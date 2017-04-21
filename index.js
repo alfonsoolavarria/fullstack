@@ -37,7 +37,7 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 console.log(dic);
-var api = new ParseServer(dic);
+//var api = new ParseServer(dic);
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -56,7 +56,7 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 
 // Serve the Parse API on the /parse URL prefix
 var mountPath = configEnv.PARSE_MOUNT || '/parse';
-app.use(mountPath, api);
+//app.use(mountPath, api);
 
 
 var port = configEnv.PORT || 1339;
