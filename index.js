@@ -39,7 +39,6 @@ if (!databaseUri) {
 console.log(dic);
 //var api = new ParseServer(dic);
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(session(
