@@ -57,7 +57,6 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 var mountPath = configEnv.PARSE_MOUNT || '/parse';
 //app.use(mountPath, api);
 
-
 var port = configEnv.PORT || 1339;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
