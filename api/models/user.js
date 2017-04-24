@@ -2,6 +2,9 @@ var Parse = require('parse/node');
 var type_business = require('../../default/typeBusiness.js');
 var _ = require('lodash');
 
+Parse.initialize('8a70d849-410c-409f-9be4-b199125afb10',null,'0ae7ebf4-0021-4a48-a8a7-d40502cd35de');
+Parse.serverURL ='https://timesapp.azurewebsites.net/parse';
+
 var UsersModel = {};
 
 
@@ -45,9 +48,9 @@ UsersModel.createUser = function createUser (options,object) {
 
 
 UsersModel.createTypeBusiness = function createTypeBusiness () {
+
   var query = new Parse.Query('TypeBusiness');
   return query.find().then(function(dataType) {
-      console.log('----------> data',dataType);
       if (dataType.length>0) {
         dataType.forEach(function(data) {
             data.destroy({success: function() {},error: function() {}
@@ -57,8 +60,14 @@ UsersModel.createTypeBusiness = function createTypeBusiness () {
       _.each(type_business.all_business,function(typeb){
         var typeB = new Parse.Object('TypeBusiness');
         typeB.set('name', typeb.name);
-        typeB.save();
+        typeB.save(null,{ useMasterKey: true });
       });
+  }).then(null, function (error) {
+    _.each(type_business.all_business,function(typeb){
+      var typeB = new Parse.Object('TypeBusiness');
+      typeB.set('name', typeb.name);
+      typeB.save(null,{ useMasterKey: true });
+    });
   });
 
 };
