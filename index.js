@@ -1,20 +1,20 @@
-// Example express application adding the parse-server module to expose Parse
-// compatible API routes.
+//TimesApp.
 
 var express = require('express');
 var app = express();
 var path = require('path');
+var ParseInit = require('./default/parseInit.js');
 var Parse = require('parse/node');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
 var dic={cloud: __dirname + '/cloud/main.js'};
+var configEnv = require('./config/enviro.js');
+var type_business = require('./default/typeBusiness.js');
+var _ = require('lodash');
 
-var configEnv = require('./config/enviro2.js');
-
-  dic.appId = configEnv.PARSE_APP_ID;
-  dic.masterKey= configEnv.PARSE_MASTER_KEY;
-  dic.serverURL= configEnv.PARSE_SERVER_URL;
+ dic.appId = configEnv.PARSE_APP_ID;
+ dic.masterKey= configEnv.PARSE_MASTER_KEY;
+ dic.serverURL= configEnv.PARSE_SERVER_URL;
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -34,6 +34,34 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 // Serve the Parse API on the /parse URL prefix
 var mountPath = configEnv.PARSE_MOUNT || '/parse';
 
+function createTB() {
+  var query = new Parse.Query("TypeBusiness");
+  return query.find({
+    success: function(dataType) {
+      if (dataType.length>0) {
+        dataType.forEach(function(data) {
+          data.destroy({success: function() {},error: function() {}
+        });
+      });
+    }
+    _.each(type_business.all_business,function(typeb){
+      var typeB = new Parse.Object("TypeBusiness");
+      typeB.set('name', typeb.name);
+      typeB.save(null,{ useMasterKey: true });
+    });
+
+    },
+    error: function(error) {
+      _.each(type_business.all_business,function(typeb){
+        var typeB = new Parse.Object("TypeBusiness");
+        typeB.set('name', typeb.name);
+        typeB.save(null,{ useMasterKey: true });
+      });
+    }
+  });
+}
+
+createTB(); //create type_business
 var port = configEnv.PORT || 1339;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {

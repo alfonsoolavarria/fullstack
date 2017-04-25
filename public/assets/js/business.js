@@ -12,7 +12,7 @@ $(document).ready(function() {
       nombre : e.currentTarget[6].value,
       phone : e.currentTarget[7].value,
       email : e.currentTarget[8].value,
-      pwd : e.currentTarget[9].value,
+      password : e.currentTarget[9].value,
       type:'Propietario'
     }
 

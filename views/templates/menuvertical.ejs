@@ -26,6 +26,7 @@ if (usersType.userId){
               <span class="site-menu-title">Dashboard</span>
             </a>
           </li>
+          <%if (usersType.admin){%>
           <li class="site-menu-item has-sub">
             <a href="javascript:void(0)">
               <i class="site-menu-icon md-chart" aria-hidden="true"></i>
@@ -34,7 +35,7 @@ if (usersType.userId){
             <ul class="site-menu-sub">
               <li class="site-menu-item">
                 <a class="animsition-link" href="/business/list?user=<%=usersType.userId%>">
-                  <span class="site-menu-title">Litado de Empresas</span>
+                  <span class="site-menu-title">Listado de Empresas</span>
                 </a>
               </li>
               <li class="site-menu-item">
@@ -44,6 +45,7 @@ if (usersType.userId){
               </li>
             </ul>
             </li>
+            <%}%>
 
           <li class="site-menu-item has-sub">
             <a href="javascript:void(0)">
