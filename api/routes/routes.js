@@ -12,6 +12,7 @@ var usersType = {
   owner:false,
   employee:false
 }
+var session='';
 
 module.exports = function(app) {
 
@@ -20,9 +21,8 @@ module.exports = function(app) {
     if (req.query.invalid) {
       message = 'Error al logearse';
     }
-    Users.createTypeBusiness().then(function(){
-      res.render('login.ejs',{message});
-    });
+    res.render('login.ejs',{message});
+
 	});
 
   /*******************************|
@@ -30,9 +30,18 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/admin', function(req, res) {
-    usersType.admin = true;
-    usersType.userId = req.query.user;
-    res.render('index.ejs',{usersType});
+    if (session) {
+      usersType.admin = true;
+      usersType.owner=false;
+      usersType.employee=false;
+      usersType.userId = req.query.user;
+      return res.render('index.ejs',{
+        usersType,
+        session:session
+      });
+    }else {
+      return res.redirect('/');
+    }
 	});
 
   /*******************************|
@@ -40,19 +49,35 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/owner', function(req, res) {
-    console.log('owner');
-    usersType.owner=true;
-    res.render('index.ejs',{usersType});
-	});
+    if (session) {
+      usersType.admin=false;
+      usersType.employee=false;
+      usersType.owner=true;
+      return res.render('index.ejs',{
+        usersType,
+        session:session
+      });
+    }else {
+      return res.redirect('/');
+    }
+  });
 
   /*******************************|
   |*******Employee********|
   ********************************/
 
   app.get('/employee', function(req, res) {
-    console.log('employee');
-    usersType.employee=true;
-    res.render('index.ejs',{usersType});
+    if (session) {
+      usersType.admin=false;
+      usersType.owner=false;
+      usersType.employee=true;
+      res.render('index.ejs',{
+        usersType,
+        session:session
+      });
+    }else {
+      return res.redirect('/');
+    }
 	});
 
   /*******************************|
@@ -112,21 +137,11 @@ module.exports = function(app) {
     res.render('calendar/calendar.ejs');
 	});
 
+
   /********************************
-  ************VISITS************
+  ************User************
   ********************************/
 
-  app.get('/alfonso', function(req, res) {
-    var test = Parse.Object.extend("GameScore");
-		var game = new Parse.Query('GameScore');
-    var promises = [],data2=[];
-    game.find().then(function(result){
-      promises.push(result);
-      res.json(promises);
-    });
-
-
-	});
 
   //signUp user
   app.post('/user',middle.checkParams, function(req, res) {
@@ -153,26 +168,29 @@ module.exports = function(app) {
     }
 
     if (req.body && req.body.email && req.body.password) {
-      UsersContro.logIn({ email: req.body.email, pwd: req.body.password })
+      UsersContro.logIn({ email: req.body.email, password: req.body.password })
       .then(function (user) {
+        console.log('userrr',JSON.stringify(user));
         req.session['timesapp-token-session'] = user.data.get('sessionToken');
-        var id = user.data.get('data').id;
-        return dataUser(id).then(function(data){
-          if (data.get('type')==USER_ALL.admin) {
+        session = req.session['timesapp-token-session'];
+        var id = user.data.id;
+        //return dataUser(id).then(function(data){
+          if (user.data.get('type')==USER_ALL.admin) {
             console.log('Administrador');
-            return res.redirect('/admin?'+'user='+user.data.id);
+            return res.redirect('/admin?'+'user='+id);
           }
-          if (data.get('type')==USER_ALL.owner) {
+          else if (user.data.get('type')==USER_ALL.owner) {
             console.log('Propietario');
-            return res.redirect('/owner?'+'user='+user.data.id);
+            return res.redirect('/owner?'+'user='+id);
           }
-          if (data.get('type')==USER_ALL.employee) {
+          else if (user.data.get('type')==USER_ALL.employee) {
             console.log('Empleado');
-            return res.redirect('/employee?'+'user='+user.data.id);
+            return res.redirect('/employee?'+'user='+id);
+          }else {
+            return res.status(user.code).send(user.data);
           }
 
-          return res.status(user.code).send(user.data);
-        });
+        //});
 
       }).then(null, function (error) {
         console.log('Error al logearse');
@@ -184,5 +202,14 @@ module.exports = function(app) {
       return res.status(409).send({error:'Email or Password are required'});
     }
 	});
+
+//Logout user
+app.get('/logout', function(req, res) {
+  req.session['timesapp-token-session'] = "";
+  session = "";
+  return res.redirect('/');
+});
+
+
 
 };

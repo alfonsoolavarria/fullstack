@@ -12,7 +12,7 @@ $(document).ready(function() {
       nombre : e.currentTarget[6].value,
       phone : e.currentTarget[7].value,
       email : e.currentTarget[8].value,
-      pwd : e.currentTarget[9].value,
+      password : e.currentTarget[9].value,
       type:'Propietario'
     }
 
@@ -47,9 +47,10 @@ $(document).ready(function() {
 
     //getLocation().then(function(data) {
       if (dataSend.direccion && dataSend.cuidad && dataSend.cp) {
+        $("#businessDelaysucc").trigger("click");
+        $(".clean").trigger("click");
         $.post('/business',dataSend)
         .done(function (result) {
-          $("#businessDelaysucc").trigger("click");
           if (result.valores.length>0) {
             //$(".page2").css('visibility','visible');
             //$(".registerBusiness").css('visibility','visible');
@@ -61,7 +62,6 @@ $(document).ready(function() {
           }else {
             $(".negocio").attr('value','');
           }
-          $(".clean").trigger("click");
         }).fail(function(error) {
           console.log(error.responseText);
           $("#businessDelayerr").trigger("click");

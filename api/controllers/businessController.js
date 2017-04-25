@@ -1,6 +1,5 @@
 var Parse = require('parse/node');
-
-
+var ParseInit = require('../../default/parseInit.js');
 
 var BusinessControllers = {};
 
