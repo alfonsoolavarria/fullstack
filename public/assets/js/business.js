@@ -1,15 +1,19 @@
 $(document).ready(function() {
+  var flagUser = 0;
+  var flagBusiness = 0;
+  var dataSend = {};
+  var flag = 0;
 
   $('form').submit(function (e) {
     e.preventDefault();
-    var dataSend = {
-      direccion : e.currentTarget[0].value,
-      cuidad : e.currentTarget[1].value,
+    dataSend = {
+      address : e.currentTarget[0].value,
+      city : e.currentTarget[1].value,
       country : e.currentTarget[2].value,
       cp : e.currentTarget[3].value,
-      tiponegocio : e.currentTarget[4].value,
-      nombrenegocio : e.currentTarget[5].value,
-      nombre : e.currentTarget[6].value,
+      typeCommerce : e.currentTarget[4].value,
+      nameCommerce : e.currentTarget[5].value,
+      name : e.currentTarget[6].value,
       phone : e.currentTarget[7].value,
       email : e.currentTarget[8].value,
       password : e.currentTarget[9].value,
@@ -46,7 +50,7 @@ $(document).ready(function() {
     };
 
     //getLocation().then(function(data) {
-      if (dataSend.direccion && dataSend.cuidad && dataSend.cp) {
+      if (dataSend.address && dataSend.city && dataSend.cp) {
         $("#businessDelaysucc").trigger("click");
         $(".clean").trigger("click");
         $.post('/business',dataSend)
@@ -72,6 +76,110 @@ $(document).ready(function() {
         console.log('nises');
       }
     //});
+  });
+
+
+
+  $('.btn-sm-edit').click(function () {
+    var button = $(this);
+    var text = button[0].innerText;
+    var id = button.data('edit-id');
+    var iduser = button.data('user-bus');
+    $('.btn-'+id).empty();
+    if (text=='Guardar') {
+      dataSend.id=id;
+      dataSend.iduser=iduser;
+
+      console.log('flaggg',flag);
+      if (flag==1) {
+        flag = 0;
+        flagUser = 0;
+        flagBusiness=0;
+        $.ajax({
+          url:'/business',
+          data:dataSend,
+          type: 'PUT',
+          success: function functionName(data) {
+            console.log('*************',data);
+
+          }
+        });
+        dataSend={};
+        $("#businessDelaylist-"+id).trigger("click");
+      }
+
+      $("#name-"+id).attr("disabled",true);
+      $("#address-"+id).attr("disabled",true);
+      $("#country-"+id).attr("disabled",true);
+      $("#city-"+id).attr("disabled",true);
+      $("#cp-"+id).attr("disabled",true);
+      $("#owner-"+id).attr("disabled",true);
+      $("#telefono-"+id).attr("disabled",true);
+      $("#email-"+id).attr("disabled",true);
+      $("#tipo-"+id).attr("disabled",true);
+      $('.btn-'+id).append("<span id='nameE-"+id+"'>Editar</span>");
+
+    }else {
+      //console.log('poner aqui para poder editar');
+      $("#name-"+id).removeAttr("disabled");
+      $("#address-"+id).removeAttr("disabled");
+      $("#country-"+id).removeAttr("disabled");
+      $("#city-"+id).removeAttr("disabled");
+      $("#cp-"+id).removeAttr("disabled");
+      $("#owner-"+id).removeAttr("disabled");
+      $("#telefono-"+id).removeAttr("disabled");
+      $("#email-"+id).removeAttr("disabled");
+      $("#tipo-"+id).removeAttr("disabled");
+      $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+      $("#name-"+id).keyup(function () {
+        dataSend.nameCommerce = $("#name-"+id).val();
+        flag=1;
+        dataSend.flagBusiness=1;
+
+      });
+      $("#address-"+id).keyup(function () {
+        dataSend.address = $("#address-"+id).val();
+        flag=1;
+        dataSend.flagBusiness=1;
+      });
+      $("#country-"+id).keyup(function () {
+        dataSend.country = $("#country-"+id).val();
+        flag=1;
+        dataSend.flagBusiness=1;
+      });
+      $("#city-"+id).keyup(function () {
+        dataSend.city = $("#city-"+id).val();
+        flag=1;
+        dataSend.flagBusiness=1;
+      });
+      $("#cp-"+id).keyup(function () {
+        dataSend.cp = $("#cp-"+id).val();
+        flag=1;
+        dataSend.flagBusiness=1;
+      });
+      $("#owner-"+id).keyup(function () {
+        flag=1;
+        dataSend.flagUser=1;
+        dataSend.name = $("#owner-"+id).val();
+      });
+      $("#telefono-"+id).keyup(function () {
+        flag=1;
+        dataSend.flagUser=1;
+        dataSend.phone = $("#telefono-"+id).val();
+      });
+      $("#email-"+id).keyup(function () {
+        flag=1;
+        dataSend.flagUser=1;
+        dataSend.email = $("#email-"+id).val();
+      });
+      $("#tipo-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.typeCommerce = $("#tipo-"+id).val();
+      });
+    }
+
+
   });
 
 });

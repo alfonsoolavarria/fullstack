@@ -91,15 +91,25 @@ module.exports = function(app) {
     });
 	});
 
-  app.get('/business/list', function(req, res) { //in progress
-    var valores={};
-    usersType.userId = req.query.user;
-    BusinessControllers.searchListBusiness(req.body.latlon).then(function(data){
-      if (data) {
-        valores=data;
-      }
-      res.render('businesslist.ejs',{usersType,valores});
-    });
+  app.get('/business/list', function(req, res) {
+    if (session) {
+      var valores={};
+      usersType.userId = req.query.user;
+      BusinessControllers.searchListBusiness(req.body.latlon).then(function(data){
+        if (data) {
+          valores=JSON.parse(JSON.stringify(data))
+        }
+        Users.getTypeBusiness().then(function(typeBusiness) {
+          res.render('businesslist.ejs',{
+            usersType,
+            valores,
+            typeBusiness
+          });
+        });
+      });
+    }else {
+      return res.redirect('/');
+    }
 	});
 
   app.post('/business', function(req, res) {
@@ -127,6 +137,26 @@ module.exports = function(app) {
       });
     }
 	});
+
+  app.put('/business', function(req, res) {
+    if (req.body.flagBusiness) {
+      BusinessControllers.updateBusiness(req.body).then(function(data) {
+        if (req.body.flagUser) {
+          Users.updateUserBusiness(req.body).then(function (user) {
+            return res.json({code:200});
+          });
+        }else {
+          return res.json({code:200});
+        }
+      });
+    }else if (req.body.flagUser) {
+      Users.updateUserBusiness(req.body).then(function (user) {
+        return res.json({code:200});
+      });
+    }else {
+      return res.json({code:200});
+    }
+  });
 
 
 
@@ -170,7 +200,6 @@ module.exports = function(app) {
     if (req.body && req.body.email && req.body.password) {
       UsersContro.logIn({ email: req.body.email, password: req.body.password })
       .then(function (user) {
-        console.log('userrr',JSON.stringify(user));
         req.session['timesapp-token-session'] = user.data.get('sessionToken');
         session = req.session['timesapp-token-session'];
         var id = user.data.id;

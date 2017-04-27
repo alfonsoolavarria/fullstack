@@ -1,0 +1,188 @@
+
+<% include templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include templates/header.ejs %>
+  <!-- Menu-->
+  <% include templates/menuvertical.ejs %>
+
+    <!-- Page -->
+    <div class="page">
+      <div class="page-content">
+        <!-- Panel -->
+        <div class="panel">
+          <div class="panel-body">
+            <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+              <div class="tab-content">
+                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                  <ul class="list-group">
+                    <% for(var i=0; i<valores.length; i++) {%>
+                      <li class="list-group-item">
+                        <div class="media">
+                          <div class="pr-20">
+                            <div class="avatar avatar-online">
+                              <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                              <i class="avatar avatar-busy"></i>
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <h4 class="mt-0 mb-5">
+                              <input id="name-<%=valores[i].objectId%>" style="border:0px;background: none;" value="<%=valores[i].nameCommerce%>" disabled></input>
+                            </h4>
+                            <form class="form-horizontal">
+                            <div class="row">
+                              <div class="col-md-4">
+                            <div class="panel-body container-fluid">
+                                <div class="form-group row form-material row">
+                                  <label class="col-md-6 form-control-label">Direccion:</label>
+                                  <div class="col-md-6">
+                                    <input class="form-control" id="address-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].address%>" disabled></input>
+                                  </div>
+                                </div>
+                                <div class="form-group row form-material row">
+                                  <label class="col-md-6 form-control-label">Ciudad:</label>
+                                  <div class="col-md-6">
+                                    <input class="form-control" id="city-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].city%>" disabled></input>
+                                  </div>
+                                </div>
+                                <div class="form-group row form-material row">
+                                  <label class="col-md-6 form-control-label">Pa&iacute;s:</label>
+                                  <div class="col-md-6">
+                                    <input class="form-control" id="country-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].country%>" disabled></input><br>
+                                  </div>
+                                </div>
+                                <div class="form-group row form-material row">
+                                  <label class="col-md-6 form-control-label">CP:</label>
+                                  <div class="col-md-6">
+                                    <input class="form-control" id="cp-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].postalCode%>" disabled></input>
+                                  </div>
+                                </div>
+                                <div class="form-group row form-material row">
+                                  <label class="col-md-6 form-control-label">Tipo de Negocio:</label>
+                                  <div class="col-md-6">
+                                    <select class="form-control" id="tipo-<%=valores[i].objectId%>" style="border-bottom: 0px;" disabled>
+                                      <% for(var o=0; o<typeBusiness.length; o++) {%>
+                                        <%if (valores[i].typeCommerce==typeBusiness[o].name){%>
+                                          <option selected><%=typeBusiness[o].name%></option>
+                                        <%}else{%>
+                                          <option><%=typeBusiness[o].name%></option>
+                                        <%}%>
+                                      <%}%>
+                                    </select>
+                                  </div>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                <div class="panel-body container-fluid">
+                                    <div class="form-group row form-material row">
+                                      <label class="col-md-4 form-control-label">Nombre del propietario:</label>
+                                      <div class="col-md-8">
+                                        <input class="form-control" id="owner-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).name%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-md-4 form-control-label">Teléfono:</label>
+                                      <div class="col-md-8">
+                                        <input class="form-control" id="telefono-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).phone%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-md-4 form-control-label">Email:</label>
+                                      <div class="col-md-8">
+                                        <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).username%>" disabled></input>
+                                      </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4"></div>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="pl-20 align-self-center">
+                          <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
+                        </div>
+                        <button type="button" class="btn btn-primary waves-effect" id="businessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                      </div>
+                      </li>
+                    <% } %>
+                  </ul>
+                  <nav>
+                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Panel -->
+      </div>
+    </div>
+    <!-- End Page -->
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="site-footer-legal">© 2017 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">Remark</a></div>
+      <div class="site-footer-right">
+        Crafted with <i class="red-600 icon md-favorite"></i> by <a href="http://themeforest.net/user/amazingSurge">amazingSurge</a>
+      </div>
+    </footer>
+    <!-- Core  -->
+    <script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
+    <script src="/public/assets/material/global/vendor/tether/tether.js"></script>
+    <script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
+    <script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+    <!-- Plugins -->
+    <script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
+    <script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
+    <script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
+    <script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+    <script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
+    <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+    <!-- Scripts -->
+    <script src="/public/assets/material/global/js/State.js"></script>
+    <script src="/public/assets/material/global/js/Component.js"></script>
+    <script src="/public/assets/material/global/js/Plugin.js"></script>
+    <script src="/public/assets/material/global/js/Base.js"></script>
+    <script src="/public/assets/material/global/js/Config.js"></script>
+    <script src="/public/assets/material/js/Section/Menubar.js"></script>
+    <script src="/public/assets/material/js/Section/Sidebar.js"></script>
+    <script src="/public/assets/material/js/Section/PageAside.js"></script>
+    <script src="/public/assets/material/js/Plugin/menu.js"></script>
+    <!-- Config -->
+    <script src="/public/assets/material/global/js/config/colors.js"></script>
+    <script src="/public/assets/material/js/config/tour.js"></script>
+    <script>
+    Config.set('assets', '../../assets');
+    </script>
+    <!-- Page -->
+    <script src="/public/assets/material/js/Site.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/aspaginator.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+    <script src="/public/assets/js/business.js"></script>
+    <script>
+    (function(document, window, $) {
+      'use strict';
+      var Site = window.Site;
+      $(document).ready(function() {
+        Site.run();
+      });
+    })(document, window, jQuery);
+    </script>
+  </body>
+  </html>

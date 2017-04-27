@@ -70,4 +70,20 @@ UsersModel.checkSession = function checkSession (sess) {
 
 };
 
+
+UsersModel.updateUserBusiness = function updateUserBusiness (options) {
+  var query = new Parse.Query('User');
+  return query.get(options.iduser).then(function(userB){
+    if (options.email) userB.set('username', options.email);
+    if (options.name) userB.set('name', options.name);
+    if (options.phone) userB.set('phone', options.phone);
+    if (options.email) userB.set('email', options.email);
+    return userB.save(null,{ useMasterKey: true });
+  });
+
+};
+
+
+
+
 module.exports = UsersModel;
