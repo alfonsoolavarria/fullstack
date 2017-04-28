@@ -22,6 +22,7 @@ BusinessControllers.searchListBusiness = function searchListBusiness (options) {
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
+  query.equalTo('status',true);
   return query.find({
     success: function(object) {},
     error: function(error) {
@@ -82,6 +83,18 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
     }, function(error) {
       console.log('Business update Error',error);
       return {ready:false,error:'Business update Error '+error};
+    });
+};
+
+BusinessControllers.deleteBusiness = function deleteBusiness (id) {
+    var query = new Parse.Query('Business');
+    return query.get(id).then(function(dataB){
+      dataB.set({'status':false});
+      dataB.save(null, { useMasterKey: true });
+      return{success:true,code:200};
+    }, function(error) {
+      console.log('Business delete Error',error);
+      return {ready:false,error:'Business delete Error '+error};
     });
 };
 

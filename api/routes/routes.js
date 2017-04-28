@@ -92,7 +92,7 @@ module.exports = function(app) {
 	});
 
   app.get('/business/list', function(req, res) {
-    if (session) {
+  //  if (session) {
       var valores={};
       usersType.userId = req.query.user;
       BusinessControllers.searchListBusiness(req.body.latlon).then(function(data){
@@ -107,9 +107,9 @@ module.exports = function(app) {
           });
         });
       });
-    }else {
+    /*}else {
       return res.redirect('/');
-    }
+    }*/
 	});
 
   app.post('/business', function(req, res) {
@@ -139,6 +139,13 @@ module.exports = function(app) {
 	});
 
   app.put('/business', function(req, res) {
+
+    if (req.body.delete) {
+      BusinessControllers.deleteBusiness(req.body.id).then(function(data) {
+        return res.json({code:200});
+      });
+    }
+    
     if (req.body.flagBusiness) {
       BusinessControllers.updateBusiness(req.body).then(function(data) {
         if (req.body.flagUser) {

@@ -179,7 +179,39 @@ $(document).ready(function() {
       });
     }
 
-
   });
+
+$('.btn-danger').click(function () {
+  var button = $(this);
+  var id = button.data('delete-id');
+  $(".modal-"+id).css("visibility", "visible");
+
+});
+$('.ok').click(function () {
+  var button = $(this);
+  var id = button.data('ok-id');
+  $('.modal-'+id).css("visibility", "hidden");
+  $.ajax({
+    url:'/business',
+    data:{delete:true,id:id},
+    type: 'PUT',
+    success: function functionName(data) {
+      location.reload();
+    }
+  });
+  $("#businessok-"+id).trigger("click");
+});
+
+
+$('.cancel').click(function () {
+  var button = $(this);
+  var id = button.data('cancel-id');
+  $('.modal-'+id).css("visibility", "hidden");
+  var delayMillis = 100;
+  setTimeout(function() {
+    $("#businesscancel-"+id).trigger("click");
+  }, delayMillis);
+});
+
 
 });

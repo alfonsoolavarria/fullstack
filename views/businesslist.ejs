@@ -1,4 +1,4 @@
-
+<%var idGeneral=0;%>
 <% include templates/head.ejs %>
 <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
@@ -105,11 +105,18 @@
                         </form>
                         <div class="pl-20 align-self-center">
                           <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
+                          <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>">Eliminar</button>
                         </div>
-                        <button type="button" class="btn btn-primary waves-effect" id="businessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
                         data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessok-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="businesscancel-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
                       </div>
                       </li>
+                      <label style="visibility:hidden;" id="delete-bu-<%= valores[i].objectId %>"></label>
+                      <%idGeneral=valores[i].objectId%>
                     <% } %>
                   </ul>
                   <nav>
@@ -186,3 +193,16 @@
     </script>
   </body>
   </html>
+  <div class="alertify-logs"></div>
+  <% for(var i=0; i<valores.length; i++) {%>
+  <div class="alertify modal-<%=valores[i].objectId%>" style="visibility:hidden;">
+    <div class="dialog">
+      <div><p class="msg">Seguro de eliminar?</p>
+        <nav>
+          <button class="cancel btn btn-default" data-cancel-id="<%=valores[i].objectId%>" tabindex="2">Cancelar</button>
+          <button class="ok btn btn-primary" data-ok-id="<%=valores[i].objectId%>" tabindex="1">Borrar</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+<%}%>
