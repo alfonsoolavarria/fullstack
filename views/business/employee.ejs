@@ -1,0 +1,103 @@
+<div class="panel">
+    <div class="panel-body">
+        <form class="page-search-form" role="search"></form>
+        <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+            <div class="dropdown page-user-sortlist">
+                Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
+                <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                    <a class="active dropdown-item" href="javascript:void(0)">Otra</a>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                    <ul class="list-group">
+                        <% for(var o=0; o<employeeB.employee.length; o++) {%>
+                            <li class="list-group-item">
+                                <div class="media">
+                                    <div class="pr-20">
+                                        <div class="avatar avatar-online">
+                                            <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                                            <i class="avatar avatar-busy"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <form class="form-horizontal">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Nombre:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="emplo-name-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].name%>" disabled></input>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Telefono:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="emplo-phone-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].phone%>" disabled></input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Email:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="emplo-email-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=employeeB.employee[o].username%>" disabled></input>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    </div>
+                                    </form>
+                                    <div class="pl-20 align-self-center">
+                                        <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.employee[o].objectId%>" data-edit-id="<%=employeeB.employee[o].objectId%>" ><span id="nameE-<%=employeeB.employee[o].objectId%>">Editar</span></button>
+                                        <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
+                                    data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                            </li>
+                            <%}%>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Site Action Nuevo Empleado-->
+<div class="site-action" data-toggle="modal" data-target="#addStageFrom" data-plugin="actionBtn">
+  <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">
+    <i class="icon md-plus" aria-hidden="true"></i>
+  </button>
+</div>
+<!-- End Site Action -->
+<div class="modal fade" id="addStageFrom" aria-hidden="true" aria-labelledby="addStageFrom" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Nuevo Empleado</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" role="form">
+          <div class="form-group">
+            <input type="text" class="form-control" id="name" placeholder="Nombre">
+            <input type="email" class="form-control" id="email" placeholder="Email" autocomplete="off" required/>
+            <input type="text" class="form-control" id="password" placeholder="Password" autocomplete="off" required/>
+            <input type="text" class="form-control" id="phone" placeholder="Teléfono" autocomplete="off" required/>
+            <input type="text" class="form-control" id="idBusiness" value="<%=valores.objectId%>" style="visibility:hidden;">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer text-left">
+        <button id="employeeCreate" class="btn btn-primary" data-dismiss="modal" type="button">Crear</button>
+        <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
+      </div>
+      <button type="button" class="btn btn-primary waves-effect" id="employeeDelaysucc" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+    </div>
+  </div>
+</div>

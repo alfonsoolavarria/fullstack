@@ -90,7 +90,6 @@ $(document).ready(function() {
       dataSend.id=id;
       dataSend.iduser=iduser;
 
-      console.log('flaggg',flag);
       if (flag==1) {
         flag = 0;
         flagUser = 0;

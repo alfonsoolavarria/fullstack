@@ -1,0 +1,84 @@
+
+        <div class="col-md-12">
+          <div class="media">
+            <div class="pr-20">
+              <div class="avatar avatar-online">
+                <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                <i class="avatar avatar-busy"></i>
+              </div>
+            </div>
+            <div class="media-body">
+              <h4 class="mt-0 mb-5">
+                <input id="name-<%=valores.objectId%>" style="border:0px;background: none;" value="<%=valores.nameCommerce%>" disabled></input>
+              </h4>
+              <form class="form-horizontal">
+              <div class="row">
+                <div class="col-md-4">
+              <div class="panel-body container-fluid">
+                  <div class="form-group row form-material row">
+                    <label class="col-md-6 form-control-label">Direccion:</label>
+                    <div class="col-md-6">
+                      <input class="form-control" id="address-<%=valores.objectId%>" style="border:0px;background:none;" value="<%=valores.address%>" disabled></input>
+                    </div>
+                  </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-6 form-control-label">Ciudad:</label>
+                    <div class="col-md-6">
+                      <input class="form-control" id="city-<%=valores.objectId%>" style="border:0px;background:none;" value="<%=valores.city%>" disabled></input>
+                    </div>
+                  </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-6 form-control-label">Pa&iacute;s:</label>
+                    <div class="col-md-6">
+                      <input class="form-control" id="country-<%=valores.objectId%>" style="border:0px;background:none;" value="<%=valores.country%>" disabled></input><br>
+                    </div>
+                  </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-6 form-control-label">CP:</label>
+                    <div class="col-md-6">
+                      <input class="form-control" id="cp-<%=valores.objectId%>" style="border:0px;background:none;" value="<%=valores.postalCode%>" disabled></input>
+                    </div>
+                  </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-6 form-control-label">Tipo de Negocio:</label>
+                    <div class="col-md-6">
+                      <select class="form-control" id="tipo-<%=valores.objectId%>" style="border-bottom: 0px;" disabled>
+                        <% for(var o=0; o<typeBusiness.length; o++) {%>
+                          <%if (valores.typeCommerce==typeBusiness[o].name){%>
+                            <option selected><%=typeBusiness[o].name%></option>
+                          <%}else{%>
+                            <option><%=typeBusiness[o].name%></option>
+                          <%}%>
+                        <%}%>
+                      </select>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="col-md-4">
+                  <div class="panel-body container-fluid">
+                      <div class="form-group row form-material row">
+                        <label class="col-md-4 form-control-label">Nombre del propietario:</label>
+                        <div class="col-md-8">
+                          <input class="form-control" id="owner-<%=valores.objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores.owner)).name%>" disabled></input>
+                        </div>
+                      </div>
+                      <div class="form-group row form-material row">
+                        <label class="col-md-4 form-control-label">Teléfono:</label>
+                        <div class="col-md-8">
+                          <input class="form-control" id="telefono-<%=valores.objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores.owner)).phone%>" disabled></input>
+                        </div>
+                      </div>
+                      <div class="form-group row form-material row">
+                        <label class="col-md-4 form-control-label">Email:</label>
+                        <div class="col-md-8">
+                          <input class="form-control" id="email-<%=valores.objectId%>" style="border:0px;background:none;width:120%;" value="<%-JSON.parse(JSON.stringify(valores.owner)).username%>" disabled></input>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+      </div>
+      </div>

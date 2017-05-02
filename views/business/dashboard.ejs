@@ -1,0 +1,116 @@
+
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+
+    <!-- Page -->
+    <div class="page">
+      <div class="page-content">
+        <div class="col-xl-12">
+          <!-- Example Nav Tabs Line -->
+          <div class="example-wrap">
+            <h4 class="example-title">Nombre de la empresa</h4>
+            <% include navbusiness.ejs %>
+          </div>
+          <!-- End Example Nav Tabs Line -->
+        </div>
+
+            <%if (useTemplate.dashboard){%>
+              <!-- Empresa -->
+              <% include detailsbusiness.ejs %>
+            <%}else if (useTemplate.employee){%>
+              <!-- Empleado -->
+              <% include employee.ejs %>
+            <%}else if(useTemplate.service){%>
+              <!-- Servicios -->
+              <% include service.ejs %>
+            <%}else{%>
+              <!-- Administrador -->
+              <% include admin.ejs %>
+            <%}%>
+
+        </div>
+    </div>
+
+    <!-- End Page -->
+
+    <!-- Footer -->
+      <% include ../templates/footer.ejs %>
+    <!-- Core  -->
+    <script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
+    <script src="/public/assets/material/global/vendor/tether/tether.js"></script>
+    <script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
+    <script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+    <!-- Plugins -->
+    <script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
+    <script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
+    <script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
+    <script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+    <script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
+    <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+    <!-- Scripts -->
+    <script src="/public/assets/material/global/js/State.js"></script>
+    <script src="/public/assets/material/global/js/Component.js"></script>
+    <script src="/public/assets/material/global/js/Plugin.js"></script>
+    <script src="/public/assets/material/global/js/Base.js"></script>
+    <script src="/public/assets/material/global/js/Config.js"></script>
+    <script src="/public/assets/material/js/Section/Menubar.js"></script>
+    <script src="/public/assets/material/js/Section/Sidebar.js"></script>
+    <script src="/public/assets/material/js/Section/PageAside.js"></script>
+    <script src="/public/assets/material/js/Plugin/menu.js"></script>
+    <!-- Config -->
+    <script src="/public/assets/material/global/js/config/colors.js"></script>
+    <script src="/public/assets/material/js/config/tour.js"></script>
+    <script>
+    Config.set('assets', '../../assets');
+    </script>
+    <!-- Page -->
+    <script src="/public/assets/material/js/Site.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/aspaginator.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+    <script src="/public/assets/js/business.js"></script>
+    <script src="/public/assets/js/employee.js"></script>
+    <script>
+    (function(document, window, $) {
+      'use strict';
+      var Site = window.Site;
+      $(document).ready(function() {
+        Site.run();
+      });
+    })(document, window, jQuery);
+    </script>
+  </body>
+  </html>
+  <div class="alertify-logs"></div>
+  <%if (employeeB){%>
+    <% for(var o=0; o<employeeB.employee.length; o++) {%>
+    <div class="alertify modale-<%=employeeB.employee[o].objectId%>" style="visibility:hidden;">
+      <div class="dialog">
+        <div><p class="msg">Seguro de eliminar?</p>
+          <nav>
+            <button class="cancele btn btn-default" data-cancel-id="<%=employeeB.employee[o].objectId%>" tabindex="2">Cancelar</button>
+            <button class="oke btn btn-primary" data-ok-id="<%=employeeB.employee[o].objectId%>" tabindex="1">Borrar</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  <%}%>
+<%}%>

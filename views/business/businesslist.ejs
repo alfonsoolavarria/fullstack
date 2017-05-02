@@ -1,14 +1,14 @@
 <%var idGeneral=0;%>
-<% include templates/head.ejs %>
+<% include ../templates/head.ejs %>
 <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
 <link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
 <body class="animsition page-user">
   <!-- Headear barra -->
-  <% include templates/header.ejs %>
+  <% include ../templates/header.ejs %>
   <!-- Menu-->
-  <% include templates/menuvertical.ejs %>
+  <% include ../templates/menuvertical.ejs %>
 
     <!-- Page -->
     <div class="page">
@@ -94,18 +94,22 @@
                                     <div class="form-group row form-material row">
                                       <label class="col-md-4 form-control-label">Email:</label>
                                       <div class="col-md-8">
-                                        <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).username%>" disabled></input>
+                                        <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;width:120%;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).username%>" disabled></input>
                                       </div>
                                     </div>
                                 </div>
                               </div>
-                              <div class="col-md-4"></div>
+                              <div class="col-md-4">
+                                <a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard">
+                                  <i class="icon md-wrench" aria-hidden="true"></i> Detalles
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </form>
                         <div class="pl-20 align-self-center">
                           <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
-                          <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>">Eliminar</button>
+                          <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
                         data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>

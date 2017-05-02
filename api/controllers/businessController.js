@@ -33,6 +33,23 @@ BusinessControllers.searchListBusiness = function searchListBusiness (options) {
   });
 };
 
+BusinessControllers.searchGetBusiness = function searchGetBusiness (id) {
+  var query = new Parse.Query('Business');
+  query.include('owner.name');
+  query.include('owner.email');
+  query.include('owner.phone');
+  query.include('owner.username');
+  query.equalTo('status',true);
+  return query.get(id,{
+    success: function(object) {},
+    error: function(error) {
+      // error is an instance of Parse.Error.
+      console.log('error search Business');
+      console.log('%j',error);
+    }
+  });
+};
+
 /*Registro de Empresa*/
 BusinessControllers.createBusiness = function createBusiness (options) {
   var business = new Parse.Object('Business');
@@ -57,7 +74,7 @@ BusinessControllers.createBusiness = function createBusiness (options) {
 
 };
 
-BusinessControllers.addRelationBusiness = function addRelationBusiness (idBusiness,userId) {
+BusinessControllers.addPointerBusiness = function addPointerBusiness (idBusiness,userId) {
     var query = new Parse.Query('Business');
     return query.get(idBusiness.id).then(function(dataB){
       dataB.set('owner', {"__type":"Pointer","className":"_User","objectId":userId});
@@ -97,6 +114,19 @@ BusinessControllers.deleteBusiness = function deleteBusiness (id) {
       return {ready:false,error:'Business delete Error '+error};
     });
 };
+
+BusinessControllers.addRelationBusiness = function addRelationBusiness (idBusiness,userId) {
+    var query = new Parse.Query('Business');
+    return query.get(idBusiness.id).then(function(dataB){
+      dataB.relation('employee').add(userId);
+      dataB.save(null, { useMasterKey: true });
+      return{success:true,code:200};
+    }, function(error) {
+      console.log('Business Add relation Error',error);
+      return {ready:false,error:'Business Add relation Error '+error};
+    });
+};
+
 
 
 
