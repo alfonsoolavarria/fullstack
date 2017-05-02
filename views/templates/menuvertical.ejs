@@ -26,7 +26,7 @@ if (usersType.userId){
               <span class="site-menu-title">Dashboard</span>
             </a>
           </li>
-          <%if (usersType.admin){%>
+          <%if (usersType.admin || usersType.owner){%>
           <li class="site-menu-item has-sub">
             <a href="javascript:void(0)">
               <i class="site-menu-icon md-chart" aria-hidden="true"></i>
