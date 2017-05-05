@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
 <link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/select2/select2.min.css?v2.2.0">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/clockpicker/clockpicker.css">
 <body class="animsition page-user">
   <!-- Headear barra -->
   <% include ../templates/header.ejs %>
@@ -16,7 +18,6 @@
         <div class="col-xl-12">
           <!-- Example Nav Tabs Line -->
           <div class="example-wrap">
-            <h4 class="example-title">Nombre de la empresa</h4>
             <% include navbusiness.ejs %>
           </div>
           <!-- End Example Nav Tabs Line -->
@@ -30,7 +31,7 @@
               <% include employee.ejs %>
             <%}else if(useTemplate.service){%>
               <!-- Servicios -->
-              <% include service.ejs %>
+              <% include ../service/service.ejs %>
             <%}else{%>
               <!-- Administrador -->
               <% include admin.ejs %>
@@ -71,6 +72,7 @@
     <script src="/public/assets/material/js/Section/Sidebar.js"></script>
     <script src="/public/assets/material/js/Section/PageAside.js"></script>
     <script src="/public/assets/material/js/Plugin/menu.js"></script>
+     <script src="/public/assets/material/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
     <!-- Config -->
     <script src="/public/assets/material/global/js/config/colors.js"></script>
     <script src="/public/assets/material/js/config/tour.js"></script>
@@ -88,6 +90,10 @@
     <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
     <script src="/public/assets/js/business.js"></script>
     <script src="/public/assets/js/employee.js"></script>
+    <script src="/public/assets/js/service.js"></script>
+    <script src="/public/assets/material/global/vendor/select2/select2.min.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/select2.min.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
     <script>
     (function(document, window, $) {
       'use strict';

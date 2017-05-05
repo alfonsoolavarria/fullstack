@@ -1,0 +1,454 @@
+<h4 class="example-title">Listado de Servicios</h4>
+<div class="panel">
+    <div class="panel-body">
+        <form class="page-search-form" role="search"></form>
+        <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+            <div class="dropdown page-user-sortlist">
+                Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
+                <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                    <a class="active dropdown-item" href="javascript:void(0)">Otra</a>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                    <ul class="list-group">
+                        <% for(var o=0; o<serviceData.length; o++) {%>
+                            <li class="list-group-item">
+                                <div class="media">
+                                    <div class="pr-20">
+                                        <div class="avatar avatar-online">
+                                            <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                                            <i class="avatar avatar-busy"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <form class="form-horizontal">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Nombre:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="service-name-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].serviceName%>" disabled></input>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Duracion:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-material row">
+                                                        <label class="col-md-6 form-control-label">Precio:</label>
+                                                        <div class="col-md-6">
+                                                            <input class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=serviceData[o].price%>" disabled></input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row form-material row">
+                                                      <label class="col-md-6 form-control-label">Empleado:</label>
+                                                      <div class="col-md-6">
+                                                        <select class="form-control select2-hidden-accessible" id="selectSe-<%=serviceData[o].objectId%>" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true" disabled>
+                                                          <% for(var a=0; a<employeeB.employee.length; a++) {%>
+                                                            <!-- final[i] -->
+
+                                                            <% if (final[o].indexOf(employeeB.employee[a].objectId)>=0) {%>
+                                                              <option  data-id-option="<%=employeeB.employee[a].objectId%>" id="<%=employeeB.employee[a].objectId%>" selected><%=employeeB.employee[a].name%></option>
+                                                            <%}else{%>
+                                                              <option  data-id-option="<%=employeeB.employee[a].objectId%>" id="<%=employeeB.employee[a].objectId%>"><%=employeeB.employee[a].name%></option>
+                                                            <%}%>
+                                                          <%}%>
+                                                        </select><span class="select2 select2-container select2-container--material select2-container--below select2-container--focus" dir="ltr"><span class="selection">
+                                                          <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                            <ul class="select2-selection__rendered">
+                                                          </ul>
+                                                          </span>
+                                                          </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                        </div>
+                                                      </div>
+
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                  <div class="form-group row form-material row">
+                                                      <label class="col-md-6 form-control-label">Descripci&oacute;n:</label>
+                                                      <textarea class="form-control" name="content" id="service-description-<%=serviceData[o].objectId%>" style="width: 160px;" disabled><%=serviceData[o].description%></textarea>
+                                                  </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                              <div class="pl-20 align-self-center">
+                                                <button type="button" class="btn btn-primary btn-sm editS btnS-<%=serviceData[o].objectId%>" data-edit-id="<%=serviceData[o].objectId%>" ><span id="nameS-<%=serviceData[o].objectId%>">Editar</span></button>
+                                                <button type="button" class="btn btn-primary btn-danger waves-effect deleteS" data-delete-id="<%=serviceData[o].objectId%>" id="confirmS-<%=serviceData[o].objectId%>" style="height:32px;">Eliminar</button>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                              <div class="form-group row form-material row">
+                                                <label class="col-md-4 form-control-label">Dia</label>
+                                                <label class="col-md-2 form-control-label">Horario1</label>
+                                                <label class="col-md-4 form-control-label">Horario2</label>
+                                            </div>
+                                            <% for(var w=0; w<serviceData[o].schedule.length; w++) {%>
+
+                                                <% for (var kk in serviceData[o].schedule[w]){%>
+
+                                                <div class="form-group row form-material row">
+                                                  <label class="col-md-4 form-control-label"><%=kk%></label>
+                                                  <div class="input-group col-md-2" style="">
+                                                    <span class="input-group-addon">
+                                                      <span class="md-time">
+                                                      </span>
+                                                    </span>
+                                                    <input type="text" id="<%=kk%>-0-<%=serviceData[o].objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=serviceData[o].schedule[w][kk][0].horario1[0]%>" disabled>
+                                                  </div>
+                                                  <div class="input-group col-md-2" style="">
+                                                    <span class="input-group-addon">
+                                                      <span class="md-time"></span>
+                                                    </span>
+                                                    <input type="text" id="<%=kk%>-1-<%=serviceData[o].objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=serviceData[o].schedule[w][kk][0].horario1[1]%>" disabled>
+                                                  </div>
+
+                                                  <div class="input-group col-md-2" style="">
+                                                    <span class="input-group-addon">
+                                                      <span class="md-time"></span>
+                                                    </span>
+                                                    <input type="text" id="<%=kk%>-2-<%=serviceData[o].objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=serviceData[o].schedule[w][kk][0].horario2[0]%>" disabled>
+                                                  </div>
+                                                  <div class="input-group col-md-2" style="">
+                                                    <span class="input-group-addon">
+                                                      <span class="md-time"></span>
+                                                    </span>
+                                                    <input type="text" id="<%=kk%>-3-<%=serviceData[o].objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=serviceData[o].schedule[w][kk][0].horario2[1]%>" disabled>
+                                                  </div>
+                                                </div>
+                                              <%}%>
+                                            <%}%>
+
+                                            </div>
+                                          </div>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceDelay-<%=serviceData[o].objectId%>" data-plugin="alertify"
+                                    data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceok-<%=serviceData[o].objectId%>" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="servicecancel-<%=serviceData[o].objectId%>" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                            </li>
+                            <%}%>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Nuevo Servicio -->
+<div class="site-action" data-target="#addTopicForm" data-toggle="modal" data-plugin="actionBtn">
+    <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">
+    <i class="icon md-edit" aria-hidden="true"></i>
+  </button>
+</div>
+
+<!-- Fin de Nuevo Servicio -->
+<div class="modal fade" id="addTopicForm" aria-hidden="true" aria-labelledby="addTopicForm" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Crear nuevo Servicio</h4>
+            </div>
+            <div class="modal-body container-fluid" style="width:100%;">
+                <form method="post">
+                    <div class="form-group">
+                        <label class="form-control-label mb-15" for="topicTitle">Nombre:</label>
+                        <input type="text" class="form-control" id="topicName" name="nombre" placeholder="Nombre" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label mb-15" for="topicTitle">Duraci&oacute;n:</label>
+                        <input type="text" class="form-control" id="topicDuration" name="duracion" placeholder="Duraci&oacute;n" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label mb-15" for="topicTitle">Precio:</label>
+                        <input type="text" class="form-control" id="topicPrice" name="precio" placeholder="Precio" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label mb-15" for="topicTitle">Descripci&oacute;n:</label>
+                        <textarea name="content" id="topicDescription" data-provide="markdown" data-iconlibrary="fa" rows="10" style="width: 100%;margin-top: 0px;margin-bottom: 0px;height: 100px;"></textarea>
+                    </div>
+                    <!-- Example Multi Balue -->
+                    <div class="example-wrap">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <label class="form-control-label" for="topicCategory">Empleado:</label>
+                          <div class="example">
+                            <select class="form-control select2-hidden-accessible" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true">
+                              <% for(var e=0; e<employeeB.employee.length; e++) {%>
+                                <option  data-id-option="<%=employeeB.employee[e].objectId%>" id="<%=employeeB.employee[e].objectId%>"><%=employeeB.employee[e].name%></option>
+                              <%}%>
+                            </select><span class="select2 select2-container select2-container--material select2-container--below select2-container--focus" dir="ltr"><span class="selection">
+                              <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                <ul class="select2-selection__rendered">
+                              </ul>
+                              </span>
+                              </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-10">
+                        <div class="form-group row form-material row">
+                          <label class="col-md-4 form-control-label">Dia</label>
+                          <label class="col-md-4 form-control-label">Horario1</label>
+                          <label class="col-md-4 form-control-label">Horario2</label>
+                      </div>
+                        <div class="form-group row form-material row">
+                          <label class="col-md-4 form-control-label">Lunes</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceLunes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceLunes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceLunes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceLunes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                        </div>
+
+
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Martes</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceMartes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMartes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMartes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMartes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                      </div>
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Miercoles</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceMiercoles1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMiercoles2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMiercoles3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceMiercoles4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                      </div>
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Jueves</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceJueves1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceJueves2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceJueves3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceJueves4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                      </div>
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Viernes</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceViernes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceViernes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceViernes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceViernes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                      </div>
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Sabado</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceSabado1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceSabado2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceSabado3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceSabado4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                      </div>
+                        <div class="form-group row form-material row">
+
+                          <label class="col-md-4 form-control-label">Domingo</label>
+                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                            <span class="input-group-addon">
+                              <span class="md-time">
+                              </span>
+                            </span>
+                            <input type="text" id="serviceDomingo1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceDomingo2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceDomingo3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                          <div class="input-group" style="width:20%;margin-left: 0px;">
+                            <span class="input-group-addon">
+                              <span class="md-time"></span>
+                            </span>
+                            <input type="text" id="serviceDomingo4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-4 form-control-label"></label>
+                </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-4 form-control-label"></label>
+                </div>
+                  <div class="form-group row form-material row">
+                    <label class="col-md-4 form-control-label"></label>
+                </div>
+            <input style="visibility:hidden;" id="businessid" value="<%=valores.objectId%>"></input>
+          </form>
+          <div class="modal-footer text-left">
+            <button class="btn btn-primary service" type="submit">Crear</button>
+            <a class="btn btn-sm btn-white btn-flat" data-dismiss="modal" href="javascript:void(0)">Cancelar</a>
+          </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<% for(var g=0; g<serviceData.length; g++) {%>
+<div class="alertify modalS-<%=serviceData[g].objectId%>" style="visibility:hidden;">
+  <div class="dialog">
+    <div><p class="msg">Seguro de eliminar?</p>
+      <nav>
+        <button class="Scancel btn btn-default" data-cancel-id="<%=serviceData[g].objectId%>" tabindex="2">Cancelar</button>
+        <button class="Sok btn btn-primary" data-ok-id="<%=serviceData[g].objectId%>" tabindex="1">Borrar</button>
+      </nav>
+    </div>
+  </div>
+</div>
+<%}%>

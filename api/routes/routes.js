@@ -5,6 +5,7 @@ var Users = require('../models/user');
 var UsersContro = require('../controllers/controllersUser');
 var BusinessControllers = require('../controllers/businessController');
 var EployeeControllers = require('../controllers/employeeController');
+var ServiceControllers = require('../controllers/serviceController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
 var USER_ALL = GloVariable.TYPES;
@@ -61,6 +62,7 @@ module.exports = function(app) {
       usersType.admin=false;
       usersType.employee=false;
       usersType.owner=true;
+      usersType.userId = req.query.user;
       return res.render('index.ejs',{
         usersType,
         session:session
@@ -136,26 +138,75 @@ module.exports = function(app) {
 	});
 
   app.get('/business/:id/dashboard', function(req, res) {
-
+    var employee='',service='',serviceData={};
+    useTemplate.service=false;
+    useTemplate.employee = false;
+    useTemplate.dashboard = false;
     BusinessControllers.searchGetBusiness(req.params.id).then(function(data){
       if (data) valores=JSON.parse(JSON.stringify(data));
       Users.getTypeBusiness().then(function(typeBusiness) {
-        useTemplate.dashboard = true;
-        if (req.query.type=='employee') {
+        if (req.query.type=='employee' || req.query.type=='service' ) {
+          if (req.query.type=='employee') {
+            employee='active';
+            useTemplate.employee = true;
+          }
+          if (req.query.type=='service') {
+            useTemplate.service=true;
+            service='active';
+          }
           useTemplate.dashboard = false;
-          useTemplate.employee = true;
           Users.getEmployeeBusiness(req.params).then(function(employeeB) {
-            res.render('business/dashboard.ejs',{
-              usersType,
-              valores,
-              typeBusiness,
-              useTemplate,
-              employeeB,
-              dashboard:'',
-              employee:'active',
-            });
+            if (useTemplate.service) {
+              ServiceControllers.getService(req.params.id).then(function(serviceData) {
+                serviceData = JSON.parse(JSON.stringify(serviceData));
+                var listService = [], final=[], schedule=[];
+                if (serviceData[0].employee.length>0) {
+                  for (var i = 0; i < serviceData.length; i++) {
+                    for (var o = 0; o < serviceData[i].employee.length; o++) {
+                      listService.push(serviceData[i].employee[o].id);
+                    }
+                    final.push(JSON.parse(JSON.stringify(listService)));
+                    listService=[];
+                  }
+
+                }
+                res.render('business/dashboard.ejs',{
+                  usersType,
+                  valores,
+                  typeBusiness,
+                  useTemplate,
+                  employeeB,
+                  dashboard:'',
+                  employee,
+                  service,
+                  serviceData,
+                  final,
+                  listService,
+                  schedule:[],
+                });
+
+              });
+
+            }else {
+              res.render('business/dashboard.ejs',{
+                usersType,
+                valores,
+                typeBusiness,
+                useTemplate,
+                employeeB,
+                dashboard:'',
+                employee,
+                service,
+                serviceData,
+                final:[],
+                listService:[],
+                schedule:[],
+              });
+            }
           });
-        }else {
+        }
+        else {
+          useTemplate.dashboard = true;
           res.render('business/dashboard.ejs',{
             usersType,
             valores,
@@ -164,6 +215,11 @@ module.exports = function(app) {
             employeeB:null,
             dashboard:'active',
             employee:'',
+            service:'',
+            serviceData,
+            final:[],
+            listService:[],
+            schedule:[],
           });
         }
       });
@@ -232,6 +288,22 @@ module.exports = function(app) {
     }
   });
 
+
+  /*******************************|
+  |*******Service********|
+  ********************************/
+  app.post('/service', function(req, res) {
+    ServiceControllers.createService(req.body).then(function(data){
+      res.json({code:200});
+
+    });
+  });
+
+  app.put('/service', function(req, res) {
+    ServiceControllers.updateService(req.body).then(function(data){
+      res.json({code:200});
+    });
+  });
 
 
   /********************************
