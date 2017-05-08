@@ -102,7 +102,7 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
       return{success:true,code:200};
     }, function(error) {
       console.log('Business update Error',error);
-      return {ready:false,error:'Business update Error '+error};
+      return {ready:false,error:'Business update Error '+error, code:500};
     });
 };
 

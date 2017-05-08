@@ -95,6 +95,11 @@ $(document).ready(function() {
           type: 'PUT',
           success: function functionName(data) {
             console.log('*************',data);
+            if (data.code!=200) {
+              $("#businessError-"+id).trigger("click");
+            }else {
+              $("#businessCorrect-"+id).trigger("click");
+            }
 
           }
         });
@@ -117,6 +122,7 @@ $(document).ready(function() {
       //console.log('poner aqui para poder editar');
       $("#name-"+id).removeAttr("disabled");
       $("#address-"+id).removeAttr("disabled");
+      $("#address-"+id).focus();
       $("#country-"+id).removeAttr("disabled");
       $("#city-"+id).removeAttr("disabled");
       $("#cp-"+id).removeAttr("disabled");

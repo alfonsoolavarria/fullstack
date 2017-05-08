@@ -292,6 +292,9 @@ module.exports = function(app) {
 
     if (req.body.flagBusiness) {
       BusinessControllers.updateBusiness(req.body).then(function(data) {
+        if (data.code==500) {
+          return res.json({code:500});
+        }
         if (req.body.flagUser) {
           Users.updateUserBusiness(req.body).then(function (user) {
             return res.json({code:200});
