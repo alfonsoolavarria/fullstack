@@ -18,11 +18,14 @@ BusinessControllers.searchBusiness = function searchBusiness (options) {
 
 BusinessControllers.searchListBusiness = function searchListBusiness (options) {
   var query = new Parse.Query('Business');
+  if (options.owner) {
+    query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+  }
   query.include('owner.name');
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
-  query.equalTo('status',true);
+  //query.equalTo('status',true);
   return query.find({
     success: function(object) {},
     error: function(error) {
@@ -39,7 +42,7 @@ BusinessControllers.searchGetBusiness = function searchGetBusiness (id) {
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
-  query.equalTo('status',true);
+  //query.equalTo('status',true);
   return query.get(id,{
     success: function(object) {},
     error: function(error) {
@@ -103,15 +106,19 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
     });
 };
 
-BusinessControllers.deleteBusiness = function deleteBusiness (id) {
+BusinessControllers.deleteBusiness = function deleteBusiness (options) {
     var query = new Parse.Query('Business');
-    return query.get(id).then(function(dataB){
-      dataB.set({'status':false});
+    return query.get(options.id).then(function(dataB){
+      if (options.deleteB) {
+        dataB.set({'status':false});
+      }else {
+        dataB.set({'status':true});
+      }
       dataB.save(null, { useMasterKey: true });
-      return{success:true,code:200};
+      return{success:true,code:200,business:dataB};
     }, function(error) {
-      console.log('Business delete Error',error);
-      return {ready:false,error:'Business delete Error '+error};
+      console.log('Business delete/activate Error',error);
+      return {ready:false,error:'Business delete/activate Error '+error};
     });
 };
 

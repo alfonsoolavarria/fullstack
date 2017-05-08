@@ -13,7 +13,7 @@
     <!-- Page -->
     <div class="page">
       <div class="page-content">
-        <!-- Panel -->
+        <!-- Panel-->
         <div class="panel">
           <div class="panel-body">
             <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
@@ -21,7 +21,11 @@
                 <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
                   <ul class="list-group">
                     <% for(var i=0; i<valores.length; i++) {%>
-                      <li class="list-group-item">
+                      <% if (valores[i].status){%>
+                        <li class="list-group-item">
+                      <%}else{%>
+                        <li class="list-group-item" style="background-color: gainsboro;">
+                      <%}%>
                         <div class="media">
                           <div class="pr-20">
                             <div class="avatar avatar-online">
@@ -107,14 +111,22 @@
                             </div>
                           </div>
                         </form>
-                        <div class="pl-20 align-self-center">
-                          <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
-                          <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
-                        </div>
+                        <%if (usersType.admin){%>
+                          <div class="pl-20 align-self-center">
+                            <% if (valores[i].status){%>
+                              <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
+                              <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
+                            <%}else{%>
+                              <button type="button" class="btn btn-primary btn-warning waves-effect" data-activate-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Activar</button>
+                            <%}%>
+                          </div>
+                        <%}%>
                         <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
                         data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
                         <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessok-<%= valores[i].objectId %>" data-plugin="alertify"
-                        data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+                        data-type="log" data-delay="3000" data-log-message="Desactivada" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="businessactivada-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Activada" style="visibility:hidden;" >delay</button>
                         <button type="button" class="btn btn-sm btn-primary waves-effect" id="businesscancel-<%= valores[i].objectId %>" data-plugin="alertify"
                         data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
                       </div>
@@ -201,10 +213,10 @@
   <% for(var i=0; i<valores.length; i++) {%>
   <div class="alertify modal-<%=valores[i].objectId%>" style="visibility:hidden;">
     <div class="dialog">
-      <div><p class="msg">Seguro de eliminar?</p>
+      <div><p class="msg">Si desactiva la empresa, no podr&aacute; verla en el app m&oacute;vil</p>
         <nav>
           <button class="cancel btn btn-default" data-cancel-id="<%=valores[i].objectId%>" tabindex="2">Cancelar</button>
-          <button class="ok btn btn-primary" data-ok-id="<%=valores[i].objectId%>" tabindex="1">Borrar</button>
+          <button class="ok btn btn-primary" id="ok-<%=valores[i].objectId%>" data-ok-id="<%=valores[i].objectId%>" tabindex="1">Desactivar</button>
         </nav>
       </div>
     </div>

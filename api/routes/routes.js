@@ -29,6 +29,8 @@ module.exports = function(app) {
     var message = '';
     if (req.query.invalid) {
       message = 'Error al logearse';
+    }else if (req.query.inactive) {
+      message = 'Usuario Inactivo';
     }
     res.render('login.ejs',{message});
 
@@ -91,9 +93,14 @@ module.exports = function(app) {
 	});
 
   app.post('/employee', function(req, res) {
-    EployeeControllers.creteEmployee(req.body).then(function(user) {
-      BusinessControllers.addRelationBusiness(req.body,user).then(function(data){
-        res.json({code:200});
+    Users.checkUser(req.body).then(function(result) {
+      if (result.code=409) {
+        res.json(result);
+      }
+      EployeeControllers.creteEmployee(req.body).then(function(user) {
+        BusinessControllers.addRelationBusiness(req.body,user).then(function(data){
+          res.json({code:200});
+        });
       });
     });
 	});
@@ -119,8 +126,13 @@ module.exports = function(app) {
   app.get('/business/list', function(req, res) {
     //  if (session) {
       var valores={};
-      usersType.userId = req.query.user;
-      BusinessControllers.searchListBusiness(req.body.latlon).then(function(data){
+      if (req.query.user){
+        usersType.userId = req.query.user;
+      } else {
+        req.body.owner = req.query.owner;
+        usersType.userId = req.query.owner;
+      }
+      BusinessControllers.searchListBusiness(req.body).then(function(data){
         if (data) {
           valores=JSON.parse(JSON.stringify(data))
         }
@@ -139,6 +151,7 @@ module.exports = function(app) {
 
   app.get('/business/:id/dashboard', function(req, res) {
     var employee='',service='',serviceData={};
+    var listService = [], final=[], schedule=[];
     useTemplate.service=false;
     useTemplate.employee = false;
     useTemplate.dashboard = false;
@@ -158,18 +171,19 @@ module.exports = function(app) {
           Users.getEmployeeBusiness(req.params).then(function(employeeB) {
             if (useTemplate.service) {
               ServiceControllers.getService(req.params.id).then(function(serviceData) {
-                serviceData = JSON.parse(JSON.stringify(serviceData));
-                var listService = [], final=[], schedule=[];
-                if (serviceData[0].employee.length>0) {
-                  for (var i = 0; i < serviceData.length; i++) {
-                    for (var o = 0; o < serviceData[i].employee.length; o++) {
-                      listService.push(serviceData[i].employee[o].id);
+                if (serviceData.length>0) {
+                  serviceData = JSON.parse(JSON.stringify(serviceData));
+                  if (serviceData[0].employee.length>0) {
+                    for (var i = 0; i < serviceData.length; i++) {
+                      for (var o = 0; o < serviceData[i].employee.length; o++) {
+                        listService.push(serviceData[i].employee[o].id);
+                      }
+                      final.push(JSON.parse(JSON.stringify(listService)));
+                      listService=[];
                     }
-                    final.push(JSON.parse(JSON.stringify(listService)));
-                    listService=[];
                   }
-
                 }
+
                 res.render('business/dashboard.ejs',{
                   usersType,
                   valores,
@@ -182,7 +196,7 @@ module.exports = function(app) {
                   serviceData,
                   final,
                   listService,
-                  schedule:[],
+                  schedule,
                 });
 
               });
@@ -198,9 +212,9 @@ module.exports = function(app) {
                 employee,
                 service,
                 serviceData,
-                final:[],
-                listService:[],
-                schedule:[],
+                final,
+                listService,
+                schedule,
               });
             }
           });
@@ -217,9 +231,9 @@ module.exports = function(app) {
             employee:'',
             service:'',
             serviceData,
-            final:[],
-            listService:[],
-            schedule:[],
+            final,
+            listService,
+            schedule,
           });
         }
       });
@@ -245,27 +259,34 @@ module.exports = function(app) {
         res.json({usersType,valores});
       });
     }else {
-      BusinessControllers.createBusiness(req.body).then(function(dataBusiness){
-        if (dataBusiness.ready) {
-          Users.createUser(req.body,dataBusiness)
+      Users.checkUser(req.body).then(function(result) {
+        if (result.code=409) {
+          res.json({usersType,valores,result});
+        }
+        BusinessControllers.createBusiness(req.body).then(function(dataBusiness){
+          if (dataBusiness.ready) {
+            Users.createUser(req.body,dataBusiness)
             .then(function (user) {
               BusinessControllers.addPointerBusiness(dataBusiness,user.id)
-                .then(function(data){
-                  res.json({usersType,valores,data});
-                });
-          });
-        }else {
-          res.json({usersType,valores,data});
-        }
+              .then(function(data){
+                res.json({usersType,valores,data});
+              });
+            });
+          }else {
+            res.json({usersType,valores,data});
+          }
+        });
       });
     }
 	});
 
   app.put('/business', function(req, res) {
 
-    if (req.body.delete) {
-      BusinessControllers.deleteBusiness(req.body.id).then(function(data) {
-        return res.json({code:200});
+    if (req.body.deleteB || req.body.activa) {
+      BusinessControllers.deleteBusiness(req.body).then(function(data) {
+        Users.activateDesactivate(req.body,data).then(function() {
+          return res.json({code:200});
+        });
       });
     }
 
@@ -346,10 +367,10 @@ module.exports = function(app) {
     if (req.body && req.body.email && req.body.password) {
       UsersContro.logIn({ email: req.body.email, password: req.body.password })
       .then(function (user) {
-        req.session['timesapp-token-session'] = user.data.get('sessionToken');
-        session = req.session['timesapp-token-session'];
-        var id = user.data.id;
-        //return dataUser(id).then(function(data){
+        if (user.data.get('isActive')==true) {
+          req.session['timesapp-token-session'] = user.data.get('sessionToken');
+          session = req.session['timesapp-token-session'];
+          var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
             console.log('Administrador');
             return res.redirect('/admin?'+'user='+id);
@@ -364,8 +385,9 @@ module.exports = function(app) {
           }else {
             return res.status(user.code).send(user.data);
           }
-
-        //});
+        }else {
+          return res.redirect('/'+'?inactive=true');
+        }
 
       }).then(null, function (error) {
         console.log('Error al logearse');

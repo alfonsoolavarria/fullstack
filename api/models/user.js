@@ -22,25 +22,16 @@ UsersModel.createUser = function createUser (options,object) {
 
 
   var query = new Parse.Query('User');
-  return query.equalTo('username',options.email).find().then(function(userEx){
-    if (userEx.length<=0) {
-      var user = new Parse.User();
-      user.set('username', options.email);
-      user.set('name', options.name);
-      user.set('phone', options.phone);
-      user.set('password', options.password);
-      user.set('email', options.email);
-      user.set('type', options.type);
-      user.set('isActive', true);
-      user.signUp();
-      return user.save(null,{ useMasterKey: true });
-    }
-    else {
-      disableBusiness(object.id).then(function(data){
-        return {code:409,error:'User Exist'};
-      });
-    }
-  });
+    var user = new Parse.User();
+    user.set('username', options.email);
+    user.set('name', options.name);
+    user.set('phone', options.phone);
+    user.set('password', options.password);
+    user.set('email', options.email);
+    user.set('type', options.type);
+    user.set('isActive', true);
+    user.signUp();
+    return user.save(null,{ useMasterKey: true });
 
 };
 
@@ -78,6 +69,30 @@ UsersModel.updateUserBusiness = function updateUserBusiness (options) {
     if (options.name) userB.set('name', options.name);
     if (options.phone) userB.set('phone', options.phone);
     if (options.email) userB.set('email', options.email);
+    return userB.save(null,{ useMasterKey: true });
+  });
+};
+
+UsersModel.checkUser = function checkUser (options) {
+  var query = new Parse.Query('User');
+  return query.find(options.username).then(function(userB){
+    if (userB.length>0) {
+        return {code:409,message:'Email Existente'};
+    }else {
+        return {code:200,message:''};
+    }
+  });
+};
+
+UsersModel.activateDesactivate = function activateDesactivate (options,data) {
+
+  var query = new Parse.Query('User');
+  return query.get(data.business.get('owner').id).then(function(userB){
+    if (options.deleteB) {
+      userB.set({'isActive':false});
+    }else {
+      userB.set({'isActive':true});
+    }
     return userB.save(null,{ useMasterKey: true });
   });
 };

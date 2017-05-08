@@ -17,8 +17,11 @@ var flag = 0;
     $("#employeeDelaysucc").trigger("click");
     $.post('/employee',dataSend)
     .done(function (result) {
-      console.log('listooo',result);
-      location.reload();
+      if (result.code==409) {
+        $("#employeeConflict").trigger("click");
+      }else {
+        location.reload();
+      }
     }).fail(function(error) {
       console.log(error.responseText);
     });

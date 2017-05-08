@@ -60,6 +60,8 @@
                                 data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
                             </li>
                             <%}%>
                     </ul>
@@ -94,7 +96,7 @@
         </form>
       </div>
       <div class="modal-footer text-left">
-        <button id="employeeCreate" class="btn btn-primary" data-dismiss="modal" type="button">Crear</button>
+        <button id="employeeCreate" class="btn btn-primary" type="button">Crear</button>
         <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
       </div>
       <button type="button" class="btn btn-primary waves-effect" id="employeeDelaysucc" data-plugin="alertify"

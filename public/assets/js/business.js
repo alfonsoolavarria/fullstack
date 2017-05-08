@@ -51,20 +51,15 @@ $(document).ready(function() {
 
     //getLocation().then(function(data) {
       if (dataSend.address && dataSend.city && dataSend.cp) {
+
         $("#businessDelaysucc").trigger("click");
-        $(".clean").trigger("click");
         $.post('/business',dataSend)
         .done(function (result) {
-          if (result.valores.length>0) {
-            //$(".page2").css('visibility','visible');
-            //$(".registerBusiness").css('visibility','visible');
-            //$("#detailsBusiness").append('<input type="text" class="form-control details" name="detalles" placeholder="Detalles" autocomplete="off" value="'+result.valores[0].name+'" required/>');
-            console.log('****',result.valores[0].latlong.latitude);
-            console.log('****',result.valores[0].latlong.longitude);
-            console.log('****',result.valores[0].name);
-            //$(".negocio").attr('value',result.valores[0].name);
+          if (result.result.code==409) {
+            $("#businessConflict").trigger("click");
           }else {
-            $(".negocio").attr('value','');
+            $(".clean").trigger("click");
+            $("#businessSave").trigger("click");
           }
         }).fail(function(error) {
           console.log(error.responseText);
@@ -186,19 +181,43 @@ $('.btn-danger').click(function () {
   $(".modal-"+id).css("visibility", "visible");
 
 });
+
+$('.btn-warning').click(function () {
+  var button = $(this);
+  var id = button.data('activate-id');
+  $('.msg').empty();
+  $('.msg').text('Seguro de Activar?');
+  $('.ok').empty();
+  $('.ok').text('Activar');
+  $(".modal-"+id).css("visibility", "visible");
+
+});
+
 $('.ok').click(function () {
   var button = $(this);
+  var activa = false, deleteB=false;
   var id = button.data('ok-id');
+  var dataE = {};
+  dataE.id = id;
   $('.modal-'+id).css("visibility", "hidden");
+  if ($('#ok-'+id).text()=='Activar') {
+    dataE.activa=true;
+  }else {
+    dataE.deleteB=true;
+  }
   $.ajax({
     url:'/business',
-    data:{delete:true,id:id},
+    data:dataE,
     type: 'PUT',
     success: function functionName(data) {
       location.reload();
     }
   });
-  $("#businessok-"+id).trigger("click");
+  if ($('#ok-'+id).text()=='Activar') {
+    $("#businessactivada-"+id).trigger("click");
+  }else {
+    $("#businessok-"+id).trigger("click");
+  }
 });
 
 
