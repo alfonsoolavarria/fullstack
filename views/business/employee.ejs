@@ -13,7 +13,11 @@
                 <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
                     <ul class="list-group">
                         <% for(var o=0; o<employeeB.employee.length; o++) {%>
-                            <li class="list-group-item">
+                          <%if (employeeB.employee[o].isActive==false){%>
+                            <li class="list-group-item" style="background-color:darkgray;">
+                            <%}else {%>
+                              <li class="list-group-item">
+                            <%}%>
                                 <div class="media">
                                     <div class="pr-20">
                                         <div class="avatar avatar-online">
@@ -50,14 +54,20 @@
                                     </div>
                                     </form>
                                     <div class="pl-20 align-self-center">
+                                      <%if (employeeB.employee[o].isActive==false){%>
+                                        <button type="button" class="btn btn-primary btn-warning disabledEmpl waves-effect" data-activate-id="<%=employeeB.employee[o].objectId%>" id="confirmA-<%=employeeB.employee[o].objectId%>" style="height:32px;">Activar</button>
+                                      <%}else{%>
                                         <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.employee[o].objectId%>" data-edit-id="<%=employeeB.employee[o].objectId%>" ><span id="nameE-<%=employeeB.employee[o].objectId%>">Editar</span></button>
                                         <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
+                                      <%}%>
                                     </div>
                                     <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
                                     data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
                                 </div>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+                                data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
                                 <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"

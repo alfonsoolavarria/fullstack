@@ -86,19 +86,42 @@ var flag = 0;
 
   });
 
+  $('.disabledEmpl').click(function () {
+    var button = $(this);
+    var id = button.data('activate-id');
+    $('.empl').empty();
+    $('.empl').text('Seguro de Activar?');
+    $('.oke').empty();
+    $('.oke').text('Activar');
+    $(".modale-"+id).css("visibility", "visible");
+
+  });
+
   $('.oke').click(function () {
+    var dataE = {};
     var button = $(this);
     var id = button.data('ok-id');
     $('.modale-'+id).css("visibility", "hidden");
+    if ($('#oke-'+id).text()=='Activar') {
+      dataE.activa=true;
+    }else {
+      dataE.deleteB=true;
+    }
+    dataE.id = id;
     $.ajax({
       url:'/employee',
-      data:{delete:true,id:id},
+      data:dataE,
       type: 'PUT',
       success: function functionName(data) {
         location.reload();
       }
     });
-    $("#emplook-"+id).trigger("click");
+    if ($('#oke-'+id).text()=='Activar') {
+      $("#emploDesactivate-"+id).trigger("click");
+    }else {
+      $("#emplook-"+id).trigger("click");
+    }
+
   });
 
 

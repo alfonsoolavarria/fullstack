@@ -25,8 +25,10 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
 EmployeeModel.updateEmployee = function updateEmployee (options) {
     var query = new Parse.Query('User');
     return query.get(options.id).then(function(dataB){
-      if (options.delete) {
+      if (options.deleteB) {
           dataB.set({'isActive':false});
+      }else if (options.activa) {
+        dataB.set({'isActive':true});
       }else {
         if (options.name) dataB.set({'name':options.name});
         if (options.phone) dataB.set({'phone':options.phone});

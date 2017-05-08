@@ -213,6 +213,7 @@ $('.ok').click(function () {
       location.reload();
     }
   });
+
   if ($('#ok-'+id).text()=='Activar') {
     $("#businessactivada-"+id).trigger("click");
   }else {

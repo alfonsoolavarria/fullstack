@@ -100,7 +100,7 @@ UsersModel.activateDesactivate = function activateDesactivate (options,data) {
 UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options) {
   var queryB = new Parse.Query('Business');
   return queryB.get(options.id).then(function(data){
-    return data.relation('employee').query().equalTo('isActive',true).find().then(function(gente){
+    return data.relation('employee').query().find().then(function(gente){
       return {data:data,employee:JSON.parse(JSON.stringify(gente))};
     });
 

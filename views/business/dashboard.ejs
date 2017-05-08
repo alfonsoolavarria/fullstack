@@ -110,10 +110,10 @@
     <% for(var o=0; o<employeeB.employee.length; o++) {%>
     <div class="alertify modale-<%=employeeB.employee[o].objectId%>" style="visibility:hidden;">
       <div class="dialog">
-        <div><p class="msg">Seguro de eliminar?</p>
+        <div><p class="msg empl">Seguro de eliminar?</p>
           <nav>
             <button class="cancele btn btn-default" data-cancel-id="<%=employeeB.employee[o].objectId%>" tabindex="2">Cancelar</button>
-            <button class="oke btn btn-primary" data-ok-id="<%=employeeB.employee[o].objectId%>" tabindex="1">Borrar</button>
+            <button class="oke btn btn-primary" id="oke-<%=employeeB.employee[o].objectId%>" data-ok-id="<%=employeeB.employee[o].objectId%>" tabindex="1">Borrar</button>
           </nav>
         </div>
       </div>
