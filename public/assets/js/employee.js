@@ -4,29 +4,36 @@ $(document).ready(function() {
 var dataSend = {};
 var flag = 0;
 
-  $('#employeeCreate').click(function () {
 
+$('#employeeCreate').click(function () {
     var dataSend = {
       name:$('#name').val(),
       email:$('#email').val(),
       password:$('#password').val(),
       phone:$('#phone').val(),
       id:$('#idBusiness').val(),
+      imagen:$('.dropify-render img').attr('src'),
+    }
+    function validateEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     }
 
-    $("#employeeDelaysucc").trigger("click");
-    $.post('/employee',dataSend)
-    .done(function (result) {
-      if (result.code==409) {
-        $("#employeeConflict").trigger("click");
-      }else {
-        location.reload();
-      }
-    }).fail(function(error) {
-      console.log(error.responseText);
-    });
+    if (validateEmail($('#email').val())) {
+      $.post('/employee',dataSend)
+      .done(function (result) {
+        $("#employeeDelaysucc").trigger("click");
+        if (result.code==409) {
+          $("#employeeConflict").trigger("click");
+        }else {
+          location.reload();
+        }
 
-  });
+      }).fail(function(error) {
+        console.log(error.responseText);
+      });
+    }
+});
 
   $('.edit').click(function () {
     var button = $(this);
@@ -43,6 +50,11 @@ var flag = 0;
           type: 'PUT',
           success: function functionName(data) {
             console.log('*************',data);
+            if (data.code!=200) {
+              $("#EditEmpleoyeeError").trigger("click");
+            }else {
+              $("#EditEmployeeSave").trigger("click");
+            }
 
           }
         });
@@ -57,6 +69,7 @@ var flag = 0;
 
     }else {
       $("#emplo-name-"+id).removeAttr("disabled");
+      $("#emplo-name-"+id).focus();
       $("#emplo-phone-"+id).removeAttr("disabled");
       $("#emplo-email-"+id).removeAttr("disabled");
       $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");

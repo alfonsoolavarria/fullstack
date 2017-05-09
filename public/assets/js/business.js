@@ -4,52 +4,53 @@ $(document).ready(function() {
   var dataSend = {};
   var flag = 0;
 
-  $('form').submit(function (e) {
-    e.preventDefault();
-    dataSend = {
-      address : e.currentTarget[0].value,
-      city : e.currentTarget[1].value,
-      country : e.currentTarget[2].value,
-      cp : e.currentTarget[3].value,
-      typeCommerce : e.currentTarget[4].value,
-      nameCommerce : e.currentTarget[5].value,
-      name : e.currentTarget[6].value,
-      phone : e.currentTarget[7].value,
-      email : e.currentTarget[8].value,
-      password : e.currentTarget[9].value,
-      type:'Propietario'
-    }
-
-    //var latitude=0,longitude=0;
-
-    function getLocation() {
-      var p = new Promise(function (resolve, reject){
-        var address = direccion + ', ' + cp + ', ' + cuidad + ', ' + country;
-        if (address.length == 0) {
-          alert('Ingresa una dirección');
-        } else {
-          $('#googleMap').css('background', 'url(img/input-spinner.gif) center center no-repeat');
-          var geocoder = new google.maps.Geocoder();
-          geocoder.geocode({
-              'address': address
-          }, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                  latitude = results[0].geometry.location.lat();
-                  longitude = results[0].geometry.location.lng();
-                  var data ={latitude:latitude,longitude:longitude};
-                  resolve(data);
-              } else {
-                  alert("No pudimos encontrar esa direccion, prueba con otra y acomodala en el mapa.");
-                  //$('#googleMap').css('background', 'none');
-                  reject(new Error('Error'));
-              }
-          });
+  $('#registerBusiness').click(function () {
+    $('form').submit(function (e) {
+      e.preventDefault();
+      dataSend = {
+        address : e.currentTarget[0].value,
+        city : e.currentTarget[1].value,
+        country : e.currentTarget[2].value,
+        cp : e.currentTarget[3].value,
+        typeCommerce : e.currentTarget[4].value,
+        nameCommerce : e.currentTarget[5].value,
+        name : e.currentTarget[6].value,
+        phone : e.currentTarget[7].value,
+        email : e.currentTarget[8].value,
+        password : e.currentTarget[9].value,
+        type:'Propietario'
       }
-      });
-      return p;
-    };
 
-    //getLocation().then(function(data) {
+      //var latitude=0,longitude=0;
+
+      function getLocation() {
+        var p = new Promise(function (resolve, reject){
+          var address = direccion + ', ' + cp + ', ' + cuidad + ', ' + country;
+          if (address.length == 0) {
+            alert('Ingresa una dirección');
+          } else {
+            $('#googleMap').css('background', 'url(img/input-spinner.gif) center center no-repeat');
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+              'address': address
+            }, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                latitude = results[0].geometry.location.lat();
+                longitude = results[0].geometry.location.lng();
+                var data ={latitude:latitude,longitude:longitude};
+                resolve(data);
+              } else {
+                alert("No pudimos encontrar esa direccion, prueba con otra y acomodala en el mapa.");
+                //$('#googleMap').css('background', 'none');
+                reject(new Error('Error'));
+              }
+            });
+          }
+        });
+        return p;
+      };
+
+      //getLocation().then(function(data) {
       if (dataSend.address && dataSend.city && dataSend.cp) {
 
         $("#businessDelaysucc").trigger("click");
@@ -70,7 +71,8 @@ $(document).ready(function() {
       }else {
         console.log('nises');
       }
-    //});
+      //});
+    });
   });
 
 

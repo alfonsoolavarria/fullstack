@@ -75,7 +75,8 @@ UsersModel.updateUserBusiness = function updateUserBusiness (options) {
 
 UsersModel.checkUser = function checkUser (options) {
   var query = new Parse.Query('User');
-  return query.find(options.username).then(function(userB){
+  query.equalTo('email',options.email);
+  return query.find().then(function(userB){
     if (userB.length>0) {
         return {code:409,message:'Email Existente'};
     }else {

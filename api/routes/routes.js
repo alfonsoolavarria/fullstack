@@ -94,7 +94,7 @@ module.exports = function(app) {
 
   app.post('/employee', function(req, res) {
     Users.checkUser(req.body).then(function(result) {
-      if (result.code=409) {
+      if (result.code==409) {
         res.json(result);
       }
       EployeeControllers.creteEmployee(req.body).then(function(user) {
@@ -107,7 +107,7 @@ module.exports = function(app) {
 
   app.put('/employee', function(req, res) {
     EployeeControllers.updateEmployee(req.body).then(function(user) {
-      res.json({code:200});
+      res.json(user);
     });
 
   });
@@ -260,7 +260,7 @@ module.exports = function(app) {
       });
     }else {
       Users.checkUser(req.body).then(function(result) {
-        if (result.code=409) {
+        if (result.code==409) {
           res.json({usersType,valores,result});
         }
         BusinessControllers.createBusiness(req.body).then(function(dataBusiness){

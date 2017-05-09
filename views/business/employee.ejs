@@ -21,7 +21,7 @@
                                 <div class="media">
                                     <div class="pr-20">
                                         <div class="avatar avatar-online">
-                                            <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                                            <img src="/public/assets/images/avataremployee.png" alt="...">
                                             <i class="avatar avatar-busy"></i>
                                         </div>
                                     </div>
@@ -72,6 +72,10 @@
                                 data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
                                 <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
                             </li>
                             <%}%>
                     </ul>
@@ -95,19 +99,53 @@
         <h4 class="modal-title">Nuevo Empleado</h4>
       </div>
       <div class="modal-body">
-        <form method="post" role="form">
-          <div class="form-group">
-            <input type="text" class="form-control" id="name" placeholder="Nombre">
-            <input type="email" class="form-control" id="email" placeholder="Email" autocomplete="off" required/>
-            <input type="text" class="form-control" id="password" placeholder="Password" autocomplete="off" required/>
-            <input type="text" class="form-control" id="phone" placeholder="Teléfono" autocomplete="off" required/>
-            <input type="text" class="form-control" id="idBusiness" value="<%=valores.objectId%>" style="visibility:hidden;">
+        <form class="form-horizontal">
+          <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="">
+                        <label class="form-control-label">Nombre:</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="name"  required></input>
+                        </div>
+                    </div>
+                    <div class="">
+                        <label class="form-control-label">Telefono:</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="phone"></input>
+                        </div>
+                    </div>
+                    <div class="">
+                        <label class="form-control-label">Email:</label>
+                        <div class="col-md-10">
+                            <input type="email" class="form-control" id="email" required></input>
+                        </div>
+                    </div>
+                    <div class="">
+                        <label class="form-control-label">Password:</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="password" required></input>
+                        </div>
+                    </div>
+                    <div class="col-md-12 panel-body container-fluid">
+                      <div class="row row-lg">
+                        <div class="example-wrap">
+                          <label class="form-control-label">Seleccione una Imagen:</label>
+                          <div class="example">
+                            <input type="file" id="input-file-now" data-plugin="dropify" data-default-file=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" id="idBusiness" value="<%=valores.objectId%>" style="visibility:hidden;">
+                </div>
+            </div>
           </div>
         </form>
-      </div>
-      <div class="modal-footer text-left">
-        <button id="employeeCreate" class="btn btn-primary" type="button">Crear</button>
-        <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
+        <div class="modal-footer text-left">
+          <button id="employeeCreate" class="btn btn-primary" type="submit">Crear</button>
+          <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
+        </div>
       </div>
       <button type="button" class="btn btn-primary waves-effect" id="employeeDelaysucc" data-plugin="alertify"
       data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
