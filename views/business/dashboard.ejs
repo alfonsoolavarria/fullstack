@@ -9,6 +9,9 @@
 
 <link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
+
 <body class="animsition page-user">
   <!-- Headear barra -->
   <% include ../templates/header.ejs %>
@@ -80,7 +83,7 @@
     <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
     <script src="/public/assets/material/global/vendor/dropify/dropify.min.js"></script>
 
-
+    <script src="/public/assets/material/global/vendor/asrange/jquery-asRange.min.js"></script>
 
 
 
@@ -102,6 +105,7 @@
     Config.set('assets', '../../assets');
     </script>
     <!-- Page -->
+    <script src="/public/assets/js/moment.js"></script>
     <script src="/public/assets/material/js/Site.js"></script>
     <script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
     <script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
@@ -118,8 +122,9 @@
     <script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
 
     <script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
-
     <script src="/public/assets/material/examples/js/forms/uploads.js"></script>
+     <script src="/public/assets/material/global/js/Plugin/asrange.js"></script>
+
 
     <script>
     (function(document, window, $) {
@@ -147,3 +152,8 @@
     </div>
   <%}%>
 <%}%>
+<script type="text/javascript">
+  var input = $('.timepicker').clockpicker({
+      twelvehour:true
+    });
+</script>

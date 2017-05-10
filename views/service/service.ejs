@@ -35,7 +35,14 @@
                                                     <div class="form-group row form-material row">
                                                         <label class="col-md-6 form-control-label">Duracion:</label>
                                                         <div class="col-md-6">
-                                                            <input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>
+                                                            <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
+                                                            <div class="example-wrap">
+                                                              <div class="example mt-30">
+                                                                <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <span class="form-control-label" style="margin-left:80%;margin-top:-101px;position:absolute;">min</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row form-material row">
@@ -132,6 +139,8 @@
                                 data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="servicecancel-<%=serviceData[o].objectId%>" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHora" data-plugin="alertify"
+                                data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
                             </li>
                             <%}%>
                     </ul>
@@ -145,7 +154,7 @@
 <!-- Nuevo Servicio -->
 <div class="site-action" data-target="#addTopicForm" data-toggle="modal" data-plugin="actionBtn">
     <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">
-    <i class="icon md-edit" aria-hidden="true"></i>
+    <i class="icon md-plus" aria-hidden="true"></i>
   </button>
 </div>
 
@@ -165,7 +174,13 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label mb-15" for="topicTitle">Duraci&oacute;n:</label>
-                        <input type="text" class="form-control" id="topicDuration" name="duracion" placeholder="Duraci&oacute;n" required/>
+                        <!--<input type="text" class="form-control" id="topicDuration" name="duracion" placeholder="Duraci&oacute;n" required/>-->
+                        <div class="example-wrap">
+                          <div class="example mt-30">
+                            <div class="asRange rangeUi" data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="2" data-tip="true" data-max="180" data-value="0">
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label mb-15" for="topicTitle">Precio:</label>
@@ -203,14 +218,14 @@
                       </div>
                         <div class="form-group row form-material row">
                           <label class="col-md-4 form-control-label">Lunes</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceLunes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -235,14 +250,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Martes</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceMartes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -266,14 +281,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Miercoles</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceMiercoles1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -297,14 +312,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Jueves</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceJueves1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -328,14 +343,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Viernes</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceViernes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -359,14 +374,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Sabado</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceSabado1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>
@@ -390,14 +405,14 @@
                         <div class="form-group row form-material row">
 
                           <label class="col-md-4 form-control-label">Domingo</label>
-                          <div class="input-group" style="width:20%;margin-left: -52px;">
+                          <div class="input-group" style="width:20%;margin-left:-70px;">
                             <span class="input-group-addon">
                               <span class="md-time">
                               </span>
                             </span>
                             <input type="text" id="serviceDomingo1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-                          <div class="input-group" style="width:20%;margin-left: -20px;">
+                          <div class="input-group" style="width:20%;margin-left:-8px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
                             </span>

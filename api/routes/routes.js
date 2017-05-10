@@ -124,7 +124,7 @@ module.exports = function(app) {
 	});
 
   app.get('/business/list', function(req, res) {
-    //  if (session) {
+    if (session) {
       var valores={};
       if (req.query.user){
         usersType.userId = req.query.user;
@@ -144,9 +144,9 @@ module.exports = function(app) {
           });
         });
       });
-    /*}else {
+    }else {
       return res.redirect('/');
-    }*/
+    }
 	});
 
   app.get('/business/:id/dashboard', function(req, res) {
