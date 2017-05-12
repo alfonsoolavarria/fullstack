@@ -1,5 +1,6 @@
 var Parse = require('parse/node');
 var ParseInit = require('../../default/parseInit.js');
+var _ = require('lodash');
 
 var ServiceControllers = {};
 
@@ -42,25 +43,64 @@ ServiceControllers.updateService = function updateService (options) {
       if (options.employee) dataS.set({'employee':options.employee});
       if (options.schedule) dataS.set({'schedule':options.schedule});
     }
-    dataS.save(null, { useMasterKey: true });
-    return{success:true,code:200};
-  }, function(error) {
-    console.log('Service Update',error);
-    return {};
-  });
+    return dataS.save().then(function(saveData) {
+        // The save was successful.
+        return {ready:true,successful:'Created Service',id:saveData.id};
+      }, function(error) {
+        console.log('Service Save Error',error);
+        return {ready:false,error:'Service Save Error '+error};
+      });
+    });
+
 
 };
 
 ServiceControllers.getService = function getService (id) {
+
   var query = new Parse.Query('Service');
-  query.equalTo('business', new Parse.Object('Business', { id: id }));
-  query.equalTo('status',true);
-  return query.find().then(function(data) {
-    return data;
-  }, function(error) {
-    console.log('Service get',error);
-    return {};
-  });
+query.equalTo('business', new Parse.Object('Business', {
+    id: id
+}));
+query.equalTo('status', true);
+return query.find().then(function(data) {
+    var promises = [];
+    var kk = 0;
+    _.forEach(data, function(allD) {
+        promises.push(allD.relation('employee2').query().find());
+    });
+    return Parse.Promise.when(promises).then(function(resultados, index) {
+        for (var i = 0; i < resultados.length; i++) {
+            data[i] = data[i].toJSON();
+            data[i].alfonso = [];
+            data[i].alfonso.push(resultados[i]);
+        }
+        return data;
+    });
+});
+};
+
+ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,employeeId) {
+    var query1 = new Parse.Query('User');
+    return query1.get(employeeId).then(function(UserData) {
+        var query = new Parse.Query('Service');
+        query.get(serviceId).then(function(dataS) {
+            dataS.relation('employee2').add(UserData);
+            dataS.save(null, {
+                useMasterKey: true
+            });
+            return {
+                success: true,
+                code: 200
+            };
+        }, function(error) {
+            console.log('Service Get', error);
+            return {};
+        });
+    }, function(error) {
+        console.log('User Get', error);
+        return {};
+    });
+
 };
 
 

@@ -16,12 +16,14 @@ $(document).ready(function() {
         idBusiness:$('#businessid').val(),
       }
 
+
+
     try {
-      for (var i = 0; i < $(".select2-hidden-accessible").select2()[1].length; i++) {
-        if ($(".select2-hidden-accessible").select2()[1][i].selected==true) {
+      for (var i = 0; i < $(".input-select-final").select2()[0].length; i++) {
+        if ($(".input-select-final").select2()[0][i].selected==true) {
           dataSend.employee.push({
-            id:$(".select2-hidden-accessible").select2()[1][i].id,
-            name:$(".select2-hidden-accessible").select2()[1][i].text,
+            id:$(".input-select-final").select2()[0][i].id,
+            name:$(".input-select-final").select2()[0][i].text,
           });
         }
       }
@@ -229,8 +231,11 @@ $(document).ready(function() {
         }],
       }];
 
+      console.log(dataSend);
+
       $.post('/service',dataSend)
       .done(function (result) {
+        console.log('rpuesta devueltaaa',result);
         $(".btn-flat").trigger("click");
         location.reload();
       }).fail(function(error) {
@@ -238,7 +243,7 @@ $(document).ready(function() {
       });
 
 
-    });
+  });
 
 
     $('.editS').click(function () {
@@ -425,14 +430,19 @@ $(document).ready(function() {
         }
 
 
-
-        for (var i = 0; i < $(".select2-hidden-accessible").select2()[0].length; i++) {
-          if ($(".select2-hidden-accessible").select2()[0][i].selected) {
-            dataSend.employee.push({
-              id:$(".select2-hidden-accessible").select2()[0][i].id,
-              name:$(".select2-hidden-accessible").select2()[0][i].text,
-            });
+        try {
+          for (var i = 0; i < $(".input-edit").select2()[0].length; i++) {
+            if ($(".input-edit").select2()[0][i].selected==true) {
+              dataSend.employee.push({
+                id:$(".input-edit").select2()[0][i].id,
+                name:$(".input-edit").select2()[0][i].text,
+              });
+            }
           }
+
+        } catch (e) {
+          console.log('error con empleados',e);
+          dataSend.employee=[];
         }
 
         /*horario*/
@@ -472,7 +482,7 @@ $(document).ready(function() {
 
         var stringDuration2 = $("#service-duration-"+id).text();
         dataSend.duration = stringDuration2.trim();
-        if (flag==1) {
+        //if (flag==1) {
           flag = 0;
           console.log('a enviar ',dataSend);
           $.ajax({
@@ -485,7 +495,7 @@ $(document).ready(function() {
           });
           dataSend={};
           $("#serviceDelay-"+id).trigger("click");
-        }
+        //}
 
         /*horario*/
         for (var i = 0; i < she.length; i++) {

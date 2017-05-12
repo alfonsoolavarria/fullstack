@@ -54,10 +54,10 @@
                                                     <div class="form-group row form-material row">
                                                       <label class="col-md-6 form-control-label">Empleado:</label>
                                                       <div class="col-md-6">
-                                                        <select class="form-control select2-hidden-accessible" id="selectSe-<%=serviceData[o].objectId%>" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true" disabled>
+                                                        <select class="form-control select2-hidden-accessible input-edit" id="selectSe-<%=serviceData[o].objectId%>" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true" disabled>
                                                           <% for(var a=0; a<employeeB.employee.length; a++) {%>
                                                             <!-- final[i] -->
-
+                                                            <%=final[o]%>--><%=employeeB.employee[a].objectId%>
                                                             <% if (final[o].indexOf(employeeB.employee[a].objectId)>=0) {%>
                                                               <option  data-id-option="<%=employeeB.employee[a].objectId%>" id="<%=employeeB.employee[a].objectId%>" selected><%=employeeB.employee[a].name%></option>
                                                             <%}else{%>
@@ -196,13 +196,13 @@
                         <div class="col-sm-12">
                           <label class="form-control-label" for="topicCategory">Empleado:</label>
                           <div class="example">
-                            <select class="form-control select2-hidden-accessible" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <select class="form-control select2-hidden-accessible input-select-final" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true">
                               <% for(var e=0; e<employeeB.employee.length; e++) {%>
                                 <option  data-id-option="<%=employeeB.employee[e].objectId%>" id="<%=employeeB.employee[e].objectId%>"><%=employeeB.employee[e].name%></option>
                               <%}%>
                             </select><span class="select2 select2-container select2-container--material select2-container--below select2-container--focus" dir="ltr"><span class="selection">
                               <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                                <ul class="select2-selection__rendered">
+                              <ul class="select2-selection__rendered este">
                               </ul>
                               </span>
                               </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>

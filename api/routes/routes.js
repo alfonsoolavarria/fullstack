@@ -83,6 +83,7 @@ module.exports = function(app) {
       usersType.admin=false;
       usersType.owner=false;
       usersType.employee=true;
+      usersType.userId = req.query.user;
       res.render('index.ejs',{
         usersType,
         session:session
@@ -170,20 +171,27 @@ module.exports = function(app) {
           useTemplate.dashboard = false;
           Users.getEmployeeBusiness(req.params).then(function(employeeB) {
             if (useTemplate.service) {
+              console.log('kkkkkkkkkkkkkkkkkkkkkkk');
               ServiceControllers.getService(req.params.id).then(function(serviceData) {
+                console.log('funqui',JSON.parse(JSON.stringify(serviceData)));
                 if (serviceData.length>0) {
                   serviceData = JSON.parse(JSON.stringify(serviceData));
-                  if (serviceData[0].employee.length>0) {
                     for (var i = 0; i < serviceData.length; i++) {
-                      for (var o = 0; o < serviceData[i].employee.length; o++) {
-                        listService.push(serviceData[i].employee[o].id);
+                      if (serviceData[i].alfonso[0].length>0) {
+                        for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
+                            console.log('-------------->', serviceData[i].alfonso[0][o].objectId);
+                            listService.push(serviceData[i].alfonso[0][o].objectId);
+                          }
+                          final.push(JSON.parse(JSON.stringify(listService)));
+                          listService=[];
+                      }else {
+                        final.push(['']);
                       }
-                      final.push(JSON.parse(JSON.stringify(listService)));
-                      listService=[];
                     }
-                  }
                 }
+                //console.log('lista finallll1111',final);
 
+                console.log('lista finallll222',final);
                 res.render('business/dashboard.ejs',{
                   usersType,
                   valores,
@@ -318,14 +326,24 @@ module.exports = function(app) {
   ********************************/
   app.post('/service', function(req, res) {
     ServiceControllers.createService(req.body).then(function(data){
-      res.json({code:200});
+      if (req.body.employee) {
+        for (var i = 0; i < req.body.employee.length; i++) {
+          ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
+            res.json({code:200});
+          });
+        }
+      }
 
     });
   });
 
   app.put('/service', function(req, res) {
     ServiceControllers.updateService(req.body).then(function(data){
-      res.json({code:200});
+      for (var i = 0; i < req.body.employee.length; i++) {
+        ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
+          res.json({code:200});
+        });
+      }
     });
   });
 
@@ -334,7 +352,14 @@ module.exports = function(app) {
   ************CALENDAR************
   ********************************/
   app.get('/calendar', function(req, res) {
-    res.render('calendar/calendar.ejs');
+    usersType.admin=false;
+    usersType.owner=false;
+    usersType.employee=true;
+    usersType.userId = req.query.user;
+    res.render('calendar/calendar.ejs',{
+      usersType,
+      session:session
+    });
 	});
 
 

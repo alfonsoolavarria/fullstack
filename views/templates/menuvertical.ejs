@@ -60,98 +60,18 @@ if (usersType.userId){
                 </ul>
                 </li>
             <%}%>
-
-          <li class="site-menu-item has-sub">
-            <a href="javascript:void(0)">
-              <i class="site-menu-icon md-apps" aria-hidden="true"></i>
-              <span class="site-menu-title">Apps</span>
-            </a>
-            <ul class="site-menu-sub">
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/contacts/contacts.html">
-                  <span class="site-menu-title">Contacts</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="/calendar">
-                  <span class="site-menu-title">Calendar</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/notebook/notebook.html">
-                  <span class="site-menu-title">Notebook</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/taskboard/taskboard.html">
-                  <span class="site-menu-title">Taskboard</span>
-                </a>
-              </li>
+            <%if (usersType.owner || usersType.employee){%>
               <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                  <span class="site-menu-title">Documents</span>
-                  <span class="site-menu-arrow"></span>
+                <%if (usersType.owner){%>
+                  <a href="/calendar?owner=<%=usersType.userId%>">
+                <%} else if (usersType.employee){%>
+                  <a href="/calendar?employee=<%=usersType.userId%>">
+                <%}%>
+                  <i class="site-menu-icon md-chart" aria-hidden="true"></i>
+                  <span class="site-menu-title">Calendario</span>
                 </a>
-                <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="apps/documents/articles.html">
-                      <span class="site-menu-title">Articles</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="apps/documents/categories.html">
-                      <span class="site-menu-title">Categories</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="apps/documents/article.html">
-                      <span class="site-menu-title">Article</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/forum/forum.html">
-                  <span class="site-menu-title">Forum</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/message/message.html">
-                  <span class="site-menu-title">Message</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/projects/projects.html">
-                  <span class="site-menu-title">Projects</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/mailbox/mailbox.html">
-                  <span class="site-menu-title">Mailbox</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/media/overview.html">
-                  <span class="site-menu-title">Media</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/work/work.html">
-                  <span class="site-menu-title">Work</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/location/location.html">
-                  <span class="site-menu-title">Location</span>
-                </a>
-              </li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="apps/travel/travel.html">
-                  <span class="site-menu-title">Travel</span>
-                </a>
-              </li>
-            </ul>
-          </li>
+                </li>
+            <%}%>
         </ul>
       </div>
     </div>

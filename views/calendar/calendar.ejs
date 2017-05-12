@@ -1,917 +1,12 @@
-<% include templates/head.ejs %>
+<% include ../templates/head.ejs %>
 <body class="animsition app-calendar page-aside-left">
 
   <!-- Headear barra -->
-  <% include templates/header.ejs %>
+  <% include ../templates/header.ejs %>
 
-  <div class="site-menubar">
-    <div class="site-menubar-body">
-      <div>
-        <div>
-          <ul class="site-menu" data-plugin="menu">
-            <li class="site-menu-item">
-              <a class="animsition-link" href="/">
-                <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                <span class="site-menu-title">Dashboard</span>
-              </a>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
-                <span class="site-menu-title">Layouts</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/menu-collapsed.html">
-                    <span class="site-menu-title">Menu Collapsed</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/grids.html">
-                    <span class="site-menu-title">Grid Scaffolding</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/layout-grid.html">
-                    <span class="site-menu-title">Layout Grid</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/headers.html">
-                    <span class="site-menu-title">Different Headers</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/panel-transition.html">
-                    <span class="site-menu-title">Panel Transition</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/boxed.html">
-                    <span class="site-menu-title">Boxed Layout</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/two-columns.html">
-                    <span class="site-menu-title">Two Columns</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/bordered-header.html">
-                    <span class="site-menu-title">Bordered Header</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../layouts/menubar-flipped.html">
-                    <span class="site-menu-title">Menubar Flipped</span>
-                  </a>
-                </li>
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Page Aside</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../layouts/aside-left-static.html">
-                        <span class="site-menu-title">Left Static</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../layouts/aside-right-static.html">
-                        <span class="site-menu-title">Right Static</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../layouts/aside-left-fixed.html">
-                        <span class="site-menu-title">Left Fixed</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../layouts/aside-right-fixed.html">
-                        <span class="site-menu-title">Right Fixed</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-google-pages" aria-hidden="true"></i>
-                <span class="site-menu-title">Pages</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Errors</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/error-400.html">
-                        <span class="site-menu-title">400</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/error-403.html">
-                        <span class="site-menu-title">403</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/error-404.html">
-                        <span class="site-menu-title">404</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/error-500.html">
-                        <span class="site-menu-title">500</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/error-503.html">
-                        <span class="site-menu-title">503</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/faq.html">
-                    <span class="site-menu-title">FAQ</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/gallery.html">
-                    <span class="site-menu-title">Gallery</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/gallery-grid.html">
-                    <span class="site-menu-title">Gallery Grid</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/search-result.html">
-                    <span class="site-menu-title">Search Result</span>
-                  </a>
-                </li>
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Maps</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/map-google.html">
-                        <span class="site-menu-title">Google Maps</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/map-vector.html">
-                        <span class="site-menu-title">Vector Maps</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/maintenance.html">
-                    <span class="site-menu-title">Maintenance</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/forgot-password.html">
-                    <span class="site-menu-title">Forgot Password</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/lockscreen.html">
-                    <span class="site-menu-title">Lockscreen</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/login.html">
-                    <span class="site-menu-title">Login</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/register.html">
-                    <span class="site-menu-title">Register</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/login-v2.html">
-                    <span class="site-menu-title">Login V2</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/register-v2.html">
-                    <span class="site-menu-title">Register V2</span>
-                    <div class="site-menu-label">
-                      <span class="badge badge-info badge-round">new</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/login-v3.html">
-                    <span class="site-menu-title">Login V3</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/register-v3.html">
-                    <span class="site-menu-title">Register V3</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/user.html">
-                    <span class="site-menu-title">User List</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/invoice.html">
-                    <span class="site-menu-title">Invoice</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/blank.html">
-                    <span class="site-menu-title">Blank Page</span>
-                  </a>
-                </li>
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Email</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/email-articles.html">
-                        <span class="site-menu-title">Articles</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/email-welcome.html">
-                        <span class="site-menu-title">Welcome</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/email-post.html">
-                        <span class="site-menu-title">Post</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/email-thumbnail.html">
-                        <span class="site-menu-title">Thumbnail</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../pages/email-news.html">
-                        <span class="site-menu-title">News</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/code-editor.html">
-                    <span class="site-menu-title">Code Editor</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/profile.html">
-                    <span class="site-menu-title">Profile</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/profile-v2.html">
-                    <span class="site-menu-title">Profile V2</span>
-                    <div class="site-menu-label">
-                      <span class="badge badge-info badge-round">new</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/profile-v3.html">
-                    <span class="site-menu-title">Profile V3</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/site-map.html">
-                    <span class="site-menu-title">Sitemap</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../pages/project.html">
-                    <span class="site-menu-title">Project</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-palette" aria-hidden="true"></i>
-                <span class="site-menu-title">Basic UI</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Panel</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../uikit/panel-structure.html">
-                        <span class="site-menu-title">Panel Structure</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../uikit/panel-actions.html">
-                        <span class="site-menu-title">Panel Actions</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../uikit/panel-portlets.html">
-                        <span class="site-menu-title">Panel Portlets</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/buttons.html">
-                    <span class="site-menu-title">Buttons</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/cards.html">
-                    <span class="site-menu-title">Cards</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/dropdowns.html">
-                    <span class="site-menu-title">Dropdowns</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/icons.html">
-                    <span class="site-menu-title">Icons</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/list.html">
-                    <span class="site-menu-title">List</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/tooltip-popover.html">
-                    <span class="site-menu-title">Tooltip &amp; Popover</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/modals.html">
-                    <span class="site-menu-title">Modals</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/tabs-accordions.html">
-                    <span class="site-menu-title">Tabs &amp; Accordions</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/images.html">
-                    <span class="site-menu-title">Images</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/badges.html">
-                    <span class="site-menu-title">Badges</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/progress-bars.html">
-                    <span class="site-menu-title">Progress Bars</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/carousel.html">
-                    <span class="site-menu-title">Carousel</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/typography.html">
-                    <span class="site-menu-title">Typography</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/colors.html">
-                    <span class="site-menu-title">Colors</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../uikit/utilities.html">
-                    <span class="site-menu-title">Utilties</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-format-color-fill" aria-hidden="true"></i>
-                <span class="site-menu-title">Advanced UI</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item hidden-sm-down site-tour-trigger">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Tour</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/animation.html">
-                    <span class="site-menu-title">Animation</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/highlight.html">
-                    <span class="site-menu-title">Highlight</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/lightbox.html">
-                    <span class="site-menu-title">Lightbox</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/scrollable.html">
-                    <span class="site-menu-title">Scrollable</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/rating.html">
-                    <span class="site-menu-title">Rating</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/context-menu.html">
-                    <span class="site-menu-title">Context Menu</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/alertify.html">
-                    <span class="site-menu-title">Alertify</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/masonry.html">
-                    <span class="site-menu-title">Masonry</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/treeview.html">
-                    <span class="site-menu-title">Treeview</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/toastr.html">
-                    <span class="site-menu-title">Toastr</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/maps-vector.html">
-                    <span class="site-menu-title">Vector Maps</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/maps-google.html">
-                    <span class="site-menu-title">Google Maps</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/sortable-nestable.html">
-                    <span class="site-menu-title">Sortable &amp; Nestable</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../advanced/bootbox-sweetalert.html">
-                    <span class="site-menu-title">Bootbox &amp; Sweetalert</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-puzzle-piece" aria-hidden="true"></i>
-                <span class="site-menu-title">Structure</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/alerts.html">
-                    <span class="site-menu-title">Alerts</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/ribbon.html">
-                    <span class="site-menu-title">Ribbon</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/pricing-tables.html">
-                    <span class="site-menu-title">Pricing Tables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/overlay.html">
-                    <span class="site-menu-title">Overlay</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/cover.html">
-                    <span class="site-menu-title">Cover</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/timeline-simple.html">
-                    <span class="site-menu-title">Simple Timeline</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/timeline.html">
-                    <span class="site-menu-title">Timeline</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/step.html">
-                    <span class="site-menu-title">Step</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/comments.html">
-                    <span class="site-menu-title">Comments</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/media.html">
-                    <span class="site-menu-title">Media</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/chat.html">
-                    <span class="site-menu-title">Chat</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/testimonials.html">
-                    <span class="site-menu-title">Testimonials</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/nav.html">
-                    <span class="site-menu-title">Nav</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/navbars.html">
-                    <span class="site-menu-title">Navbars</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/blockquotes.html">
-                    <span class="site-menu-title">Blockquotes</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/pagination.html">
-                    <span class="site-menu-title">Pagination</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../structure/breadcrumbs.html">
-                    <span class="site-menu-title">Breadcrumbs</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-widgets" aria-hidden="true"></i>
-                <span class="site-menu-title">Widgets</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/statistics.html">
-                    <span class="site-menu-title">Statistics Widgets</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/data.html">
-                    <span class="site-menu-title">Data Widgets</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/blog.html">
-                    <span class="site-menu-title">Blog Widgets</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/chart.html">
-                    <span class="site-menu-title">Chart Widgets</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/social.html">
-                    <span class="site-menu-title">Social Widgets</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../widgets/weather.html">
-                    <span class="site-menu-title">Weather Widgets</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-comment-alt-text" aria-hidden="true"></i>
-                <span class="site-menu-title">Forms</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/general.html">
-                    <span class="site-menu-title">General Elements</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/material.html">
-                    <span class="site-menu-title">Material Elements</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/advanced.html">
-                    <span class="site-menu-title">Advanced Elements</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/layouts.html">
-                    <span class="site-menu-title">Form Layouts</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/wizard.html">
-                    <span class="site-menu-title">Form Wizard</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/validation.html">
-                    <span class="site-menu-title">Form Validation</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/masks.html">
-                    <span class="site-menu-title">Form Masks</span>
-                  </a>
-                </li>
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Editors</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../forms/editor-summernote.html">
-                        <span class="site-menu-title">Summernote</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../forms/editor-markdown.html">
-                        <span class="site-menu-title">Markdown</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../forms/editor-ace.html">
-                        <span class="site-menu-title">Ace Editor</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/image-cropping.html">
-                    <span class="site-menu-title">Image Cropping</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../forms/file-uploads.html">
-                    <span class="site-menu-title">File Uploads</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-border-all" aria-hidden="true"></i>
-                <span class="site-menu-title">Tables</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/basic.html">
-                    <span class="site-menu-title">Basic Tables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/bootstrap.html">
-                    <span class="site-menu-title">Bootstrap Tables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/floatthead.html">
-                    <span class="site-menu-title">floatThead</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/responsive.html">
-                    <span class="site-menu-title">Responsive Tables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/editable.html">
-                    <span class="site-menu-title">Editable Tables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/jsgrid.html">
-                    <span class="site-menu-title">jsGrid</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/footable.html">
-                    <span class="site-menu-title">FooTable</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/datatable.html">
-                    <span class="site-menu-title">DataTables</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/jqtabledit.html">
-                    <span class="site-menu-title">Jquery Tabledit</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../tables/table-dragger.html">
-                    <span class="site-menu-title">Table Dragger</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-chart" aria-hidden="true"></i>
-                <span class="site-menu-title">Chart</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/chartjs.html">
-                    <span class="site-menu-title">Chart.js</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/gauges.html">
-                    <span class="site-menu-title">Gauges</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/flot.html">
-                    <span class="site-menu-title">Flot</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/peity.html">
-                    <span class="site-menu-title">Peity</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/sparkline.html">
-                    <span class="site-menu-title">Sparkline</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/morris.html">
-                    <span class="site-menu-title">Morris</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/chartist.html">
-                    <span class="site-menu-title">Chartist.js</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/rickshaw.html">
-                    <span class="site-menu-title">Rickshaw</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/pie-progress.html">
-                    <span class="site-menu-title">Pie Progress</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../charts/c3.html">
-                    <span class="site-menu-title">C3</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="site-menu-item has-sub active open">
-              <a href="javascript:void(0)">
-                <i class="site-menu-icon md-apps" aria-hidden="true"></i>
-                <span class="site-menu-title">Apps</span>
-              </a>
-              <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/contacts/contacts.html">
-                    <span class="site-menu-title">Contacts</span>
-                  </a>
-                </li>
-                <li class="site-menu-item active">
-                  <a class="animsition-link" href="calendar">
-                    <span class="site-menu-title">Calendar</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/notebook/notebook.html">
-                    <span class="site-menu-title">Notebook</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/taskboard/taskboard.html">
-                    <span class="site-menu-title">Taskboard</span>
-                  </a>
-                </li>
-                <li class="site-menu-item has-sub">
-                  <a href="javascript:void(0)">
-                    <span class="site-menu-title">Documents</span>
-                    <span class="site-menu-arrow"></span>
-                  </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../apps/documents/articles.html">
-                        <span class="site-menu-title">Articles</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../apps/documents/categories.html">
-                        <span class="site-menu-title">Categories</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                      <a class="animsition-link" href="../../apps/documents/article.html">
-                        <span class="site-menu-title">Article</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/forum/forum.html">
-                    <span class="site-menu-title">Forum</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/message/message.html">
-                    <span class="site-menu-title">Message</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/projects/projects.html">
-                    <span class="site-menu-title">Projects</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/mailbox/mailbox.html">
-                    <span class="site-menu-title">Mailbox</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/media/overview.html">
-                    <span class="site-menu-title">Media</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/work/work.html">
-                    <span class="site-menu-title">Work</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/location/location.html">
-                    <span class="site-menu-title">Location</span>
-                  </a>
-                </li>
-                <li class="site-menu-item">
-                  <a class="animsition-link" href="../../apps/travel/travel.html">
-                    <span class="site-menu-title">Travel</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+
   <div class="page">
     <div class="page-aside">
       <div class="page-aside-switch">
@@ -921,79 +16,6 @@
       <div class="page-aside-inner page-aside-scroll">
         <div data-role="container">
           <div data-role="content">
-            <!--<section class="page-aside-section">
-              <h5 class="page-aside-title">CALENDAR LIST</h5>
-              <div class="list-group has-actions">
-                <div class="list-group-item" data-plugin="editlist">
-                  <div class="list-content">
-                    <span class="item-right">10</span>
-                    <span class="list-text">Admin Calendar</span>
-                    <div class="item-actions">
-                      <span class="btn btn-pure btn-icon" data-toggle="list-editable"><i class="icon md-edit" aria-hidden="true"></i></span>
-                      <span class="btn btn-pure btn-icon" data-toggle="list-delete"><i class="icon md-delete" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                  <div class="list-editable">
-                    <div class="form-group form-material">
-                      <input type="text" class="form-control empty" name="label" value="Admin Calendar">
-                      <button type="button" class="input-editable-close icon md-close" data-toggle="list-editable-close"
-                      aria-label="Close" aria-expanded="true"></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="list-group-item" data-plugin="editlist">
-                  <div class="list-content">
-                    <span class="item-right">5</span>
-                    <span class="list-text">Home Calendar</span>
-                    <div class="item-actions">
-                      <span class="btn btn-pure btn-icon" data-toggle="list-editable"><i class="icon md-edit" aria-hidden="true"></i></span>
-                      <span class="btn btn-pure btn-icon" data-toggle="list-delete"><i class="icon md-delete" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                  <div class="list-editable">
-                    <div class="form-group form-material">
-                      <input type="text" class="form-control empty" name="label" value="Home Calendar">
-                      <button type="button" class="input-editable-close icon md-close" data-toggle="list-editable-close"
-                      aria-label="Close" aria-expanded="true"></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="list-group-item" data-plugin="editlist">
-                  <div class="list-content">
-                    <span class="item-right">16</span>
-                    <span class="list-text">Work Calendar</span>
-                    <div class="item-actions">
-                      <span class="btn btn-pure btn-icon" data-toggle="list-editable"><i class="icon md-edit" aria-hidden="true"></i></span>
-                      <span class="btn btn-pure btn-icon" data-toggle="list-delete"><i class="icon md-delete" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                  <div class="list-editable">
-                    <div class="form-group form-material">
-                      <input type="text" class="form-control empty" name="label" value="Work Calendar">
-                      <button type="button" class="input-editable-close icon md-close" data-toggle="list-editable-close"
-                      aria-label="Close" aria-expanded="true"></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="list-group-item" data-plugin="editlist">
-                  <div class="list-content">
-                    <span class="item-right">30</span>
-                    <span class="list-text">Calendar One</span>
-                    <div class="item-actions">
-                      <span class="btn btn-pure btn-icon" data-toggle="list-editable"><i class="icon md-edit" aria-hidden="true"></i></span>
-                      <span class="btn btn-pure btn-icon" data-toggle="list-delete"><i class="icon md-delete" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                  <div class="list-editable">
-                    <div class="form-group form-material">
-                      <input type="text" class="form-control empty" name="label" value="Calendar One">
-                      <button type="button" class="input-editable-close icon md-close" data-toggle="list-editable-close"
-                      aria-label="Close" aria-expanded="true"></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>-->
             <section class="page-aside-section">
               <h5 class="page-aside-title">Veterinarios</h5>
               <div class="list-group calendar-list">
@@ -1028,8 +50,7 @@
       <div class="calendar-container">
         <div id="calendar"></div>
         <!--AddEvent Dialog -->
-        <div class="modal fade" id="addNewEvent" aria-hidden="true" aria-labelledby="addNewEvent"
-        role="dialog" tabindex="-1">
+        <div class="modal fade" id="addNewEvent" aria-hidden="true" aria-labelledby="addNewEvent" role="dialog" tabindex="-1">
           <div class="modal-dialog">
             <form class="modal-content form-horizontal" action="#" method="post" role="form">
               <div class="modal-header">
@@ -1127,8 +148,7 @@
         </div>
         <!-- End AddEvent Dialog -->
         <!-- Edit Dialog -->
-        <div class="modal fade" id="editNewEvent" aria-hidden="true" aria-labelledby="editNewEvent"
-        role="dialog" tabindex="-1" data-show="false">
+        <div class="modal fade" id="editNewEvent" aria-hidden="true" aria-labelledby="editNewEvent" role="dialog" tabindex="-1" data-show="false">
           <div class="modal-dialog">
             <form class="modal-content form-horizontal" action="#" method="post" role="form">
               <div class="modal-header">
@@ -1227,13 +247,106 @@
         </div>
         <!-- End EditEvent Dialog -->
         <!--AddCalendar Dialog -->
-        <div class="modal fade" id="addNewCalendar" aria-hidden="true" aria-labelledby="addNewCalendar"
-        role="dialog" tabindex="-1">
+        <div class="modal fade" id="addNewCalendar" aria-hidden="true" aria-labelledby="addNewCalendar" role="dialog" tabindex="-1">
           <div class="modal-dialog">
+            <form class="modal-content form-horizontal" action="#" method="post" role="form">
+              <div class="modal-header">
+                <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Nueva Cita</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="ename">Nombre:</label>
+                  <div class="col-md-10">
+                    <input type="text" class="form-control" id="ename" name="ename">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="starts">Starts:</label>
+                  <div class="col-md-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="starts" data-container="#addNewEvent"
+                      data-plugin="datepicker">
+                      <span class="input-group-addon">
+                        <i class="icon md-calendar" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="ends">Ends:</label>
+                  <div class="col-md-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="ends" data-container="#addNewEvent"
+                      data-plugin="datepicker">
+                      <span class="input-group-addon">
+                        <i class="icon md-calendar" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="repeats">Repeats:</label>
+                  <div class="col-md-10">
+                    <input type="text" class="form-control" id="repeats" name="repeats" data-plugin="TouchSpin"
+                    data-min="0" data-max="10" value="0" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="form-control-label col-md-2">Color:</label>
+                  <div class="col-md-10">
+                    <ul class="color-selector">
+                      <li class="bg-blue-600">
+                        <input type="radio" checked name="eventColorChosen" id="eventColorChosen2">
+                        <label for="eventColorChosen2"></label>
+                      </li>
+                      <li class="bg-green-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen3">
+                        <label for="eventColorChosen3"></label>
+                      </li>
+                      <li class="bg-cyan-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen4">
+                        <label for="eventColorChosen4"></label>
+                      </li>
+                      <li class="bg-orange-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen5">
+                        <label for="eventColorChosen5"></label>
+                      </li>
+                      <li class="bg-red-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen6">
+                        <label for="eventColorChosen6"></label>
+                      </li>
+                      <li class="bg-blue-grey-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen7">
+                        <label for="eventColorChosen7"></label>
+                      </li>
+                      <li class="bg-purple-600">
+                        <input type="radio" name="eventColorChosen" id="eventColorChosen8">
+                        <label for="eventColorChosen8"></label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="people">People:</label>
+                  <div class="col-md-10">
+                    <select id="eventPeople" multiple="multiple" class="plugin-selective"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="form-actions">
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">Add this event</button>
+                  <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancel</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        <!--  <div class="modal-dialog">
             <form class="form modal-content form-horizontal">
               <div class="modal-header">
                 <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Nueva Visita</h4>
+                <h4 class="modal-title">Nueva Cita</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
@@ -1291,7 +404,7 @@
                 </div>
               </div>
             </form>
-          </div>
+          </div>-->
         </div>
         <!-- End AddCalendar Dialog -->
       </div>
@@ -1305,34 +418,7 @@
     </button>
   </div>
   <!-- End Site Action -->
-  <!-- Add Calendar Form -->
-  <div class="modal fade" id="addNewCalendarForm" aria-hidden="true" aria-labelledby="addNewCalendarForm"
-  role="dialog" tabindex="-1">
-    <div class="modal-dialog">
-      <form class="modal-content" action="#" method="post" role="form">
-        <div class="modal-header">
-          <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Create New Calendar</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-control-label mb-15" for="name">Calendar name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Calendar name">
-          </div>
-          <div class="form-group">
-            <label class="form-control-label mb-15" for="name">Choice people to your project:</label>
-            <select multiple="multiple" class="plugin-selective"></select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="form-actions">
-            <button class="btn btn-primary" id="create-visit" data-dismiss="modal" type="button">Create</button>
-            <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancel</a>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+
   <!-- End Add Calendar Form -->
   <!-- Footer -->
   <footer class="site-footer">
@@ -1394,7 +480,6 @@
   <script src="/public/assets/material/js/Site.js"></script>
   <script src="/public/assets/material/js/App/Calendar.js"></script>
   <script src="/public/assets/material/examples/js/apps/calendar.js"></script>
-  <!-- Peticiones -->
-  <script src="/public/assets/js/calendar.js"></script>
+
 </body>
 </html>
