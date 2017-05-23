@@ -24,7 +24,6 @@ var FC = $.fullCalendar = {
 };
 var fcViews = FC.views = {};
 
-
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
 	var res = this; // what this function will return (this jQuery object by default)
@@ -36,6 +35,7 @@ $.fn.fullCalendar = function(options) {
 
 		// a method call
 		if (typeof options === 'string') {
+
 			if (calendar && $.isFunction(calendar[options])) {
 				singleRes = calendar[options].apply(calendar, args);
 				if (!i) {
@@ -48,9 +48,17 @@ $.fn.fullCalendar = function(options) {
 		}
 		// a new calendar initialization
 		else if (!calendar) { // don't initialize twice
+		$.get( "/booking", function( data ) {
+			//console.log(data.data);
+			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
+			//console.log(options);
+			options.events= data.data;
 			calendar = new Calendar(element, options);
 			element.data('fullCalendar', calendar);
+			$(".loader-circle").css("visibility","hidden");
 			calendar.render();
+
+		});
 		}
 	});
 
@@ -630,10 +638,9 @@ FC.divideDurationByDuration = divideDurationByDuration;
 FC.multiplyDuration = multiplyDuration;
 FC.durationHasTime = durationHasTime;
 
-console.log('---->dias');
 var dayIDs = [ 'dom', 'lun', 'mar', 'mierc', 'juev', 'vier', 'sab' ];
 var intervalUnits = [ 'year', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond' ];
-console.log(dayIDs);
+
 
 
 // Diffs the two moments into a Duration where full-days are recorded first, then the remaining time.
@@ -4296,6 +4303,29 @@ Grid.mixin({
 
 
 	handleSegClick: function(seg, ev) {
+		//console.log(seg.event);
+		$('#hourup').val(seg.event.alfonso.end);
+		$('#durationC').val(seg.event.alfonso.duration);
+		$('#editEname').val(seg.event.alfonso.clientName);
+		$('#servicioO2').val(seg.event.alfonso.serviceName);
+		$('#employeeE2').val(seg.event.alfonso.employeeName);
+
+		$('#data-id-cliente').val(seg.event.alfonso.client.objectId);
+		$('#data-id-service').val(seg.event.alfonso.service.objectId);
+		$('#data-id-emple').val(seg.event.alfonso.employee.objectId);
+
+		$('#infoA').val(seg.event.alfonso.additionalInfo);
+		$('#data-id-booking').val(seg.event.alfonso.idBooking);
+		if (seg.event.alfonso.state=='3'|| seg.event.alfonso.state=='1') {
+			$(".changed-cita").css("visibility","hidden");
+			$(".no-present").css("visibility","hidden");
+			$(".finish-booking").css("visibility","hidden");
+		}else {
+			$(".changed-cita").css("visibility","");
+			$(".no-present").css("visibility","");
+			$(".finish-booking").css("visibility","");
+		}
+
 		var res = this.view.publiclyTrigger('eventClick', seg.el[0], seg.event, ev); // can return `false` to cancel
 		if (res === false) {
 			ev.preventDefault();
@@ -5617,7 +5647,7 @@ var DayTableMixin = FC.DayTableMixin = {
 			date = this.getCellDate(0, col);
 			htmls.push(this.renderHeadDateCellHtml(date));
 		}
-		console.log('--->>>',htmls);
+
 		return htmls.join('');
 	},
 
@@ -5796,6 +5826,7 @@ var DayGrid = FC.DayGrid = Grid.extend(DayTableMixin, {
 		// trigger dayRender with each cell's element
 		for (row = 0; row < rowCnt; row++) {
 			for (col = 0; col < colCnt; col++) {
+
 				view.publiclyTrigger(
 					'dayRender',
 					null,
@@ -6411,7 +6442,7 @@ DayGrid.mixin({
 					emptyCellsUntil(seg.leftCol);
 
 					// create a container that occupies or more columns. append the event element.
-					td = $('<td class="fc-event-container"/>').append(seg.el);
+					td = $('<td class="fc-event-container" style="cursor:pointer;"/>').append(seg.el);
 					if (seg.leftCol != seg.rightCol) {
 						td.attr('colspan', seg.rightCol - seg.leftCol + 1);
 					}
@@ -9709,7 +9740,8 @@ function Toolbar(calendar, toolbarOptions) {
 			else {
 				el.empty();
 			}
-			console.log('apendo el center month');
+
+
 			el.append(renderSection('left'))
 				.append(renderSection('right'))
 				.append(renderSection('center'))
@@ -9732,7 +9764,7 @@ function Toolbar(calendar, toolbarOptions) {
 	function renderSection(position) {
 		var sectionEl = $('<div class="fc-' + position + '"/>');
 		var buttonStr = toolbarOptions.layout[position];
-
+		console.log('->',buttonStr);
 		if (buttonStr) {
 			$.each(buttonStr.split(' '), function(i) {
 				var groupChildren = $();
@@ -9862,6 +9894,7 @@ function Toolbar(calendar, toolbarOptions) {
 								);
 
 							groupChildren = groupChildren.add(button);
+							//console.log(groupChildren);
 						}
 					}
 				});

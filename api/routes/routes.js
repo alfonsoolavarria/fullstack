@@ -6,8 +6,12 @@ var UsersContro = require('../controllers/controllersUser');
 var BusinessControllers = require('../controllers/businessController');
 var EployeeControllers = require('../controllers/employeeController');
 var ServiceControllers = require('../controllers/serviceController');
+var Booking = require('../controllers/bookingController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
+var _ = require('lodash');
+var moment = require('moment');
+
 var USER_ALL = GloVariable.TYPES;
 var usersType = {
   admin:false,
@@ -21,7 +25,7 @@ var useTemplate = {
   admin:false,
   service:false
 }
-var session='';
+var session={};
 
 module.exports = function(app) {
 
@@ -171,15 +175,12 @@ module.exports = function(app) {
           useTemplate.dashboard = false;
           Users.getEmployeeBusiness(req.params).then(function(employeeB) {
             if (useTemplate.service) {
-              console.log('kkkkkkkkkkkkkkkkkkkkkkk');
               ServiceControllers.getService(req.params.id).then(function(serviceData) {
-                console.log('funqui',JSON.parse(JSON.stringify(serviceData)));
                 if (serviceData.length>0) {
                   serviceData = JSON.parse(JSON.stringify(serviceData));
                     for (var i = 0; i < serviceData.length; i++) {
                       if (serviceData[i].alfonso[0].length>0) {
                         for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
-                            console.log('-------------->', serviceData[i].alfonso[0][o].objectId);
                             listService.push(serviceData[i].alfonso[0][o].objectId);
                           }
                           final.push(JSON.parse(JSON.stringify(listService)));
@@ -189,9 +190,7 @@ module.exports = function(app) {
                       }
                     }
                 }
-                //console.log('lista finallll1111',final);
 
-                console.log('lista finallll222',final);
                 res.render('business/dashboard.ejs',{
                   usersType,
                   valores,
@@ -355,12 +354,99 @@ module.exports = function(app) {
     usersType.admin=false;
     usersType.owner=false;
     usersType.employee=true;
-    usersType.userId = req.query.user;
-    res.render('calendar/calendar.ejs',{
-      usersType,
-      session:session
+    usersType.userId = req.query.employee;
+
+    Users.getUsersClient('Cliente').then(function(data){
+      BusinessControllers.searchBusinessEmployee(req.query.employee).then(function(dataBusiness1) {
+        var id = 0;
+        if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+        ServiceControllers.getService(id).then(function(serviceData) {
+          var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
+          var datakk = JSON.parse(JSON.stringify(serviceData));
+          for (var i = 0; i < datakk.length; i++) {
+            bussiId=datakk[i].business.objectId;
+            listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId});
+            if (datakk[i].alfonso[0].length>0) {
+              for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
+                if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
+                  listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
+                  flag.push(datakk[i].alfonso[0][o].objectId);
+                }
+            }
+            }else {
+              listaemploye.push(['']);
+            }
+          }
+          session.business=bussiId;
+          session.service=JSON.stringify(listaservice);
+          session.employee=JSON.stringify(listaemploye);
+          res.render('calendar/calendar.ejs',{
+            usersType,
+            session:session,
+            client:data,
+            service:JSON.stringify(listaservice),
+            employee:JSON.stringify(listaemploye),
+            Idbussi:bussiId,
+          });
+        });
+      });
     });
 	});
+
+  /********************************
+  *****Booking - Reservas-Citas****
+  ********************************/
+  app.get('/booking',function(req,res) {
+    Booking.getBooking(session.business).then(function (data) {
+      var colors = {'0':'green','1':'blue','3':'orange'}
+      var nuevo = [];
+      for (var i = 0; i < data.length; i++) {
+        var pos = JSON.parse(JSON.stringify(data[i])).state;
+        nuevo.push({
+          title:JSON.parse(JSON.stringify(data[i])).client.name,
+          start:JSON.parse(JSON.stringify(data[i])).startDate.iso,
+          backgroundColor:colors[pos],
+          color:colors[pos],
+          alfonso: {
+            end: moment(JSON.parse(JSON.stringify(data[i])).startDate.iso).format("HH:mm"),
+            duration:JSON.parse(JSON.stringify(data[i])).duration,
+            service:JSON.parse(JSON.stringify(data[i])).service,
+            serviceName:JSON.parse(JSON.stringify(data[i])).service.serviceName,
+            employee:JSON.parse(JSON.stringify(data[i])).employee,
+            employeeName:JSON.parse(JSON.stringify(data[i])).employee.username,
+            bussines:JSON.parse(JSON.stringify(data[i])).bussines,
+            client:JSON.parse(JSON.stringify(data[i])).client,
+            clientName:JSON.parse(JSON.stringify(data[i])).client.username,
+            additionalInfo:JSON.parse(JSON.stringify(data[i])).additionalInfo,
+            idBooking:JSON.parse(JSON.stringify(data[i])).objectId,
+            state:JSON.parse(JSON.stringify(data[i])).state,
+            dataGeneral:session,
+          },
+        });
+      }
+      res.json({code:200,data:nuevo});
+    });
+  });
+
+   app.post('/booking', function(req, res) {
+     Booking.createBooking(req.body).then(function (data) {
+       if (data.ready) {
+         res.json({code:200,data:req.body,id:data.id});
+       }else {
+         res.json({code:500});
+       }
+     });
+   });
+
+   app.put('/booking', function(req, res) {
+     Booking.updateBooking(req.body.idBooking,req.body).then(function (data) {
+       if (data.ready) {
+         res.json({code:200});
+       }else {
+         res.json({code:500});
+       }
+     });
+   });
 
 
   /********************************
@@ -397,7 +483,7 @@ module.exports = function(app) {
       .then(function (user) {
         if (user.data.get('isActive')==true) {
           req.session['timesapp-token-session'] = user.data.get('sessionToken');
-          session = req.session['timesapp-token-session'];
+          session.toke = req.session['timesapp-token-session'];
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
             console.log('Administrador');
@@ -431,7 +517,7 @@ module.exports = function(app) {
 //Logout user
 app.get('/logout', function(req, res) {
   req.session['timesapp-token-session'] = "";
-  session = "";
+  session = {};
   return res.redirect('/');
 });
 

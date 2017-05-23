@@ -3,9 +3,21 @@
 
   <!-- Headear barra -->
   <% include ../templates/header.ejs %>
-
+<link rel="stylesheet" href="/public/assets/material/global/vendor/clockpicker/clockpicker.css">
   <!-- Menu-->
   <% include ../templates/menuvertical.ejs %>
+
+<!-- autocomplete CSS file -->
+<link rel="stylesheet" href="/public/assets/js/EasyAutocomplete-1.3.5/easy-autocomplete.min.css">
+
+<!-- autocomplete Additional CSS Themes file - not required-->
+<link rel="stylesheet" href="/public/assets/js/EasyAutocomplete-1.3.5/easy-autocomplete.themes.min.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/nprogress/nprogress.css">
 
   <div class="page">
     <div class="page-aside">
@@ -49,7 +61,7 @@
     <div class="page-main">
       <div class="calendar-container">
         <div id="calendar"></div>
-        <!--AddEvent Dialog -->
+        <!--AddEvent Dialog
         <div class="modal fade" id="addNewEvent" aria-hidden="true" aria-labelledby="addNewEvent" role="dialog" tabindex="-1">
           <div class="modal-dialog">
             <form class="modal-content form-horizontal" action="#" method="post" role="form">
@@ -145,101 +157,102 @@
               </div>
             </form>
           </div>
-        </div>
+        </div>-->
         <!-- End AddEvent Dialog -->
         <!-- Edit Dialog -->
         <div class="modal fade" id="editNewEvent" aria-hidden="true" aria-labelledby="editNewEvent" role="dialog" tabindex="-1" data-show="false">
           <div class="modal-dialog">
-            <form class="modal-content form-horizontal" action="#" method="post" role="form">
+            <form class="modal-content form-horizontal" method="post">
               <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Edit Event</h4>
+                <button type="button" class="close modal-edit-close" aria-hidden="true" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Editar Citas</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="editEname">Name:</label>
-                  <div class="col-md-10">
+                  <label class="col-md-2 form-control-label" for="editEname">Cliente:</label>
+                  <!--<div class="col-md-10">
                     <input type="text" class="form-control" id="editEname" name="editEname">
+                  </div>-->
+                  <div class="col-md-10">
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control" id="editEname" name="editEname" placeholder="Busca por nombre, email o tel&eacute;fono" disabled required>
+                      <!--<button type="button" class="input-search-close icon md-close close-cliente2" aria-label="Close"></button>-->
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="editStarts">Starts:</label>
+                  <label class="col-md-2 form-control-label" for="starts2">Servicio:</label>
                   <div class="col-md-10">
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="editStarts" name="editStarts" data-container="#editNewEvent"
-                      data-plugin="datepicker">
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control ss" id="servicioO2" name="servicio2" placeholder="Busca por nombre" disabled required>
+                      <!--<button type="button" class="input-search-close icon md-close close-service2" aria-label="Close"></button>-->
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="starts3">Duraci&oacute;n:</label>
+                  <div class="col-md-4" id="b">
+                    <input type="text" class="form-control" id="durationC" name="repeats" data-plugin="TouchSpin"
+                    data-min="10" data-max="180" value="" maxlength="3" disabled/>
+                  </div>
+                  <div class="col-md-2" style="margin-top:7px;">
+                    <span style="margin-left:-18px;" id="span"><b>min</b></span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="editStarts">Fecha:</label>
+                  <div class="col-md-3">
+                    <div class="input-group" style="width:120%;">
+                      <input type="text" class="form-control" id="editStarts" data-container="#editNewEvent" data-plugin="datepicker" disabled required>
                       <span class="input-group-addon">
                         <i class="icon md-calendar" aria-hidden="true"></i>
                       </span>
                     </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="editEnds">Ends:</label>
-                  <div class="col-md-10">
+                  <label class="col-md-2 form-control-label" for="editEnds">Hora:</label>
+                  <div class="col-md-3">
                     <div class="input-group">
-                      <input type="text" class="form-control" id="editEnds" data-container="#editNewEvent"
-                      data-plugin="datepicker">
                       <span class="input-group-addon">
-                        <i class="icon md-calendar" aria-hidden="true"></i>
+                        <span class="md-time">
+                        </span>
                       </span>
+                      <input type="text" id="hourup" class="timepicker form-control" data-container="#editNewEvent" data-plugin="clockpicker" data-autoclose="true" value="" disabled required>
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="editRepeats">Repeats:</label>
+                  <label class="col-md-2 form-control-label" for="ename2">Empleado:</label>
                   <div class="col-md-10">
-                    <input type="text" class="form-control" id="editRepeats" name="repeats" data-plugin="TouchSpin"
-                    data-min="0" data-max="10" value="0" />
-                  </div>
-                </div>
-                <div class="form-group row" id="editColor">
-                  <label class="form-control-label col-md-2">Color:</label>
-                  <div class="col-md-10">
-                    <ul class="color-selector">
-                      <li class="bg-blue-600">
-                        <input type="radio" data-color="blue|600" name="colorChosen" id="editColorChosen2">
-                        <label for="editColorChosen2"></label>
-                      </li>
-                      <li class="bg-green-600">
-                        <input type="radio" data-color="green|600" name="colorChosen" id="editColorChosen3">
-                        <label for="editColorChosen3"></label>
-                      </li>
-                      <li class="bg-cyan-600">
-                        <input type="radio" data-color="cyan|600" name="colorChosen" id="editColorChosen4">
-                        <label for="editColorChosen4"></label>
-                      </li>
-                      <li class="bg-orange-600">
-                        <input type="radio" data-color="orange|600" name="colorChosen" id="editColorChosen5">
-                        <label for="editColorChosen4"></label>
-                      </li>
-                      <li class="bg-red-600">
-                        <input type="radio" data-color="red|600" name="colorChosen" id="editColorChosen6">
-                        <label for="editColorChosen6"></label>
-                      </li>
-                      <li class="bg-blue-grey-600">
-                        <input type="radio" data-color="blue-grey|600" name="colorChosen" id="editColorChosen7">
-                        <label for="editColorChosen7"></label>
-                      </li>
-                      <li class="bg-purple-600">
-                        <input type="radio" data-color="purple|600" name="colorChosen" id="editColorChosen8">
-                        <label for="editColorChosen8"></label>
-                      </li>
-                    </ul>
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control" id="employeeE2" name="emplo2" placeholder="Busca por nombre" disabled required>
+                      <!--<button type="button" class="input-search-close icon md-close close-employe2" aria-label="Close"></button>-->
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="editPeople">People:</label>
+                  <label class="col-md-2 form-control-label" for="ename">Informaci&oacute;n adicional:</label>
                   <div class="col-md-10">
-                    <select id="editPeople" multiple="multiple" class="plugin-selective"></select>
+                    <input type="text" class="form-control" id="infoA" name="infoA" disabled>
                   </div>
                 </div>
               </div>
+              <input id="data-id-booking" style="visibility:hidden;" />
               <div class="modal-footer">
-                <div class="form-actions">
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">Save</button>
-                  <button class="btn btn-danger" data-dismiss="modal" type="button">Delete</button>
-                  <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancel</a>
+                <div class="col-md-8">
+                  <!--para cerrar el modal data-dismiss="modal" -->
+                  <button class="btn no-present" type="button">No Presentado</button>
+                  <button class="btn changed-cita" type="button">Cambiar Cita</button>
+                  <button class="btn" type="button" id="deteBooking">Borrar</button>
+                </div>
+                <div class="col-md-2">
+                  <div class="loader vertical-align-middle loader-circle" style="visibility:hidden;"></div>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-primary finish-booking" type="button">Finalizar</button>
+                  <!--<a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancelar</a>-->
                 </div>
               </div>
             </form>
@@ -249,167 +262,107 @@
         <!--AddCalendar Dialog -->
         <div class="modal fade" id="addNewCalendar" aria-hidden="true" aria-labelledby="addNewCalendar" role="dialog" tabindex="-1">
           <div class="modal-dialog">
-            <form class="modal-content form-horizontal" action="#" method="post" role="form">
+            <form class="modal-content form-horizontal" method="post">
               <div class="modal-header">
                 <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Nueva Cita</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="ename">Nombre:</label>
+                  <label class="col-md-2 form-control-label" for="ename">Cliente:</label>
                   <div class="col-md-10">
-                    <input type="text" class="form-control" id="ename" name="ename">
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control" id="clienteE" name="cliente" placeholder="Busca por nombre, email o tel&eacute;fono" required>
+                      <button type="button" class="input-search-close icon md-close close-cliente" aria-label="Close"></button>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="starts">Starts:</label>
+                  <label class="col-md-2 form-control-label" for="starts">Servicio:</label>
                   <div class="col-md-10">
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="starts" data-container="#addNewEvent"
-                      data-plugin="datepicker">
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control ss" id="servicioO" name="servicio" placeholder="Busca por nombre" disabled required>
+                      <button type="button" class="input-search-close icon md-close close-service" aria-label="Close"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="starts2">Duraci&oacute;n:</label>
+                  <div class="col-md-4" id="a">
+                    <input type="text" class="form-control" id="durationB" name="duration" data-plugin="TouchSpin"
+                    data-min="10" data-max="180" value="0" maxlength="3"/>
+                  </div>
+                  <div class="col-md-2" style="margin-top:7px;">
+                    <span style="margin-left:-18px;" id="span"><b>min</b></span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 form-control-label" for="ends">Fecha:</label>
+                  <div class="col-md-3">
+                    <div class="input-group" style="width:120%;">
+                      <input type="text" class="form-control" id="fechaA" data-container="#addNewCalendar" data-plugin="datepicker" required>
                       <span class="input-group-addon">
                         <i class="icon md-calendar" aria-hidden="true"></i>
                       </span>
                     </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="ends">Ends:</label>
-                  <div class="col-md-10">
+                  <label class="col-md-2 form-control-label" for="ends">Hora:</label>
+                  <div class="col-md-3">
                     <div class="input-group">
-                      <input type="text" class="form-control" id="ends" data-container="#addNewEvent"
-                      data-plugin="datepicker">
                       <span class="input-group-addon">
-                        <i class="icon md-calendar" aria-hidden="true"></i>
+                        <span class="md-time">
+                        </span>
                       </span>
+                      <input type="text" id="horaH" class="timepicker form-control" data-container="#addNewCalendar" data-plugin="clockpicker" data-autoclose="true" value="" required>
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="repeats">Repeats:</label>
+                  <label class="col-md-2 form-control-label" for="ename">Empleado:</label>
                   <div class="col-md-10">
-                    <input type="text" class="form-control" id="repeats" name="repeats" data-plugin="TouchSpin"
-                    data-min="0" data-max="10" value="0" />
+                    <div class="input-search input-search-dark">
+                      <!--autocomplete -->
+                      <input type="text" class="form-control" id="employeeE" name="emplo" placeholder="Busca por nombre" disabled required>
+                      <button type="button" class="input-search-close icon md-close close-employe" aria-label="Close"></button>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="form-control-label col-md-2">Color:</label>
+                  <label class="col-md-2 form-control-label" for="ename">Informaci&oacute;n adicional:</label>
                   <div class="col-md-10">
-                    <ul class="color-selector">
-                      <li class="bg-blue-600">
-                        <input type="radio" checked name="eventColorChosen" id="eventColorChosen2">
-                        <label for="eventColorChosen2"></label>
-                      </li>
-                      <li class="bg-green-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen3">
-                        <label for="eventColorChosen3"></label>
-                      </li>
-                      <li class="bg-cyan-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen4">
-                        <label for="eventColorChosen4"></label>
-                      </li>
-                      <li class="bg-orange-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen5">
-                        <label for="eventColorChosen5"></label>
-                      </li>
-                      <li class="bg-red-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen6">
-                        <label for="eventColorChosen6"></label>
-                      </li>
-                      <li class="bg-blue-grey-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen7">
-                        <label for="eventColorChosen7"></label>
-                      </li>
-                      <li class="bg-purple-600">
-                        <input type="radio" name="eventColorChosen" id="eventColorChosen8">
-                        <label for="eventColorChosen8"></label>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="people">People:</label>
-                  <div class="col-md-10">
-                    <select id="eventPeople" multiple="multiple" class="plugin-selective"></select>
+                    <input type="text" class="form-control" id="info" name="info">
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <div class="form-actions">
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">Add this event</button>
-                  <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancel</a>
+                  <button type="submit" class="btn btn-primary" id="modalNewService">Crear</button>
+                  <a class="btn btn-sm btn-white btn-pure close-modal-cita" data-dismiss="modal" href="javascript:void(0)">Cancelar</a>
                 </div>
               </div>
             </form>
+            <input id="data-id-cliente" style="visibility:hidden;" />
+            <input id="data-id-service" style="visibility:hidden;" />
+            <input id="data-id-emple" style="visibility:hidden;" />
+            <input id="alfonso-id" style="visibility:hidden;" value="132456"/>
           </div>
-        <!--  <div class="modal-dialog">
-            <form class="form modal-content form-horizontal">
-              <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Nueva Cita</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="ename">Name:</label>
-                  <div class="col-md-10">
-                    <input type="text" class="form-control" id="ename" name="ename" required>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="form-control-label col-md-2">Color:</label>
-                  <div class="col-md-10">
-                    <ul class="color-selector">
-                      <li class="bg-blue-600">
-                        <input type="radio" checked name="colorChosen" id="colorChosen2">
-                        <label for="colorChosen2"></label>
-                      </li>
-                      <li class="bg-green-600">
-                        <input type="radio" name="colorChosen" id="colorChosen3">
-                        <label for="colorChosen3"></label>
-                      </li>
-                      <li class="bg-cyan-600">
-                        <input type="radio" name="colorChosen" id="colorChosen4">
-                        <label for="colorChosen4"></label>
-                      </li>
-                      <li class="bg-orange-600">
-                        <input type="radio" name="colorChosen" id="colorChosen5">
-                        <label for="colorChosen5"></label>
-                      </li>
-                      <li class="bg-red-600">
-                        <input type="radio" name="colorChosen" id="colorChosen6">
-                        <label for="colorChosen6"></label>
-                      </li>
-                      <li class="bg-blue-grey-600">
-                        <input type="radio" name="colorChosen" id="colorChosen7">
-                        <label for="colorChosen7"></label>
-                      </li>
-                      <li class="bg-purple-600">
-                        <input type="radio" name="colorChosen" id="colorChosen8">
-                        <label for="colorChosen8"></label>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-2 form-control-label" for="people">People:</label>
-                  <div class="col-md-10">
-                    <select id="people" multiple="multiple" class="plugin-selective"></select>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <div class="form-actions">
-                  <button class="form-button-contact text-center btn btn-primary" type="submit" id="create-visit" >Create</button>
-                  <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" href="javascript:void(0)">Cancel</a>
-                </div>
-              </div>
-            </form>
-          </div>-->
+          <input id="valores-json" style="visibility:hidden;" value="<%=client%>" />
+          <input id="valoresS-json" style="visibility:hidden;" value="<%=service%>" />
+          <input id="valoresEm-json" style="visibility:hidden;" value="<%=employee%>" />
+          <input id="idBusiness" style="visibility:hidden;" value="<%=Idbussi%>" />
         </div>
         <!-- End AddCalendar Dialog -->
       </div>
     </div>
   </div>
+  <button type="button" class="btn btn-sm btn-primary waves-effect" id="booking-cancel" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+  <button type="button" class="btn btn-sm btn-primary waves-effect" id="booking-deleateada" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+  <button type="button" class="btn btn-sm btn-primary waves-effect" id="booking-nopresente" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Enviado" style="visibility:hidden;" >delay</button>
   <!-- Site Action -->
   <div class="site-action" data-plugin="actionBtn">
     <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">
@@ -450,6 +403,8 @@
   <script src="/public/assets/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
   <script src="/public/assets/material/global/vendor/bootstrap-touchspin/bootstrap-touchspin.min.js"></script>
   <script src="/public/assets/material/global/vendor/bootbox/bootbox.js"></script>
+  <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+  <script src="/public/assets/material/global/vendor/nprogress/nprogress.js"></script>
   <!-- Scripts -->
   <script src="/public/assets/material/global/js/State.js"></script>
   <script src="/public/assets/material/global/js/Component.js"></script>
@@ -460,6 +415,7 @@
   <script src="/public/assets/material/js/Section/Sidebar.js"></script>
   <script src="/public/assets/material/js/Section/PageAside.js"></script>
   <script src="/public/assets/material/js/Plugin/menu.js"></script>
+  <script src="/public/assets/material/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
   <!-- Config -->
   <script src="/public/assets/material/global/js/config/colors.js"></script>
   <script src="/public/assets/material/js/config/tour.js"></script>
@@ -480,6 +436,27 @@
   <script src="/public/assets/material/js/Site.js"></script>
   <script src="/public/assets/material/js/App/Calendar.js"></script>
   <script src="/public/assets/material/examples/js/apps/calendar.js"></script>
+  <script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
+  <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+  <script src="/public/assets/material/global/js/Plugin/nprogress.js"></script>
+  <script src="/public/assets/js/calendar.js"></script>
+
+
+  <!-- autocomplete JS file -->
+  <script src="/public/assets/js/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js"></script>
+  <script src="/public/assets/material/global/vendor/asrange/jquery-asRange.min.js"></script>
+  <script src="/public/assets/material/global/js/Plugin/asrange.js"></script>
 
 </body>
 </html>
+<div class="alertify-logs"></div>
+<div class="alertify modal-confirm" style="visibility:hidden;">
+  <div class="dialog">
+    <div><p class="msg"></p>
+      <nav>
+        <button class="cancel btn btn-default cancel-booking" tabindex="2">Cancelar</button>
+        <button class="ok btn btn-primary delete-booking" tabindex="1">Borrar</button>
+      </nav>
+    </div>
+  </div>
+</div>

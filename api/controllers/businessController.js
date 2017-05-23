@@ -1,11 +1,12 @@
 var Parse = require('parse/node');
 var ParseInit = require('../../default/parseInit.js');
+var _ = require('lodash');
 
 var BusinessControllers = {};
 
 BusinessControllers.searchBusiness = function searchBusiness (options) {
   var query = new Parse.Query('Business');
-  query.equalTo('latlong', (parseFloat(options.latitude),parseFloat(options.longitude)));
+  //query.equalTo('latlong', (parseFloat(options.latitude),parseFloat(options.longitude)));
   return query.find({
     success: function(object) {},
     error: function(error) {
@@ -134,6 +135,29 @@ BusinessControllers.addRelationBusiness = function addRelationBusiness (idBusine
     });
 };
 
+BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (idEmployee) {
+  var query = new Parse.Query('Business');
+  return query.find().then(function(dataE){
+    var promises = [];
+    _.forEach(dataE, function(allD) {
+        promises.push(allD.relation('employee').query().find().then(function (employess) {
+          for (var i = 0; i < employess.length; i++) {
+            if (JSON.parse(JSON.stringify(employess[i])).objectId==idEmployee) {
+                return {
+                  business:JSON.parse(JSON.stringify(allD)).objectId,
+                  nameEmployee:JSON.parse(JSON.stringify(employess[i])).name,
+                  idEmployee:JSON.parse(JSON.stringify(employess[i])).objectId,
+                };
+            }
+          }
+        }));
+    });
+    return Parse.Promise.when(promises).then(function(resultados, index) {
+      var dataFinal = resultados.filter(function(n){ return n != undefined });
+      return dataFinal;
+    });
+  });
+};
 
 
 

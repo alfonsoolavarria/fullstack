@@ -21,7 +21,7 @@ UsersModel.createUser = function createUser (options,object) {
   }
 
 
-  var query = new Parse.Query('User');
+  var query = new Parse.Query('_User');
     var user = new Parse.User();
     user.set('username', options.email);
     user.set('name', options.name);
@@ -49,7 +49,7 @@ UsersModel.getTypeBusiness = function getTypeBusiness () {
 };
 
 UsersModel.checkSession = function checkSession (sess) {
-  var query = new Parse.Query('User');
+  var query = new Parse.Query('_User');
   return query.first('sessionToken',sess).then(function(userSess){
     if (userSess.length<=0) return {success:false};
     else return {success:true};
@@ -63,7 +63,7 @@ UsersModel.checkSession = function checkSession (sess) {
 
 
 UsersModel.updateUserBusiness = function updateUserBusiness (options) {
-  var query = new Parse.Query('User');
+  var query = new Parse.Query('_User');
   return query.get(options.iduser).then(function(userB){
     if (options.email) userB.set('username', options.email);
     if (options.name) userB.set('name', options.name);
@@ -74,7 +74,7 @@ UsersModel.updateUserBusiness = function updateUserBusiness (options) {
 };
 
 UsersModel.checkUser = function checkUser (options) {
-  var query = new Parse.Query('User');
+  var query = new Parse.Query('_User');
   query.equalTo('email',options.email);
   return query.find().then(function(userB){
     if (userB.length>0) {
@@ -87,7 +87,7 @@ UsersModel.checkUser = function checkUser (options) {
 
 UsersModel.activateDesactivate = function activateDesactivate (options,data) {
 
-  var query = new Parse.Query('User');
+  var query = new Parse.Query('_User');
   return query.get(data.business.get('owner').id).then(function(userB){
     if (options.deleteB) {
       userB.set({'isActive':false});
@@ -105,6 +105,15 @@ UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options) {
       return {data:data,employee:JSON.parse(JSON.stringify(gente))};
     });
 
+  });
+
+};
+
+UsersModel.getUsersClient = function getUsersClient (typeUser) {
+  var queryU = new Parse.Query('_User');
+  queryU.equalTo('type',typeUser);
+  return queryU.find().then(function(dataUsers){
+    return JSON.stringify(dataUsers);
   });
 
 };

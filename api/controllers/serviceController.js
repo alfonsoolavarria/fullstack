@@ -56,13 +56,12 @@ ServiceControllers.updateService = function updateService (options) {
 };
 
 ServiceControllers.getService = function getService (id) {
-
   var query = new Parse.Query('Service');
-query.equalTo('business', new Parse.Object('Business', {
-    id: id
-}));
-query.equalTo('status', true);
-return query.find().then(function(data) {
+  if (id) {
+    query.equalTo('business', new Parse.Object('Business', {id: id}));
+  }
+  query.equalTo('status', true);
+  return query.find().then(function(data) {
     var promises = [];
     var kk = 0;
     _.forEach(data, function(allD) {
