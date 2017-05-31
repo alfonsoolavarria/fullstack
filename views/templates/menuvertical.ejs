@@ -1,6 +1,6 @@
 <%
 var redirect = '/';
-var userId ='nada';
+var userId ='0';
 if (usersType.admin){
   var redirect = 'admin';
 }else if (usersType.owner){
@@ -21,7 +21,7 @@ if (usersType.userId){
       <div>
         <ul class="site-menu" data-plugin="menu">
           <li class="site-menu-item active">
-            <a class="animsition-link" href="<%=redirect%>?user=<%=userId%>">
+            <a class="animsition-link" href="/<%=redirect%>?user=<%=userId%>">
               <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
               <span class="site-menu-title">Dashboard</span>
             </a>
