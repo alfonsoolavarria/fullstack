@@ -4303,7 +4303,7 @@ Grid.mixin({
 
 
 	handleSegClick: function(seg, ev) {
-		//console.log(seg.event);
+		console.log(seg.event);
 		$('#hourup').val(seg.event.alfonso.end);
 		$('#durationC').val(seg.event.alfonso.duration);
 		$('#editEname').val(seg.event.alfonso.clientName);

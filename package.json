@@ -17,7 +17,8 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "parse": "~1.8.0",
-    "parse-server": "*"
+    "parse-server": "*",
+    "useragent": "^2.1.13"
   },
   "scripts": {
     "start": "node index.js"

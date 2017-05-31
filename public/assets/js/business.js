@@ -4,8 +4,10 @@ $(document).ready(function() {
   var dataSend = {};
   var flag = 0;
 
-  $('#registerBusiness').click(function () {
+  $('.registerBusiness').click(function () {
     $('form').submit(function (e) {
+      $(".loadgif").css("visibility","");
+      $(".registerBusiness").css("visibility","hidden");
       e.preventDefault();
       dataSend = {
         address : e.currentTarget[0].value,
@@ -52,11 +54,12 @@ $(document).ready(function() {
 
       //getLocation().then(function(data) {
       if (dataSend.address && dataSend.city && dataSend.cp) {
-
         $("#businessDelaysucc").trigger("click");
         $.post('/business',dataSend)
         .done(function (result) {
-          if (result.result.code==409) {
+          $(".loadgif").css("visibility","hidden");
+          $(".registerBusiness").css("visibility","");
+          if (result.data.code==409) {
             $("#businessConflict").trigger("click");
           }else {
             $(".clean").trigger("click");
@@ -67,7 +70,6 @@ $(document).ready(function() {
           $("#businessDelayerr").trigger("click");
           $(".clean").trigger("click");
         });
-
       }else {
         console.log('nises');
       }

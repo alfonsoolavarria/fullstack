@@ -23,7 +23,7 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
 
     return filesImages(options).then(function(base64imagen){
       var employee =  new Parse.User();
-      if (options.image) employee.set('image', base64imagen);
+      if (options.imagen) employee.set('image', base64imagen);
       employee.set('username', options.email);
       employee.set('name', options.name);
       employee.set('phone', options.phone);

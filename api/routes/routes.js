@@ -10,7 +10,8 @@ var Booking = require('../controllers/bookingController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
 var _ = require('lodash');
-var moment = require('moment');
+//var moment = require('moment');
+var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
 
 var USER_ALL = GloVariable.TYPES;
 var usersType = {
@@ -452,7 +453,6 @@ module.exports = function(app) {
   /********************************
   ************User************
   ********************************/
-
 
   //signUp user
   app.post('/user',middle.checkParams, function(req, res) {

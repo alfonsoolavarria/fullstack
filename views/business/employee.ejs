@@ -21,7 +21,11 @@
                                 <div class="media">
                                     <div class="pr-20">
                                         <div class="avatar avatar-online">
+                                          <%if (employeeB.employee[o].image){%>
+                                            <img src="<%=employeeB.employee[o].image.url%>" alt="...">
+                                          <%}else{%>
                                             <img src="/public/assets/images/avataremployee.png" alt="...">
+                                          <%}%>
                                             <i class="avatar avatar-busy"></i>
                                         </div>
                                     </div>
