@@ -17,23 +17,45 @@ BusinessControllers.searchBusiness = function searchBusiness (options) {
   });
 };
 
-BusinessControllers.searchListBusiness = function searchListBusiness (options) {
+BusinessControllers.searchListBusiness = function searchListBusiness (options,pageparams) {
   var query = new Parse.Query('Business');
-  if (options.owner) {
-    query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+  var cantpage=1;
+  var page=pageparams ? pageparams : 0;
+
+  function twicequery() {
+    var query2 = new Parse.Query('Business');
+    //cantidad de paginas, paginador para el html
+    return query2.find().then(function (a) {
+      if ((a.length/2)>0 && (a.length/2)%1==0) {
+        //entero
+        return cantpage=(a.length/2)*10;
+      }else if ((a.length/2)>0 && (a.length/2)%1!=0) {
+        //redondeo
+        return cantpage=(parseInt(a.length/2)+1)*10;
+      }else {
+        //una sola pagina
+        return cantpage=1*10;
+      }
+    });
   }
+
+  if (options.owner) query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+  //pagination businesslist
+  query.descending('createdAt');
+  query.limit(2);
+  query.skip(page*2);
   query.include('owner.name');
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
-  //query.equalTo('status',true);
-  return query.find({
-    success: function(object) {},
-    error: function(error) {
-      // error is an instance of Parse.Error.
-      console.log('error search Business');
-      console.log('%j',error);
-    }
+
+  return query.find().then(function (objectData) {
+    return twicequery().then(function() {
+      if (objectData.length<1) {
+        cantpage=0;
+      }
+      return {data:objectData,cantPage:cantpage};
+    });
   });
 };
 

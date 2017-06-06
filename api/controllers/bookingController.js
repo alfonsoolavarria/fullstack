@@ -38,22 +38,26 @@ BookingController.createBooking = function createBooking (options) {
 };
 
 BookingController.getBooking = function getBooking (idB) {
-  var query = new Parse.Query('Booking');
-  query.include('client.name');
-  query.include('business');
-  query.include('employee');
-  query.include('service');
-  query.equalTo('business', new Parse.Object('Business', { id:idB}));
-  query.equalTo('status',true);
-  return query.find({
-    success: function(object) {
-    },
-    error: function(error) {
-      // error is an instance of Parse.Error.
-      console.log('error search Booking');
-      console.log('%j',error);
-    }
-  });
+  if (idB!=0) {
+    var query = new Parse.Query('Booking');
+    query.include('client.name');
+    query.include('business');
+    query.include('employee');
+    query.include('service');
+    query.equalTo('business', new Parse.Object('Business', { id:idB}));
+    query.equalTo('status',true);
+    return query.find({
+      success: function(object) {
+      },
+      error: function(error) {
+        // error is an instance of Parse.Error.
+        console.log('error search Booking');
+        console.log('%j',error);
+      }
+    });
+  }else {
+    return [];
+  }
 };
 
 BookingController.updateBooking = function updateBooking (idB,options) {

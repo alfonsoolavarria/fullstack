@@ -53,7 +53,7 @@
       value: function getDefaults() {
         return {
           namespace: 'pagination',
-          currentPage: 1,
+          currentPage: parseInt($("#pageN").val()),
           itemsPerPage: 10,
           disabledClass: 'disabled',
           activeClass: 'active',
@@ -71,27 +71,38 @@
           components: {
             prev: {
               tpl: function tpl() {
-                return '<li class="' + this.namespace + '-prev page-item"><a class="page-link" href="javascript:void(0)" aria-label="Prev"><span class="icon md-chevron-left"></span></a></li>';
+                return '<li onclick="prevC();" class="' + this.namespace + '-prev page-item"><a class="page-link" href="javascript:void(0)" aria-label="Prev"><span class="icon md-chevron-left"></span></a></li>';
               }
             },
             next: {
               tpl: function tpl() {
-                return '<li class="' + this.namespace + '-next page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next"><span class="icon md-chevron-right"></span></a></li>';
+                return '<li onclick="nextC();" class="' + this.namespace + '-next page-item next"><a class="page-link" href="javascript:void(0)" aria-label="Next"><span class="icon md-chevron-right"></span></a></li>';
               }
             },
             lists: {
               tpl: function tpl() {
+                var user = $("#user").val()?$("#user").val():0;
                 var lists = '',
-                    remainder = this.currentPage >= this.visible ? this.currentPage % this.visible : this.currentPage;
+                remainder = this.currentPage >= this.visible ? this.currentPage % this.visible : this.currentPage;
                 remainder = remainder === 0 ? this.visible : remainder;
-                for (var k = 1; k < remainder; k++) {
-                  lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="javascript:void(0)">' + (this.currentPage - remainder + k) + '</a></li>';
-                }
-                lists += '<li class="' + this.namespace + '-items page-item ' + this.classes.active + '" data-value="' + this.currentPage + '"><a class="page-link" href="javascript:void(0)">' + this.currentPage + '</a></li>';
-                for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
-                  lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="javascript:void(0)">' + i + '</a></li>';
-                }
 
+                for (var k = 1; k < remainder; k++) {
+                  lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="/business/list?user='+user+'&page='+(this.currentPage - remainder + k)+'">' + (this.currentPage - remainder + k) + '</a></li>';
+
+                }
+                for (var ii = 1; ii <= this.currentPage; ii++) {
+                  if (this.currentPage==ii) {
+                    lists += '<li class="' + this.namespace + '-items page-item active" data-value="'+ii+'"><a class="page-link" href="/business/list?user='+user+'&page='+ii+'">'+ii+'</a></li>';
+                  }
+                }
+                for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
+                  if (this.currentPage==i) {
+                    lists += '<li class="' + this.namespace + '-items page-item active" data-value="' + i + '"><a class="page-link" href="/business/list?user='+user+'&page='+i+'">' + i + '</a></li>';
+                    $(".next").attr("disabled");
+                  }else {
+                    lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="/business/list?user='+user+'&page='+i+'">' + i + '</a></li>';
+                  }
+                }
                 return lists;
               }
             }

@@ -131,21 +131,27 @@ module.exports = function(app) {
 
   app.get('/business/list', function(req, res) {
     if (session) {
-      var valores={};
+      var valores={},selectPage=1;
       if (req.query.user){
         usersType.userId = req.query.user;
       } else {
         req.body.owner = req.query.owner;
         usersType.userId = req.query.owner;
       }
-      BusinessControllers.searchListBusiness(req.body).then(function(data){
+      if (req.query.page) {
+        selectPage=req.query.page;
+        req.query.page=req.query.page-1;
+      }
+      BusinessControllers.searchListBusiness(req.body,req.query.page).then(function(data){
         if (data) {
-          valores=JSON.parse(JSON.stringify(data))
+          valores=JSON.parse(JSON.stringify(data.data));
         }
         Users.getTypeBusiness().then(function(typeBusiness) {
           res.render('business/businesslist.ejs',{
             usersType,
             valores,
+            catpage:JSON.parse(JSON.stringify(data.cantPage)),
+            selectPage:selectPage,
             typeBusiness
           });
         });
@@ -352,46 +358,55 @@ module.exports = function(app) {
   ************CALENDAR************
   ********************************/
   app.get('/calendar', function(req, res) {
-    usersType.admin=false;
-    usersType.owner=false;
-    usersType.employee=true;
-    usersType.userId = req.query.employee;
-
-    Users.getUsersClient('Cliente').then(function(data){
-      BusinessControllers.searchBusinessEmployee(req.query.employee).then(function(dataBusiness1) {
-        var id = 0;
-        if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
-        ServiceControllers.getService(id).then(function(serviceData) {
-          var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
-          var datakk = JSON.parse(JSON.stringify(serviceData));
-          for (var i = 0; i < datakk.length; i++) {
-            bussiId=datakk[i].business.objectId;
-            listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId});
-            if (datakk[i].alfonso[0].length>0) {
-              for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
-                if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
-                  listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
-                  flag.push(datakk[i].alfonso[0][o].objectId);
-                }
+    if (session) {
+      usersType.admin=true ? req.query.admin:false;
+      usersType.owner=true ? req.query.owner:false;
+      usersType.employee=true ? req.query.employee:false;
+      usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
+      Users.getUsersClient('Cliente').then(function(data){
+        BusinessControllers.searchBusinessEmployee(req.query.employee).then(function(dataBusiness1) {
+          var id = 0;
+          if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+          ServiceControllers.getService(id).then(function(serviceData) {
+            var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
+            var datakk = JSON.parse(JSON.stringify(serviceData));
+            for (var i = 0; i < datakk.length; i++) {
+              bussiId=datakk[i].business.objectId;
+              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId});
+              if (datakk[i].alfonso[0].length>0) {
+                for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
+                  if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
+                    listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
+                    flag.push(datakk[i].alfonso[0][o].objectId);
+                  }
+              }
+              }else {
+                listaemploye.push(['']);
+              }
             }
+            if (bussiId==0){
+              session.business=id;
+              bussiId=id;
             }else {
-              listaemploye.push(['']);
+              session.business=bussiId;
+              bussiId=bussiId;
             }
-          }
-          session.business=bussiId;
-          session.service=JSON.stringify(listaservice);
-          session.employee=JSON.stringify(listaemploye);
-          res.render('calendar/calendar.ejs',{
-            usersType,
-            session:session,
-            client:data,
-            service:JSON.stringify(listaservice),
-            employee:JSON.stringify(listaemploye),
-            Idbussi:bussiId,
+            session.service=JSON.stringify(listaservice);
+            session.employee=JSON.stringify(listaemploye);
+            res.render('calendar/calendar.ejs',{
+              usersType,
+              session:session,
+              client:data,
+              service:JSON.stringify(listaservice),
+              employee:JSON.stringify(listaemploye),
+              Idbussi:bussiId,
+            });
           });
         });
       });
-    });
+    }else {
+      return res.redirect('/');
+    }
 	});
 
   /********************************

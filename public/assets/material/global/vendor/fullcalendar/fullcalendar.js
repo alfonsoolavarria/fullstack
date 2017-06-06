@@ -49,7 +49,8 @@ $.fn.fullCalendar = function(options) {
 		// a new calendar initialization
 		else if (!calendar) { // don't initialize twice
 		$.get( "/booking", function( data ) {
-			//console.log(data.data);
+			console.log('+--------');
+			console.log(data.data);
 			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
 			//console.log(options);
 			options.events= data.data;

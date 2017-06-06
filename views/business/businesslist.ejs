@@ -135,9 +135,16 @@
                       <%idGeneral=valores[i].objectId%>
                     <% } %>
                   </ul>
-                  <nav>
-                    <ul data-plugin="paginator" data-total="50" data-skin="pagination-no-border"></ul>
-                  </nav>
+                  <%if(catpage!=0){%>
+                    <nav>
+                      <ul data-plugin="paginator" id="paginationId" data-total="<%=catpage%>" data-skin="pagination-no-border"></ul>
+                    </nav>
+                  <%}else{%>
+                    No hay empresas disponibles/activas
+                  <%}%>
+                  <input id="pageN" value="<%=selectPage%>" style="visibility:hidden;">
+                  <input id="user" value="<%=usersType.userId%>" style="visibility:hidden;">
+                  <a class="next-prev" href="" style="visibility:hidden;"></a>
                 </div>
               </div>
             </div>
@@ -206,6 +213,40 @@
         Site.run();
       });
     })(document, window, jQuery);
+
+    function prevC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            //console.log(lis.prevObject[i]);//object completo
+            //console.log(lis.prevObject[i].className);// nombre de la clase
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              //console.log(lis.prevObject[i].textContent);//numero del li
+              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").text(lis.prevObject[i].textContent);
+              window.location.href = $(".next-prev").attr("href");
+            }
+        }
+      }, delayMillis);
+    }
+
+    function nextC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").text(lis.prevObject[i].textContent);
+              window.location.href = $(".next-prev").attr("href");
+            }
+        }
+      }, delayMillis);
+    }
+
     </script>
   </body>
   </html>

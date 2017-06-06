@@ -5,11 +5,12 @@ $(document).ready(function() {
   var flag = 0;
   var she = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
   var cant = [1,2,3,4];
-
     $('.service').click(function () {
+      var str = $('.rangeUi-tip').text();
+      var dur = str.substr(1,$('.rangeUi-tip').text().length);
       dataSend = {
         serviceName:$('#topicName').val(),
-        duration:$('#topicDuration').val(),
+        duration:dur,
         price:$('#topicPrice').val(),
         description:$('#topicDescription').val(),
         employee:[],
