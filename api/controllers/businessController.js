@@ -20,10 +20,13 @@ BusinessControllers.searchBusiness = function searchBusiness (options) {
 BusinessControllers.searchListBusiness = function searchListBusiness (options,pageparams) {
   var query = new Parse.Query('Business');
   var cantpage=1;
+  var flag = 0;
   var page=pageparams ? pageparams : 0;
-
-  function twicequery() {
+  function twicequery(boolflag) {
     var query2 = new Parse.Query('Business');
+    if (boolflag==1) {
+      query2.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+    }
     //cantidad de paginas, paginador para el html
     return query2.find().then(function (a) {
       if ((a.length/2)>0 && (a.length/2)%1==0) {
@@ -39,21 +42,26 @@ BusinessControllers.searchListBusiness = function searchListBusiness (options,pa
     });
   }
 
-  if (options.owner) query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+  if (options.owner) {
+    query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+    flag = 1;
+  }
   //pagination businesslist
   query.descending('createdAt');
   query.limit(2);
   query.skip(page*2);
+
   query.include('owner.name');
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
 
   return query.find().then(function (objectData) {
-    return twicequery().then(function() {
+    return twicequery(flag).then(function() {
       if (objectData.length<1) {
         cantpage=0;
       }
+      //hacer una validacion de paginacion para cuando sea el Propietario
       return {data:objectData,cantPage:cantpage};
     });
   });
@@ -157,19 +165,30 @@ BusinessControllers.addRelationBusiness = function addRelationBusiness (idBusine
     });
 };
 
-BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (idEmployee) {
+BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (options,idEmployeeorOwner) {
   var query = new Parse.Query('Business');
+  if (options.owner) {
+    query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
+  }
   return query.find().then(function(dataE){
     var promises = [];
     _.forEach(dataE, function(allD) {
         promises.push(allD.relation('employee').query().find().then(function (employess) {
           for (var i = 0; i < employess.length; i++) {
-            if (JSON.parse(JSON.stringify(employess[i])).objectId==idEmployee) {
+            if (options.owner) {
+              return {
+                business:JSON.parse(JSON.stringify(allD)).objectId,
+                nameEmployee:JSON.parse(JSON.stringify(employess[i])).name,
+                idEmployeeorOwner:JSON.parse(JSON.stringify(employess[i])).objectId,
+              };
+            }else {
+              if (JSON.parse(JSON.stringify(employess[i])).objectId==idEmployeeorOwner) {
                 return {
                   business:JSON.parse(JSON.stringify(allD)).objectId,
                   nameEmployee:JSON.parse(JSON.stringify(employess[i])).name,
-                  idEmployee:JSON.parse(JSON.stringify(employess[i])).objectId,
+                  idEmployeeorOwner:JSON.parse(JSON.stringify(employess[i])).objectId,
                 };
+              }
             }
           }
         }));

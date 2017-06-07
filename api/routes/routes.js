@@ -132,10 +132,10 @@ module.exports = function(app) {
   app.get('/business/list', function(req, res) {
     if (session) {
       var valores={},selectPage=1;
-      if (req.query.user){
+      if (req.query.user && usersType.admin){
         usersType.userId = req.query.user;
       } else {
-        req.body.owner = req.query.owner;
+        req.body.owner = req.query.owner?req.query.owner:req.query.user;
         usersType.userId = req.query.owner;
       }
       if (req.query.page) {
@@ -364,7 +364,14 @@ module.exports = function(app) {
       usersType.employee=true ? req.query.employee:false;
       usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
       Users.getUsersClient('Cliente').then(function(data){
-        BusinessControllers.searchBusinessEmployee(req.query.employee).then(function(dataBusiness1) {
+        var idUserEmploOwner = 0;
+        if (req.query.employee) {
+          idUserEmploOwner = req.query.employee;
+        }else if (req.query.owner) {
+          idUserEmploOwner = req.query.owner;
+        }
+
+        BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
           var id = 0;
           if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
           ServiceControllers.getService(id).then(function(serviceData) {

@@ -103,7 +103,7 @@
                                 </div>
                               </div>
                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <%if (usersType.admin){%>
+                                <%if (usersType.admin || usersType.owner ){%>
                                   <div class="pl-20 align-self-center">
                                     <% if (valores[i].status){%>
                                       <a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard"> <button type="button" style="height:32px;" class="btn btn-primary btn-success btn-sm-details" <span id="nameD-<%= valores[i].objectId %>">Detalles</span></button></a>
