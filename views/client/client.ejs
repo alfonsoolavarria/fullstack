@@ -1,0 +1,132 @@
+<h4 class="example-title">Listado de Clientes</h4>
+<div class="panel">
+  <div class="panel-body">
+    <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+      <div class="tab-content">
+        <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+          <% for(var i=0; i<dataClient.length; i++) {%>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="media">
+                <div class="pr-20">
+                  <div class="avatar avatar-online">
+                    <img src="/public/assets/material/global/portraits/1.jpg" alt="...">
+                      <i class="avatar avatar-busy"></i>
+                  </div>
+                </div>
+                <div class="media-body">
+                  <form class="form-horizontal">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row form-material row">
+                          <label class="col-md-6 form-control-label">Nombre:</label>
+                          <div class="col-md-6">
+                            <input class="form-control" id="client-name-<%= dataClient[i].objectId%>" style="border:0px;background:none;" value="<%=dataClient[i].name%>" disabled></input>
+                          </div>
+                        </div>
+                        <div class="form-group row form-material row">
+                          <label class="col-md-6 form-control-label">Email:</label>
+                            <div class="col-md-6">
+                              <input class="form-control" id="client-email-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;" value="<%=dataClient[i].username%>" disabled></input>
+                            </div>
+                        </div>
+                        <div class="form-group row form-material row">
+                          <label class="col-md-6 form-control-label">Telefono:</label>
+                            <div class="col-md-6">
+                              <input class="form-control" id="client-phone-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;" value="<%=dataClient[i].phone%>" disabled></input>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-group row form-material row"></div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="pl-20 align-self-center">
+                          <button type="button" class="btn btn-primary btn-sm edit-client resetcl-<%= dataClient[i].objectId%>" data-edit-id="<%= dataClient[i].objectId%>"><span id="nameC-text-<%= dataClient[i].objectId%>">Editar</span></button>
+                          <button type="button" class="btn btn-primary btn-danger waves-effect delete-cliente del-<%= dataClient[i].objectId%>" data-delete-id="<%= dataClient[i].objectId%>" style="height:32px;">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary waves-effect" id="clientConflict" data-plugin="alertify"
+                    data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
+                    <button type="button" class="btn btn-primary waves-effect" id="clientSave" data-plugin="alertify"
+                    data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+                    <button type="button" class="btn btn-primary waves-effect" id="clientError" data-plugin="alertify"
+                    data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
+                    <button type="button" class="btn btn-primary waves-effect" id="clientsucc" data-plugin="alertify"
+                    data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                    <button type="button" class="btn btn-primary waves-effect" id="email-error" data-plugin="alertify"
+                    data-type="log" data-delay="3000" data-log-message="Email Incorrecto" style="visibility:hidden;" >delay</button>
+                  </form>
+                </div>
+              </li>
+            </ul>
+          <%}%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Nuevo Cliente -->
+    <div class="site-action" data-target="#addTopicForm2" data-toggle="modal" data-plugin="actionBtn">
+      <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">
+        <i class="icon md-plus" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="modal fade" id="addTopicForm2" aria-hidden="true" aria-labelledby="addTopicForm" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Crear nuevo Cliente</h4>
+              </div>
+              <div class="modal-body container-fluid" style="width:100%;">
+                <form method="post">
+                  <div class="form-group">
+                      <label class="form-control-label mb-15" for="topicTitle">Nombre:</label>
+                      <input type="text" class="form-control" id="client-name-new" name="nombre" placeholder="Nombre" required/>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-control-label mb-15" for="topicTitle">Email:</label>
+                      <input type="text" class="form-control" id="client-email-new" name="email" placeholder="Email" required/>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-control-label mb-15" for="topicTitle">Tel&eacute;fono:</label>
+                      <input type="text" class="form-control" id="client-phone-new" name="telefono" placeholder="Tel&eacute;fono" required/>
+                  </div>
+                  <div class="col-md-12 panel-body container-fluid">
+                    <div class="row row-lg">
+                      <div class="example-wrap">
+                        <label class="form-control-label">Seleccione una Imagen:</label>
+                        <div class="example">
+                          <input type="file" id="input-file-now" data-plugin="dropify" data-default-file=""/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <div class="modal-footer text-left">
+                  <button class="btn btn-primary cliente" id="clienteCreate" type="submit">Crear</button>
+                  <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
+                  <a class="btn btn-sm btn-white btn-flat-cliente" data-dismiss="modal" href="javascript:void(0)">Cancelar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+  <% for(var o=0; o<dataClient.length; o++) {%>
+  <div class="alertify modalClient-<%=dataClient[o].objectId%>" style="visibility:hidden;">
+    <div class="dialog">
+      <div><p class="msg empl">Seguro de eliminar el Cliente?</p>
+        <nav>
+          <button class="canceleCm btn btn-default" data-cancelc-id="<%=dataClient[o].objectId%>" tabindex="2">Cancelar</button>
+          <button class="deleteCm btn btn-primary" id="okeC-<%=dataClient[o].objectId%>" data-del-id="<%=dataClient[o].objectId%>" tabindex="1">Borrar</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+<%}%>

@@ -7,6 +7,7 @@ var BusinessControllers = require('../controllers/businessController');
 var EployeeControllers = require('../controllers/employeeController');
 var ServiceControllers = require('../controllers/serviceController');
 var Booking = require('../controllers/bookingController');
+var ClienteControllers = require('../controllers/clientController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
 var _ = require('lodash');
@@ -162,42 +163,79 @@ module.exports = function(app) {
 	});
 
   app.get('/business/:id/dashboard', function(req, res) {
-    var employee='',service='',serviceData={};
-    var listService = [], final=[], schedule=[];
+    var employee='',service='',client='', serviceData={};
+    var listService = [], final=[], schedule=[], dataClient=[];
+    useTemplate.client=false;
     useTemplate.service=false;
     useTemplate.employee = false;
     useTemplate.dashboard = false;
-    BusinessControllers.searchGetBusiness(req.params.id).then(function(data){
-      if (data) valores=JSON.parse(JSON.stringify(data));
-      Users.getTypeBusiness().then(function(typeBusiness) {
-        if (req.query.type=='employee' || req.query.type=='service' ) {
-          if (req.query.type=='employee') {
-            employee='active';
-            useTemplate.employee = true;
-          }
-          if (req.query.type=='service') {
-            useTemplate.service=true;
-            service='active';
-          }
-          useTemplate.dashboard = false;
-          Users.getEmployeeBusiness(req.params).then(function(employeeB) {
-            if (useTemplate.service) {
-              ServiceControllers.getService(req.params.id).then(function(serviceData) {
-                if (serviceData.length>0) {
-                  serviceData = JSON.parse(JSON.stringify(serviceData));
+    if (req.query.type=='client') {
+      useTemplate.client=true;
+      client='active';
+      Users.getUsersClient('Cliente').then(function(userClient){
+        dataClient = JSON.parse(userClient);
+        res.render('business/dashboard.ejs',{
+          usersType,
+          valores:{objectId:req.params.id},
+          typeBusiness:{},
+          useTemplate,
+          employeeB:null,
+          dashboard:'',
+          employee,
+          service,
+          dataClient:dataClient,
+          client:'active',
+        });
+      });
+    }else {
+      BusinessControllers.searchGetBusiness(req.params.id).then(function(data){
+        if (data) valores=JSON.parse(JSON.stringify(data));
+        Users.getTypeBusiness().then(function(typeBusiness) {
+          if (req.query.type=='employee' || req.query.type=='service' ) {
+            if (req.query.type=='employee') {
+              employee='active';
+              useTemplate.employee = true;
+            }
+            if (req.query.type=='service') {
+              useTemplate.service=true;
+              service='active';
+            }
+            useTemplate.dashboard = false;
+            Users.getEmployeeBusiness(req.params).then(function(employeeB) {
+              if (useTemplate.service) {
+                ServiceControllers.getService(req.params.id).then(function(serviceData) {
+                  if (serviceData.length>0) {
+                    serviceData = JSON.parse(JSON.stringify(serviceData));
                     for (var i = 0; i < serviceData.length; i++) {
                       if (serviceData[i].alfonso[0].length>0) {
                         for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
-                            listService.push(serviceData[i].alfonso[0][o].objectId);
-                          }
-                          final.push(JSON.parse(JSON.stringify(listService)));
-                          listService=[];
+                          listService.push(serviceData[i].alfonso[0][o].objectId);
+                        }
+                        final.push(JSON.parse(JSON.stringify(listService)));
+                        listService=[];
                       }else {
                         final.push(['']);
                       }
                     }
-                }
-
+                  }
+                  res.render('business/dashboard.ejs',{
+                    usersType,
+                    valores,
+                    typeBusiness,
+                    useTemplate,
+                    employeeB,
+                    dashboard:'',
+                    employee,
+                    service,
+                    client,
+                    serviceData,
+                    final,
+                    dataClient,
+                    listService,
+                    schedule,
+                  });
+                });
+              }else {
                 res.render('business/dashboard.ejs',{
                   usersType,
                   valores,
@@ -207,51 +245,38 @@ module.exports = function(app) {
                   dashboard:'',
                   employee,
                   service,
+                  client,
                   serviceData,
                   final,
+                  dataClient,
                   listService,
                   schedule,
                 });
-
-              });
-
-            }else {
-              res.render('business/dashboard.ejs',{
-                usersType,
-                valores,
-                typeBusiness,
-                useTemplate,
-                employeeB,
-                dashboard:'',
-                employee,
-                service,
-                serviceData,
-                final,
-                listService,
-                schedule,
-              });
-            }
-          });
-        }
-        else {
-          useTemplate.dashboard = true;
-          res.render('business/dashboard.ejs',{
-            usersType,
-            valores,
-            typeBusiness,
-            useTemplate,
-            employeeB:null,
-            dashboard:'active',
-            employee:'',
-            service:'',
-            serviceData,
-            final,
-            listService,
-            schedule,
-          });
-        }
+              }
+            });
+          }
+          else {
+            useTemplate.dashboard = true;
+            res.render('business/dashboard.ejs',{
+              usersType,
+              valores,
+              typeBusiness,
+              useTemplate,
+              employeeB:null,
+              dashboard:'active',
+              employee:'',
+              service:'',
+              serviceData,
+              final,
+              dataClient,
+              listService,
+              schedule,
+              client,
+            });
+          }
+        });
       });
-    });
+    }
 	});
 
   /*app.get('/business/:id/employee', function(req, res) {
@@ -339,7 +364,6 @@ module.exports = function(app) {
           });
         }
       }
-
     });
   });
 
@@ -451,7 +475,7 @@ module.exports = function(app) {
     });
   });
 
-   app.post('/booking', function(req, res) {
+  app.post('/booking', function(req, res) {
      Booking.createBooking(req.body).then(function (data) {
        if (data.ready) {
          res.json({code:200,data:req.body,id:data.id});
@@ -461,15 +485,42 @@ module.exports = function(app) {
      });
    });
 
-   app.put('/booking', function(req, res) {
-     Booking.updateBooking(req.body.idBooking,req.body).then(function (data) {
-       if (data.ready) {
-         res.json({code:200});
+  app.put('/booking', function(req, res) {
+    Booking.updateBooking(req.body.idBooking,req.body).then(function (data) {
+      if (data.ready) {
+        res.json({code:200});
        }else {
-         res.json({code:500});
+        res.json({code:500});
        }
      });
    });
+
+
+  /********************************
+   ************Client************
+   ********************************/
+   app.post('/client', function(req, res) {
+     Users.checkUser(req.body).then(function(result) {
+       if (result.code==409) {
+         res.json(result);
+       }
+       ClienteControllers.createCliente(req.body).then(function(user) {
+         res.json({code:200});
+       });
+     });
+   });
+
+   app.put('/client', function(req, res) {
+     Users.checkUser(req.body).then(function(result) {
+       if (result.code==409) {
+         res.json(result);
+       }
+       ClienteControllers.updateCliente(req.body).then(function(user) {
+         res.json(user);
+       });
+     });
+   });
+
 
 
   /********************************

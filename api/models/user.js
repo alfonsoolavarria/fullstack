@@ -111,6 +111,7 @@ UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options) {
 
 UsersModel.getUsersClient = function getUsersClient (typeUser) {
   var queryU = new Parse.Query('_User');
+  queryU.equalTo('isActive',true);
   queryU.equalTo('type',typeUser);
   return queryU.find().then(function(dataUsers){
     return JSON.stringify(dataUsers);

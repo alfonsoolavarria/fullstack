@@ -136,9 +136,11 @@
                     <% } %>
                   </ul>
                   <%if(catpage!=0){%>
-                    <nav>
-                      <ul data-plugin="paginator" id="paginationId" data-total="<%=catpage%>" data-skin="pagination-no-border"></ul>
-                    </nav>
+                    <%if(catpage!=10){%>
+                      <nav>
+                        <ul data-plugin="paginator" id="paginationId" data-total="<%=catpage%>" data-skin="pagination-no-border"></ul>
+                      </nav>
+                    <%}%>
                   <%}else{%>
                     No hay empresas disponibles/activas
                   <%}%>

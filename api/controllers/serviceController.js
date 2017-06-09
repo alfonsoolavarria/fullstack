@@ -79,7 +79,7 @@ ServiceControllers.getService = function getService (id) {
 };
 
 ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,employeeId) {
-    var query1 = new Parse.Query('User');
+    var query1 = new Parse.Query('_User');
     return query1.get(employeeId).then(function(UserData) {
         var query = new Parse.Query('Service');
         query.get(serviceId).then(function(dataS) {
@@ -101,7 +101,6 @@ ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,e
     });
 
 };
-
 
 
 

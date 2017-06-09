@@ -65,23 +65,23 @@
                                         <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
                                       <%}%>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
-                                    data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
-                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
-                                <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel-<%=employeeB.employee[o].objectId%>" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
-                                <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
-                                <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
-                                <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
-                                data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
                             </li>
                             <%}%>
+                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;">delay</button>
+                            <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
                     </ul>
                 </div>
             </div>
@@ -147,7 +147,8 @@
           </div>
         </form>
         <div class="modal-footer text-left">
-          <button id="employeeCreate" class="btn btn-primary" type="submit">Crear</button>
+          <button class="btn btn-primary" type="submit" id="employeeCreate">Crear</button>
+          <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
           <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
         </div>
       </div>

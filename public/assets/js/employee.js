@@ -6,6 +6,8 @@ var flag = 0;
 
 
 $('#employeeCreate').click(function () {
+    $(".loadgif").css("visibility","");
+    $("#employeeCreate").css("visibility","hidden");
     var dataSend = {
       name:$('#name').val(),
       email:$('#email').val(),
@@ -20,9 +22,9 @@ $('#employeeCreate').click(function () {
     }
 
     if (validateEmail($('#email').val())) {
+      $("#employeeDelaysucc").trigger("click");
       $.post('/employee',dataSend)
       .done(function (result) {
-        $("#employeeDelaysucc").trigger("click");
         if (result.code==409) {
           $("#employeeConflict").trigger("click");
         }else {
@@ -59,7 +61,7 @@ $('#employeeCreate').click(function () {
           }
         });
         dataSend={};
-        $("#employeeDelay-"+id).trigger("click");
+        $("#employeeDelay").trigger("click");
       }
 
       $("#emplo-name-"+id).attr("disabled",true);
@@ -130,9 +132,9 @@ $('#employeeCreate').click(function () {
       }
     });
     if ($('#oke-'+id).text()=='Activar') {
-      $("#emploDesactivate-"+id).trigger("click");
+      $("#emploDesactivate").trigger("click");
     }else {
-      $("#emplook-"+id).trigger("click");
+      $("#emplook").trigger("click");
     }
 
   });
@@ -144,7 +146,7 @@ $('#employeeCreate').click(function () {
     $('.modale-'+id).css("visibility", "hidden");
     var delayMillis = 100;
     setTimeout(function() {
-      $("#emplocancel-"+id).trigger("click");
+      $("#emplocancel").trigger("click");
     }, delayMillis);
   });
 

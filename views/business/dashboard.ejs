@@ -38,7 +38,10 @@
             <%}else if(useTemplate.service){%>
               <!-- Servicios -->
               <% include ../service/service.ejs %>
-            <%}else{%>
+            <%}else if(useTemplate.client){%>
+              <!-- Cliente -->
+              <% include ../client/client.ejs %>
+            <%} else{%>
               <!-- Administrador -->
               <% include admin.ejs %>
             <%}%>
@@ -117,6 +120,7 @@
     <script src="/public/assets/js/business.js"></script>
     <script src="/public/assets/js/employee.js"></script>
     <script src="/public/assets/js/service.js"></script>
+    <script src="/public/assets/js/client.js"></script>
     <script src="/public/assets/material/global/vendor/select2/select2.min.js"></script>
     <script src="/public/assets/material/global/js/Plugin/select2.min.js"></script>
     <script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
@@ -137,8 +141,10 @@
     </script>
   </body>
   </html>
+
   <div class="alertify-logs"></div>
-  <%if (employeeB){%>
+
+  <%if (employeeB && employeeB.employee!='undefined' ){%>
     <% for(var o=0; o<employeeB.employee.length; o++) {%>
     <div class="alertify modale-<%=employeeB.employee[o].objectId%>" style="visibility:hidden;">
       <div class="dialog">
@@ -152,8 +158,3 @@
     </div>
   <%}%>
 <%}%>
-<script type="text/javascript">
-  var input = $('.timepicker').clockpicker({
-      twelvehour:true
-    });
-</script>

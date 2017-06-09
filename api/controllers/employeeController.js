@@ -41,7 +41,7 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
 };
 
 EmployeeModel.updateEmployee = function updateEmployee (options) {
-    var query = new Parse.Query('User');
+    var query = new Parse.Query('_User');
     return query.get(options.id).then(function(dataB){
       if (options.deleteB) {
           dataB.set({'isActive':false});
@@ -50,7 +50,10 @@ EmployeeModel.updateEmployee = function updateEmployee (options) {
       }else {
         if (options.name) dataB.set({'name':options.name});
         if (options.phone) dataB.set({'phone':options.phone});
-        if (options.email) dataB.set({'email':options.email});
+        if (options.email) {
+          dataB.set({'email':options.email});
+          dataB.set({'username':options.email});
+        }
       }
       dataB.save(null, { useMasterKey: true });
       return{success:true,code:200};

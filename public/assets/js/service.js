@@ -18,7 +18,6 @@ $(document).ready(function() {
       }
 
 
-
     try {
       for (var i = 0; i < $(".input-select-final").select2()[0].length; i++) {
         if ($(".input-select-final").select2()[0][i].selected==true) {
@@ -36,169 +35,148 @@ $(document).ready(function() {
 
     if ($('#serviceLunes1').val().length>0 || $('#serviceLunes2').val().length>0 || $('#serviceLunes3').val().length>0 || $('#serviceLunes4').val().length>0) {
       if ($('#serviceLunes1').val().length>0 && $('#serviceLunes2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceLunes1').val().length<1 && $('#serviceLunes2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceLunes3').val().length>0 && $('#serviceLunes4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceLunes3').val().length<1 && $('#serviceLunes4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceLunes1').val().length>0 && $('#serviceLunes2').val().length>0) && ($('#serviceLunes3').val().length<1 || $('#serviceLunes4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceLunes1').val().length<1 || $('#serviceLunes2').val().length<1) && ($('#serviceLunes3').val().length>0 && $('#serviceLunes4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+       if (($('#serviceLunes1').val().length<1 || $('#serviceLunes2').val().length<1) && ($('#serviceLunes3').val().length>0 && $('#serviceLunes4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if ($('#serviceLunes1').val().length>0 && $('#serviceLunes2').val().length>0) {
-
-        //en proceso
-      }
-
     }
     if ($('#serviceMartes1').val().length>0 || $('#serviceMartes2').val().length>0 || $('#serviceMartes3').val().length>0 || $('#serviceMartes4').val().length>0) {
       if ($('#serviceMartes1').val().length>0 && $('#serviceMartes2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceMartes1').val().length<1 && $('#serviceMartes2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceMartes3').val().length>0 && $('#serviceMartes4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceMartes3').val().length<1 && $('#serviceMartes4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceMartes1').val().length>0 && $('#serviceMartes2').val().length>0) && ($('#serviceMartes3').val().length<1 || $('#serviceMartes4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceMartes1').val().length<1 || $('#serviceMartes2').val().length<1) && ($('#serviceMartes3').val().length>0 && $('#serviceMartes4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+       if (($('#serviceMartes1').val().length<1 || $('#serviceMartes2').val().length<1) && ($('#serviceMartes3').val().length>0 && $('#serviceMartes4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
     }
     if ($('#serviceMiercoles1').val().length>0 || $('#serviceMiercoles2').val().length>0 || $('#serviceMiercoles3').val().length>0 || $('#serviceMiercoles4').val().length>0) {
       if ($('#serviceMiercoles1').val().length>0 && $('#serviceMiercoles2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceMiercoles1').val().length<1 && $('#serviceMiercoles2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceMiercoles3').val().length>0 && $('#serviceMiercoles4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceMiercoles3').val().length<1 && $('#serviceMiercoles4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceMiercoles1').val().length>0 && $('#serviceMiercoles2').val().length>0) && ($('#serviceMiercoles3').val().length<1 || $('#serviceMiercoles4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceMiercoles1').val().length<1 || $('#serviceMiercoles2').val().length<1) && ($('#serviceMiercoles3').val().length>0 && $('#serviceMiercoles4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+      if (($('#serviceMiercoles1').val().length<1 || $('#serviceMiercoles2').val().length<1) && ($('#serviceMiercoles3').val().length>0 && $('#serviceMiercoles4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
     }
     if ($('#serviceJueves1').val().length>0 || $('#serviceJueves2').val().length>0 || $('#serviceJueves3').val().length>0 || $('#serviceJueves4').val().length>0) {
       if ($('#serviceJueves1').val().length>0 && $('#serviceJueves2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceJueves1').val().length<1 && $('#serviceJueves2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceJueves3').val().length>0 && $('#serviceJueves4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceJueves3').val().length<1 && $('#serviceJueves4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceJueves1').val().length>0 && $('#serviceJueves2').val().length>0) && ($('#serviceJueves3').val().length<1 || $('#serviceJueves4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceJueves1').val().length<1 || $('#serviceJueves2').val().length<1) && ($('#serviceJueves3').val().length>0 && $('#serviceJueves4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+    if (($('#serviceJueves1').val().length<1 || $('#serviceJueves2').val().length<1) && ($('#serviceJueves3').val().length>0 && $('#serviceJueves4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
     }
     if ($('#serviceViernes1').val().length>0 || $('#serviceViernes2').val().length>0 || $('#serviceViernes3').val().length>0 || $('#serviceViernes4').val().length>0) {
       if ($('#serviceViernes1').val().length>0 && $('#serviceViernes2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceViernes1').val().length<1 && $('#serviceViernes2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceViernes3').val().length>0 && $('#serviceViernes4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceViernes3').val().length<1 && $('#serviceViernes4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceViernes1').val().length>0 && $('#serviceViernes2').val().length>0) && ($('#serviceViernes3').val().length<1 || $('#serviceViernes4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceViernes1').val().length<1 || $('#serviceViernes2').val().length<1) && ($('#serviceViernes3').val().length>0 && $('#serviceViernes4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+      if (($('#serviceViernes1').val().length<1 || $('#serviceViernes2').val().length<1) && ($('#serviceViernes3').val().length>0 && $('#serviceViernes4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
     }
     if ($('#serviceSabado1').val().length>0 || $('#serviceSabado2').val().length>0 || $('#serviceSabado3').val().length>0 || $('#serviceSabado4').val().length>0) {
       if ($('#serviceSabado1').val().length>0 && $('#serviceSabado2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceSabado1').val().length<1 && $('#serviceSabado2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceSabado3').val().length>0 && $('#serviceSabado4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceSabado3').val().length<1 && $('#serviceSabado4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceSabado1').val().length>0 && $('#serviceSabado2').val().length>0) && ($('#serviceSabado3').val().length<1 || $('#serviceSabado4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceSabado1').val().length<1 || $('#serviceSabado2').val().length<1) && ($('#serviceSabado3').val().length>0 && $('#serviceSabado4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+       if (($('#serviceSabado1').val().length<1 || $('#serviceSabado2').val().length<1) && ($('#serviceSabado3').val().length>0 && $('#serviceSabado4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
     }
     if ($('#serviceDomingo1').val().length>0 || $('#serviceDomingo2').val().length>0 || $('#serviceDomingo3').val().length>0 || $('#serviceDomingo4').val().length>0) {
       if ($('#serviceDomingo1').val().length>0 && $('#serviceDomingo2').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceDomingo1').val().length<1 && $('#serviceDomingo2').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
       if ($('#serviceDomingo3').val().length>0 && $('#serviceDomingo4').val().length<1) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }else if ($('#serviceDomingo3').val().length<1 && $('#serviceDomingo4').val().length>0) {
-        $("#CompletaHora").trigger("click");
+        $("#CompletaHoraS").trigger("click");
         return;
       }
-      if (($('#serviceDomingo1').val().length>0 && $('#serviceDomingo2').val().length>0) && ($('#serviceDomingo3').val().length<1 || $('#serviceDomingo4').val().length<1)) {
-        $("#CompletaHora").trigger("click");
-        return;
-      }else if (($('#serviceDomingo1').val().length<1 || $('#serviceDomingo2').val().length<1) && ($('#serviceDomingo3').val().length>0 && $('#serviceDomingo4').val().length>0)) {
-        $("#CompletaHora").trigger("click");
+      if (($('#serviceDomingo1').val().length<1 || $('#serviceDomingo2').val().length<1) && ($('#serviceDomingo3').val().length>0 && $('#serviceDomingo4').val().length>0)) {
+        $("#CompletaHoraS").trigger("click");
         return;
       }
+    }
+
+    if ($('#serviceLunes1').val().length<1 && $('#serviceMartes1').val().length<1 && $('#serviceMiercoles1').val().length<1 && $('#serviceJueves1').val().length<1 && $('#serviceViernes1').val().length<1 && $('#serviceSabado1').val().length<1 && $('#serviceDomingo1').val().length<1) {
+      $("#CompletaHoraS").trigger("click");
+      return;
     }
 
       dataSend.schedule=[{
@@ -232,12 +210,13 @@ $(document).ready(function() {
         }],
       }];
 
-      console.log(dataSend);
+
+      $(".loadgif").css("visibility","");
+      $(".service").css("visibility","hidden");
+      $("#serviceDelay").trigger("click");
 
       $.post('/service',dataSend)
       .done(function (result) {
-        console.log('rpuesta devueltaaa',result);
-        $(".btn-flat").trigger("click");
         location.reload();
       }).fail(function(error) {
         console.log(error.responseText);
@@ -259,24 +238,24 @@ $(document).ready(function() {
 
         if ($('#Lunes-0-'+id).val().length>0 || $('#Lunes-1-'+id).val().length>0 || $('#Lunes-2-'+id).val().length>0 || $('#Lunes-3-'+id).val().length>0) {
           if ($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Lunes-0-'+id).val().length<1 && $('#Lunes-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Lunes-2-'+id).val().length<1 && $('#Lunes-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length>0) && ($('#Lunes-2-'+id).val().length<1 || $('#Lunes-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Lunes-0-'+id).val().length<1 || $('#Lunes-1-'+id).val().length<1) && ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
 
@@ -284,24 +263,24 @@ $(document).ready(function() {
 
         if ($('#Martes-0-'+id).val().length>0 || $('#Martes-1-'+id).val().length>0 || $('#Martes-2-'+id).val().length>0 || $('#Martes-3-'+id).val().length>0) {
           if ($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Martes-0-'+id).val().length<1 && $('#Martes-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Martes-2-'+id).val().length<1 && $('#Martes-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length>0) && ($('#Martes-2-'+id).val().length<1 || $('#Martes-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Martes-0-'+id).val().length<1 || $('#Martes-1-'+id).val().length<1) && ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
 
@@ -309,48 +288,48 @@ $(document).ready(function() {
 
         if ($('#Miercoles-0-'+id).val().length>0 || $('#Miercoles-1-'+id).val().length>0 || $('#Miercoles-2-'+id).val().length>0 || $('#Miercoles-3-'+id).val().length>0) {
           if ($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Miercoles-0-'+id).val().length<1 && $('#Miercoles-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Miercoles-2-'+id).val().length<1 && $('#Miercoles-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length>0) && ($('#Miercoles-2-'+id).val().length<1 || $('#Miercoles-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Miercoles-0-'+id).val().length<1 || $('#Miercoles-1-'+id).val().length<1) && ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
         }
 
         if ($('#Jueves-0-'+id).val().length>0 || $('#Jueves-1-'+id).val().length>0 || $('#Jueves-2-'+id).val().length>0 || $('#Jueves-3-'+id).val().length>0) {
           if ($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Jueves-0-'+id).val().length<1 && $('#Jueves-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Jueves-2-'+id).val().length<1 && $('#Jueves-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length>0) && ($('#Jueves-2-'+id).val().length<1 || $('#Jueves-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Jueves-0-'+id).val().length<1 || $('#Jueves-1-'+id).val().length<1) && ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
 
@@ -358,48 +337,48 @@ $(document).ready(function() {
 
         if ($('#Viernes-0-'+id).val().length>0 || $('#Viernes-1-'+id).val().length>0 || $('#Viernes-2-'+id).val().length>0 || $('#Viernes-3-'+id).val().length>0) {
           if ($('#Viernes-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Viernes-0-'+id).val().length<1 && $('#Viernes-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Viernes-2-'+id).val().length<1 && $('#Viernes-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('Vierness-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Viernes-0-'+id).val().length<1 || $('#Viernes-1-'+id).val().length<1) && ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
         }
 
         if ($('#Sabado-0-'+id).val().length>0 || $('#Sabado-1-'+id).val().length>0 || $('#Sabado-2-'+id).val().length>0 || $('#Sabado-3-'+id).val().length>0) {
           if ($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Sabado-0-'+id).val().length<1 && $('#Sabado-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Sabado-2-'+id).val().length<1 && $('#Sabado-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length>0) && ($('#Sabado-2-'+id).val().length<1 || $('#Sabado-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Sabado-0-'+id).val().length<1 || $('#Sabado-1-'+id).val().length<1) && ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
 
@@ -407,24 +386,24 @@ $(document).ready(function() {
 
         if ($('#Domingo-0-'+id).val().length>0 || $('#Domingo-1-'+id).val().length>0 || $('#Domingo-2-'+id).val().length>0 || $('#Domingo-3-'+id).val().length>0) {
           if ($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Domingo-0-'+id).val().length<1 && $('#Domingo-1-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length<1) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if ($('#Domingo-2-'+id).val().length<1 && $('#Domingo-3-'+id).val().length>0) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
           if (($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length>0) && ($('#Domingo-2-'+id).val().length<1 || $('#Domingo-3-'+id).val().length<1)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }else if (($('#Domingo-0-'+id).val().length<1 || $('#Domingo-1-'+id).val().length<1) && ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length>0)) {
-            $("#CompletaHora").trigger("click");
+            $("#CompletaHoraS").trigger("click");
             dataSend.flag = 0;
           }
 
@@ -495,7 +474,7 @@ $(document).ready(function() {
             }
           });
           dataSend={};
-          $("#serviceDelay-"+id).trigger("click");
+          $("#serviceDelay").trigger("click");
         //}
 
         /*horario*/
@@ -568,7 +547,7 @@ $(document).ready(function() {
           location.reload();
         }
       });
-      $("#serviceok-"+id).trigger("click");
+      $("#serviceok").trigger("click");
     });
 
 
@@ -578,7 +557,7 @@ $(document).ready(function() {
       $('.modalS-'+id).css("visibility", "hidden");
       var delayMillis = 100;
       setTimeout(function() {
-        $("#servicecancel-"+id).trigger("click");
+        $("#servicecancel").trigger("click");
       }, delayMillis);
     });
 
