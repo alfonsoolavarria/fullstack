@@ -378,5 +378,45 @@ $('.finish-booking').click(function () {
 
   });
 
+  $("#modalCliente").click(function() {
+    $('#addNewCalendar').modal('hide');
+    $('#addClient').modal('show');
+  });
+
+  $(".close-modal-client").click(function() {
+    $('#addNewCalendar').modal('show');
+    $('#addClient').modal('hide');
+  });
+
+  $("#newClienteM").click(function(e) {
+    $(".loadgif").css("visibility","");
+    $("#newClienteM").css("visibility","hidden");
+    e.preventDefault();
+
+    if ($("#clientname").val().length<1 || $("#phonemail").val().length<1 ) {
+      $("#cl-invalido").trigger("click");
+      return;
+    }else {
+      var dataSendC = {
+        name:$("#clientname").val(),
+        phone:$("#phonemail").val(),
+        email:$("#phoneclient").val(),
+        imagen:$('.dropify-render img').attr('src'),
+        password:'12345678',
+      };
+      $.post('/client',dataSendC)
+        .done(function (result) {
+          console.log('lo que me llega',result);
+          $(".loadgif").css("visibility","hidden");
+          $("#newClienteM").css("visibility","");
+          $('#addNewCalendar').modal('show');
+          $('#addClient').modal('hide');
+
+      }).fail(function(error) {
+        console.log(error.responseText);
+        console.log('error poner alertify');
+      });
+    }
+  });
 
 });
