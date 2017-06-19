@@ -213,6 +213,16 @@
       var Site = window.Site;
       $(document).ready(function() {
         Site.run();
+        //buttom next-prev disabled
+        var cadena = $(".pagination-next")[0].className;
+        if (cadena.indexOf('disabled') != -1) {
+          $(".pagination-next").prop("onclick", null);
+        }
+        var cadena2 = $(".pagination-prev")[0].className;
+        if (cadena2.indexOf('disabled') != -1) {
+          $(".pagination-prev").prop("onclick", null);
+        }
+
       });
     })(document, window, jQuery);
 
@@ -221,11 +231,8 @@
       setTimeout(function() {
         var lis = $("li.pagination-items").find("active");
         for (var i = 0; i < lis.prevObject.length; i++) {
-            //console.log(lis.prevObject[i]);//object completo
-            //console.log(lis.prevObject[i].className);// nombre de la clase
             var nameclass = lis.prevObject[i].className;
             if (nameclass.search("active")!="-1") {
-              //console.log(lis.prevObject[i].textContent);//numero del li
               $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
               $(".next-prev").text(lis.prevObject[i].textContent);
               window.location.href = $(".next-prev").attr("href");
