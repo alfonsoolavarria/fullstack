@@ -12,7 +12,18 @@ if (usersType.admin){
 if (usersType.userId){
   userId=usersType.userId;
 }
+var Em='', Das='', Cal='';
 
+if(businessSelec==1){
+  Em = 'active';
+}
+if (dashSelec==1){
+  Das = 'active';
+}
+
+if (calendarSelec==1){
+  Cal = 'active';
+}
 %>
 
 <div class="site-menubar">
@@ -20,14 +31,14 @@ if (usersType.userId){
     <div>
       <div>
         <ul class="site-menu" data-plugin="menu">
-          <li class="site-menu-item active">
+          <li class="site-menu-item <%=Das%>">
             <a class="animsition-link" href="/<%=redirect%>?user=<%=userId%>">
               <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
               <span class="site-menu-title">Dashboard</span>
             </a>
           </li>
           <%if (usersType.admin){%>
-          <li class="site-menu-item has-sub">
+          <li class="site-menu-item has-sub <%=Em%>">
             <a href="javascript:void(0)">
               <i class="site-menu-icon md-chart" aria-hidden="true"></i>
               <span class="site-menu-title">Empresas</span>
@@ -46,7 +57,7 @@ if (usersType.userId){
             </ul>
             </li>
             <%} else if (usersType.owner){%>
-              <li class="site-menu-item has-sub">
+              <li class="site-menu-item has-sub <%=Em%>">
                 <a href="/business/list?owner=<%=usersType.userId%>">
                   <i class="site-menu-icon md-chart" aria-hidden="true"></i>
                   <span class="site-menu-title">Ajustes</span>
@@ -54,7 +65,7 @@ if (usersType.userId){
                 </li>
             <%}%>
             <%if (usersType.owner || usersType.employee){%>
-              <li class="site-menu-item has-sub">
+                <li class="site-menu-item has-sub <%=Cal%>">
                 <%if (usersType.owner){%>
                   <a href="/calendar?owner=<%=usersType.userId%>">
                 <%} else if (usersType.employee){%>

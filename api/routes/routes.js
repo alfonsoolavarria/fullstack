@@ -54,7 +54,10 @@ module.exports = function(app) {
       usersType.userId = req.query.user;
       return res.render('index.ejs',{
         usersType,
-        session:session
+        session:session,
+        businessSelec: 0,
+        dashSelec:1,
+        calendarSelec:0,
       });
     }else {
       return res.redirect('/');
@@ -73,7 +76,10 @@ module.exports = function(app) {
       usersType.userId = req.query.user;
       return res.render('index.ejs',{
         usersType,
-        session:session
+        session:session,
+        businessSelec:0,
+        dashSelec:1,
+        calendarSelec:0,
       });
     }else {
       return res.redirect('/');
@@ -92,7 +98,10 @@ module.exports = function(app) {
       usersType.userId = req.query.user;
       res.render('index.ejs',{
         usersType,
-        session:session
+        session:session,
+        businessSelec:0,
+        dashSelec:1,
+        calendarSelec:0,
       });
     }else {
       return res.redirect('/');
@@ -126,7 +135,14 @@ module.exports = function(app) {
     usersType.userId = req.query.user;
     var valores={};
     Users.getTypeBusiness().then(function(typeBusiness) {
-      res.render('business/newbusiness.ejs',{usersType,valores,typeBusiness});
+      res.render('business/newbusiness.ejs',{
+        usersType,
+        valores,
+        typeBusiness,
+        businessSelec:1,
+        businessSelec:0,
+        calendarSelec:0,
+      });
     });
 	});
 
@@ -153,7 +169,10 @@ module.exports = function(app) {
             valores,
             catpage:JSON.parse(JSON.stringify(data.cantPage)),
             selectPage:selectPage,
-            typeBusiness
+            typeBusiness,
+            businessSelec:1,
+            calendarSelec:0,
+            dashSelec:0,
           });
         });
       });
@@ -185,6 +204,9 @@ module.exports = function(app) {
           service,
           dataClient:dataClient,
           client:'active',
+          businessSelec:1,
+          calendarSelec:0,
+          dashSelec:0,
         });
       });
     }else {
@@ -233,6 +255,9 @@ module.exports = function(app) {
                     dataClient,
                     listService,
                     schedule,
+                    businessSelec:1,
+                    calendarSelec:0,
+                    dashSelec:0,
                   });
                 });
               }else {
@@ -251,6 +276,9 @@ module.exports = function(app) {
                   dataClient,
                   listService,
                   schedule,
+                  businessSelec:1,
+                  calendarSelec:0,
+                  dashSelec:0,
                 });
               }
             });
@@ -272,6 +300,9 @@ module.exports = function(app) {
               listService,
               schedule,
               client,
+              businessSelec:1,
+              calendarSelec:0,
+              dashSelec:0,
             });
           }
         });
@@ -431,6 +462,9 @@ module.exports = function(app) {
               service:JSON.stringify(listaservice),
               employee:JSON.stringify(listaemploye),
               Idbussi:bussiId,
+              businessSelec:0,
+              dashSelec:0,
+              calendarSelec:1,
             });
           });
         });
