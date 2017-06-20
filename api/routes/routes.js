@@ -539,7 +539,7 @@ module.exports = function(app) {
          res.json(result);
        }
        ClienteControllers.createCliente(req.body).then(function(user) {
-         res.json({code:200});
+         res.json({code:200,data:user});
        });
      });
    });

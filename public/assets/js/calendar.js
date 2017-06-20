@@ -19,6 +19,10 @@ $(document).ready(function() {
     data:jsonCliente,
   	getValue: "name",
     list: {
+      maxNumberOfElements: 10,
+      match: {
+        enabled: true
+      },
   		onSelectItemEvent: function() {
   			var value = $("#clienteE").getSelectedItemData().objectId;
         //pongo el id del cliente
@@ -34,6 +38,10 @@ $(document).ready(function() {
     data:jsonCliente,
   	getValue: "name",
     list: {
+      maxNumberOfElements: 10,
+      match: {
+        enabled: true
+      },
   		onSelectItemEvent: function() {
   			var value = $("#editEname").getSelectedItemData().objectId;
         //pongo el id del cliente
@@ -50,6 +58,10 @@ $(document).ready(function() {
     data:dataSs,
   	getValue: "name",
     list: {
+      maxNumberOfElements: 10,
+      match: {
+        enabled: true
+      },
   		onSelectItemEvent: function() {
   			var value = $("#servicioO2").getSelectedItemData().objectId;
         //pongo el id del cliente
@@ -66,6 +78,10 @@ $(document).ready(function() {
     data:dataEe,
   	getValue: "name",
     list: {
+      maxNumberOfElements: 10,
+      match: {
+        enabled: true
+      },
   		onSelectItemEvent: function() {
   			var value = $("#employeeE2").getSelectedItemData().objectId;
         //pongo el id del cliente
@@ -78,8 +94,8 @@ $(document).ready(function() {
 
 
   //autocomplete service
-  $("#eac-container-clienteE").click(function() {
-    $("#servicioO").removeAttr("disabled");
+  //$("#eac-container-clienteE").click(function() {
+    //$("#servicioO").removeAttr("disabled");
     $("#eac-container-servicioO").css("zIndex","1710");
     var dataS = JSON.parse($("#valoresS-json").val());
     /*dataS = $.grep(dataS, function(data1, index) {
@@ -90,39 +106,47 @@ $(document).ready(function() {
       data:dataS,
       getValue: "name",
       list: {
+        maxNumberOfElements: 10,
+        match: {
+          enabled: true
+        },
         onSelectItemEvent: function() {
           var value2 = $("#servicioO").getSelectedItemData().id;
           //pongo el id del servicio
           $("#data-id-service").val(value2).trigger("change");
-          //autocomplete empledo
-          var dataE = JSON.parse($("#valoresEm-json").val());
-          /*dataE = $.grep(dataE, function(data2, index) {
-           return data2.servi == $("#data-id-service").val();
-         });*/
-          if (dataE.length<1) {dataE=[{name:'No hay empleado disponible'}] }
-          var options3 = {
-            data:dataE,
-            getValue: "name",
-            list: {
-              onSelectItemEvent: function() {
-                var value2 = $("#employeeE").getSelectedItemData().id;
-                //pongo el id del empleado
-                $("#data-id-emple").val(value2).trigger("change");
-              }
-            }
-          };
-          $("#employeeE").easyAutocomplete(options3);
-          //fin autocomplete empledo
         }
       }
     };
     $("#servicioO").easyAutocomplete(options2);
-  });
+  //});
   //fin autocomplete service
+
+
+  //autocomplete empledo
+  var dataE = JSON.parse($("#valoresEm-json").val());
+  if (dataE.length<1) {dataE=[{name:'No hay empleado disponible'}] }
+  var options3 = {
+    data:dataE,
+    getValue: "name",
+    list: {
+      maxNumberOfElements: 10,
+      match: {
+        enabled: true
+      },
+      onSelectItemEvent: function() {
+        var value2 = $("#employeeE").getSelectedItemData().id;
+        //pongo el id del empleado
+        $("#data-id-emple").val(value2).trigger("change");
+      }
+    }
+  };
+  $("#employeeE").easyAutocomplete(options3);
+  //fin autocomplete empledo
+
 
   $("#servicioO").click(function () {
     $("#eac-container-servicioO").css("zIndex","1710");
-    $("#employeeE").removeAttr("disabled");
+    //$("#employeeE").removeAttr("disabled");
     $("#eac-container-employeeE").css("zIndex","1710");
 
   });
@@ -132,19 +156,33 @@ $(document).ready(function() {
     $("#clienteE").val("");
     $("#servicioO").val("");
     $("#employeeE").val("");
-    $("#servicioO").attr("disabled",true);
+
+    $('#data-id-cliente').val("");
+    $('#data-id-service').val("");
+    $('#data-id-emple').val("");
+
+    //$("#servicioO").attr("disabled",true);
   });
 
   $(".close-service").click(function() {
     $("#clienteE").val("");
     $("#servicioO").val("");
     $("#employeeE").val("");
+
+    $('#data-id-cliente').val("");
+    $('#data-id-service').val("");
+    $('#data-id-emple').val("");
+
   });
 
   $(".close-employe").click(function() {
     $("#clienteE").val("");
     $("#servicioO").val("");
     $("#employeeE").val("");
+
+    $('#data-id-cliente').val("");
+    $('#data-id-service').val("");
+    $('#data-id-emple').val("");
   });
 
   $(".close-cliente2").click(function() {
@@ -224,7 +262,7 @@ $(document).ready(function() {
         data:dataSendBooking2,
         type: 'PUT',
         success: function functionName(data) {
-          console.log('*************',data);
+
           location.reload();
         }
       });
@@ -241,6 +279,8 @@ $(document).ready(function() {
 
   $('form').submit(function (e) {
     e.preventDefault();
+    $(".loadgif").css("visibility","");
+    $("#modalNewService").css("visibility","hidden");
     var duration = $('#durationB').val();
     var startdateinit = new Date($('#fechaA').val()+" "+$('#horaH').val());
     var startdatefinish = moment(startdateinit).format("YYYY-MM-DD HH:mm");
@@ -261,6 +301,8 @@ $(document).ready(function() {
     }
     if (dataSendBooking.client.length<1 || dataSendBooking.employee.length<1 || dataSendBooking.service.length<1) {
       $("#booking-invalido").trigger("click");
+      $(".loadgif").css("visibility","hidden");
+      $("#modalNewService").css("visibility","");
       return;
     }
     $.post('/booking',dataSendBooking)
@@ -310,7 +352,7 @@ $('.finish-booking').click(function () {
     data:dataFinish,
     type: 'PUT',
     success: function functionName(data) {
-      console.log('*Finish*',data);
+
       location.reload();
     }
   });
@@ -363,7 +405,7 @@ $('.finish-booking').click(function () {
       data:dataDelete,
       type: 'PUT',
       success: function functionName(data) {
-        console.log('*Delete*',data);
+
         location.reload();
       }
     });
@@ -386,27 +428,54 @@ $('.finish-booking').click(function () {
   $(".close-modal-client").click(function() {
     $('#addNewCalendar').modal('show');
     $('#addClient').modal('hide');
+    $(".loadgif").css("visibility","hidden");
+    $("#newClienteM").css("visibility","");
   });
 
   $("#newClienteM").click(function(e) {
-    $(".loadgif").css("visibility","");
-    $("#newClienteM").css("visibility","hidden");
-    e.preventDefault();
-
-    if ($("#clientname").val().length<1 || $("#phonemail").val().length<1 ) {
+    if ($("#clientname").val().length<1 || $("#emailcliente").val().length<1 ) {
       $("#cl-invalido").trigger("click");
       return;
     }else {
+      $(".loadgif").css("visibility","");
+      $("#newClienteM").css("visibility","hidden");
       var dataSendC = {
         name:$("#clientname").val(),
-        phone:$("#phonemail").val(),
-        email:$("#phoneclient").val(),
+        phone:$("#phonecliente").val(),
+        email:$("#emailcliente").val(),
         imagen:$('.dropify-render img').attr('src'),
         password:'12345678',
       };
       $.post('/client',dataSendC)
         .done(function (result) {
-          console.log('lo que me llega',result);
+          if (result.data) {
+            var newdata = JSON.parse($("#valores-json").val());
+            newdata.push(result.data);
+            $(".paste").remove();
+            $(".inp-cli").append("<div class='input-search input-search-dark paste'><input type='text' class='form-control other' id='clienteE' name='cliente' placeholder='Busca por nombre, email o tel&eacute;fono' required><button onclick='resetD()' type='button' class='input-search-close icon md-close close-clienteD' aria-label='Close'></button></div>");
+
+            $("#valorestwo").val(JSON.stringify(newdata));
+            var jsonClientet = JSON.parse($("#valorestwo").val());
+            var options = {
+              data:jsonClientet,
+              getValue: "name",
+              list: {
+                maxNumberOfElements: 10,
+                match: {
+                  enabled: true
+                },
+                onSelectItemEvent: function() {
+                  var value = $("#clienteE").getSelectedItemData().objectId;
+                  //pongo el id del cliente
+                  $("#data-id-cliente").val(value).trigger("change");
+                }
+              }
+            };
+            $("#clienteE").easyAutocomplete(options);
+            $(".easy-autocomplete").css("width","");
+            $("#eac-container-clienteE").css("zIndex","1710");
+          }
+
           $(".loadgif").css("visibility","hidden");
           $("#newClienteM").css("visibility","");
           $('#addNewCalendar').modal('show');
@@ -415,8 +484,11 @@ $('.finish-booking').click(function () {
       }).fail(function(error) {
         console.log(error.responseText);
         console.log('error poner alertify');
+        $(".loadgif").css("visibility","hidden");
+        $("#newClienteM").css("visibility","");
       });
     }
+    e.preventDefault();
   });
 
 });
