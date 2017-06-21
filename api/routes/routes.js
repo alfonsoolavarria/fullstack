@@ -494,7 +494,7 @@ module.exports = function(app) {
             service:JSON.parse(JSON.stringify(data[i])).service,
             serviceName:JSON.parse(JSON.stringify(data[i])).service.serviceName,
             employee:JSON.parse(JSON.stringify(data[i])).employee,
-            employeeName:JSON.parse(JSON.stringify(data[i])).employee.username,
+            employeeName:JSON.parse(JSON.stringify(data[i])).employee.name,
             bussines:JSON.parse(JSON.stringify(data[i])).bussines,
             client:JSON.parse(JSON.stringify(data[i])).client,
             clientName:JSON.parse(JSON.stringify(data[i])).client.username,

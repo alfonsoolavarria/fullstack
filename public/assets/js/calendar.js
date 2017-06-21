@@ -63,9 +63,9 @@ $(document).ready(function() {
         enabled: true
       },
   		onSelectItemEvent: function() {
-  			var value = $("#servicioO2").getSelectedItemData().objectId;
+  			var value = $("#servicioO2").getSelectedItemData().id;
         //pongo el id del cliente
-  			$("#data-id-cliente").val(value).trigger("change");
+  			$("#data-id-service").val(value).trigger("change");
   		}
   	}
   };
@@ -83,9 +83,9 @@ $(document).ready(function() {
         enabled: true
       },
   		onSelectItemEvent: function() {
-  			var value = $("#employeeE2").getSelectedItemData().objectId;
+  			var value = $("#employeeE2").getSelectedItemData().servi;
         //pongo el id del cliente
-  			$("#data-id-cliente").val(value).trigger("change");
+  			$("#data-id-emple").val(value).trigger("change");
   		}
   	}
   };
@@ -256,6 +256,16 @@ $(document).ready(function() {
         idBooking:$('#data-id-booking').val(),
         endDate:dataendfinal,
         deleteBooking:false,
+      }
+
+      if (dataSendBooking2.client.length<1 || dataSendBooking2.service.length<1 || dataSendBooking2.employee.length<1 || $("#employeeE2").val().length<1 || $("#servicioO2").val().length<1 || $("#editEname").val().length<1 ) {
+        $("#booking-invalido").trigger("click");
+        return;
+      }
+
+      if (dataSendBooking2.duration.length<1 || $('#hourup').val().length<1) {
+        $("#cl-invalido").trigger("click");
+        return;
       }
       $.ajax({
         url:'/booking',
@@ -430,6 +440,11 @@ $('.finish-booking').click(function () {
     $('#addClient').modal('hide');
     $(".loadgif").css("visibility","hidden");
     $("#newClienteM").css("visibility","");
+  });
+
+  $(".modal-second").click(function() {
+    $('#addNewCalendar').modal('show');
+    $('#addClient').modal('hide');
   });
 
   $("#newClienteM").click(function(e) {
