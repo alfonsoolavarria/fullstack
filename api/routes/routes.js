@@ -434,7 +434,7 @@ module.exports = function(app) {
             var datakk = JSON.parse(JSON.stringify(serviceData));
             for (var i = 0; i < datakk.length; i++) {
               bussiId=datakk[i].business.objectId;
-              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId});
+              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
               if (datakk[i].alfonso[0].length>0) {
                 for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
                   if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {

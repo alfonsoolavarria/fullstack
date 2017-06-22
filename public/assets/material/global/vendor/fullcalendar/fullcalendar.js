@@ -32,9 +32,8 @@ $.fn.fullCalendar = function(options) {
 		var element = $(_element);
 		var calendar = element.data('fullCalendar'); // get the existing calendar object (if any)
 		var singleRes; // the returned value of this single method call
-
 		// a method call
-		if (typeof options === 'string') {
+		/*if (typeof options === 'string') {
 
 			if (calendar && $.isFunction(calendar[options])) {
 				singleRes = calendar[options].apply(calendar, args);
@@ -45,12 +44,12 @@ $.fn.fullCalendar = function(options) {
 					element.removeData('fullCalendar');
 				}
 			}
-		}
+		}*/
 		// a new calendar initialization
-		else if (!calendar) { // don't initialize twice
+		if (!calendar) { // don't initialize twice
 		$.get( "/booking", function( data ) {
 			//console.log('+--------');
-			//console.log(data.data);
+			//console.log(data);
 			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
 			//console.log(options);
 			options.events= data.data;

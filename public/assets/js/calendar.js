@@ -112,6 +112,9 @@ $(document).ready(function() {
         },
         onSelectItemEvent: function() {
           var value2 = $("#servicioO").getSelectedItemData().id;
+          var duravalue = $("#servicioO").getSelectedItemData().duration;
+          //pongo la duracion
+          $("#durationB").val(duravalue)
           //pongo el id del servicio
           $("#data-id-service").val(value2).trigger("change");
         }
@@ -167,6 +170,7 @@ $(document).ready(function() {
   $(".close-service").click(function() {
     $("#clienteE").val("");
     $("#servicioO").val("");
+    $("#durationB").val("");
     $("#employeeE").val("");
 
     $('#data-id-cliente').val("");
