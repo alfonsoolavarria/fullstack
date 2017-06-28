@@ -59,9 +59,11 @@
                   <label class="col-md-3 form-control-label">Tipo de Negocio:</label>
                   <div class="col-md-9">
                     <select class="form-control">
-                      <% typeBusiness.forEach(function(tb) { %>
-                        <option><%= tb.name %></option>
-                      <% }); %>
+                      <%if(typeBusiness.length>0){%>
+                        <% typeBusiness.forEach(function(tb) { %>
+                          <option><%= tb.name %></option>
+                        <% }); %>
+                      <%}%>
                     </select>
                   </div>
                 </div>

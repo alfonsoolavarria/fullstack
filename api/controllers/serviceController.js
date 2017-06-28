@@ -55,13 +55,32 @@ ServiceControllers.updateService = function updateService (options) {
 
 };
 
-ServiceControllers.getService = function getService (id) {
+ServiceControllers.getService = function getService (id,reqparams) {
+  var page=reqparams.page ? reqparams.page : 0;
+  var cantpage=10;
   var query = new Parse.Query('Service');
+  var consulta;
   if (id) {
     query.equalTo('business', new Parse.Object('Business', {id: id}));
   }
   query.equalTo('status', true);
-  return query.find().then(function(data) {
+
+  if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
+  else consulta = query.find();
+  query.count().then(function(cantData) {
+    if ((cantData/2)>0 && (cantData/2)%1==0) {
+      //entero
+      cantpage=(cantData/2)*10;
+    }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
+      //redondeo
+      cantpage=(parseInt(cantData/2)+1)*10;
+    }else {
+      //una sola pagina
+      cantpage=1*10;
+    }
+  });
+
+  return consulta.then(function(data) {
     var promises = [];
     var kk = 0;
     _.forEach(data, function(allD) {
@@ -73,9 +92,10 @@ ServiceControllers.getService = function getService (id) {
             data[i].alfonso = [];
             data[i].alfonso.push(resultados[i]);
         }
+        if (reqparams.type=='service') data.push({catpageE:cantpage});
         return data;
     });
-});
+  });
 };
 
 ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,employeeId) {

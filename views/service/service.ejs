@@ -12,6 +12,7 @@
             <div class="tab-content">
                 <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
                     <ul class="list-group">
+                      <%if (serviceData.length>0){%>
                         <% for(var o=0; o<serviceData.length; o++) {%>
                             <li class="list-group-item">
                                 <div class="media">
@@ -144,6 +145,18 @@
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
                     </ul>
+                    <%}else{%>
+                      No hay Servicios disponibles
+                    <%}%>
+
+                    <%if(catpageE!=10){%>
+                      <nav>
+                        <ul data-plugin="paginator" id="paginationId3" data-total="<%=catpageE%>" data-skin="pagination-no-border"></ul>
+                      </nav>
+                    <%}%>
+                    <input id="flagPaginator" value="3" style="visibility:hidden;">
+                    <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
+                    <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                 </div>
             </div>
         </div>
@@ -445,6 +458,7 @@
                     <label class="col-md-4 form-control-label"></label>
                 </div>
             <input style="visibility:hidden;" id="businessid" value="<%=valores.objectId%>"></input>
+            <input style="visibility:hidden;" id="asRangevalue" value=""></input>
           </form>
           <div class="modal-footer text-left">
             <button class="btn btn-primary service" type="submit">Crear</button>

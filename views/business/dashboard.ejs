@@ -136,8 +136,54 @@
       var Site = window.Site;
       $(document).ready(function() {
         Site.run();
+        var cadena = $(".pagination-next")[0].className;
+        if (cadena.indexOf('disabled') != -1) {
+          $(".pagination-next").prop("onclick", null);
+        }
+        var cadena2 = $(".pagination-prev")[0].className;
+        if (cadena2.indexOf('disabled') != -1) {
+          $(".pagination-prev").prop("onclick", null);
+        }
       });
     })(document, window, jQuery);
+
+    function prevC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              if ($("#flagPaginator").val()==2) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=employee&page='+lis.prevObject[i].textContent;
+              }else if ($("#flagPaginator").val()==3) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=service&page='+lis.prevObject[i].textContent;
+              }else if ($("#flagPaginator").val()==4) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=client&page='+lis.prevObject[i].textContent;
+              }
+            }
+        }
+      }, delayMillis);
+    }
+    function nextC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              if ($("#flagPaginator").val()==2) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=employee&page='+lis.prevObject[i].textContent;
+              }else if ($("#flagPaginator").val()==3) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=service&page='+lis.prevObject[i].textContent;
+              }else if ($("#flagPaginator").val()==4) {
+                window.location.href = '/business/<%=bussiId%>/dashboard?type=client&page='+lis.prevObject[i].textContent;
+              }
+            }
+        }
+      }, delayMillis);
+    }
+
     </script>
   </body>
   </html>

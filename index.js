@@ -30,7 +30,6 @@ app.set('views', __dirname + "/views");
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
-
 // Serve the Parse API on the /parse URL prefix
 var mountPath = configEnv.PARSE_MOUNT || '/parse';
 

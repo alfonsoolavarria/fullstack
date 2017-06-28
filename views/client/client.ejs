@@ -4,6 +4,7 @@
     <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
       <div class="tab-content">
         <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+          <%if(dataClient.length>0){%>
           <% for(var i=0; i<dataClient.length; i++) {%>
           <ul class="list-group">
             <li class="list-group-item">
@@ -62,6 +63,17 @@
               </li>
             </ul>
           <%}%>
+          <%}else{%>
+            No hay Clientes disponibles
+          <%}%>
+          <%if(catpageE!=10){%>
+            <nav>
+              <ul data-plugin="paginator" id="paginationId4" data-total="<%=catpageE%>" data-skin="pagination-no-border"></ul>
+            </nav>
+          <%}%>
+          <input id="flagPaginator" value="4" style="visibility:hidden;">
+          <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
+          <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
           </div>
         </div>
       </div>

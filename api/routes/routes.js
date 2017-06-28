@@ -47,6 +47,7 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/admin', function(req, res) {
+    console.log('adminnnnn');
     if (session) {
       usersType.admin = true;
       usersType.owner=false;
@@ -140,7 +141,7 @@ module.exports = function(app) {
         valores,
         typeBusiness,
         businessSelec:1,
-        businessSelec:0,
+        dashSelec:0,//dejar esta correccion
         calendarSelec:0,
       });
     });
@@ -182,8 +183,13 @@ module.exports = function(app) {
 	});
 
   app.get('/business/:id/dashboard', function(req, res) {
-    var employee='',service='',client='', serviceData={};
+    var employee='',service='',client='', selectPageE=1, catpage=10, serviceData={};
     var listService = [], final=[], schedule=[], dataClient=[];
+    if (req.query.page) {
+      selectPageE=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+
     useTemplate.client=false;
     useTemplate.service=false;
     useTemplate.employee = false;
@@ -191,8 +197,18 @@ module.exports = function(app) {
     if (req.query.type=='client') {
       useTemplate.client=true;
       client='active';
-      Users.getUsersClient('Cliente').then(function(userClient){
+      Users.getUsersClient('Cliente',req.query).then(function(userClient){
         dataClient = JSON.parse(userClient);
+        for (var ii = 0; ii < dataClient.length; ii++) {
+          if (dataClient[ii].catpageE) {
+            catpage = dataClient[ii].catpageE;
+          }
+        }
+        for (var ii = 0; ii < dataClient.length; ii++) {
+          dataClient = dataClient.filter(function(el) {
+            return !el.catpageE;
+          });
+        }
         res.render('business/dashboard.ejs',{
           usersType,
           valores:{objectId:req.params.id},
@@ -202,6 +218,9 @@ module.exports = function(app) {
           dashboard:'',
           employee,
           service,
+          bussiId:req.params.id,
+          selectPageE,
+          catpageE:catpage,
           dataClient:dataClient,
           client:'active',
           businessSelec:1,
@@ -223,21 +242,30 @@ module.exports = function(app) {
               service='active';
             }
             useTemplate.dashboard = false;
-            Users.getEmployeeBusiness(req.params).then(function(employeeB) {
+            Users.getEmployeeBusiness(req.params,req.query).then(function(employeeB) {
               if (useTemplate.service) {
-                ServiceControllers.getService(req.params.id).then(function(serviceData) {
+                ServiceControllers.getService(req.params.id,req.query).then(function(serviceData) {
+                  for (var ii = 0; ii < serviceData.length; ii++) {
+                    if (serviceData[ii].catpageE) {
+                      catpage = serviceData[ii].catpageE;
+                    }
+                  }
+                  serviceData = serviceData.filter(function(el) {
+                    return !el.catpageE;
+                  });
                   if (serviceData.length>0) {
                     serviceData = JSON.parse(JSON.stringify(serviceData));
                     for (var i = 0; i < serviceData.length; i++) {
-                      if (serviceData[i].alfonso[0].length>0) {
-                        for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
-                          listService.push(serviceData[i].alfonso[0][o].objectId);
+                        if (serviceData[i].alfonso[0].length>0) {
+                          for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
+                            listService.push(serviceData[i].alfonso[0][o].objectId);
+                          }
+                          final.push(JSON.parse(JSON.stringify(listService)));
+                          listService=[];
+                        }else {
+                          final.push(['']);
                         }
-                        final.push(JSON.parse(JSON.stringify(listService)));
-                        listService=[];
-                      }else {
-                        final.push(['']);
-                      }
+
                     }
                   }
                   res.render('business/dashboard.ejs',{
@@ -245,9 +273,13 @@ module.exports = function(app) {
                     valores,
                     typeBusiness,
                     useTemplate,
+                    bussiId:req.params.id,
                     employeeB,
                     dashboard:'',
                     employee,
+                    selectPageE,
+                    catpageE:catpage,
+                    bussiId:req.params.id,
                     service,
                     client,
                     serviceData,
@@ -267,8 +299,11 @@ module.exports = function(app) {
                   typeBusiness,
                   useTemplate,
                   employeeB,
+                  bussiId:req.params.id,
                   dashboard:'',
                   employee,
+                  catpageE:employeeB.cantPage,
+                  selectPageE,
                   service,
                   client,
                   serviceData,
@@ -290,6 +325,7 @@ module.exports = function(app) {
               valores,
               typeBusiness,
               useTemplate,
+              bussiId:req.params.id,
               employeeB:null,
               dashboard:'active',
               employee:'',
@@ -418,7 +454,7 @@ module.exports = function(app) {
       usersType.owner=true ? req.query.owner:false;
       usersType.employee=true ? req.query.employee:false;
       usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
-      Users.getUsersClient('Cliente').then(function(data){
+      Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
         var idUserEmploOwner = 0;
         if (req.query.employee) {
           idUserEmploOwner = req.query.employee;
@@ -429,7 +465,7 @@ module.exports = function(app) {
         BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
           var id = 0;
           if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
-          ServiceControllers.getService(id).then(function(serviceData) {
+          ServiceControllers.getService(id,{type:'',page:0}).then(function(serviceData) {
             var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
             var datakk = JSON.parse(JSON.stringify(serviceData));
             for (var i = 0; i < datakk.length; i++) {

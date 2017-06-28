@@ -6,8 +6,7 @@ $(document).ready(function() {
   var she = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
   var cant = [1,2,3,4];
     $('.service').click(function () {
-      var str = $('.rangeUi-tip').text();
-      var dur = str.substr(1,$('.rangeUi-tip').text().length);
+      var dur = $("#asRangevalue").val();
       dataSend = {
         serviceName:$('#topicName').val(),
         duration:dur,

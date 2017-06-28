@@ -98,23 +98,61 @@ UsersModel.activateDesactivate = function activateDesactivate (options,data) {
   });
 };
 
-UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options) {
+UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options,reqparams) {
   var queryB = new Parse.Query('Business');
+  var cantpage=10;
+  var page=reqparams.page ? reqparams.page : 0;
   return queryB.get(options.id).then(function(data){
-    return data.relation('employee').query().find().then(function(gente){
-      return {data:data,employee:JSON.parse(JSON.stringify(gente))};
-    });
-
+    if (reqparams.type=='employee') {
+      return data.relation('employee').query().descending('createdAt').limit(2).skip(page*2).find().then(function(gente1){
+        return data.relation('employee').query().find().then(function(gente2){
+          if ((gente2.length/2)>0 && (gente2.length/2)%1==0) {
+            //entero
+            cantpage=(gente2.length/2)*10;
+          }else if ((gente2.length/2)>0 && (gente2.length/2)%1!=0) {
+            //redondeo
+            cantpage=(parseInt(gente2.length/2)+1)*10;
+          }else {
+            //una sola pagina
+            cantpage=1*10;
+          }
+          return {data:data,employee:JSON.parse(JSON.stringify(gente1)),cantPage:cantpage};
+        });
+      });
+    }else {
+      return data.relation('employee').query().find().then(function(gente){
+        return {data:data,employee:JSON.parse(JSON.stringify(gente)),cantPage:10};
+      });
+    }
   });
 
 };
 
-UsersModel.getUsersClient = function getUsersClient (typeUser) {
+UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
+  var page=reqparams.page ? reqparams.page : 0;
+  var cantpage=10;
+  var consulta;
   var queryU = new Parse.Query('_User');
+  if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(2).skip(page*2).find();
+  else consulta = queryU.find();
+
   queryU.equalTo('isActive',true);
   queryU.equalTo('type',typeUser);
-  return queryU.find().then(function(dataUsers){
-    return JSON.stringify(dataUsers);
+  return consulta.then(function(dataUsers){
+    return queryU.count().then(function(cantData) {
+      if ((cantData/2)>0 && (cantData/2)%1==0) {
+        //entero
+        cantpage=(cantData/2)*10;
+      }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
+        //redondeo
+        cantpage=(parseInt(cantData/2)+1)*10;
+      }else {
+        //una sola pagina
+        cantpage=1*10;
+      }
+      if (reqparams.type=='client') dataUsers.push({catpageE:cantpage});
+      return JSON.stringify(dataUsers);
+    });
   });
 
 };
