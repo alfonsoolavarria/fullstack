@@ -38,10 +38,7 @@ function createTB() {
   return query.find({
     success: function(dataType) {
       if (dataType.length>0) {
-        dataType.forEach(function(data) {
-          data.destroy({success: function() {},error: function() {}
-        });
-      });
+        Parse.Object.destroyAll(dataType);
     }
     _.each(type_business.all_business,function(typeb){
       var typeB = new Parse.Object("TypeBusiness");

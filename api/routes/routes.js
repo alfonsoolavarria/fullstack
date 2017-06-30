@@ -45,31 +45,26 @@ module.exports = function(app) {
   /*******************************|
   |*******Admin********|
   ********************************/
-
-  app.get('/admin', function(req, res) {
-    console.log('adminnnnn');
-    if (session) {
-      usersType.admin = true;
-      usersType.owner=false;
-      usersType.employee=false;
-      usersType.userId = req.query.user;
-      return res.render('index.ejs',{
-        usersType,
-        session:session,
-        businessSelec: 0,
-        dashSelec:1,
-        calendarSelec:0,
-      });
-    }else {
-      return res.redirect('/');
-    }
+  //
+  app.get('/admin',middle.checkSession, function(req, res) {
+    usersType.admin = true;
+    usersType.owner=false;
+    usersType.employee=false;
+    usersType.userId = req.query.user;
+    return res.render('index.ejs',{
+      usersType,
+      session:session,
+      businessSelec: 0,
+      dashSelec:1,
+      calendarSelec:0,
+    });
 	});
 
   /*******************************|
   |*******Owner********|
   ********************************/
 
-  app.get('/owner', function(req, res) {
+  app.get('/owner',middle.checkSession, function(req, res) {
     if (session) {
       usersType.admin=false;
       usersType.employee=false;
@@ -91,7 +86,7 @@ module.exports = function(app) {
   |*******Employee********|
   ********************************/
 
-  app.get('/employee', function(req, res) {
+  app.get('/employee',middle.checkSession, function(req, res) {
     if (session) {
       usersType.admin=false;
       usersType.owner=false;
@@ -109,7 +104,7 @@ module.exports = function(app) {
     }
 	});
 
-  app.post('/employee', function(req, res) {
+  app.post('/employee',middle.checkSession, function(req, res) {
     Users.checkUser(req.body).then(function(result) {
       if (result.code==409) {
         res.json(result);
@@ -122,7 +117,7 @@ module.exports = function(app) {
     });
 	});
 
-  app.put('/employee', function(req, res) {
+  app.put('/employee',middle.checkSession, function(req, res) {
     EployeeControllers.updateEmployee(req.body).then(function(user) {
       res.json(user);
     });
@@ -355,7 +350,7 @@ module.exports = function(app) {
     });
 	});*/
 
-  app.post('/business', function(req, res) {
+  app.post('/business',middle.checkSession, function(req, res) {
     var valores={};
     if (req.body.latlon && req.body.latlon.latitude && req.body.latlon.latitude) {
       BusinessControllers.searchBusiness(req.body.latlon).then(function(data){
@@ -422,7 +417,7 @@ module.exports = function(app) {
   /*******************************|
   |*******Service********|
   ********************************/
-  app.post('/service', function(req, res) {
+  app.post('/service',middle.checkSession, function(req, res) {
     ServiceControllers.createService(req.body).then(function(data){
       if (req.body.employee) {
         for (var i = 0; i < req.body.employee.length; i++) {
@@ -434,7 +429,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put('/service', function(req, res) {
+  app.put('/service',middle.checkSession, function(req, res) {
     ServiceControllers.updateService(req.body).then(function(data){
       for (var i = 0; i < req.body.employee.length; i++) {
         ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
@@ -545,7 +540,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/booking', function(req, res) {
+  app.post('/booking',middle.checkSession, function(req, res) {
      Booking.createBooking(req.body).then(function (data) {
        if (data.ready) {
          res.json({code:200,data:req.body,id:data.id});
@@ -555,7 +550,7 @@ module.exports = function(app) {
      });
    });
 
-  app.put('/booking', function(req, res) {
+  app.put('/booking',middle.checkSession, function(req, res) {
     Booking.updateBooking(req.body.idBooking,req.body).then(function (data) {
       if (data.ready) {
         res.json({code:200});
@@ -569,7 +564,7 @@ module.exports = function(app) {
   /********************************
    ************Client************
    ********************************/
-   app.post('/client', function(req, res) {
+   app.post('/client',middle.checkSession, function(req, res) {
      Users.checkUser(req.body).then(function(result) {
        if (result.code==409) {
          res.json(result);
@@ -580,7 +575,7 @@ module.exports = function(app) {
      });
    });
 
-   app.put('/client', function(req, res) {
+   app.put('/client',middle.checkSession, function(req, res) {
      Users.checkUser(req.body).then(function(result) {
        if (result.code==409) {
          res.json(result);
@@ -626,7 +621,7 @@ module.exports = function(app) {
       .then(function (user) {
         if (user.data.get('isActive')==true) {
           req.session['timesapp-token-session'] = user.data.get('sessionToken');
-          session.toke = req.session['timesapp-token-session'];
+          session.toke = req.session['x-parse-session-token'];
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
             console.log('Administrador');

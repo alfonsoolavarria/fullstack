@@ -48,16 +48,21 @@ UsersModel.getTypeBusiness = function getTypeBusiness () {
 
 };
 
-UsersModel.checkSession = function checkSession (sess) {
-  var query = new Parse.Query('_User');
-  return query.first('sessionToken',sess).then(function(userSess){
-    if (userSess.length<=0) return {success:false};
-    else return {success:true};
-  }).then(null, function (error) {
-    console.log('Error al validar la sessionToken');
-    console.log(error);
+UsersModel.checkSession = function checkSession (req) {
+  if (req.session) {
+    var sess = req.headers['x-parse-session-token']?req.headers:req.session['x-parse-session-token']?req.session:0;
+    var query = new Parse.Query('_User');
+    return query.first('sessionToken',sess).then(function(userSess){
+      if (userSess.length<=0) return {success:false};
+      else return {success:true};
+    }).then(null, function (error) {
+      console.log('Error al validar la sessionToken');
+      console.log(error);
+      return {success:false};
+    });
+  }else {
     return {success:false};
-  });
+  }
 
 };
 
