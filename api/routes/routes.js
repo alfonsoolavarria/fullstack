@@ -65,21 +65,17 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/owner',middle.checkSession, function(req, res) {
-    if (session) {
-      usersType.admin=false;
-      usersType.employee=false;
-      usersType.owner=true;
-      usersType.userId = req.query.user;
-      return res.render('index.ejs',{
-        usersType,
-        session:session,
-        businessSelec:0,
-        dashSelec:1,
-        calendarSelec:0,
-      });
-    }else {
-      return res.redirect('/');
-    }
+    usersType.admin=false;
+    usersType.employee=false;
+    usersType.owner=true;
+    usersType.userId = req.query.user;
+    return res.render('index.ejs',{
+      usersType,
+      session:session,
+      businessSelec:0,
+      dashSelec:1,
+      calendarSelec:0,
+    });
   });
 
   /*******************************|
@@ -87,21 +83,17 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/employee',middle.checkSession, function(req, res) {
-    if (session) {
-      usersType.admin=false;
-      usersType.owner=false;
-      usersType.employee=true;
-      usersType.userId = req.query.user;
-      res.render('index.ejs',{
-        usersType,
-        session:session,
-        businessSelec:0,
-        dashSelec:1,
-        calendarSelec:0,
-      });
-    }else {
-      return res.redirect('/');
-    }
+    usersType.admin=false;
+    usersType.owner=false;
+    usersType.employee=true;
+    usersType.userId = req.query.user;
+    res.render('index.ejs',{
+      usersType,
+      session:session,
+      businessSelec:0,
+      dashSelec:1,
+      calendarSelec:0,
+    });
 	});
 
   app.post('/employee',middle.checkSession, function(req, res) {
@@ -143,38 +135,34 @@ module.exports = function(app) {
 	});
 
   app.get('/business/list', function(req, res) {
-    if (session) {
-      var valores={},selectPage=1;
-      if (req.query.user && usersType.admin){
-        usersType.userId = req.query.user;
-      } else {
-        req.body.owner = req.query.owner?req.query.owner:req.query.user;
-        usersType.userId = req.query.owner;
+    var valores={},selectPage=1;
+    if (req.query.user && usersType.admin){
+      usersType.userId = req.query.user;
+    } else {
+      req.body.owner = req.query.owner?req.query.owner:req.query.user;
+      usersType.userId = req.query.owner;
+    }
+    if (req.query.page) {
+      selectPage=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+    BusinessControllers.searchListBusiness(req.body,req.query.page).then(function(data){
+      if (data) {
+        valores=JSON.parse(JSON.stringify(data.data));
       }
-      if (req.query.page) {
-        selectPage=req.query.page;
-        req.query.page=req.query.page-1;
-      }
-      BusinessControllers.searchListBusiness(req.body,req.query.page).then(function(data){
-        if (data) {
-          valores=JSON.parse(JSON.stringify(data.data));
-        }
-        Users.getTypeBusiness().then(function(typeBusiness) {
-          res.render('business/businesslist.ejs',{
-            usersType,
-            valores,
-            catpage:JSON.parse(JSON.stringify(data.cantPage)),
-            selectPage:selectPage,
-            typeBusiness,
-            businessSelec:1,
-            calendarSelec:0,
-            dashSelec:0,
-          });
+      Users.getTypeBusiness().then(function(typeBusiness) {
+        res.render('business/businesslist.ejs',{
+          usersType,
+          valores,
+          catpage:JSON.parse(JSON.stringify(data.cantPage)),
+          selectPage:selectPage,
+          typeBusiness,
+          businessSelec:1,
+          calendarSelec:0,
+          dashSelec:0,
         });
       });
-    }else {
-      return res.redirect('/');
-    }
+    });
 	});
 
   app.get('/business/:id/dashboard', function(req, res) {
@@ -444,65 +432,61 @@ module.exports = function(app) {
   ************CALENDAR************
   ********************************/
   app.get('/calendar', function(req, res) {
-    if (session) {
-      usersType.admin=true ? req.query.admin:false;
-      usersType.owner=true ? req.query.owner:false;
-      usersType.employee=true ? req.query.employee:false;
-      usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
-      Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
-        var idUserEmploOwner = 0;
-        if (req.query.employee) {
-          idUserEmploOwner = req.query.employee;
-        }else if (req.query.owner) {
-          idUserEmploOwner = req.query.owner;
-        }
+    usersType.admin=true ? req.query.admin:false;
+    usersType.owner=true ? req.query.owner:false;
+    usersType.employee=true ? req.query.employee:false;
+    usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
+    Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
+      var idUserEmploOwner = 0;
+      if (req.query.employee) {
+        idUserEmploOwner = req.query.employee;
+      }else if (req.query.owner) {
+        idUserEmploOwner = req.query.owner;
+      }
 
-        BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
-          var id = 0;
-          if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
-          ServiceControllers.getService(id,{type:'',page:0}).then(function(serviceData) {
-            var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
-            var datakk = JSON.parse(JSON.stringify(serviceData));
-            for (var i = 0; i < datakk.length; i++) {
-              bussiId=datakk[i].business.objectId;
-              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
-              if (datakk[i].alfonso[0].length>0) {
-                for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
-                  if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
-                    listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
-                    flag.push(datakk[i].alfonso[0][o].objectId);
-                  }
-              }
-              }else {
-                listaemploye.push(['']);
-              }
+      BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
+        var id = 0;
+        if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+        ServiceControllers.getService(id,{type:'',page:0}).then(function(serviceData) {
+          var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
+          var datakk = JSON.parse(JSON.stringify(serviceData));
+          for (var i = 0; i < datakk.length; i++) {
+            bussiId=datakk[i].business.objectId;
+            listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
+            if (datakk[i].alfonso[0].length>0) {
+              for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
+                if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
+                  listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
+                  flag.push(datakk[i].alfonso[0][o].objectId);
+                }
             }
-            if (bussiId==0){
-              session.business=id;
-              bussiId=id;
             }else {
-              session.business=bussiId;
-              bussiId=bussiId;
+              listaemploye.push(['']);
             }
-            session.service=JSON.stringify(listaservice);
-            session.employee=JSON.stringify(listaemploye);
-            res.render('calendar/calendar.ejs',{
-              usersType,
-              session:session,
-              client:data,
-              service:JSON.stringify(listaservice),
-              employee:JSON.stringify(listaemploye),
-              Idbussi:bussiId,
-              businessSelec:0,
-              dashSelec:0,
-              calendarSelec:1,
-            });
+          }
+          if (bussiId==0){
+            session.business=id;
+            bussiId=id;
+          }else {
+            session.business=bussiId;
+            bussiId=bussiId;
+          }
+          session.service=JSON.stringify(listaservice);
+          session.employee=JSON.stringify(listaemploye);
+          res.render('calendar/calendar.ejs',{
+            usersType,
+            session:session,
+            client:data,
+            service:JSON.stringify(listaservice),
+            employee:JSON.stringify(listaemploye),
+            Idbussi:bussiId,
+            businessSelec:0,
+            dashSelec:0,
+            calendarSelec:1,
           });
         });
       });
-    }else {
-      return res.redirect('/');
-    }
+    });
 	});
 
   /********************************
@@ -620,11 +604,9 @@ module.exports = function(app) {
       UsersContro.logIn({ email: req.body.email, password: req.body.password })
       .then(function (user) {
         if (user.data.get('isActive')==true) {
-          req.session['timesapp-token-session'] = user.data.get('sessionToken');
-          session.toke = req.session['x-parse-session-token'];
+          req.session['x-parse-session-token'] = user.data.get('sessionToken');
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
-            console.log('Administrador');
             return res.redirect('/admin?'+'user='+id);
           }
           else if (user.data.get('type')==USER_ALL.owner) {
@@ -654,7 +636,7 @@ module.exports = function(app) {
 
 //Logout user
 app.get('/logout', function(req, res) {
-  req.session['timesapp-token-session'] = "";
+  req.session['x-parse-session-token'] = "";
   session = {};
   return res.redirect('/');
 });

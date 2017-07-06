@@ -25,7 +25,7 @@ ClientModel.createCliente = function createCliente (options) {
     userCliente.set('name', options.name);
     userCliente.set('phone', options.phone);
     userCliente.set('email', options.email);
-    userCliente.set('password', options.password);
+    userCliente.set('password', options.password?options.password:12345678);
     userCliente.set('type', 'Cliente');
     userCliente.set('isActive', true);
     var acl = new Parse.ACL();

@@ -51,7 +51,6 @@ $('#employeeCreate').click(function () {
           data:dataSend,
           type: 'PUT',
           success: function functionName(data) {
-            console.log('*************',data);
             if (data.code!=200) {
               $("#EditEmpleoyeeError").trigger("click");
             }else {
