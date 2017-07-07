@@ -1,4 +1,4 @@
-<nav class="site-navbar navbar navbar-default navbar-inverse navbar-fixed-top navbar-mega" role="navigation">
+<nav class="site-navbar navbar navbar-default navbar-inverse navbar-fixed-top navbar-mega" role="navigation" style="background-color:#523eba;">
   <div class="navbar-header">
     <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
     data-toggle="menubar">
@@ -18,7 +18,7 @@
   <div class="navbar-container container-fluid">
     <!-- Navbar Collapse -->
     <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
-      <!-- Navbar Toolbar -->
+      <!-- Navbar Toolbar
       <ul class="nav navbar-toolbar">
         <li class="nav-item hidden-float" id="toggleMenubar">
           <a class="nav-link" data-toggle="menubar" href="#" role="button">
@@ -28,18 +28,12 @@
               </i>
           </a>
         </li>
-      </ul>
+      </ul>-->
       <!-- End Navbar Toolbar -->
-      <%if (usersType.admin){%>
-        <label style="margin-left:370px;font-size:x-large;color:aliceblue;">Administrador</label>
-      <%}else if (usersType.owner){%>
-        <label style="margin-left:370px;font-size:x-large;color:aliceblue;">Propietario</label>
-      <%}else{%>
-        <label style="margin-left:370px;font-size:x-large;color:aliceblue;">Empleado</label>
-      <%}%>
-      <!-- Navbar Toolbar Right -->
-      <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
 
+      <img style="margin-left:370px;" class="brand-img" src="/public/assets/images/logo.png" alt="...">
+      <!-- Navbar Toolbar Right -->
+      <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right" style="margin-right: 90px;">
         <li class="nav-item dropdown">
           <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
           data-animation="scale-up" role="button">
@@ -56,7 +50,7 @@
             <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
           </div>
         </li>
-        <li class="nav-item dropdown" style="visibility:hidden;">
+        <li class="nav-item dropdown" style="visibility:hidden;margin-right: -90px;">
           <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
           aria-expanded="false" data-animation="scale-up" role="button">
             <i class="icon md-notifications" aria-hidden="true"></i>
@@ -138,6 +132,14 @@
             </div>
           </div>
         </li>
+        <label style="margin-left:83px;margin-top:15px;position:absolute;font-size:small;color:aliceblue;"><%=session.name%></label>
+        <%if (usersType.admin){%>
+          <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Administrador</label>
+          <%}else if (usersType.owner){%>
+            <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Propietario</label>
+            <%}else{%>
+              <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Empleado</label>
+              <%}%>
       </ul>
       <!-- End Navbar Toolbar Right -->
     </div>

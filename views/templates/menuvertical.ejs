@@ -33,14 +33,14 @@ if (calendarSelec==1){
         <ul class="site-menu" data-plugin="menu">
           <li class="site-menu-item <%=Das%>">
             <a class="animsition-link" href="/<%=redirect%>?user=<%=userId%>">
-              <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+              <i class="site-menu-icon md-view-dashboard" aria-hidden="true" style="color:#523eba"></i>
               <span class="site-menu-title">Dashboard</span>
             </a>
           </li>
           <%if (usersType.admin){%>
           <li class="site-menu-item has-sub <%=Em%>">
             <a href="javascript:void(0)">
-              <i class="site-menu-icon md-chart" aria-hidden="true"></i>
+              <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
               <span class="site-menu-title">Empresas</span>
             </a>
             <ul class="site-menu-sub">
@@ -59,7 +59,7 @@ if (calendarSelec==1){
             <%} else if (usersType.owner){%>
               <li class="site-menu-item has-sub <%=Em%>">
                 <a href="/business/list?owner=<%=usersType.userId%>">
-                  <i class="site-menu-icon md-chart" aria-hidden="true"></i>
+                  <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
                   <span class="site-menu-title">Ajustes</span>
                 </a>
                 </li>
@@ -71,7 +71,7 @@ if (calendarSelec==1){
                 <%} else if (usersType.employee){%>
                   <a href="/calendar?employee=<%=usersType.userId%>">
                 <%}%>
-                  <i class="site-menu-icon md-chart" aria-hidden="true"></i>
+                  <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
                   <span class="site-menu-title">Calendario</span>
                 </a>
                 </li>

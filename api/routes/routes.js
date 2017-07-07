@@ -154,6 +154,7 @@ module.exports = function(app) {
         res.render('business/businesslist.ejs',{
           usersType,
           valores,
+          session:session,
           catpage:JSON.parse(JSON.stringify(data.cantPage)),
           selectPage:selectPage,
           typeBusiness,
@@ -209,6 +210,7 @@ module.exports = function(app) {
           businessSelec:1,
           calendarSelec:0,
           dashSelec:0,
+          session:session,
         });
       });
     }else {
@@ -273,6 +275,7 @@ module.exports = function(app) {
                     businessSelec:1,
                     calendarSelec:0,
                     dashSelec:0,
+                    session:session,
                   });
                 });
               }else {
@@ -297,6 +300,7 @@ module.exports = function(app) {
                   businessSelec:1,
                   calendarSelec:0,
                   dashSelec:0,
+                  session:session,
                 });
               }
             });
@@ -322,6 +326,7 @@ module.exports = function(app) {
               businessSelec:1,
               calendarSelec:0,
               dashSelec:0,
+              session:session,
             });
           }
         });
@@ -445,7 +450,7 @@ module.exports = function(app) {
       }
 
       BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
-        var id = 0;
+        var id = 10;
         if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
         ServiceControllers.getService(id,{type:'',page:0}).then(function(serviceData) {
           var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
@@ -605,6 +610,7 @@ module.exports = function(app) {
       .then(function (user) {
         if (user.data.get('isActive')==true) {
           req.session['x-parse-session-token'] = user.data.get('sessionToken');
+          session.name = user.data.get('name');
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
             return res.redirect('/admin?'+'user='+id);
