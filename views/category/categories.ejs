@@ -1,0 +1,75 @@
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/select2/select2.min.css?v2.2.0">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/clockpicker/clockpicker.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
+<body>
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-header">
+      <h1 class="page-title">Nueva Categoria</h1>
+    </div>
+    <div class="page-content container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Panel Static Labels -->
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body container-fluid">
+              <form class="form-horizontal" method="post">
+                <div class="form-group row form-material row">
+                  <label class="col-md-4 form-control-label">Nombre:</label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="nameCate" name="namecate" placeholder="Nombre de la Categoria" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                    <label class="col-md-4 form-control-label">Seleccione una Imagen:</label>
+                    <div class="col-md-3">
+                      <input type="file" id="input-file-now" data-plugin="dropify" data-default-file=""/>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <!-- End Panel Static Labels -->
+        </div>
+        <button type="button" class="btn btn-primary waves-effect" id="cateDelaysucc" data-plugin="alertify"
+        data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+        <button type="button" class="btn btn-primary waves-effect" id="cateSave" data-plugin="alertify"
+        data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+        <button type="button" class="btn btn-primary waves-effect" id="cateError" data-plugin="alertify"
+        data-type="log" data-delay="3000" data-log-message="Error en el servidor/Imagen muy pesada" style="visibility:hidden;" >delay</button>
+        <button type="button" class="btn btn-primary waves-effect" id="cateErrorName" data-plugin="alertify"
+        data-type="log" data-delay="3000" data-log-message="El nombre ya esta registrado" style="visibility:hidden;" >delay</button>
+      </div>
+      <div class="form-group row form-material row">
+        <div class="col-md-9 offset-md-3">
+          <button type="submit" class="btn btn-primary categorySave" style="margin-left: 28%;">Guardar</button>
+          <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-65px; visibility:hidden;">
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+  </body>
+</html>
+<!-- Footer -->
+  <% include ../templates/footer.ejs %>
+  <!--Core -->
+  <% include ../templates/core.ejs %>
+  <script src="/public/assets/js/category.js"></script>

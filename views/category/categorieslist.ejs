@@ -1,0 +1,62 @@
+
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+
+    <!-- Page -->
+    <div class="page">
+      <div class="page-content">
+        <!-- Panel-->
+        <div class="panel">
+          <div class="panel-body">
+            <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+              <div class="tab-content">
+                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                  <% for(var i=0; i<listCateg.length; i++) {%>
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="avatar avatar-online">
+                          <img src="<%=listCateg[i].image.url%>" alt="...">
+                        </div>
+                      </div>
+                      <div class="container">
+                        <form class="form-horizontal">
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                            <div class="panel-body container-fluid">
+                              <div class="form-group row form-material row">
+                                <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Nombre:</label>
+                                <div class="col-xs-12 col-sm-12 col-md-8">
+                                  <input class="form-control" id="name" style="border:0px;background: none;" value="<%=listCateg[i].name%>" disabled></input>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </li>
+                </ul>
+              <%}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Panel -->
+      </div>
+    </div>
+    <!-- End Page -->
+    <!-- Footer -->
+      <% include ../templates/footer.ejs %>
+    <!-- Core  -->
+    <% include ../templates/core.ejs %>
+      </body>
+  </html>

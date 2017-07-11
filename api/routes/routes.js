@@ -7,6 +7,7 @@ var BusinessControllers = require('../controllers/businessController');
 var EployeeControllers = require('../controllers/employeeController');
 var ServiceControllers = require('../controllers/serviceController');
 var Booking = require('../controllers/bookingController');
+var Category = require('../controllers/categoryController');
 var ClienteControllers = require('../controllers/clientController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
@@ -54,9 +55,10 @@ module.exports = function(app) {
     return res.render('index.ejs',{
       usersType,
       session:session,
-      businessSelec: 0,
+      businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
+      categorySelec:0,
     });
 	});
 
@@ -75,6 +77,7 @@ module.exports = function(app) {
       businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
+      categorySelec:0,
     });
   });
 
@@ -93,6 +96,7 @@ module.exports = function(app) {
       businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
+      categorySelec:0,
     });
 	});
 
@@ -126,10 +130,12 @@ module.exports = function(app) {
       res.render('business/newbusiness.ejs',{
         usersType,
         valores,
+        session:session,
         typeBusiness,
         businessSelec:1,
-        dashSelec:0,//dejar esta correccion
+        dashSelec:0,
         calendarSelec:0,
+        categorySelec:0,
       });
     });
 	});
@@ -161,6 +167,7 @@ module.exports = function(app) {
           businessSelec:1,
           calendarSelec:0,
           dashSelec:0,
+          categorySelec:0,
         });
       });
     });
@@ -211,6 +218,7 @@ module.exports = function(app) {
           calendarSelec:0,
           dashSelec:0,
           session:session,
+          categorySelec:0,
         });
       });
     }else {
@@ -276,6 +284,7 @@ module.exports = function(app) {
                     calendarSelec:0,
                     dashSelec:0,
                     session:session,
+                    categorySelec:0,
                   });
                 });
               }else {
@@ -301,6 +310,7 @@ module.exports = function(app) {
                   calendarSelec:0,
                   dashSelec:0,
                   session:session,
+                  categorySelec:0,
                 });
               }
             });
@@ -327,6 +337,7 @@ module.exports = function(app) {
               calendarSelec:0,
               dashSelec:0,
               session:session,
+              categorySelec:0,
             });
           }
         });
@@ -488,6 +499,7 @@ module.exports = function(app) {
             businessSelec:0,
             dashSelec:0,
             calendarSelec:1,
+            categorySelec:0,
           });
         });
       });
@@ -575,7 +587,40 @@ module.exports = function(app) {
      });
    });
 
+   /********************************
+    ************Category***********
+    ********************************/
+    app.get('/category',middle.checkSession, function(req, res) {
+      res.render('category/categories.ejs',{
+        usersType,
+        session:session,
+        businessSelec:0,
+        dashSelec:0,
+        calendarSelec:0,
+        categorySelec:1,
+      });
+    });
 
+    app.get('/category/list',middle.checkSession, function(req, res) {
+      Category.getCategories().then(function(dataC) {
+        res.render('category/categorieslist.ejs',{
+          usersType,
+          session:session,
+          businessSelec:0,
+          dashSelec:0,
+          listCateg:JSON.parse(dataC),
+          calendarSelec:0,
+          categorySelec:1,
+        });
+      });
+    });
+
+    app.post('/category',middle.checkSession, function(req, res) {
+      Category.createCategory(req.body).then(function(dataC) {
+        res.json(dataC);
+      });
+
+    });
 
   /********************************
   ************User************
