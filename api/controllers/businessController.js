@@ -55,6 +55,7 @@ BusinessControllers.searchListBusiness = function searchListBusiness (options,pa
   query.include('owner.email');
   query.include('owner.phone');
   query.include('owner.username');
+  query.include('typeCommerce.name');
 
   return query.find().then(function (objectData) {
     return twicequery(flag).then(function() {
@@ -92,7 +93,7 @@ BusinessControllers.createBusiness = function createBusiness (options) {
   business.set({'city':options.city});
   business.set({'country':options.country});
   business.set({'postalCode':options.cp});
-  business.set({'typeCommerce':options.typeCommerce});
+  business.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
   business.set({'nameCommerce':options.nameCommerce});
   var acl = new Parse.ACL();
   acl.setPublicWriteAccess(true);
@@ -127,7 +128,7 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
       if (options.city) dataB.set({'city':options.city});
       if (options.country) dataB.set({'country':options.country});
       if (options.cp) dataB.set({'postalCode':options.cp});
-      if (options.typeCommerce) dataB.set({'typeCommerce':options.typeCommerce});
+      if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
       if (options.nameCommerce) dataB.set({'nameCommerce':options.nameCommerce});
       dataB.save(null, { useMasterKey: true });
       return{success:true,code:200};

@@ -41,7 +41,7 @@ UsersModel.getTypeBusiness = function getTypeBusiness () {
   return query.find().then(function(dataType) {
       var typeArray = [];
       _.forEach(dataType,function(typeb){
-        typeArray.push({name:JSON.parse(JSON.stringify(typeb)).name});
+        typeArray.push({name:JSON.parse(JSON.stringify(typeb)).name,id:JSON.parse(JSON.stringify(typeb)).objectId});
       });
       return typeArray;
   });

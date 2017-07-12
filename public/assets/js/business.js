@@ -88,7 +88,6 @@ $(document).ready(function() {
     if (text=='Guardar') {
       dataSend.id=id;
       dataSend.iduser=iduser;
-
       if (flag==1) {
         flag = 0;
         flagUser = 0;
@@ -98,7 +97,6 @@ $(document).ready(function() {
           data:dataSend,
           type: 'PUT',
           success: function functionName(data) {
-            console.log('*************',data);
             if (data.code!=200) {
               $("#businessError-"+id).trigger("click");
             }else {

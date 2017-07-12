@@ -44,10 +44,10 @@
                     <div class="col-md-6">
                       <select class="form-control" id="tipo-<%=valores.objectId%>" style="border-bottom: 0px;" disabled>
                         <% for(var o=0; o<typeBusiness.length; o++) {%>
-                          <%if (valores.typeCommerce==typeBusiness[o].name){%>
-                            <option selected><%=typeBusiness[o].name%></option>
+                          <%if (JSON.parse(JSON.stringify(valores.typeCommerce)).name==typeBusiness[o].name){%>
+                            <option value="<%-JSON.parse(JSON.stringify(valores.typeCommerce)).objectId%>" selected><%=typeBusiness[o].name%></option>
                           <%}else{%>
-                            <option><%=typeBusiness[o].name%></option>
+                            <option value="<%=typeBusiness[o].id%>"><%=typeBusiness[o].name%></option>
                           <%}%>
                         <%}%>
                       </select>
