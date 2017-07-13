@@ -87,25 +87,52 @@ BusinessControllers.searchGetBusiness = function searchGetBusiness (id) {
 
 /*Registro de Empresa*/
 BusinessControllers.createBusiness = function createBusiness (options) {
-  var business = new Parse.Object('Business');
-  business.set('status',true);
-  business.set({'address':options.address});
-  business.set({'city':options.city});
-  business.set({'country':options.country});
-  business.set({'postalCode':options.cp});
-  business.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
-  business.set({'nameCommerce':options.nameCommerce});
-  var acl = new Parse.ACL();
-  acl.setPublicWriteAccess(true);
-  acl.setPublicReadAccess(true);
-  business.setACL(acl);
-  return business.save().then(function(saveData) {
-      // The save was successful.
-      return {ready:true,successful:'Created Business',id:saveData.id};
-    }, function(error) {
-      console.log('Business Save Error',error);
-      return {ready:false,error:'Business Save Error '+error};
+
+  function filesImages(data) {
+    var promise = new Parse.Promise();
+    try {
+      var avatarImg;
+      if (data.icon) {
+        avatarImg = new Parse.File(data.name+'icon' + '-img.png', { base64: data.icon });
+      }else if(data.banner) {
+        avatarImg = new Parse.File(data.name+'banner' + '-img.png', { base64: data.banner });
+      }
+      avatarImg.save();
+      promise.resolve(avatarImg);
+      return promise;
+    } catch (e) {
+      promise.resolve(0);
+      return promise;
+    }
+  }
+
+  return filesImages(options).then(function(base64icon){
+    options.icon2 = options.icon;
+    options.icon = null;
+    return filesImages(options).then(function(base64banner){
+      var business = new Parse.Object('Business');
+      business.set('status',true);
+      business.set({'address':options.address});
+      business.set({'city':options.city});
+      business.set({'country':options.country});
+      business.set({'postalCode':options.cp});
+      business.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
+      business.set({'nameCommerce':options.nameCommerce});
+      if (options.icon2) business.set('imageIcon', base64icon);
+      if (options.banner) business.set('imageBanner', base64banner);
+      var acl = new Parse.ACL();
+      acl.setPublicWriteAccess(true);
+      acl.setPublicReadAccess(true);
+      business.setACL(acl);
+      return business.save().then(function(saveData) {
+        // The save was successful.
+        return {ready:true,successful:'Created Business',id:saveData.id};
+      }, function(error) {
+        console.log('Business Save Error',error);
+        return {ready:false,error:'Business Save Error '+error};
+      });
     });
+  });
 
 };
 

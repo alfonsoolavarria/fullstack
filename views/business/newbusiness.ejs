@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
   <link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
   <link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
 
 
 <body class="animsition">
@@ -29,7 +31,7 @@
               <form class="form-horizontal" method="post">
                 <div class="form-group row form-material row">
                   <label class="col-md-3 form-control-label">Direccion:</label>
-                  <div class="col-md-9">
+                  <div class="col-md-3">
                     <input type="text" class="form-control" name="direccion" placeholder="Direccion" autocomplete="off"
                     required/>
                   </div>
@@ -43,7 +45,7 @@
                 </div>
                 <div class="form-group row form-material row">
                   <label class="col-md-3 form-control-label">Pa&iacute;s:</label>
-                  <div class="col-md-9">
+                  <div class="col-md-4">
                     <input type="text" class="form-control" name="pais" placeholder="Pa&iacute;s" autocomplete="off"
                     required/>
                   </div>
@@ -135,6 +137,24 @@
           <!-- End Panel Floating Labels -->
         </div>
       </div>
+      <div class="panel">
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <label style="margin-left:14%;"><b>Imagen tipo Icon:</b></label>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <label style="margin-left:40%;"><b>Imagen tipo Banner:</b></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 image-icon">
+            <input type="file" id="input-file-now-icon" data-plugin="dropify"/>
+          </div>
+          <div class="col-sm-6 col-md-6 image-banner">
+            <input type="file" id="input-file-now-banner" data-plugin="dropify" data-default-file=""/>
+          </div>
+      </div>
+    </div>
       <div class="form-group row form-material row">
         <div class="col-md-9 offset-md-3">
           <button type="submit" class="btn btn-primary registerBusiness" style="margin-left: 28%;">Registrar</button>
@@ -152,65 +172,10 @@
   </div>
   <!-- End Page -->
   <!-- Footer -->
-  <footer class="site-footer">
-    <div class="site-footer-legal">© 2017 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">Remark</a></div>
-    <div class="site-footer-right">
-      Crafted with <i class="red-600 icon md-favorite"></i> by <a href="http://themeforest.net/user/amazingSurge">amazingSurge</a>
-    </div>
-  </footer>
+  <% include ../templates/footer.ejs %>
   <!-- Core  -->
-  <script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
-  <script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
-  <script src="/public/assets/material/global/vendor/tether/tether.js"></script>
-  <script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
-  <script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
-  <script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
-  <script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
-  <script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
-  <script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
-  <script src="/public/assets/material/global/vendor/waves/waves.js"></script>
-  <!-- Plugins -->
-  <script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
-  <script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
-  <script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
-  <script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
-  <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
-  <script src="/public/assets/material/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-  <!-- Scripts -->
-  <script src="/public/assets/material/global/js/State.js"></script>
-  <script src="/public/assets/material/global/js/Component.js"></script>
-  <script src="/public/assets/material/global/js/Plugin.js"></script>
-  <script src="/public/assets/material/global/js/Base.js"></script>
-  <script src="/public/assets/material/global/js/Config.js"></script>
-  <script src="/public/assets/material/js/Section/Menubar.js"></script>
-  <script src="/public/assets/material/js/Section/Sidebar.js"></script>
-  <script src="/public/assets/material/js/Section/PageAside.js"></script>
-  <script src="/public/assets/material/js/Plugin/menu.js"></script>
-  <!-- Config -->
-  <script src="/public/assets/material/global/js/config/colors.js"></script>
-  <script src="/public/assets/material/js/config/tour.js"></script>
-  <script>
-  Config.set('assets', '/public/assets/material');
-  </script>
-  <!-- Page -->
-  <script src="/public/assets/material/js/Site.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/notie-js.js"></script>
-  <script src="/public/assets/js/business.js"></script>
-  <script src="/public/assets/material/global/js/Plugin/jquery-placeholder.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG1eTuIUU1Vg3l7j2m7NLmwlVPaFhd6cU"></script>
-  <script>
-  (function(document, window, $) {
-    'use strict';
-    var Site = window.Site;
-    $(document).ready(function() {
-      Site.run();
-    });
-  })(document, window, jQuery);
-  </script>
+  <% include ../templates/core.ejs %>
+    <script src="/public/assets/js/business.js"></script>
   <div class="alertify-logs"></div>
 </body>
 </html>

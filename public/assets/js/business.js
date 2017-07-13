@@ -20,7 +20,9 @@ $(document).ready(function() {
         phone : e.currentTarget[7].value,
         email : e.currentTarget[8].value,
         password : e.currentTarget[9].value,
-        type:'Propietario'
+        type:'Propietario',
+        icon:$('.image-icon .dropify-render img').attr('src'),
+        banner:$('.image-banner .dropify-render img').attr('src'),
       }
 
       //var latitude=0,longitude=0;
@@ -63,15 +65,19 @@ $(document).ready(function() {
             $("#businessConflict").trigger("click");
           }else {
             $(".clean").trigger("click");
+            $(".image-icon .dropify-render img").attr("src","");
+            $(".image-banner .dropify-render img").attr("src","");
             $("#businessSave").trigger("click");
           }
         }).fail(function(error) {
           console.log(error.responseText);
           $("#businessDelayerr").trigger("click");
           $(".clean").trigger("click");
+          $(".image-icon .dropify-render img").attr("src","");
+          $(".image-banner .dropify-render img").attr("src","");
         });
       }else {
-        console.log('nises');
+        console.log('---');
       }
       //});
     });
@@ -242,6 +248,8 @@ $('.cancel').click(function () {
 
 
 
+$('.image-icon .dropify-wrapper').css({ borderRadius:"150px",width:"154px", height:"167px", marginLeft:"70px" });
+$('.image-banner .dropify-wrapper').css({ width:"34%", height:"100%", marginLeft:"34%" });
 
 
 });

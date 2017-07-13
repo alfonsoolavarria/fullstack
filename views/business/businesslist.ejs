@@ -28,7 +28,11 @@
                       <%}%>
                           <div class="pr-20">
                             <div class="avatar avatar-online">
-                              <img src="/public/assets/images/buss.png" alt="...">
+                              <%if(valores[i].imageIcon){%>
+                                <img src="<%=valores[i].imageIcon.url%>" alt="...">
+                              <%}else{%>
+                                <img src="/public/assets/images/buss.png" alt="...">
+                              <%}%>
                               <i class="avatar avatar-busy"></i>
                             </div>
                           </div>
