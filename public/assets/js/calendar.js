@@ -83,7 +83,8 @@ $(document).ready(function() {
         enabled: true
       },
   		onSelectItemEvent: function() {
-  			var value = $("#employeeE2").getSelectedItemData().servi;
+  			var value = $("#employeeE2").getSelectedItemData().objectId;
+        console.log(value);
         //pongo el id del cliente
   			$("#data-id-emple").val(value).trigger("change");
   		}
@@ -137,7 +138,7 @@ $(document).ready(function() {
         enabled: true
       },
       onSelectItemEvent: function() {
-        var value2 = $("#employeeE").getSelectedItemData().id;
+        var value2 = $("#employeeE").getSelectedItemData().objectId;
         //pongo el id del empleado
         $("#data-id-emple").val(value2).trigger("change");
       }

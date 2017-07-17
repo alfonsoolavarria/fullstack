@@ -61,6 +61,7 @@ module.exports = function(app) {
       calendarSelec:0,
       categorySelec:0,
       serviSelect:0,
+      clientSelect:0,
     });
 	});
 
@@ -73,7 +74,8 @@ module.exports = function(app) {
     usersType.employee=false;
     usersType.owner=true;
     usersType.userId = req.query.user;
-    return res.render('index.ejs',{
+    //res.redirect('/calendar');
+    /*return res.render('index.ejs',{
       usersType,
       session:session,
       businessSelec:0,
@@ -82,7 +84,7 @@ module.exports = function(app) {
       employeeSelec:0,
       categorySelec:0,
       serviSelect:0,
-    });
+    });*/
   });
 
   /*******************************|
@@ -103,6 +105,7 @@ module.exports = function(app) {
       employeeSelec:0,
       categorySelec:0,
       serviSelect:0,
+      clientSelect:0,
     });
 	});
 
@@ -126,6 +129,7 @@ module.exports = function(app) {
         session:session,
         categorySelec:0,
         serviSelect:0,
+        clientSelect:0,
       });
     });
   });
@@ -168,6 +172,7 @@ module.exports = function(app) {
         calendarSelec:0,
         categorySelec:0,
         serviSelect:0,
+        clientSelect:0,
       });
     });
 	});
@@ -202,6 +207,7 @@ module.exports = function(app) {
           employeeSelec:0,
           categorySelec:0,
           serviSelect:0,
+          clientSelect:0,
         });
       });
     });
@@ -255,6 +261,7 @@ module.exports = function(app) {
           session:session,
           categorySelec:0,
           serviSelect:0,
+          clientSelect:0,
         });
       });
     }else {
@@ -323,6 +330,7 @@ module.exports = function(app) {
                     session:session,
                     categorySelec:0,
                     serviSelect:0,
+                    clientSelect:0,
                   });
                 });
               }else {
@@ -351,6 +359,7 @@ module.exports = function(app) {
                   session:session,
                   categorySelec:0,
                   serviSelect:0,
+                  clientSelect:0,
                 });
               }
             });
@@ -380,6 +389,7 @@ module.exports = function(app) {
               session:session,
               categorySelec:0,
               serviSelect:0,
+              clientSelect:0,
             });
           }
         });
@@ -391,7 +401,7 @@ module.exports = function(app) {
     console.log('employeeeeeeeeeeee mando');
     useTemplate.employee=true;
     res.render('business/dashboard.ejs',{
-      usersType, 
+      usersType,
       useTemplate
     });
 	});*/
@@ -511,12 +521,11 @@ module.exports = function(app) {
           session:session,
           categorySelec:0,
           serviSelect:1,
+          clientSelect:0,
         });
       });
     });
   });
-
-
 
   app.post('/service',middle.checkSession, function(req, res) {
     ServiceControllers.createService(req.body).then(function(data){
@@ -564,47 +573,56 @@ module.exports = function(app) {
       }
 
       BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
-        var id = 10;
-        if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
-        ServiceControllers.getService(id,{type:'',page:0}).then(function(serviceData) {
-          var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
-          var datakk = JSON.parse(JSON.stringify(serviceData));
-          for (var i = 0; i < datakk.length; i++) {
-            bussiId=datakk[i].business.objectId;
-            listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
-            if (datakk[i].alfonso[0].length>0) {
-              for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
-                if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
-                  listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
-                  flag.push(datakk[i].alfonso[0][o].objectId);
-                }
-            }
-            }else {
-              listaemploye.push(['']);
-            }
-          }
-          if (bussiId==0){
-            session.business=id;
-            bussiId=id;
+        Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
+          var id = 10;
+          if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+          if (req.query.twoService=='1') {
+            var queryQuery = ServiceControllers.getService2(usersType.userId,{type:'',page:0});
           }else {
-            session.business=bussiId;
-            bussiId=bussiId;
+            var queryQuery = ServiceControllers.getService(id,{type:'',page:0});
           }
-          session.service=JSON.stringify(listaservice);
-          session.employee=JSON.stringify(listaemploye);
-          res.render('calendar/calendar.ejs',{
-            usersType,
-            session:session,
-            client:data,
-            service:JSON.stringify(listaservice),
-            employee:JSON.stringify(listaemploye),
-            Idbussi:bussiId,
-            businessSelec:0,
-            dashSelec:0,
-            calendarSelec:1,
-            categorySelec:0,
-            employeeSelec:0,
-            serviSelect:0,
+          queryQuery.then(function(serviceData) {
+            var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
+            var datakk = JSON.parse(JSON.stringify(serviceData));
+            for (var i = 0; i < datakk.length; i++) {
+              bussiId=datakk[i].business.objectId;
+              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
+              if (datakk[i].alfonso[0].length>0) {
+                for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
+                  if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
+                    listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
+                    flag.push(datakk[i].alfonso[0][o].objectId);
+                  }
+              }
+              }else {
+                listaemploye.push(['']);
+              }
+            }
+            if (bussiId==0){
+              session.business=id;
+              bussiId=id;
+            }else {
+              session.business=bussiId;
+              bussiId=bussiId;
+            }
+            session.service=JSON.stringify(listaservice);
+            session.employee=JSON.stringify(listaemploye);
+            res.render('calendar/calendar.ejs',{
+              usersType,
+              session:session,
+              client:data,
+              service:JSON.stringify(listaservice),
+              employee:JSON.stringify(listaemploye),
+              employee2:JSON.stringify(employeeB.employee),
+              Idbussi:bussiId,
+              businessSelec:0,
+              dashSelec:0,
+              calendarSelec:1,
+              categorySelec:0,
+              employeeSelec:0,
+              serviSelect:0,
+              clientSelect:0,
+            });
           });
         });
       });
@@ -670,6 +688,47 @@ module.exports = function(app) {
   /********************************
    ************Client************
    ********************************/
+
+   app.get('/client/:id',function(req,res) {
+     var selectPageE=1, catpageE=10;
+     if (req.query.page) {
+       selectPageE=req.query.page;
+       req.query.page=req.query.page-1;
+     }
+     req.query.type='client';
+     Users.getUsersClient('Cliente',req.query).then(function(userClient){
+       dataClient = JSON.parse(userClient);
+       for (var ii = 0; ii < dataClient.length; ii++) {
+         if (dataClient[ii].catpageE) {
+           catpage = dataClient[ii].catpageE;
+         }
+       }
+       for (var ii = 0; ii < dataClient.length; ii++) {
+         dataClient = dataClient.filter(function(el) {
+           return !el.catpageE;
+         });
+       }
+       res.render('client/client.ejs',{
+         usersType,
+         typeBusiness:{},
+         employeeB:null,
+         dashboard:'',
+         bussiId:req.params.id,
+         selectPageE,
+         employeeSelec:0,
+         catpageE:catpage,
+         dataClient:dataClient,
+         businessSelec:0,
+         calendarSelec:0,
+         dashSelec:0,
+         session:session,
+         categorySelec:0,
+         serviSelect:0,
+         clientSelect:1,
+       });
+     });
+   });
+
    app.post('/client',middle.checkSession, function(req, res) {
      Users.checkUser(req.body).then(function(result) {
        if (result.code==409) {
@@ -705,6 +764,7 @@ module.exports = function(app) {
         categorySelec:1,
         employeeSelec:0,
         serviSelect:0,
+        clientSelect:0,
       });
     });
 
@@ -720,6 +780,7 @@ module.exports = function(app) {
           categorySelec:1,
           employeeSelec:0,
           serviSelect:0,
+          clientSelect:0,
         });
       });
     });
@@ -772,7 +833,9 @@ module.exports = function(app) {
           }
           else if (user.data.get('type')==USER_ALL.owner) {
             console.log('Propietario');
-            return res.redirect('/owner?'+'user='+id);
+            usersType.owner=true;
+            //return res.redirect('/owner?'+'user='+id);
+            return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
           }
           else if (user.data.get('type')==USER_ALL.employee) {
             console.log('Empleado');

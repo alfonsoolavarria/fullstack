@@ -197,22 +197,45 @@
 
                 if ($("#flagPaginator").val()==4) {
                   var id = $("#Bid").val();
-                  for (var k = 1; k < remainder; k++) {
-                    lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+(this.currentPage - remainder + k)+'">' + (this.currentPage - remainder + k) + '</a></li>';
-                  }
-
-                  for (var ii = 1; ii <= this.currentPage; ii++) {
-                    if (this.currentPage==ii) {
-                      lists += '<li class="' + this.namespace + '-items page-item active" data-value="'+ii+'"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+ii+'">'+ii+'</a></li>';
+                  var bandera = $("#BidFlag").val();
+                  if (bandera=='1') {
+                    for (var k = 1; k < remainder; k++) {
+                      lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="/client/'+id+'?page='+(this.currentPage - remainder + k)+'">' + (this.currentPage - remainder + k) + '</a></li>';
                     }
-                  }
 
-                  for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
-                    if (this.currentPage==i) {
-                      lists += '<li class="' + this.namespace + '-items page-item active" data-value="' + i + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+i+'">' + i + '</a></li>';
-                      $(".next").attr("disabled");
-                    }else {
-                      lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+i+'">' + i + '</a></li>';
+                    for (var ii = 1; ii <= this.currentPage; ii++) {
+                      if (this.currentPage==ii) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="'+ii+'"><a class="page-link" href="/client/'+id+'?page='+ii+'">'+ii+'</a></li>';
+                      }
+                    }
+
+                    for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
+                      if (this.currentPage==i) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="' + i + '"><a class="page-link" href="/client/'+id+'?page='+i+'">' + i + '</a></li>';
+                        $(".next").attr("disabled");
+                      }else {
+                        lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="/client/'+id+'?page='+i+'">' + i + '</a></li>';
+                      }
+                    }
+
+                  }else {
+                    for (var k = 1; k < remainder; k++) {
+                      lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+(this.currentPage - remainder + k)+'">' + (this.currentPage - remainder + k) + '</a></li>';
+                    }
+
+                    for (var ii = 1; ii <= this.currentPage; ii++) {
+                      if (this.currentPage==ii) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="'+ii+'"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+ii+'">'+ii+'</a></li>';
+                      }
+                    }
+
+                    for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
+                      if (this.currentPage==i) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="' + i + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+i+'">' + i + '</a></li>';
+                        $(".next").attr("disabled");
+                      }else {
+                        lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="/business/'+id+'/dashboard?type=client&page='+i+'">' + i + '</a></li>';
+                      }
                     }
                   }
 

@@ -12,7 +12,7 @@ if (usersType.admin){
 if (usersType.userId){
   userId=usersType.userId;
 }
-var Em='', Das='', Cal='', Cat='', Emplo='', Servi='';
+var Em='', Das='', Cal='', Cat='', Emplo='', Servi='', Clie='';
 
 if(businessSelec==1){
   Em = 'active';
@@ -32,6 +32,9 @@ if (employeeSelec==1){
 }
 if (serviSelect==1){
   Servi = 'active';
+}
+if (clientSelect==1){
+  Clie = 'active';
 }
 %>
 
@@ -109,6 +112,12 @@ if (serviSelect==1){
                 <a href="/employee/<%=usersType.userId%>">
                   <i class="site-menu-icon md-accounts" aria-hidden="true" style="color:#523eba"></i>
                   <span class="site-menu-title">Empleados</span>
+                </a>
+                </li>
+              <li class="site-menu-item has-sub <%=Clie%>">
+                <a href="/client/<%=usersType.userId%>">
+                  <i class="site-menu-icon md-accounts-list" aria-hidden="true" style="color:#523eba"></i>
+                  <span class="site-menu-title">Clientes</span>
                 </a>
                 </li>
 

@@ -1,5 +1,6 @@
 <% include ../templates/head.ejs%>
 <%var lisem = JSON.parse(employee);%>
+<%var lisem2 = JSON.parse(employee2);%>
 <body class="animsition app-calendar page-aside-left">
 
   <!-- Headear barra -->
@@ -33,10 +34,10 @@
             <section class="page-aside-section">
               <h5 class="page-aside-title">Empledos</h5>
               <div class="list-group calendar-list">
-                <%for (var o=0; o<lisem.length; o++) {%>
+                <%for (var o=0; o<lisem2.length; o++) {%>
                   <a class="list-group-item calendar-event" data-title="Meeting" data-stick=true
                   data-color="red-600" href="javascript:void(0)">
-                    <i class="md-circle red-600 mr-10" aria-hidden="true"></i><%=lisem[o].name%>
+                    <i class="md-circle red-600 mr-10" aria-hidden="true"></i><%=lisem2[o].name%>
                   </a>
                 <%}%>
                 <!--<a id="addNewEventBtn" class="list-group-item" href="javascript:void(0)"> <i class="icon md-plus" aria-hidden="true"></i> Anadir un nuevo Veterinario </a>-->
@@ -246,7 +247,7 @@
           <input id="valores-json" style="visibility:hidden;" value="<%=client%>" />
           <input id="valorestwo" style="visibility:hidden;" value="" />
           <input id="valoresS-json" style="visibility:hidden;" value="<%=service%>" />
-          <input id="valoresEm-json" style="visibility:hidden;" value="<%=employee%>" />
+          <input id="valoresEm-json" style="visibility:hidden;" value="<%=employee2%>" />
           <input id="idBusiness" style="visibility:hidden;" value="<%=Idbussi%>" />
         </div>
         <!-- End AddCalendar Dialog -->
