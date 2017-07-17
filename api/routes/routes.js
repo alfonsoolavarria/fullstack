@@ -391,7 +391,7 @@ module.exports = function(app) {
     console.log('employeeeeeeeeeeee mando');
     useTemplate.employee=true;
     res.render('business/dashboard.ejs',{
-      usersType,
+      usersType, 
       useTemplate
     });
 	});*/
