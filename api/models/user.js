@@ -133,6 +133,41 @@ UsersModel.getEmployeeBusiness = function getEmployeeBusiness (options,reqparams
 
 };
 
+UsersModel.getEmployeeBusiness2 = function getEmployeeBusiness2 (id,reqparams) {
+  var cantpage=10;
+  var page=reqparams.page ? reqparams.page : 0;
+  var query = new Parse.Query('Business');
+  query.equalTo('owner', new Parse.Object('_User', { id:id }));
+  return query.find().then(function(dataE){
+    return dataE[0].relation('employee').query().find().then(function(employess2){
+      if (reqparams.flag) {
+        return dataE[0].relation('employee').query().descending('createdAt').limit(2).skip(page*2).find().then(function (employess) {
+          if ((employess2.length/2)>0 && (employess2.length/2)%1==0) {
+            //entero
+            cantpage=(employess2.length/2)*10;
+          }else if ((employess2.length/2)>0 && (employess2.length/2)%1!=0) {
+            //redondeo
+            cantpage=(parseInt(employess2.length/2)+1)*10;
+          }else {
+            //una sola pagina
+            cantpage=1*10;
+          }
+          return {
+            employee:JSON.parse(JSON.stringify(employess)),
+            cantPage:cantpage,
+          };
+        });
+      }else {
+        return {
+          employee:JSON.parse(JSON.stringify(employess2)),
+          cantPage:cantpage,
+          idBusiness:dataE[0].id,
+        };
+      }
+    });
+  });
+};
+
 UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
   var page=reqparams.page ? reqparams.page : 0;
   var cantpage=10;

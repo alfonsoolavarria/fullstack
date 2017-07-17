@@ -181,16 +181,29 @@ BusinessControllers.deleteBusiness = function deleteBusiness (options) {
     });
 };
 
-BusinessControllers.addRelationBusiness = function addRelationBusiness (idBusiness,userId) {
+BusinessControllers.addRelationBusiness = function addRelationBusiness (userId,params) {
     var query = new Parse.Query('Business');
-    return query.get(idBusiness.id).then(function(dataB){
-      dataB.relation('employee').add(userId);
-      dataB.save(null, { useMasterKey: true });
-      return{success:true,code:200};
-    }, function(error) {
-      console.log('Business Add relation Error',error);
-      return {ready:false,error:'Business Add relation Error '+error};
-    });
+    if (params.flag=='2') {
+      return query.get(params.id).then(function(dataB){
+        dataB.relation('employee').add(userId);
+        dataB.save(null, { useMasterKey: true });
+        return{success:true,code:200};
+      }, function(error) {
+        console.log('Business Add relation Error',error);
+        return {ready:false,error:'Business Add relation Error '+error};
+      });
+
+    }else {
+      query.equalTo('owner', new Parse.Object('_User', { id:params.id }));
+      return query.find().then(function(dataB){
+        dataB[0].relation('employee').add(userId);
+        dataB[0].save(null, { useMasterKey: true });
+        return{success:true,code:200};
+      }, function(error) {
+        console.log('Business Add relation Error',error);
+        return {ready:false,error:'Business Add relation Error '+error};
+      });
+    }
 };
 
 BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (options,idEmployeeorOwner) {

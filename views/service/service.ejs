@@ -1,3 +1,27 @@
+<%if (usersType.owner){%>
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/select2/select2.min.css?v2.2.0">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/clockpicker/clockpicker.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
+
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+  <div class="page">
+    <div class="page-content">
+      <%}%>
+
+
 <h4 class="example-title">Listado de Servicios</h4>
 <div class="panel">
     <div class="panel-body">
@@ -154,22 +178,25 @@
                                 <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
                                 data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
                     </ul>
-                    <%}else{%>
-                      No hay Servicios disponibles
-                    <%}%>
-
                     <%if(catpageE!=10){%>
                       <nav>
                         <ul data-plugin="paginator" id="paginationId3" data-total="<%=catpageE%>" data-skin="pagination-no-border"></ul>
                       </nav>
+                      <%}%>
+                    <%}else{%>
+                      No hay Servicios disponibles
                     <%}%>
+
                     <input id="flagPaginator" value="3" style="visibility:hidden;">
                     <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
+                    <input id="session" value="<%=session.id%>" style="visibility:hidden;">
+                    <input id="BidFlag" value="<%if (usersType.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                     <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                 </div>
             </div>
         </div>
     </div>
+  </div>
 </div>
 
 
@@ -462,7 +489,7 @@
                   <div class="form-group row form-material row">
                     <label class="col-md-4 form-control-label"></label>
                 </div>
-            <input style="visibility:hidden;" id="businessid" value="<%=valores.objectId%>"></input>
+            <input style="visibility:hidden;" id="businessid" value="<%if (usersType.owner){%><%=bussiId%><%}else{%><%=valores.objectId%><%}%>"></input>
             <input style="visibility:hidden;" id="asRangevalue" value=""></input>
           </form>
           <div class="modal-footer text-left">
@@ -473,8 +500,133 @@
         </div>
         </div>
     </div>
-</div>
+    </div>
+    </div>
 
+
+<%if (usersType.owner){%>
+<!-- Footer -->
+<% include ../templates/footer.ejs %>
+<!-- Core  -->
+<script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+<script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
+<script src="/public/assets/material/global/vendor/tether/tether.js"></script>
+<script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
+<script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
+<script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+<script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+<script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+<script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+<script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+<!-- Plugins -->
+<script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
+<script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
+<script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
+<script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+<script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
+<script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+
+
+<script src="/public/assets/material/global/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-tmpl/tmpl.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-load-image/load-image.all.min.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-process.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-image.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-video.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
+<script src="/public/assets/material/global/vendor/dropify/dropify.min.js"></script>
+
+<script src="/public/assets/material/global/vendor/asrange/jquery-asRange.min.js"></script>
+
+<!-- Scripts -->
+<script src="/public/assets/material/global/js/State.js"></script>
+<script src="/public/assets/material/global/js/Component.js"></script>
+<script src="/public/assets/material/global/js/Plugin.js"></script>
+<script src="/public/assets/material/global/js/Base.js"></script>
+<script src="/public/assets/material/global/js/Config.js"></script>
+<script src="/public/assets/material/js/Section/Menubar.js"></script>
+<script src="/public/assets/material/js/Section/Sidebar.js"></script>
+<script src="/public/assets/material/js/Section/PageAside.js"></script>
+<script src="/public/assets/material/js/Plugin/menu.js"></script>
+ <script src="/public/assets/material/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
+<!-- Config -->
+<script src="/public/assets/material/global/js/config/colors.js"></script>
+<script src="/public/assets/material/js/config/tour.js"></script>
+<script>
+Config.set('assets', '../../assets');
+</script>
+<!-- Page -->
+<script src="/public/assets/js/moment.js"></script>
+<script src="/public/assets/material/js/Site.js"></script>
+<script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
+<script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
+<script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
+<script src="/public/assets/material/global/js/Plugin/aspaginator.js"></script>
+<script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
+<script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
+<script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+<script src="/public/assets/js/service.js"></script>
+<script src="/public/assets/material/global/vendor/select2/select2.min.js"></script>
+<script src="/public/assets/material/global/js/Plugin/select2.min.js"></script>
+<script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
+
+<script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
+<script src="/public/assets/material/examples/js/forms/uploads.js"></script>
+ <script src="/public/assets/material/global/js/Plugin/asrange.js"></script>
+
+
+<script>
+(function(document, window, $) {
+  'use strict';
+  var Site = window.Site;
+  $(document).ready(function() {
+    Site.run();
+    var cadena = $(".pagination-next")[0].className;
+    if (cadena.indexOf('disabled') != -1) {
+      $(".pagination-next").prop("onclick", null);
+    }
+    var cadena2 = $(".pagination-prev")[0].className;
+    if (cadena2.indexOf('disabled') != -1) {
+      $(".pagination-prev").prop("onclick", null);
+    }
+  });
+})(document, window, jQuery);
+
+function prevC() {
+  var delayMillis = 100;
+  setTimeout(function() {
+    var lis = $("li.pagination-items").find("active");
+    for (var i = 0; i < lis.prevObject.length; i++) {
+        var nameclass = lis.prevObject[i].className;
+        if (nameclass.search("active")!="-1") {
+          if ($("#flagPaginator").val()==3) {
+            window.location.href = '/service/'+$("#session").val()+'?page='+lis.prevObject[i].textContent;
+          }
+        }
+    }
+  }, delayMillis);
+}
+function nextC() {
+  var delayMillis = 100;
+  setTimeout(function() {
+    var lis = $("li.pagination-items").find("active");
+    for (var i = 0; i < lis.prevObject.length; i++) {
+        var nameclass = lis.prevObject[i].className;
+        if (nameclass.search("active")!="-1") {
+          if ($("#flagPaginator").val()==3) {
+            window.location.href = '/service/'+$("#session").val()+'?page='+lis.prevObject[i].textContent;
+          }
+        }
+    }
+  }, delayMillis);
+}
+
+</script>
+<%}%>
 
 <% for(var g=0; g<serviceData.length; g++) {%>
 <div class="alertify modalS-<%=serviceData[g].objectId%>" style="visibility:hidden;">
@@ -488,3 +640,5 @@
   </div>
 </div>
 <%}%>
+</body>
+</html>

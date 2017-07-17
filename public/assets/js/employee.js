@@ -14,6 +14,7 @@ $('#employeeCreate').click(function () {
       password:$('#password').val(),
       phone:$('#phone').val(),
       id:$('#idBusiness').val(),
+      flag:$('#BidFlag').val(),
       imagen:$('.dropify-render img').attr('src'),
     }
     function validateEmail(email) {

@@ -1,110 +1,137 @@
-<h4 class="example-title">Empleados</h4>
-<div class="panel">
-    <div class="panel-body">
-        <form class="page-search-form" role="search"></form>
-        <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <div class="dropdown page-user-sortlist" style="margin-right:100px;margin-top:-50px;">
-                Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
-                <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
-                  <a class="active dropdown-item" href="javascript:void(0)">Otra</a>
-                </div>
-                <div class="site-action" data-toggle="modal" data-target="#addStageFrom" data-plugin="actionBtn" style="position:absolute;margin-right:-60px;margin-bottom:-31px;">
-                  <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating" style="position: absolute;margin-right: 54px;border-radius: 6px;width: 40px;height: 30px;background-color: #523eba;border-color: #523eba;">
-                    <i class="icon md-plus" aria-hidden="true" style="position:absolute;font-size:1.7145rem;margin-left:-12px;margin-top: -4px;"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+<%if (usersType.owner){%>
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/select2/select2.min.css?v2.2.0">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/clockpicker/clockpicker.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+
+<link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
+
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+  <div class="page">
+    <div class="page-content">
+      <%}%>
+      <div class="col-xl-12">
+        <h4 class="example-title">Empleados</h4>
+        <div class="panel">
+            <div class="panel-body">
+                <form class="page-search-form" role="search"></form>
+                <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
                   <div class="row">
-                    <div class="col-md-2 col-sm-2"></div>
-                    <div class="col-md-2 col-sm-2"><label><b>Nombre</b></label></div>
-                    <div class="col-md-2 col-sm-2"><label><b>Email</b></label></div>
-                    <div class="col-md-2 col-sm-2"><label><b>Tel&eacute;fono</b></label></div>
-                    <div class="col-md-2 col-sm-2"></div>
-                    <div class="col-md-2 col-sm-2"></div>
-                  </div>
-                    <ul class="list-group">
+                    <div class="col-md-12 col-sm-12">
+                      <div class="dropdown page-user-sortlist" style="margin-right:100px;margin-top:-50px;">
+                        Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
+                        <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+                          <a class="active dropdown-item" href="javascript:void(0)">Otra</a>
+                        </div>
+                        <div class="site-action" data-toggle="modal" data-target="#addStageFrom" data-plugin="actionBtn" style="position:absolute;margin-right:-60px;margin-bottom:-31px;">
+                          <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating" style="position: absolute;margin-right: 54px;border-radius: 6px;width: 40px;height: 30px;background-color: #523eba;border-color: #523eba;">
+                            <i class="icon md-plus" aria-hidden="true" style="position:absolute;font-size:1.7145rem;margin-left:-12px;margin-top: -4px;"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="tab-content">
                       <%if (employeeB.employee.length>0){%>
-                        <% for(var o=0; o<employeeB.employee.length; o++) {%>
-                          <%if (employeeB.employee[o].isActive==false){%>
-                            <li class="list-group-item" style="background-color:darkgray;">
-                            <%}else {%>
-                              <li class="list-group-item">
-                            <%}%>
-                                <div class="media">
-                                    <div class="media-body">
-                                      <form class="form-horizontal">
-                                        <div class="row">
-                                          <div class="col-md-2 col-sm-2">
-                                            <div class="avatar avatar-online" style="border-style:solid;border-color:#523eba;">
-                                              <%if (employeeB.employee[o].image){%>
-                                                  <img src="<%=employeeB.employee[o].image.url%>" alt="...">
-                                                <%}else{%>
-                                                  <img src="/public/assets/images/avataremployee.png" alt="...">
-                                                <%}%>
-                                              <i class="avatar avatar-busy"></i>
+                        <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                          <div class="row">
+                            <div class="col-md-2 col-sm-2"></div>
+                            <div class="col-md-2 col-sm-2"><label><b>Nombre</b></label></div>
+                            <div class="col-md-2 col-sm-2"><label><b>Email</b></label></div>
+                            <div class="col-md-2 col-sm-2"><label><b>Tel&eacute;fono</b></label></div>
+                            <div class="col-md-2 col-sm-2"></div>
+                            <div class="col-md-2 col-sm-2"></div>
+                          </div>
+                            <ul class="list-group">
+                                <% for(var o=0; o<employeeB.employee.length; o++) {%>
+                                  <%if (employeeB.employee[o].isActive==false){%>
+                                    <li class="list-group-item" style="background-color:darkgray;">
+                                    <%}else {%>
+                                      <li class="list-group-item">
+                                    <%}%>
+                                        <div class="media">
+                                            <div class="media-body">
+                                              <form class="form-horizontal">
+                                                <div class="row">
+                                                  <div class="col-md-2 col-sm-2">
+                                                    <div class="avatar avatar-online" style="border-style:solid;border-color:#523eba;">
+                                                      <%if (employeeB.employee[o].image){%>
+                                                          <img src="<%=employeeB.employee[o].image.url%>" alt="...">
+                                                        <%}else{%>
+                                                          <img src="/public/assets/images/avataremployee.png" alt="...">
+                                                        <%}%>
+                                                      <i class="avatar avatar-busy"></i>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-md-2 col-sm-2">
+                                                    <input class="form-control" id="emplo-name-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].name%>" disabled></input>
+                                                  </div>
+                                                  <div class="col-md-2 col-sm-2">
+                                                    <input class="form-control" id="emplo-email-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=employeeB.employee[o].username%>" disabled></input>
+                                                  </div>
+                                                  <div class="col-md-2 col-sm-2">
+                                                    <input class="form-control" id="emplo-phone-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].phone%>" disabled></input>
+                                                  </div>
+                                                  <div class="col-md-2 col-sm-2">
+                                                    <%if (employeeB.employee[o].isActive==false){%>
+                                                      <button type="button" class="btn btn-primary btn-warning disabledEmpl waves-effect" data-activate-id="<%=employeeB.employee[o].objectId%>" id="confirmA-<%=employeeB.employee[o].objectId%>" style="height:32px;">Activar</button>
+                                                      <%}else{%>
+                                                        <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.employee[o].objectId%>" data-edit-id="<%=employeeB.employee[o].objectId%>" ><span id="nameE-<%=employeeB.employee[o].objectId%>">Editar</span></button>
+                                                        <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
+                                                        <%}%>
+                                                      </div>
+                                                  <div class="col-md-2 col-sm-2"></div>
+                                                </div>
+                                              </form>
                                             </div>
-                                          </div>
-                                          <div class="col-md-2 col-sm-2">
-                                            <input class="form-control" id="emplo-name-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].name%>" disabled></input>
-                                          </div>
-                                          <div class="col-md-2 col-sm-2">
-                                            <input class="form-control" id="emplo-email-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=employeeB.employee[o].username%>" disabled></input>
-                                          </div>
-                                          <div class="col-md-2 col-sm-2">
-                                            <input class="form-control" id="emplo-phone-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].phone%>" disabled></input>
-                                          </div>
-                                          <div class="col-md-2 col-sm-2">
-                                            <%if (employeeB.employee[o].isActive==false){%>
-                                              <button type="button" class="btn btn-primary btn-warning disabledEmpl waves-effect" data-activate-id="<%=employeeB.employee[o].objectId%>" id="confirmA-<%=employeeB.employee[o].objectId%>" style="height:32px;">Activar</button>
-                                              <%}else{%>
-                                                <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.employee[o].objectId%>" data-edit-id="<%=employeeB.employee[o].objectId%>" ><span id="nameE-<%=employeeB.employee[o].objectId%>">Editar</span></button>
-                                                <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
-                                                <%}%>
-                                              </div>
-                                          <div class="col-md-2 col-sm-2"></div>
                                         </div>
-                                      </form>
-                                    </div>
-                                </div>
-                            </li>
+                                    </li>
+                                    <%}%>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
+                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                                    <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;">delay</button>
+                                    <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+                                    <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
+                                      data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
+                            </ul>
+                            <%if(catpageE!=10){%>
+                              <nav>
+                                <ul data-plugin="paginator" id="paginationId2" data-total="<%=catpageE%>" data-skin="pagination-no-border"></ul>
+                              </nav>
+                              <%}%>
+                            <%}else{%>
+                              No hay Empleados disponibles
                             <%}%>
-                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
-                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
-                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
-                            <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
-                            <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;">delay</button>
-                            <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
-                            <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
-                              data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
-                    </ul>
-                    <%}else{%>
-                      No hay Empleados disponibles
-                    <%}%>
-                    <%if(catpageE!=10){%>
-                      <nav>
-                        <ul data-plugin="paginator" id="paginationId2" data-total="<%=catpageE%>" data-skin="pagination-no-border"></ul>
-                      </nav>
-                    <%}%>
-                    <input id="flagPaginator" value="2" style="visibility:hidden;">
-                    <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
-                    <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
+                            <input id="flagPaginator" value="2" style="visibility:hidden;">
+                            <input id="Bid" value="<%if (usersType.owner){%><%=session.id%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                            <input id="BidFlag" value="<%if (usersType.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
+                            <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 <!-- Site Action Nuevo Empleado-->
 
 <!-- End Site Action -->
@@ -154,7 +181,7 @@
                         </div>
                       </div>
                     </div>
-                    <input type="text" class="form-control" id="idBusiness" value="<%=valores.objectId%>" style="visibility:hidden;">
+                    <input type="text" class="form-control" id="idBusiness" value="<%if (usersType.owner){%><%=session.id%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                 </div>
             </div>
           </div>
@@ -170,3 +197,131 @@
     </div>
   </div>
 </div>
+
+<%if (usersType.owner){%>
+<!-- Footer -->
+  <% include ../templates/footer.ejs %>
+<!-- Core  -->
+<script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+<script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
+<script src="/public/assets/material/global/vendor/tether/tether.js"></script>
+<script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
+<script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
+<script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+<script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+<script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+<script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+<script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+<!-- Plugins -->
+<script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
+<script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
+<script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
+<script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+<script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
+<script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+
+
+<script src="/public/assets/material/global/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-tmpl/tmpl.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-load-image/load-image.all.min.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-process.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-image.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-video.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+<script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
+<script src="/public/assets/material/global/vendor/dropify/dropify.min.js"></script>
+
+<script src="/public/assets/material/global/vendor/asrange/jquery-asRange.min.js"></script>
+
+
+
+<!-- Scripts -->
+<script src="/public/assets/material/global/js/State.js"></script>
+<script src="/public/assets/material/global/js/Component.js"></script>
+<script src="/public/assets/material/global/js/Plugin.js"></script>
+<script src="/public/assets/material/global/js/Base.js"></script>
+<script src="/public/assets/material/global/js/Config.js"></script>
+<script src="/public/assets/material/js/Section/Menubar.js"></script>
+<script src="/public/assets/material/js/Section/Sidebar.js"></script>
+<script src="/public/assets/material/js/Section/PageAside.js"></script>
+<script src="/public/assets/material/js/Plugin/menu.js"></script>
+ <script src="/public/assets/material/global/vendor/clockpicker/bootstrap-clockpicker.min.js"></script>
+<!-- Config -->
+<script src="/public/assets/material/global/js/config/colors.js"></script>
+<script src="/public/assets/material/js/config/tour.js"></script>
+<script>
+Config.set('assets', '../../assets');
+</script>
+<!-- Page -->
+<script src="/public/assets/js/moment.js"></script>
+<script src="/public/assets/material/js/Site.js"></script>
+<script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
+<script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
+<script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
+<script src="/public/assets/material/global/js/Plugin/aspaginator.js"></script>
+<script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
+<script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
+<script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+<script src="/public/assets/js/employee.js"></script>
+<script src="/public/assets/material/global/vendor/select2/select2.min.js"></script>
+<script src="/public/assets/material/global/js/Plugin/select2.min.js"></script>
+<script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
+
+<script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
+<script src="/public/assets/material/examples/js/forms/uploads.js"></script>
+ <script src="/public/assets/material/global/js/Plugin/asrange.js"></script>
+
+
+<script>
+(function(document, window, $) {
+  'use strict';
+  var Site = window.Site;
+  $(document).ready(function() {
+    Site.run();
+    var cadena = $(".pagination-next")[0].className;
+    if (cadena.indexOf('disabled') != -1) {
+      $(".pagination-next").prop("onclick", null);
+    }
+    var cadena2 = $(".pagination-prev")[0].className;
+    if (cadena2.indexOf('disabled') != -1) {
+      $(".pagination-prev").prop("onclick", null);
+    }
+  });
+})(document, window, jQuery);
+
+function prevC() {
+  var delayMillis = 100;
+  setTimeout(function() {
+    var lis = $("li.pagination-items").find("active");
+    for (var i = 0; i < lis.prevObject.length; i++) {
+        var nameclass = lis.prevObject[i].className;
+        if (nameclass.search("active")!="-1") {
+          if ($("#flagPaginator").val()==2) {
+            window.location.href = '/employee/'+$("#Bid").val()+'?page='+lis.prevObject[i].textContent;
+          }
+        }
+    }
+  }, delayMillis);
+}
+function nextC() {
+  var delayMillis = 100;
+  setTimeout(function() {
+    var lis = $("li.pagination-items").find("active");
+    for (var i = 0; i < lis.prevObject.length; i++) {
+        var nameclass = lis.prevObject[i].className;
+        if (nameclass.search("active")!="-1") {
+          if ($("#flagPaginator").val()==2) {
+            window.location.href = '/employee/'+$("#Bid").val()+'?page='+lis.prevObject[i].textContent;
+          }
+        }
+    }
+  }, delayMillis);
+}
+
+</script>
+<%}%>
+</body>
+</html>

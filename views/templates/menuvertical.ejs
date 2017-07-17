@@ -12,7 +12,7 @@ if (usersType.admin){
 if (usersType.userId){
   userId=usersType.userId;
 }
-var Em='', Das='', Cal='', Cat='';
+var Em='', Das='', Cal='', Cat='', Emplo='', Servi='';
 
 if(businessSelec==1){
   Em = 'active';
@@ -27,6 +27,12 @@ if (calendarSelec==1){
 if (categorySelec==1){
   Cat = 'active';
 }
+if (employeeSelec==1){
+  Emplo = 'active';
+}
+if (serviSelect==1){
+  Servi = 'active';
+}
 %>
 
 <div class="site-menubar">
@@ -34,12 +40,26 @@ if (categorySelec==1){
     <div>
       <div>
         <ul class="site-menu" data-plugin="menu">
-          <li class="site-menu-item <%=Das%>">
-            <a class="animsition-link" href="/<%=redirect%>?user=<%=userId%>">
-              <i class="site-menu-icon md-view-dashboard" aria-hidden="true" style="color:#523eba"></i>
-              <span class="site-menu-title">Dashboard</span>
-            </a>
-          </li>
+          <%if (!usersType.owner){%>
+            <li class="site-menu-item <%=Das%>">
+              <a class="animsition-link" href="/<%=redirect%>?user=<%=userId%>">
+                <i class="site-menu-icon md-view-dashboard" aria-hidden="true" style="color:#523eba"></i>
+                <span class="site-menu-title">Dashboard</span>
+              </a>
+            </li>
+          <%}%>
+          <%if (usersType.owner || usersType.employee){%>
+              <li class="site-menu-item has-sub <%=Cal%>">
+              <%if (usersType.owner){%>
+                <a href="/calendar?owner=<%=usersType.userId%>">
+              <%} else if (usersType.employee){%>
+                <a href="/calendar?employee=<%=usersType.userId%>">
+              <%}%>
+                <i class="site-menu-icon md-calendar" aria-hidden="true" style="color:#523eba"></i>
+                <span class="site-menu-title">Calendario</span>
+              </a>
+              </li>
+          <%}%>
           <%if (usersType.admin){%>
           <li class="site-menu-item has-sub <%=Em%>">
             <a href="javascript:void(0)">
@@ -78,25 +98,28 @@ if (categorySelec==1){
               </ul>
             </li>
             <%} else if (usersType.owner){%>
-              <li class="site-menu-item has-sub <%=Em%>">
+
+              <li class="site-menu-item has-sub <%=Servi%>">
+                <a href="/service/<%=usersType.userId%>">
+                  <i class="site-menu-icon md-store" aria-hidden="true" style="color:#523eba"></i>
+                  <span class="site-menu-title">Servicios</span>
+                </a>
+                </li>
+              <li class="site-menu-item has-sub <%=Emplo%>">
+                <a href="/employee/<%=usersType.userId%>">
+                  <i class="site-menu-icon md-accounts" aria-hidden="true" style="color:#523eba"></i>
+                  <span class="site-menu-title">Empleados</span>
+                </a>
+                </li>
+
+              <li class="site-menu-item has-sub ">
                 <a href="/business/list?owner=<%=usersType.userId%>">
-                  <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
+                  <i class="site-menu-icon md-settings" aria-hidden="true" style="color:#523eba"></i>
                   <span class="site-menu-title">Ajustes</span>
                 </a>
                 </li>
             <%}%>
-            <%if (usersType.owner || usersType.employee){%>
-                <li class="site-menu-item has-sub <%=Cal%>">
-                <%if (usersType.owner){%>
-                  <a href="/calendar?owner=<%=usersType.userId%>">
-                <%} else if (usersType.employee){%>
-                  <a href="/calendar?employee=<%=usersType.userId%>">
-                <%}%>
-                  <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
-                  <span class="site-menu-title">Calendario</span>
-                </a>
-                </li>
-            <%}%>
+
         </ul>
       </div>
     </div>

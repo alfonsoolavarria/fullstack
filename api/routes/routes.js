@@ -57,8 +57,10 @@ module.exports = function(app) {
       session:session,
       businessSelec:0,
       dashSelec:1,
+      employeeSelec:0,
       calendarSelec:0,
       categorySelec:0,
+      serviSelect:0,
     });
 	});
 
@@ -77,7 +79,9 @@ module.exports = function(app) {
       businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
+      employeeSelec:0,
       categorySelec:0,
+      serviSelect:0,
     });
   });
 
@@ -96,9 +100,35 @@ module.exports = function(app) {
       businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
+      employeeSelec:0,
       categorySelec:0,
+      serviSelect:0,
     });
 	});
+
+  app.get('/employee/:id', function(req, res) {
+    var selectPageE=1;
+    if (req.query.page) {
+      selectPageE=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+    req.query.flag=true;
+    Users.getEmployeeBusiness2(req.params.id,req.query).then(function(employeeB) {
+      res.render('business/employee.ejs',{
+        employeeB,
+        usersType,
+        selectPageE,
+        catpageE:JSON.parse(JSON.stringify(employeeB.cantPage)),
+        businessSelec:0,
+        employeeSelec:1,
+        calendarSelec:0,
+        dashSelec:0,
+        session:session,
+        categorySelec:0,
+        serviSelect:0,
+      });
+    });
+  });
 
   app.post('/employee',middle.checkSession, function(req, res) {
     Users.checkUser(req.body).then(function(result) {
@@ -106,7 +136,7 @@ module.exports = function(app) {
         res.json(result);
       }
       EployeeControllers.creteEmployee(req.body).then(function(user) {
-        BusinessControllers.addRelationBusiness(req.body,user).then(function(data){
+        BusinessControllers.addRelationBusiness(user,req.body).then(function(data){
           res.json({code:200});
         });
       });
@@ -134,8 +164,10 @@ module.exports = function(app) {
         typeBusiness,
         businessSelec:1,
         dashSelec:0,
+        employeeSelec:0,
         calendarSelec:0,
         categorySelec:0,
+        serviSelect:0,
       });
     });
 	});
@@ -167,7 +199,9 @@ module.exports = function(app) {
           businessSelec:1,
           calendarSelec:0,
           dashSelec:0,
+          employeeSelec:0,
           categorySelec:0,
+          serviSelect:0,
         });
       });
     });
@@ -211,6 +245,7 @@ module.exports = function(app) {
           service,
           bussiId:req.params.id,
           selectPageE,
+          employeeSelec:0,
           catpageE:catpage,
           dataClient:dataClient,
           client:'active',
@@ -219,6 +254,7 @@ module.exports = function(app) {
           dashSelec:0,
           session:session,
           categorySelec:0,
+          serviSelect:0,
         });
       });
     }else {
@@ -275,6 +311,7 @@ module.exports = function(app) {
                     bussiId:req.params.id,
                     service,
                     client,
+                    employeeSelec:0,
                     serviceData,
                     final,
                     dataClient,
@@ -285,6 +322,7 @@ module.exports = function(app) {
                     dashSelec:0,
                     session:session,
                     categorySelec:0,
+                    serviSelect:0,
                   });
                 });
               }else {
@@ -309,8 +347,10 @@ module.exports = function(app) {
                   businessSelec:1,
                   calendarSelec:0,
                   dashSelec:0,
+                  employeeSelec:0,
                   session:session,
                   categorySelec:0,
+                  serviSelect:0,
                 });
               }
             });
@@ -336,8 +376,10 @@ module.exports = function(app) {
               businessSelec:1,
               calendarSelec:0,
               dashSelec:0,
+              employeeSelec:0,
               session:session,
               categorySelec:0,
+              serviSelect:0,
             });
           }
         });
@@ -421,6 +463,61 @@ module.exports = function(app) {
   /*******************************|
   |*******Service********|
   ********************************/
+
+  app.get('/service/:id', function(req, res) {
+    var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[];
+    if (req.query.page) {
+      selectPageE=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+    req.query.flag=false;
+    Users.getEmployeeBusiness2(req.params.id,req.query).then(function(employeeB) {
+      req.query.type='service';
+      ServiceControllers.getService2(req.params.id,req.query).then(function(serviceData) {
+        for (var ii = 0; ii < serviceData.length; ii++) {
+          if (serviceData[ii].catpageE) {
+            catpage = serviceData[ii].catpageE;
+          }
+        }
+        serviceData = serviceData.filter(function(el) {
+          return !el.catpageE;
+        });
+        if (serviceData.length>0) {
+          serviceData = JSON.parse(JSON.stringify(serviceData));
+          for (var i = 0; i < serviceData.length; i++) {
+              if (serviceData[i].alfonso[0].length>0) {
+                for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
+                  listService.push(serviceData[i].alfonso[0][o].objectId);
+                }
+                final.push(JSON.parse(JSON.stringify(listService)));
+                listService=[];
+              }else {
+                final.push(['']);
+              }
+          }
+        }
+        res.render('service/service.ejs',{
+          employeeB,
+          usersType,
+          serviceData,
+          selectPageE,
+          catpageE:catpage,
+          final,
+          bussiId:employeeB.idBusiness,
+          businessSelec:0,
+          employeeSelec:0,
+          calendarSelec:0,
+          dashSelec:0,
+          session:session,
+          categorySelec:0,
+          serviSelect:1,
+        });
+      });
+    });
+  });
+
+
+
   app.post('/service',middle.checkSession, function(req, res) {
     ServiceControllers.createService(req.body).then(function(data){
       if (req.body.employee) {
@@ -429,16 +526,22 @@ module.exports = function(app) {
             res.json({code:200});
           });
         }
+      }else {
+        res.json({code:200});
       }
     });
   });
 
   app.put('/service',middle.checkSession, function(req, res) {
     ServiceControllers.updateService(req.body).then(function(data){
-      for (var i = 0; i < req.body.employee.length; i++) {
-        ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
-          res.json({code:200});
-        });
+      if (req.body.employee) {
+        for (var i = 0; i < req.body.employee.length; i++) {
+          ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
+            res.json(ready);
+          });
+        }
+      }else {
+        res.json({code:200});
       }
     });
   });
@@ -500,6 +603,8 @@ module.exports = function(app) {
             dashSelec:0,
             calendarSelec:1,
             categorySelec:0,
+            employeeSelec:0,
+            serviSelect:0,
           });
         });
       });
@@ -598,6 +703,8 @@ module.exports = function(app) {
         dashSelec:0,
         calendarSelec:0,
         categorySelec:1,
+        employeeSelec:0,
+        serviSelect:0,
       });
     });
 
@@ -611,6 +718,8 @@ module.exports = function(app) {
           listCateg:JSON.parse(dataC),
           calendarSelec:0,
           categorySelec:1,
+          employeeSelec:0,
+          serviSelect:0,
         });
       });
     });
@@ -656,6 +765,7 @@ module.exports = function(app) {
         if (user.data.get('isActive')==true) {
           req.session['x-parse-session-token'] = user.data.get('sessionToken');
           session.name = user.data.get('name');
+          session.id = user.data.id;
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
             return res.redirect('/admin?'+'user='+id);
