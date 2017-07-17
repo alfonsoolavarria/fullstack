@@ -110,7 +110,7 @@
                                 <%if (usersType.admin || usersType.owner ){%>
                                   <div class="pl-20 align-self-center">
                                     <% if (valores[i].status){%>
-                                      <a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard"> <button type="button" style="height:32px;" class="btn btn-primary btn-success btn-sm-details" <span id="nameD-<%= valores[i].objectId %>">Detalles</span></button></a>
+                                      <%if (!usersType.owner){%><a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard"> <button type="button" style="height:32px;" class="btn btn-primary btn-success btn-sm-details" <span id="nameD-<%= valores[i].objectId %>">Detalles</span></button></a><%}%>
                                       <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
                                       <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
                                       <%}else{%>
