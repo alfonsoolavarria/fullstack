@@ -1,3 +1,4 @@
+<%var flag='';%>
 <%if (usersType.owner){%>
   <% include ../templates/head.ejs %>
   <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
@@ -47,14 +48,20 @@
                     <ul class="list-group">
                       <%if (serviceData.length>0){%>
                         <% for(var o=0; o<serviceData.length; o++) {%>
+                          <%if (listCategory.indexOf(serviceData[o].category)>=0) {%>
                             <li class="list-group-item">
+                              <%if (flag!=serviceData[o].category){%>
+                                <label><b><%=serviceData[o].category%>:</b></label>
+                              <%}%>
                                 <div class="media">
-                                    <div class="pr-20">
-                                        <div class="avatar avatar-online">
-                                            <img src="/public/assets/images/service.svg" alt="...">
-                                            <i class="avatar avatar-busy"></i>
-                                        </div>
-                                    </div>
+                                  <%if (flag!=serviceData[o].category){%>
+                                      <div class="pr-20">
+                                          <div class="avatar avatar-online">
+                                              <img src="/public/assets/images/service.svg" alt="...">
+                                              <i class="avatar avatar-busy"></i>
+                                          </div>
+                                      </div>
+                                    <%}%>
                                     <div class="media-body">
                                         <form class="form-horizontal">
                                             <div class="row">
@@ -85,6 +92,7 @@
                                                             <input class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=serviceData[o].price%>" disabled></input>
                                                         </div>
                                                     </div>
+
                                                     <div class="form-group row form-material row">
                                                       <label class="col-md-6 form-control-label">Empleado:</label>
                                                       <div class="col-md-6">
@@ -106,7 +114,6 @@
                                                           </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
                                                         </div>
                                                       </div>
-
                                                 </div>
 
                                                 <div class="col-md-5">
@@ -114,7 +121,25 @@
                                                       <label class="col-md-6 form-control-label">Descripci&oacute;n:</label>
                                                       <textarea class="form-control" name="content" id="service-description-<%=serviceData[o].objectId%>" style="width: 160px;" disabled><%=serviceData[o].description%></textarea>
                                                   </div>
-                                            </div>
+                                                  <div class="form-group row form-material row">
+                                                    <label class="col-md-6 form-control-label">Categoria:</label>
+                                                    <select class="col-md-6 form-control" style="width: 50%;" id="selectcateO-<%=serviceData[o].objectId%>" disabled>
+                                                        <%for (ai in listCateSelect){%>
+                                                          <%if (listCateSelect[ai]==serviceData[o].category){%>
+                                                            <option value="<%=listCateSelect[ai]%>" selected><%=listCateSelect[ai]%></option>
+                                                          <%}else{%>
+                                                            <option value="<%=listCateSelect[ai]%>"><%=listCateSelect[ai]%></option>
+                                                          <%}%>
+                                                        <%}%>
+                                                    </select>
+                                                  </div>
+
+                                                  <div class="form-group row form-material row" style="visibility:hidden;">
+                                                    <label class="col-md-6 form-control-label" >Crear nueva Categoria:</label>
+                                                    <input type="text" class="col-md-6 form-control" id="catenameO-<%=serviceData[o].objectId%>" placeholder="Nueva Categoria" />
+                                                  </div>
+                                                </div>
+
                                             <div class="col-md-3">
                                               <div class="pl-20 align-self-center">
                                                 <button type="button" class="btn btn-primary btn-sm editS btnS-<%=serviceData[o].objectId%>" data-edit-id="<%=serviceData[o].objectId%>" ><span id="nameS-<%=serviceData[o].objectId%>">Editar</span></button>
@@ -168,6 +193,8 @@
                                     </form>
                                 </div>
                             </li>
+                            <%}%>
+                            <%flag=serviceData[o].category%>
                             <%}%>
                               <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceDelay" data-plugin="alertify"
                               data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
@@ -235,6 +262,21 @@
                     <div class="form-group">
                         <label class="form-control-label mb-15" for="topicTitle">Descripci&oacute;n:</label>
                         <textarea name="content" id="topicDescription" data-provide="markdown" data-iconlibrary="fa" rows="10" style="width: 100%;margin-top: 0px;margin-bottom: 0px;height: 100px;"></textarea>
+                    </div>
+                    <label class="form-control-label" for="topicCategory">Categoria:</label>
+                    <div class="form-group">
+                      <div class="row">
+                        <select class="col-md-6 form-control" style="width: 50%;" id="selectcate">
+                          <%if (listCateSelect.length>0){%>
+                            <%for (ai in listCateSelect){%>
+                              <option value="<%=listCategory[ai]%>"><%=listCateSelect[ai]%></option>
+                            <%}%>
+                          <%}else{%>
+                            <option value="Otros servicios">Otros servicios</option>
+                          <%}%>
+                        </select>
+                        <input type="text" class="col-md-6 form-control" id="catename" placeholder="Nueva Categoria" />
+                      </div>
                     </div>
                     <!-- Example Multi Balue -->
                     <div class="example-wrap">

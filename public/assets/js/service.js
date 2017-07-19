@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var dataSend = {};
   dataSend.duration=0;
-  var flag = 0;
+  var flag = 0, category='';
   var she = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
   var cant = [1,2,3,4];
     $('.service').click(function () {
@@ -15,7 +15,11 @@ $(document).ready(function() {
         employee:[],
         idBusiness:$('#businessid').val(),
       }
-
+      if ($("#catename").val().length>0) {
+        dataSend.category=$("#catename").val();
+      }else {
+        dataSend.category=$("#selectcate").val();
+      }
 
     try {
       for (var i = 0; i < $(".input-select-final").select2()[0].length; i++) {
@@ -507,6 +511,8 @@ $(document).ready(function() {
         $("#service-description-"+id).removeAttr("disabled");
         $("#selectSe-"+id).removeAttr("disabled");
         $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+        $("#selectcateO-"+id).removeAttr("disabled");
+        $("#catenameO-"+id).removeAttr("disabled");
 
         $("#service-serviceName-"+id).keyup(function () {
           dataSend.serviceName = $("#service-serviceName-"+id).val();

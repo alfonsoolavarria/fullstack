@@ -215,7 +215,7 @@ module.exports = function(app) {
 
   app.get('/business/:id/dashboard', function(req, res) {
     var employee='',service='',client='', selectPageE=1, catpage=10, serviceData={};
-    var listService = [], final=[], schedule=[], dataClient=[];
+    var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
     if (req.query.page) {
       selectPageE=req.query.page;
       req.query.page=req.query.page-1;
@@ -285,13 +285,22 @@ module.exports = function(app) {
                     if (serviceData[ii].catpageE) {
                       catpage = serviceData[ii].catpageE;
                     }
+                    if (serviceData[ii].liscate) {
+                      listCateSelect = serviceData[ii].liscate;
+                    }
                   }
                   serviceData = serviceData.filter(function(el) {
                     return !el.catpageE;
                   });
+                  serviceData = serviceData.filter(function(el) {
+                    return !el.liscate;
+                  });
                   if (serviceData.length>0) {
                     serviceData = JSON.parse(JSON.stringify(serviceData));
                     for (var i = 0; i < serviceData.length; i++) {
+                      if (listCategory.indexOf(serviceData[i].category)<0) {
+                        listCategory.push(serviceData[i].category);
+                      }
                         if (serviceData[i].alfonso[0].length>0) {
                           for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
                             listService.push(serviceData[i].alfonso[0][o].objectId);
@@ -304,6 +313,7 @@ module.exports = function(app) {
 
                     }
                   }
+                  serviceData = _.orderBy(serviceData, ['category'], ['desc']);
                   res.render('business/dashboard.ejs',{
                     usersType,
                     valores,
@@ -315,6 +325,8 @@ module.exports = function(app) {
                     employee,
                     selectPageE,
                     catpageE:catpage,
+                    listCategory,
+                    listCateSelect,
                     bussiId:req.params.id,
                     service,
                     client,
@@ -348,6 +360,8 @@ module.exports = function(app) {
                   service,
                   client,
                   serviceData,
+                  listCateSelect,
+                  listCategory,
                   final,
                   dataClient,
                   listService,
@@ -475,7 +489,7 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/service/:id', function(req, res) {
-    var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[];
+    var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[], listCateSelect;
     if (req.query.page) {
       selectPageE=req.query.page;
       req.query.page=req.query.page-1;
@@ -488,24 +502,36 @@ module.exports = function(app) {
           if (serviceData[ii].catpageE) {
             catpage = serviceData[ii].catpageE;
           }
+          if (serviceData[ii].liscate) {
+            listCateSelect = serviceData[ii].liscate;
+          }
         }
         serviceData = serviceData.filter(function(el) {
           return !el.catpageE;
         });
+
+        serviceData = serviceData.filter(function(el) {
+          return !el.liscate;
+        });
+
         if (serviceData.length>0) {
           serviceData = JSON.parse(JSON.stringify(serviceData));
           for (var i = 0; i < serviceData.length; i++) {
-              if (serviceData[i].alfonso[0].length>0) {
-                for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
-                  listService.push(serviceData[i].alfonso[0][o].objectId);
-                }
-                final.push(JSON.parse(JSON.stringify(listService)));
-                listService=[];
-              }else {
-                final.push(['']);
+            if (listCategory.indexOf(serviceData[i].category)<0) {
+              listCategory.push(serviceData[i].category);
+            }
+            if (serviceData[i].alfonso[0].length>0) {
+              for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
+                listService.push(serviceData[i].alfonso[0][o].objectId);
               }
+              final.push(JSON.parse(JSON.stringify(listService)));
+              listService=[];
+            }else {
+              final.push(['']);
+            }
           }
         }
+        serviceData = _.orderBy(serviceData, ['category'], ['desc']);
         res.render('service/service.ejs',{
           employeeB,
           usersType,
@@ -513,6 +539,8 @@ module.exports = function(app) {
           selectPageE,
           catpageE:catpage,
           final,
+          listCategory,
+          listCateSelect,
           bussiId:employeeB.idBusiness,
           businessSelec:0,
           employeeSelec:0,
@@ -836,6 +864,7 @@ module.exports = function(app) {
             usersType.owner=true;
             //return res.redirect('/owner?'+'user='+id);
             return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
+            //return res.redirect('/service/'+id);
           }
           else if (user.data.get('type')==USER_ALL.employee) {
             console.log('Empleado');

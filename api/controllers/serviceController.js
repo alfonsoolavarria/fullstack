@@ -15,6 +15,7 @@ ServiceControllers.createService = function createService (options) {
   service.set('business', {"__type":"Pointer","className":"Business","objectId":options.idBusiness});
   service.set('employee',options.employee);
   service.set('schedule',options.schedule);
+  service.set('category',options.category);
   var acl = new Parse.ACL();
   acl.setPublicWriteAccess(true);
   acl.setPublicReadAccess(true);
@@ -65,35 +66,44 @@ ServiceControllers.getService = function getService (id,reqparams) {
   }
   query.equalTo('status', true);
 
-  if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
-  else consulta = query.find();
-  query.count().then(function(cantData) {
-    if ((cantData/2)>0 && (cantData/2)%1==0) {
-      //entero
-      cantpage=(cantData/2)*10;
-    }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
-      //redondeo
-      cantpage=(parseInt(cantData/2)+1)*10;
-    }else {
-      //una sola pagina
-      cantpage=1*10;
-    }
-  });
-
-  return consulta.then(function(data) {
-    var promises = [];
-    var kk = 0;
-    _.forEach(data, function(allD) {
-        promises.push(allD.relation('employee2').query().find());
-    });
-    return Parse.Promise.when(promises).then(function(resultados, index) {
-        for (var i = 0; i < resultados.length; i++) {
-            data[i] = data[i].toJSON();
-            data[i].alfonso = [];
-            data[i].alfonso.push(resultados[i]);
+  return query.find().then(function(cate) {
+    return query.count().then(function(cantData) {
+      var listC = [];
+      _.forEach(cate, function(categories) {
+        if (listC.indexOf(categories.get('category'))<0) {
+          listC.push(categories.get('category'));
         }
-        if (reqparams.type=='service') data.push({catpageE:cantpage});
-        return data;
+      });
+      if ((cantData/2)>0 && (cantData/2)%1==0) {
+        //entero
+        cantpage=(cantData/2)*10;
+      }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
+        //redondeo
+        cantpage=Math.round(cantData/2)*10;
+      }else {
+        //una sola pagina
+        cantpage=1*10;
+      }
+
+      if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
+      else consulta = query.find();
+
+      return consulta.then(function(data) {
+        var promises = [];
+        var kk = 0;
+        _.forEach(data, function(allD) {
+            promises.push(allD.relation('employee2').query().find());
+        });
+        return Parse.Promise.when(promises).then(function(resultados, index) {
+            for (var i = 0; i < resultados.length; i++) {
+                data[i] = data[i].toJSON();
+                data[i].alfonso = [];
+                data[i].alfonso.push(resultados[i]);
+            }
+            if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
+            return data;
+        });
+      });
     });
   });
 };
@@ -106,40 +116,47 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     var cantpage=10;
     var query = new Parse.Query('Service');
     var consulta;
-    
+
     query.equalTo('business', new Parse.Object('Business', {id: dataE[0].id}));
     query.equalTo('status', true);
 
-
-    if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
-    else consulta = query.find();
-    query.count().then(function(cantData) {
-      if ((cantData/2)>0 && (cantData/2)%1==0) {
-        //entero
-        cantpage=(cantData/2)*10;
-      }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
-        //redondeo
-        cantpage=(parseInt(cantData/2)+1)*10;
-      }else {
-        //una sola pagina
-        cantpage=1*10;
-      }
-    });
-
-    return consulta.then(function(data) {
-      var promises = [];
-      var kk = 0;
-      _.forEach(data, function(allD) {
-        promises.push(allD.relation('employee2').query().find());
-      });
-      return Parse.Promise.when(promises).then(function(resultados, index) {
-        for (var i = 0; i < resultados.length; i++) {
-          data[i] = data[i].toJSON();
-          data[i].alfonso = [];
-          data[i].alfonso.push(resultados[i]);
+    return query.find().then(function(cate) {
+      return query.count().then(function(cantData) {
+        var listC = [];
+        _.forEach(cate, function(categories) {
+          if (listC.indexOf(categories.get('category'))<0) {
+            listC.push(categories.get('category'));
+          }
+        });
+        if ((cantData/2)>0 && (cantData/2)%1==0) {
+          //entero
+          cantpage=(cantData/2)*10;
+        }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
+          //redondeo
+          cantpage=Math.round(cantData/2)*10;
+        }else {
+          //una sola pagina
+          cantpage=1*10;
         }
-        if (reqparams.type=='service') data.push({catpageE:cantpage});
-        return data;
+
+        if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
+        else consulta = query.find();
+        return consulta.then(function(data) {
+          var promises = [];
+          var kk = 0;
+          _.forEach(data, function(allD) {
+            promises.push(allD.relation('employee2').query().find());
+          });
+          return Parse.Promise.when(promises).then(function(resultados, index) {
+            for (var i = 0; i < resultados.length; i++) {
+              data[i] = data[i].toJSON();
+              data[i].alfonso = [];
+              data[i].alfonso.push(resultados[i]);
+            }
+            if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
+            return data;
+          });
+        });
       });
     });
   });
