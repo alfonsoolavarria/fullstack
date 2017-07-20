@@ -101,6 +101,7 @@ ServiceControllers.getService = function getService (id,reqparams) {
                 data[i].alfonso.push(resultados[i]);
             }
             if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
+            if (reqparams.type=='listcate') data.push({liscate:listC});
             return data;
         });
       });
@@ -154,6 +155,7 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
               data[i].alfonso.push(resultados[i]);
             }
             if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
+            if (reqparams.type=='listcate') data.push({liscate:listC});
             return data;
           });
         });
@@ -161,6 +163,25 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     });
   });
 };
+
+ServiceControllers.getServiceOne = function getServiceOne (id) {
+  var query = new Parse.Query('Service');
+  return query.get(id).then(function(data) {
+    var promises = [];
+    var kk = 0;
+    promises.push(data.relation('employee2').query().find());
+
+    return Parse.Promise.when(promises).then(function(resultados, index) {
+
+        data = data.toJSON();
+        data.alfonso = [];
+        data.alfonso.push(resultados);
+
+      return data;
+    });
+  });
+}
+
 
 ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,employeeId) {
     var query1 = new Parse.Query('_User');

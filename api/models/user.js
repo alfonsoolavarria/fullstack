@@ -168,6 +168,16 @@ UsersModel.getEmployeeBusiness2 = function getEmployeeBusiness2 (id,reqparams) {
   });
 };
 
+UsersModel.getEmployeeBusinessOne = function getEmployeeBusinessOne (id) {
+
+  var query = new Parse.Query('Service');
+  return query.get(id).then(function(dataE){
+    return dataE.relation('employee2').query().find().then(function(employess){
+      return {employee:JSON.parse(JSON.stringify(employess))};
+    });
+  });
+};
+
 UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
   var page=reqparams.page ? reqparams.page : 0;
   var cantpage=10;

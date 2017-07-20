@@ -280,21 +280,24 @@ module.exports = function(app) {
             useTemplate.dashboard = false;
             Users.getEmployeeBusiness(req.params,req.query).then(function(employeeB) {
               if (useTemplate.service) {
+                req.query.type='listcate';
                 ServiceControllers.getService(req.params.id,req.query).then(function(serviceData) {
+                  req.query.type='service';
                   for (var ii = 0; ii < serviceData.length; ii++) {
-                    if (serviceData[ii].catpageE) {
-                      catpage = serviceData[ii].catpageE;
-                    }
                     if (serviceData[ii].liscate) {
                       listCateSelect = serviceData[ii].liscate;
                     }
+                  if (serviceData[ii].catpageE) {
+                      catpage = serviceData[ii].catpageE;
+                    }
                   }
-                  serviceData = serviceData.filter(function(el) {
-                    return !el.catpageE;
-                  });
                   serviceData = serviceData.filter(function(el) {
                     return !el.liscate;
                   });
+                  serviceData = serviceData.filter(function(el) {
+                    return !el.catpageE;
+                  });
+
                   if (serviceData.length>0) {
                     serviceData = JSON.parse(JSON.stringify(serviceData));
                     for (var i = 0; i < serviceData.length; i++) {
@@ -310,7 +313,6 @@ module.exports = function(app) {
                         }else {
                           final.push(['']);
                         }
-
                     }
                   }
                   serviceData = _.orderBy(serviceData, ['category'], ['desc']);
@@ -327,16 +329,15 @@ module.exports = function(app) {
                     catpageE:catpage,
                     listCategory,
                     listCateSelect,
-                    bussiId:req.params.id,
                     service,
                     client,
-                    employeeSelec:0,
                     serviceData,
                     final,
                     dataClient,
                     listService,
                     schedule,
                     businessSelec:1,
+                    employeeSelec:0,
                     calendarSelec:0,
                     dashSelec:0,
                     session:session,
@@ -488,7 +489,52 @@ module.exports = function(app) {
   |*******Service********|
   ********************************/
 
-  app.get('/service/:id', function(req, res) {
+  app.get('/service/:id/:bussines', function(req, res) {
+    var selectPageE=1, catpage=10, serviceData={};
+    var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
+    console.log('---->>>',req.params);
+    Users.getEmployeeBusinessOne(req.params.id).then(function(employeeB) {
+      ServiceControllers.getServiceOne(req.params.id).then(function(serviceData) {
+        console.log('ummm',serviceData);
+        if (serviceData.length>0) {
+          serviceData = JSON.parse(JSON.stringify(serviceData));
+          for (var i = 0; i < serviceData.length; i++) {
+            if (serviceData[i].alfonso[0].length>0) {
+              for (var o = 0; o < serviceData[i].alfonso[0].length; o++) {
+                listService.push(serviceData[i].alfonso[0][o].objectId);
+              }
+              final.push(JSON.parse(JSON.stringify(listService)));
+              listService=[];
+            }else {
+              final.push(['']);
+            }
+          }
+        }
+        serviceData = _.orderBy(serviceData, ['category'], ['desc']);
+        res.render('service/service.ejs',{
+          employeeB,
+          usersType,
+          serviceData,
+          selectPageE,
+          catpageE:catpage,
+          final,
+          listCategory,
+          listCateSelect,
+          bussiId:employeeB.idBusiness,
+          businessSelec:0,
+          employeeSelec:0,
+          calendarSelec:0,
+          dashSelec:0,
+          session:session,
+          categorySelec:0,
+          serviSelect:1,
+          clientSelect:0,
+        });
+      });
+    });
+  });
+
+  app.get('/servicelist/:id', function(req, res) {
     var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[], listCateSelect;
     if (req.query.page) {
       selectPageE=req.query.page;
@@ -496,20 +542,13 @@ module.exports = function(app) {
     }
     req.query.flag=false;
     Users.getEmployeeBusiness2(req.params.id,req.query).then(function(employeeB) {
-      req.query.type='service';
+      req.query.type='listcate';
       ServiceControllers.getService2(req.params.id,req.query).then(function(serviceData) {
         for (var ii = 0; ii < serviceData.length; ii++) {
-          if (serviceData[ii].catpageE) {
-            catpage = serviceData[ii].catpageE;
-          }
           if (serviceData[ii].liscate) {
             listCateSelect = serviceData[ii].liscate;
           }
         }
-        serviceData = serviceData.filter(function(el) {
-          return !el.catpageE;
-        });
-
         serviceData = serviceData.filter(function(el) {
           return !el.liscate;
         });
@@ -532,7 +571,7 @@ module.exports = function(app) {
           }
         }
         serviceData = _.orderBy(serviceData, ['category'], ['desc']);
-        res.render('service/service.ejs',{
+        res.render('service/servicelist.ejs',{
           employeeB,
           usersType,
           serviceData,
