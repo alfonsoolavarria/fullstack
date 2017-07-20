@@ -118,6 +118,9 @@ BusinessControllers.createBusiness = function createBusiness (options) {
       business.set({'postalCode':options.cp});
       business.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
       business.set({'nameCommerce':options.nameCommerce});
+      business.set({'schedule':options.horario});
+      business.set({'web':options.web});
+      business.set({'details':options.detalles});
       if (options.icon2) business.set('imageIcon', base64icon);
       if (options.banner) business.set('imageBanner', base64banner);
       var acl = new Parse.ACL();
