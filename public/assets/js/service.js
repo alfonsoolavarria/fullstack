@@ -467,7 +467,6 @@ $(document).ready(function() {
         dataSend.duration = stringDuration2.trim();
         //if (flag==1) {
           flag = 0;
-          console.log('a enviar ',dataSend);
           $.ajax({
             url:'/service',
             data:dataSend,

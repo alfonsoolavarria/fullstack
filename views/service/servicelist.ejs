@@ -1,4 +1,5 @@
-<%var flag='';%>
+<%var flag='false';%>
+<%var count;%>
 <%if (usersType.owner){%>
   <% include ../templates/head.ejs %>
   <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
@@ -70,43 +71,32 @@
                           <form class="form-horizontal">
                             <div class="row">
                               <div class="col-md-3">
-                                  <input class="form-control" id="service-name-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].serviceName%>" disabled></input>
+                                  <a href="/service/<%=serviceData[o].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=serviceData[o].objectId%>" style="border:0px;background:none;cursor:pointer;"><%=serviceData[o].serviceName%></label></a>
                               </div>
                               <div class="col-md-3">
-                                <select class="form-control select2-hidden-accessible input-edit" id="selectSe-<%=serviceData[o].objectId%>" multiple="" data-plugin="select2" tabindex="-1" aria-hidden="true" disabled>
-                                  <% for(var a=0; a<employeeB.employee.length; a++) {%>
-                                    <!-- final[i] -->
-                                    <%=final[o]%>--><%=employeeB.employee[a].objectId%>
-                                    <% if (final[o].indexOf(employeeB.employee[a].objectId)>=0) {%>
-                                      <option  data-id-option="<%=employeeB.employee[a].objectId%>" id="<%=employeeB.employee[a].objectId%>" selected><%=employeeB.employee[a].name%></option>
-                                    <%}else{%>
-                                      <option  data-id-option="<%=employeeB.employee[a].objectId%>" id="<%=employeeB.employee[a].objectId%>"><%=employeeB.employee[a].name%></option>
-                                    <%}%>
+                                <%for (var list = 0; list < serviceData[o].alfonso[0].length; list++) {%>
+                                  <% if (serviceData[o].alfonso[0].length >1) {%>
+                                    <label><%=serviceData[o].alfonso[0][list].name%><%if(list+1!=serviceData[o].alfonso[0].length){%>,<%}%> </label>
+                                  <%}else{%>
+                                    <label><%=serviceData[o].alfonso[0][list].name%></label>
                                   <%}%>
-                                </select><span class="select2 select2-container select2-container--material select2-container--below select2-container--focus" dir="ltr"><span class="selection">
-                                  <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                                    <ul class="select2-selection__rendered">
-                                  </ul>
-                                  </span>
-                                  </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                </div>
-                                <div class="col-md-3">
-                                  <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
-                                  <div class="example-wrap" style="width: 60%;">
-                                    <div class="example mt-30">
-                                      <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
-                                      </div>
+                                <%}%>
+                              </div>
+                              <div class="col-md-3">
+                                <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
+                                <label class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].duration%></label>
+                                <!--<div class="example-wrap" style="width: 60%;">
+                                  <div class="example mt-30">
+                                     <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
                                     </div>
                                   </div>
                                   <span class="form-control-label" style="margin-left: 60%;margin-top: -95px;position:absolute;">min</span>
-                                </div>
-                                <div class="col-md-1">
-                                  <input class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].price%>" disabled></input>
-                                </div>
-                                <div class="col-md-2">
-                                  <!--/service/idservicio/idempresa-->
-                                  <a class="nav-item" href="#"> <button type="button" style="height:32px;" class="btn btn-primary" <span id="">Detalles</span></button></a>
-                                </div>
+                                </div>-->
+                              </div>
+                              <div class="col-md-2">
+                                <label class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].price%></label>
+                              </div>
+                              <!--/service/idservicio/idempresa-->
                             </form>
                         </div>
                     </li>

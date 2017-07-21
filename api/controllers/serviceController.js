@@ -114,7 +114,7 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
   query1.equalTo('owner', new Parse.Object('_User', { id:id }));
   return query1.find().then(function(dataE){
     var page=reqparams.page ? reqparams.page : 0;
-    var cantpage=10;
+    //var cantpage=10;
     var query = new Parse.Query('Service');
     var consulta;
 
@@ -122,23 +122,12 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     query.equalTo('status', true);
 
     return query.find().then(function(cate) {
-      return query.count().then(function(cantData) {
         var listC = [];
         _.forEach(cate, function(categories) {
           if (listC.indexOf(categories.get('category'))<0) {
             listC.push(categories.get('category'));
           }
         });
-        if ((cantData/2)>0 && (cantData/2)%1==0) {
-          //entero
-          cantpage=(cantData/2)*10;
-        }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
-          //redondeo
-          cantpage=Math.round(cantData/2)*10;
-        }else {
-          //una sola pagina
-          cantpage=1*10;
-        }
 
         if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
         else consulta = query.find();
@@ -159,25 +148,32 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
             return data;
           });
         });
-      });
     });
   });
 };
 
 ServiceControllers.getServiceOne = function getServiceOne (id) {
   var query = new Parse.Query('Service');
-  return query.get(id).then(function(data) {
-    var promises = [];
-    var kk = 0;
-    promises.push(data.relation('employee2').query().find());
-
-    return Parse.Promise.when(promises).then(function(resultados, index) {
-
-        data = data.toJSON();
-        data.alfonso = [];
-        data.alfonso.push(resultados);
-
-      return data;
+  query.equalTo('status', true);
+  return query.find().then(function(cate) {
+    return query.get(id).then(function(data) {
+      var listC = [];
+      _.forEach(cate, function(categories) {
+        if (listC.indexOf(categories.get('category'))<0) {
+          listC.push(categories.get('category'));
+        }
+      });
+      var promises = [];
+      promises.push(data.relation('employee2').query().find());
+      return Parse.Promise.when(promises).then(function(resultados,index) {
+        for (var i = 0; i < resultados.length; i++) {
+          data = data.toJSON();
+          data.alfonso = [];
+          data.alfonso.push(resultados[i]);
+        }
+        data.liscate=listC;
+        return [data];
+      });
     });
   });
 }

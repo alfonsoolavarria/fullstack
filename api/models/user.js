@@ -169,10 +169,9 @@ UsersModel.getEmployeeBusiness2 = function getEmployeeBusiness2 (id,reqparams) {
 };
 
 UsersModel.getEmployeeBusinessOne = function getEmployeeBusinessOne (id) {
-
-  var query = new Parse.Query('Service');
+  var query = new Parse.Query('Business');
   return query.get(id).then(function(dataE){
-    return dataE.relation('employee2').query().find().then(function(employess){
+    return dataE.relation('employee').query().find().then(function(employess){
       return {employee:JSON.parse(JSON.stringify(employess))};
     });
   });

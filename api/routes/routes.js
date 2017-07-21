@@ -492,10 +492,13 @@ module.exports = function(app) {
   app.get('/service/:id/:bussines', function(req, res) {
     var selectPageE=1, catpage=10, serviceData={};
     var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
-    console.log('---->>>',req.params);
-    Users.getEmployeeBusinessOne(req.params.id).then(function(employeeB) {
+    Users.getEmployeeBusinessOne(req.params.bussines).then(function(employeeB) {
       ServiceControllers.getServiceOne(req.params.id).then(function(serviceData) {
-        console.log('ummm',serviceData);
+        for (var ii = 0; ii < serviceData.length; ii++) {
+          if (serviceData[ii].liscate) {
+            listCateSelect = serviceData[ii].liscate;
+          }
+        }
         if (serviceData.length>0) {
           serviceData = JSON.parse(JSON.stringify(serviceData));
           for (var i = 0; i < serviceData.length; i++) {
@@ -510,11 +513,11 @@ module.exports = function(app) {
             }
           }
         }
-        serviceData = _.orderBy(serviceData, ['category'], ['desc']);
         res.render('service/service.ejs',{
           employeeB,
           usersType,
           serviceData,
+          listService,
           selectPageE,
           catpageE:catpage,
           final,
