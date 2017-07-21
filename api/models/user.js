@@ -182,19 +182,19 @@ UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
   var cantpage=10;
   var consulta;
   var queryU = new Parse.Query('_User');
-  if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(2).skip(page*2).find();
+  if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(4).skip(page*4).find();
   else consulta = queryU.find();
 
   queryU.equalTo('isActive',true);
   queryU.equalTo('type',typeUser);
   return consulta.then(function(dataUsers){
     return queryU.count().then(function(cantData) {
-      if ((cantData/2)>0 && (cantData/2)%1==0) {
+      if ((cantData/4)>0 && (cantData/4)%1==0) {
         //entero
-        cantpage=(cantData/2)*10;
-      }else if ((cantData/2)>0 && (cantData/2)%1!=0) {
+        cantpage=(cantData/4)*10;
+      }else if ((cantData/4)>0 && (cantData/4)%1!=0) {
         //redondeo
-        cantpage=(parseInt(cantData/2)+1)*10;
+        cantpage=(parseInt(cantData/4)+1)*10;
       }else {
         //una sola pagina
         cantpage=1*10;
