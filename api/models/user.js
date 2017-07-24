@@ -1,7 +1,17 @@
 var Parse = require('parse/node');
 var ParseInit = require('../../default/parseInit.js');
 var _ = require('lodash');
+var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
 
+var Datadays = {
+  0:'Lunes',
+  1:'Martes',
+  2:'Mi&eacute;rcoles',
+  3:'Jueves',
+  4:'Viernes',
+  5:'S&aacute;bado',
+  6:'Domingo'
+}
 
 var UsersModel = {};
 
@@ -178,29 +188,58 @@ UsersModel.getEmployeeBusinessOne = function getEmployeeBusinessOne (id) {
 };
 
 UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
+
   var page=reqparams.page ? reqparams.page : 0;
   var cantpage=10;
   var consulta;
-  var queryU = new Parse.Query('_User');
-  if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(4).skip(page*4).find();
-  else consulta = queryU.find();
+  var queryU = new Parse.Query('Booking');
+  queryU.include('client');
+  return queryU.find().then(function(cantData) {
 
-  queryU.equalTo('isActive',true);
-  queryU.equalTo('type',typeUser);
-  return consulta.then(function(dataUsers){
-    return queryU.count().then(function(cantData) {
-      if ((cantData/4)>0 && (cantData/4)%1==0) {
+    if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(6).skip(page*6).find();
+    else consulta = queryU.descending('createdAt').find();
+
+    return consulta.then(function(dataUsers){
+      var promises = [], filters=[],filters2=[];
+      //filter all data
+      _.forEach(cantData, function(allData) {
+        if (filters2.indexOf(allData.get('client').id)<0) {
+          filters2.push(allData.get('client').id);
+        }
+      });
+      //filter six data
+      _.forEach(dataUsers, function(allD) {
+        moment.locale('es');
+        if (filters.indexOf(allD.get('client').id)<0) {
+          promises.push({
+            name:allD.get('client').get('name'),
+            email:allD.get('client').get('username'),
+            objectId:allD.get('client').id,
+            phone:allD.get('client').get('phone'),
+            dayName:Datadays[moment(allD.createdAt).weekday()],
+            dayNumber:moment(allD.createdAt).get('date'),
+            month:(moment(allD.createdAt).month())+1,
+            hour:moment(allD.createdAt).get('hour')+'hs'
+          });
+          filters.push(allD.get('client').id);
+        }
+      });
+
+      if ((filters2.length/6)>0 && (filters2.length/6)%1==0) {
         //entero
-        cantpage=(cantData/4)*10;
-      }else if ((cantData/4)>0 && (cantData/4)%1!=0) {
+        cantpage=(filters2.length/6)*10;
+      }else if ((filters2.length/6)>0 && (filters2.length/6)%1!=0) {
         //redondeo
-        cantpage=(parseInt(cantData/4)+1)*10;
+        cantpage=(parseInt(filters2.length/6)+1)*10;
       }else {
         //una sola pagina
         cantpage=1*10;
       }
-      if (reqparams.type=='client') dataUsers.push({catpageE:cantpage});
-      return JSON.stringify(dataUsers);
+      return Parse.Promise.when(promises).then(function(resultados, index) {
+        dataUsers=resultados;
+        if (reqparams.type=='client') dataUsers.push({catpageE:cantpage});
+        return JSON.stringify(dataUsers);
+      });
     });
   });
 
