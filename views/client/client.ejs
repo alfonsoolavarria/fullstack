@@ -20,7 +20,6 @@
       <div class="page-content">
 <%}%>
 
-<h4 class="example-title">Listado de Clientes</h4>
 <div class="panel">
   <div class="panel-body">
     <form class="page-search-form" role="search"></form>
@@ -28,11 +27,11 @@
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <div class="dropdown page-user-sortlist" style="margin-right:100px;margin-top:-50px;">
-              Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
+              <!--Ordenar Por: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Nombre</a>
               <div class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
-                  <a class="active dropdown-item" href="javascript:void(0)">Otra</a>
+                  <a class="active dropdown-item" href="javascript:void(0)">Otra</a>-->
               </div>
-              <div class="site-action" data-target="#addTopicForm2" data-toggle="modal" data-plugin="actionBtn" style="position:absolute;margin-right:-60px;margin-bottom:-31px;">
+              <div class="site-action" data-target="#addTopicForm2" data-toggle="modal" data-plugin="actionBtn" style="position:absolute;margin-right:80px;margin-bottom:-50px;">
                 <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating" style="position: absolute;margin-right: 54px;border-radius: 6px;width: 40px;height: 30px;background-color: #523eba;border-color: #523eba;">
                   <i class="icon md-plus" aria-hidden="true" style="position:absolute;font-size:1.7145rem;margin-left:-12px;margin-top: -4px;"></i>
                 </button>
@@ -41,7 +40,7 @@
         </div>
         </div>
 
-      <div class="tab-content">
+      <div class="tab-content" style="padding:50px;">
         <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
           <%if(dataClient.length>0){%>
             <div class="row" style="color:#36459b;">
@@ -51,7 +50,7 @@
               <div class="col-md-3"><b>&Uacute;ltima visita</b></div>
             </div>
           <% for(var i=0; i<dataClient.length; i++) {%>
-          <ul class="list-group">
+          <ul class="list-group" style="list-style: none;margin-top: 20px;">
             <li style="border-bottom-style: solid;border-bottom-width: thin;">
               <div class="row">
                 <div class="col-md-3">
@@ -64,7 +63,7 @@
                   <label id="client-phone-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;"><%=dataClient[i].phone%></label>
                 </div>
                 <div class="col-md-3">
-                  <label id="client-last-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;"><%=dataClient[i].dayName%> <%=dataClient[i].dayNumber%>/<%=dataClient[i].month%> - <%=dataClient[i].hour%></label>  
+                  <label id="client-last-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;"><%=dataClient[i].dayName%> <%=dataClient[i].dayNumber%>/<%=dataClient[i].month%> - <%=dataClient[i].hour%></label>
                 </div>
               </div>
               <!--<div class="col-md-3">
