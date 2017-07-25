@@ -1,7 +1,7 @@
 <div class="navBusiness">
   <ul class="nav nav-tabs nav-tabs-line">
     <li class="nav-item"><a class="nav-link <%=dashboard%>"  href="/business/<%=valores.objectId%>/dashboard">Dashboard</a></li>
-    <%if (!usersType.owner){%>
+    <%if (!session.owner){%>
       <li class="nav-item"><a class="nav-link <%=employee%>"  href="/business/<%=valores.objectId%>/dashboard?type=employee">Empleados</a></li>
       <li class="nav-item"><a class="nav-link <%=service%>"  href="/business/<%=valores.objectId%>/dashboard?type=service">Servicios</a></li>
       <li class="nav-item"><a class="nav-link <%=client%>"  href="/business/<%=valores.objectId%>/dashboard?type=client">Clientes</a></li>

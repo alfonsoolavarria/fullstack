@@ -1,4 +1,4 @@
-<%if (usersType.owner){%>
+<%if (session.owner){%>
   <% include ../templates/head.ejs %>
   <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
   <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
@@ -95,7 +95,7 @@
       <%}%>
         <input id="flagPaginator" value="4" style="visibility:hidden;">
         <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
-        <input id="BidFlag" value="<%if (usersType.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
+        <input id="BidFlag" value="<%if (session.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
         <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
         </div>
       </div>
@@ -149,7 +149,7 @@
 </div>
 
 
-<%if (usersType.owner){%>
+<%if (session.owner){%>
 <!-- Footer -->
 <% include ../templates/footer.ejs %>
 <!-- Core  -->

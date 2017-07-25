@@ -8,6 +8,28 @@ var flag = 0;
 $('#employeeCreate').click(function () {
     $(".loadgif").css("visibility","");
     $("#employeeCreate").css("visibility","hidden");
+
+    /*
+    Crea color hexadecimal random
+    */
+    function aleatorio(inferior,superior){
+      numPosibilidades = superior - inferior
+      aleat = Math.random() * numPosibilidades
+      aleat = Math.floor(aleat)
+      return parseInt(inferior) + aleat
+    }
+
+    function dame_color_aleatorio(){
+       hexadecimal = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
+       color_aleatorio = "#";
+       for (i=0;i<6;i++){
+          posarray = aleatorio(0,hexadecimal.length)
+          color_aleatorio += hexadecimal[posarray]
+       }
+       return color_aleatorio
+     }
+     //fin de la creacion del color
+
     var dataSend = {
       name:$('#name').val(),
       email:$('#email').val(),
@@ -16,6 +38,7 @@ $('#employeeCreate').click(function () {
       id:$('#idBusiness').val(),
       flag:$('#BidFlag').val(),
       imagen:$('.dropify-render img').attr('src'),
+      color:dame_color_aleatorio(),
     }
     function validateEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -23,6 +23,7 @@ var FC = $.fullCalendar = {
 	internalApiVersion: 7
 };
 var fcViews = FC.views = {};
+var colorStatus;
 
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
@@ -48,11 +49,11 @@ $.fn.fullCalendar = function(options) {
 		// a new calendar initialization
 		if (!calendar) { // don't initialize twice
 		$.get( "/booking", function( data ) {
-			//console.log('+--------');
-			//console.log(data);
+			colorStatus=data.data[0].colorState;
 			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
-			//console.log(options);
+			//nota:aqui puedo hacer cualquier config de calendar segun la doc
 			options.events= data.data;
+			options.defaultView= 'agendaWeek'; //vista por defecto
 			calendar = new Calendar(element, options);
 			element.data('fullCalendar', calendar);
 			$(".loader-circle").css("visibility","hidden");
@@ -7761,7 +7762,7 @@ TimeGrid.mixin({
 					(event.title ?
 						'<div class="fc-title">' +
 							htmlEscape(event.title) +
-						'</div>' :
+						'</div>'+'<div id="alfonso" style="border-radius:50%;background:'+colorStatus+';width:17px;">.'+'</div>':
 						''
 						) +
 				'</div>' +
@@ -9764,7 +9765,6 @@ function Toolbar(calendar, toolbarOptions) {
 	function renderSection(position) {
 		var sectionEl = $('<div class="fc-' + position + '"/>');
 		var buttonStr = toolbarOptions.layout[position];
-		console.log('->',buttonStr);
 		if (buttonStr) {
 			$.each(buttonStr.split(' '), function(i) {
 				var groupChildren = $();
@@ -9836,7 +9836,6 @@ function Toolbar(calendar, toolbarOptions) {
 							else {
 								innerHtml = htmlEscape(defaultText);
 							}
-
 							classes = [
 								'fc-' + buttonName + '-button',
 								tm + '-button',
@@ -9918,7 +9917,6 @@ function Toolbar(calendar, toolbarOptions) {
 				}
 			});
 		}
-
 		return sectionEl;
 	}
 

@@ -37,7 +37,12 @@
                 <%for (var o=0; o<lisem2.length; o++) {%>
                   <a class="list-group-item calendar-event" data-title="Meeting" data-stick=true
                   data-color="red-600" href="javascript:void(0)">
-                    <i class="md-circle red-600 mr-10" aria-hidden="true"></i><%=lisem2[o].name%>
+                    <%if (lisem2[o].color){%>
+                      <i class="md-circle mr-10" aria-hidden="true" style="color:<%=lisem2[o].color%>"></i>
+                    <%}else{%>
+                      <i class="md-circle mr-10" aria-hidden="true" style="color:white;"></i>
+                    <%}%>
+                    <%=lisem2[o].name%>
                   </a>
                 <%}%>
                 <!--<a id="addNewEventBtn" class="list-group-item" href="javascript:void(0)"> <i class="icon md-plus" aria-hidden="true"></i> Anadir un nuevo Veterinario </a>-->

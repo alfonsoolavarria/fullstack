@@ -16,11 +16,7 @@ var _ = require('lodash');
 var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
 
 var USER_ALL = GloVariable.TYPES;
-var usersType = {
-  admin:false,
-  owner:false,
-  employee:false
-}
+var usersType = {};
 
 var useTemplate = {
   dashboard:false,
@@ -28,7 +24,6 @@ var useTemplate = {
   admin:false,
   service:false
 }
-var session={};
 
 module.exports = function(app) {
 
@@ -54,7 +49,7 @@ module.exports = function(app) {
     usersType.userId = req.query.user;
     return res.render('index.ejs',{
       usersType,
-      session:session,
+      session:req.session,
       businessSelec:0,
       dashSelec:1,
       employeeSelec:0,
@@ -98,7 +93,7 @@ module.exports = function(app) {
     usersType.userId = req.query.user;
     res.render('index.ejs',{
       usersType,
-      session:session,
+      session:req.session,
       businessSelec:0,
       dashSelec:1,
       calendarSelec:0,
@@ -126,7 +121,7 @@ module.exports = function(app) {
         employeeSelec:1,
         calendarSelec:0,
         dashSelec:0,
-        session:session,
+        session:req.session,
         categorySelec:0,
         serviSelect:0,
         clientSelect:0,
@@ -164,7 +159,7 @@ module.exports = function(app) {
       res.render('business/newbusiness.ejs',{
         usersType,
         valores,
-        session:session,
+        session:req.session,
         typeBusiness,
         businessSelec:1,
         dashSelec:0,
@@ -180,10 +175,10 @@ module.exports = function(app) {
   app.get('/business/list', function(req, res) {
     var valores={},selectPage=1;
     if (req.query.user && usersType.admin){
-      usersType.userId = req.query.user;
+      req.session.userId = req.query.user;
     } else {
       req.body.owner = req.query.owner?req.query.owner:req.query.user;
-      usersType.userId = req.query.owner;
+      req.session.userId = req.query.owner;
     }
     if (req.query.page) {
       selectPage=req.query.page;
@@ -197,7 +192,7 @@ module.exports = function(app) {
         res.render('business/businesslist.ejs',{
           usersType,
           valores,
-          session:session,
+          session:req.session,
           catpage:JSON.parse(JSON.stringify(data.cantPage)),
           selectPage:selectPage,
           typeBusiness,
@@ -258,7 +253,7 @@ module.exports = function(app) {
           businessSelec:1,
           calendarSelec:0,
           dashSelec:0,
-          session:session,
+          session:req.session,
           categorySelec:0,
           serviSelect:0,
           clientSelect:0,
@@ -340,7 +335,7 @@ module.exports = function(app) {
                     employeeSelec:0,
                     calendarSelec:0,
                     dashSelec:0,
-                    session:session,
+                    session:req.session,
                     categorySelec:0,
                     serviSelect:0,
                     clientSelect:0,
@@ -371,7 +366,7 @@ module.exports = function(app) {
                   calendarSelec:0,
                   dashSelec:0,
                   employeeSelec:0,
-                  session:session,
+                  session:req.session,
                   categorySelec:0,
                   serviSelect:0,
                   clientSelect:0,
@@ -401,7 +396,7 @@ module.exports = function(app) {
               calendarSelec:0,
               dashSelec:0,
               employeeSelec:0,
-              session:session,
+              session:req.session,
               categorySelec:0,
               serviSelect:0,
               clientSelect:0,
@@ -528,7 +523,7 @@ module.exports = function(app) {
           employeeSelec:0,
           calendarSelec:0,
           dashSelec:0,
-          session:session,
+          session:req.session,
           categorySelec:0,
           serviSelect:1,
           clientSelect:0,
@@ -588,7 +583,7 @@ module.exports = function(app) {
           employeeSelec:0,
           calendarSelec:0,
           dashSelec:0,
-          session:session,
+          session:req.session,
           categorySelec:0,
           serviSelect:1,
           clientSelect:0,
@@ -630,10 +625,7 @@ module.exports = function(app) {
   ************CALENDAR************
   ********************************/
   app.get('/calendar', function(req, res) {
-    usersType.admin=true ? req.query.admin:false;
-    usersType.owner=true ? req.query.owner:false;
-    usersType.employee=true ? req.query.employee:false;
-    usersType.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
+    //session.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
     Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
       var idUserEmploOwner = 0;
       if (req.query.employee) {
@@ -641,13 +633,12 @@ module.exports = function(app) {
       }else if (req.query.owner) {
         idUserEmploOwner = req.query.owner;
       }
-
       BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
         Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
           var id = 10;
           if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
           if (req.query.twoService=='1') {
-            var queryQuery = ServiceControllers.getService2(usersType.userId,{type:'',page:0});
+            var queryQuery = ServiceControllers.getService2(req.session.userId,{type:'',page:0});
           }else {
             var queryQuery = ServiceControllers.getService(id,{type:'',page:0});
           }
@@ -669,17 +660,17 @@ module.exports = function(app) {
               }
             }
             if (bussiId==0){
-              session.business=id;
+              req.session.business=id;
               bussiId=id;
             }else {
-              session.business=bussiId;
+              req.session.business=bussiId;
               bussiId=bussiId;
             }
-            session.service=JSON.stringify(listaservice);
-            session.employee=JSON.stringify(listaemploye);
+            req.session.service=JSON.stringify(listaservice);
+            req.session.employee=JSON.stringify(listaemploye);
             res.render('calendar/calendar.ejs',{
               usersType,
-              session:session,
+              session:req.session,
               client:data,
               service:JSON.stringify(listaservice),
               employee:JSON.stringify(listaemploye),
@@ -703,7 +694,7 @@ module.exports = function(app) {
   *****Booking - Reservas-Citas****
   ********************************/
   app.get('/booking',function(req,res) {
-    Booking.getBooking(session.business).then(function (data) {
+    Booking.getBooking(req.session.business).then(function (data) {
       var colors = {'0':'green','1':'blue','3':'orange'}
       var nuevo = [];
       for (var i = 0; i < data.length; i++) {
@@ -711,8 +702,9 @@ module.exports = function(app) {
         nuevo.push({
           title:JSON.parse(JSON.stringify(data[i])).client.name,
           start:JSON.parse(JSON.stringify(data[i])).startDate.iso,
-          backgroundColor:colors[pos],
-          color:colors[pos],
+          backgroundColor:JSON.parse(JSON.stringify(data[i])).employee.color,
+          colorState:colors[pos],
+          color:JSON.parse(JSON.stringify(data[i])).employee.color,
           alfonso: {
             end: moment(JSON.parse(JSON.stringify(data[i])).startDate.iso).format("HH:mm"),
             duration:JSON.parse(JSON.stringify(data[i])).duration,
@@ -720,13 +712,14 @@ module.exports = function(app) {
             serviceName:JSON.parse(JSON.stringify(data[i])).service.serviceName,
             employee:JSON.parse(JSON.stringify(data[i])).employee,
             employeeName:JSON.parse(JSON.stringify(data[i])).employee.name,
+            employeeColor:JSON.parse(JSON.stringify(data[i])).employee.color,
             bussines:JSON.parse(JSON.stringify(data[i])).bussines,
             client:JSON.parse(JSON.stringify(data[i])).client,
             clientName:JSON.parse(JSON.stringify(data[i])).client.username,
             additionalInfo:JSON.parse(JSON.stringify(data[i])).additionalInfo,
             idBooking:JSON.parse(JSON.stringify(data[i])).objectId,
             state:JSON.parse(JSON.stringify(data[i])).state,
-            dataGeneral:session,
+            dataGeneral:req.session,
           },
         });
       }
@@ -791,7 +784,7 @@ module.exports = function(app) {
          businessSelec:0,
          calendarSelec:0,
          dashSelec:0,
-         session:session,
+         session:req.session,
          categorySelec:0,
          serviSelect:0,
          clientSelect:1,
@@ -827,7 +820,7 @@ module.exports = function(app) {
     app.get('/category',middle.checkSession, function(req, res) {
       res.render('category/categories.ejs',{
         usersType,
-        session:session,
+        session:req.session,
         businessSelec:0,
         dashSelec:0,
         calendarSelec:0,
@@ -842,7 +835,7 @@ module.exports = function(app) {
       Category.getCategories().then(function(dataC) {
         res.render('category/categorieslist.ejs',{
           usersType,
-          session:session,
+          session:req.session,
           businessSelec:0,
           dashSelec:0,
           listCateg:JSON.parse(dataC),
@@ -895,21 +888,36 @@ module.exports = function(app) {
       .then(function (user) {
         if (user.data.get('isActive')==true) {
           req.session['x-parse-session-token'] = user.data.get('sessionToken');
-          session.name = user.data.get('name');
-          session.id = user.data.id;
+          req.session.name = user.data.get('name');
+          req.session.id = user.data.id;
           var id = user.data.id;
           if (user.data.get('type')==USER_ALL.admin) {
-            return res.redirect('/admin?'+'user='+id);
+            console.log('Administrador');
+            //return res.redirect('/admin?'+'user='+id);
+            usersType.admin = true;
+            req.session.admin=true;
+            req.session.owner=false;
+            req.session.employee=false;
+            req.session.userId=id;
+            return res.redirect('/business/list?'+'user='+id);
           }
           else if (user.data.get('type')==USER_ALL.owner) {
             console.log('Propietario');
             usersType.owner=true;
+            req.session.admin=false;
+            req.session.owner=true;
+            req.session.employee=false;
+            req.session.userId=id;
             //return res.redirect('/owner?'+'user='+id);
             return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
             //return res.redirect('/service/'+id);
           }
           else if (user.data.get('type')==USER_ALL.employee) {
             console.log('Empleado');
+            req.session.admin=false;
+            req.session.owner=false;
+            req.session.employee=true;
+            req.session.userId=id;
             return res.redirect('/employee?'+'user='+id);
           }else {
             return res.status(user.code).send(user.data);
@@ -932,7 +940,7 @@ module.exports = function(app) {
 //Logout user
 app.get('/logout', function(req, res) {
   req.session['x-parse-session-token'] = "";
-  session = {};
+  req.session.destroy();
   return res.redirect('/');
 });
 

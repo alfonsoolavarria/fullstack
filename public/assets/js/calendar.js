@@ -1,6 +1,6 @@
 //http://easyautocomplete.com/guide
 $(document).ready(function() {
-
+  $(".fc-month-button").css("color","aqua");
 
   //only number input
   $(function() {

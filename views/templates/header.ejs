@@ -133,9 +133,9 @@
           </div>
         </li>
         <label style="margin-left:83px;margin-top:15px;position:absolute;font-size:small;color:aliceblue;"><%=session.name%></label>
-        <%if (usersType.admin){%>
+        <%if (session.admin){%>
           <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Administrador</label>
-          <%}else if (usersType.owner){%>
+          <%}else if (session.owner){%>
             <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Propietario</label>
             <%}else{%>
               <label style="margin-left:52px;margin-top: 34px;font-size:small;color:aliceblue;">Empleado</label>

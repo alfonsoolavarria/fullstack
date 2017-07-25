@@ -2,16 +2,16 @@
 var redirect = '/';
 var userId ='nada';
 var session = session;
-if (usersType.admin){
+if (session.admin){
   var redirect = 'admin';
-}else if (usersType.owner){
+}else if (session.owner){
   var redirect = 'owner';
 }else{
   var redirect = 'employee';
 }
 
-if (usersType.userId){
-  userId=usersType.userId;
+if (session.userId){
+  userId=session.userId;
 }
 
 %>

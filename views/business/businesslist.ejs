@@ -99,7 +99,7 @@
                                       </div>
                                     </div>
                                     <div class="form-group row form-material row">
-                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Email:</label>
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Email: <%- JSON.stringify(session.admin)%></label>
                                       <div class="col-xs-12 col-sm-12 col-md-8">
                                         <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;width:130%;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).username%>" disabled></input>
                                       </div>
@@ -107,10 +107,10 @@
                                 </div>
                               </div>
                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <%if (usersType.admin || usersType.owner ){%>
+                                <%if (session.admin || session.owner ){%>
                                   <div class="pl-20 align-self-center">
                                     <% if (valores[i].status){%>
-                                      <%if (!usersType.owner){%><a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard"> <button type="button" style="height:32px;" class="btn btn-primary btn-success btn-sm-details" <span id="nameD-<%= valores[i].objectId %>">Detalles</span></button></a><%}%>
+                                      <%if (session.admin==true){%><a class="nav-item" href="/business/<%=valores[i].objectId%>/dashboard"> <button type="button" style="height:32px;" class="btn btn-primary btn-success btn-sm-details" <span id="nameD-<%= valores[i].objectId %>">Detalles</span></button></a><%}%>
                                       <button type="button" data-user-bus="<%-JSON.parse(JSON.stringify(valores[i].owner)).objectId%>" class="btn btn-primary btn-sm btn-sm-edit btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="nameE-<%= valores[i].objectId %>">Editar</span></button>
                                       <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
                                       <%}else{%>
@@ -149,7 +149,7 @@
                     No hay empresas disponibles/activas
                   <%}%>
                   <input id="pageN" value="<%=selectPage%>" style="visibility:hidden;">
-                  <input id="user" value="<%=usersType.userId%>" style="visibility:hidden;">
+                  <input id="user" value="<%=session.userId%>" style="visibility:hidden;">
                   <input id="flagPaginator" value="1" style="visibility:hidden;">
                   <a class="next-prev" href="" style="visibility:hidden;"></a>
                 </div>

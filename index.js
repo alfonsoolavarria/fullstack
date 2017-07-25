@@ -19,8 +19,8 @@ var _ = require('lodash');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(session(
-  {secret: 'turno123dev',
+app.use(session({
+  secret: 'turno123dev',
   resave: false,
   saveUninitialized: false
 }));

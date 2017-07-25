@@ -202,8 +202,8 @@
 
                     <input id="flagPaginator" value="3" style="visibility:hidden;">
                     <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
-                    <input id="session" value="<%=session.id%>" style="visibility:hidden;">
-                    <input id="BidFlag" value="<%if (usersType.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
+                    <input id="session" value="<%=session.userId%>" style="visibility:hidden;">
+                    <input id="BidFlag" value="<%if (session.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                     <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                 </div>
             </div>
