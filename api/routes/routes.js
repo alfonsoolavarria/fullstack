@@ -12,11 +12,13 @@ var ClienteControllers = require('../controllers/clientController');
 var Env = require('../../config/enviro');
 var GloVariable = require('../controllers/globalVariable');
 var _ = require('lodash');
-//var moment = require('moment');
+var moment2 = require('moment');
 var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
 
 var USER_ALL = GloVariable.TYPES;
 var usersType = {};
+
+var enabled = false;
 
 var useTemplate = {
   dashboard:false,
@@ -28,7 +30,17 @@ var useTemplate = {
 module.exports = function(app) {
 
   app.get('/', function(req, res) {
+    if (req.session) {
+      if (req.session.admin) {
+        return res.redirect('/business/list?'+'user='+req.session.userId);
+      }else if (req.session.owner) {
+        return res.redirect('/calendar?'+'owner='+req.session.userId+'&twoService='+1);
+      }else if (req.session.employee) {
+        return res.redirect('/employee?'+'user='+req.session.userId);
+      }
+    }
     var message = '';
+
     if (req.query.invalid) {
       message = 'Error al logearse';
     }else if (req.query.inactive) {
@@ -104,7 +116,7 @@ module.exports = function(app) {
     });
 	});
 
-  app.get('/employee/:id', function(req, res) {
+  app.get('/employee/:id',middle.checkSession, function(req, res) {
     var selectPageE=1;
     if (req.query.page) {
       selectPageE=req.query.page;
@@ -152,7 +164,7 @@ module.exports = function(app) {
   /*******************************|
   |*******Business-Empresas********|
   ********************************/
-  app.get('/business', function(req, res) {
+  app.get('/business',middle.checkSession, function(req, res) {
     usersType.userId = req.query.user;
     var valores={};
     Users.getTypeBusiness().then(function(typeBusiness) {
@@ -172,7 +184,7 @@ module.exports = function(app) {
     });
 	});
 
-  app.get('/business/list', function(req, res) {
+  app.get('/business/list',middle.checkSession, function(req, res) {
     var valores={},selectPage=1;
     if (req.query.user && usersType.admin){
       req.session.userId = req.query.user;
@@ -208,7 +220,7 @@ module.exports = function(app) {
     });
 	});
 
-  app.get('/business/:id/dashboard', function(req, res) {
+  app.get('/business/:id/dashboard',middle.checkSession, function(req, res) {
     var employee='',service='',client='', selectPageE=1, catpage=10, serviceData={};
     var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
     if (req.query.page) {
@@ -447,7 +459,7 @@ module.exports = function(app) {
     }
 	});
 
-  app.put('/business', function(req, res) {
+  app.put('/business',middle.checkSession, function(req, res) {
 
     if (req.body.deleteB || req.body.activa) {
       BusinessControllers.deleteBusiness(req.body).then(function(data) {
@@ -484,7 +496,7 @@ module.exports = function(app) {
   |*******Service********|
   ********************************/
 
-  app.get('/service/:id/:bussines', function(req, res) {
+  app.get('/service/:id/:bussines',middle.checkSession, function(req, res) {
     var selectPageE=1, catpage=10, serviceData={};
     var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
     Users.getEmployeeBusinessOne(req.params.bussines).then(function(employeeB) {
@@ -532,7 +544,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/servicelist/:id', function(req, res) {
+  app.get('/servicelist/:id',middle.checkSession, function(req, res) {
     var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[], listCateSelect;
     if (req.query.page) {
       selectPageE=req.query.page;
@@ -624,7 +636,7 @@ module.exports = function(app) {
   /********************************
   ************CALENDAR************
   ********************************/
-  app.get('/calendar', function(req, res) {
+  app.get('/calendar',middle.checkSession, function(req, res) {
     //session.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
     Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
       var idUserEmploOwner = 0;
@@ -666,8 +678,6 @@ module.exports = function(app) {
               req.session.business=bussiId;
               bussiId=bussiId;
             }
-            req.session.service=JSON.stringify(listaservice);
-            req.session.employee=JSON.stringify(listaemploye);
             res.render('calendar/calendar.ejs',{
               usersType,
               session:req.session,
@@ -693,7 +703,7 @@ module.exports = function(app) {
   /********************************
   *****Booking - Reservas-Citas****
   ********************************/
-  app.get('/booking',function(req,res) {
+  app.get('/booking', function(req,res) {
     Booking.getBooking(req.session.business).then(function (data) {
       var colors = {'0':'green','1':'blue','3':'orange'}
       var nuevo = [];
@@ -701,7 +711,8 @@ module.exports = function(app) {
         var pos = JSON.parse(JSON.stringify(data[i])).state;
         nuevo.push({
           title:JSON.parse(JSON.stringify(data[i])).client.name,
-          start:JSON.parse(JSON.stringify(data[i])).startDate.iso,
+          start:moment(JSON.parse(JSON.stringify(data[i])).startDate.iso).format(),
+          serviceName:JSON.parse(JSON.stringify(data[i])).service.serviceName,
           backgroundColor:JSON.parse(JSON.stringify(data[i])).employee.color,
           colorState:colors[pos],
           color:JSON.parse(JSON.stringify(data[i])).employee.color,
@@ -727,7 +738,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/booking',middle.checkSession, function(req, res) {
+  app.post('/booking', function(req, res) {
      Booking.createBooking(req.body).then(function (data) {
        if (data.ready) {
          res.json({code:200,data:req.body,id:data.id});
@@ -737,7 +748,7 @@ module.exports = function(app) {
      });
    });
 
-  app.put('/booking',middle.checkSession, function(req, res) {
+  app.put('/booking', function(req, res) {
     Booking.updateBooking(req.body.idBooking,req.body).then(function (data) {
       if (data.ready) {
         res.json({code:200});
@@ -752,7 +763,7 @@ module.exports = function(app) {
    ************Client************
    ********************************/
 
-   app.get('/client/:id',function(req,res) {
+   app.get('/client/:id',middle.checkSession, function(req,res) {
      var selectPageE=1, catpageE=10;
      if (req.query.page) {
        selectPageE=req.query.page;
@@ -870,77 +881,82 @@ module.exports = function(app) {
 
  //Login User
   app.post('/login', function(req, res) {
-
-    function dataUser(id) {
-      var query = new Parse.Query('UserData');
-      return query.get(id, {
+    if (enabled) {
+      return res.redirect('/');
+    }else {
+      enabled=true;
+      function dataUser(id) {
+        var query = new Parse.Query('UserData');
+        return query.get(id, {
           success: function(object) {},
           error: function(error) {
-              // error is an instance of Parse.Error.
-              console.log('error search UserData');
-              console.log('%j', error);
+            // error is an instance of Parse.Error.
+            console.log('error search UserData');
+            console.log('%j', error);
           }
-      });
-    }
+        });
+      }
 
-    if (req.body && req.body.email && req.body.password) {
-      UsersContro.logIn({ email: req.body.email, password: req.body.password })
-      .then(function (user) {
-        if (user.data.get('isActive')==true) {
-          req.session['x-parse-session-token'] = user.data.get('sessionToken');
-          req.session.name = user.data.get('name');
-          req.session.id = user.data.id;
-          var id = user.data.id;
-          if (user.data.get('type')==USER_ALL.admin) {
-            console.log('Administrador');
-            //return res.redirect('/admin?'+'user='+id);
-            usersType.admin = true;
-            req.session.admin=true;
-            req.session.owner=false;
-            req.session.employee=false;
-            req.session.userId=id;
-            return res.redirect('/business/list?'+'user='+id);
-          }
-          else if (user.data.get('type')==USER_ALL.owner) {
-            console.log('Propietario');
-            usersType.owner=true;
-            req.session.admin=false;
-            req.session.owner=true;
-            req.session.employee=false;
-            req.session.userId=id;
-            //return res.redirect('/owner?'+'user='+id);
-            return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
-            //return res.redirect('/service/'+id);
-          }
-          else if (user.data.get('type')==USER_ALL.employee) {
-            console.log('Empleado');
-            req.session.admin=false;
-            req.session.owner=false;
-            req.session.employee=true;
-            req.session.userId=id;
-            return res.redirect('/employee?'+'user='+id);
+      if (req.body && req.body.email && req.body.password) {
+        UsersContro.logIn({ email: req.body.email, password: req.body.password })
+        .then(function (user) {
+          if (user.data.get('isActive')==true) {
+            req.session['x-parse-session-token'] = user.data.get('sessionToken');
+            req.session.enabled=true;
+            req.session.name = user.data.get('name');
+            req.session.id = user.data.id;
+            var id = user.data.id;
+            if (user.data.get('type')==USER_ALL.admin) {
+              console.log('Administrador');
+              //return res.redirect('/admin?'+'user='+id);
+              usersType.admin = true;
+              req.session.admin=true;
+              req.session.owner=false;
+              req.session.employee=false;
+              req.session.userId=id;
+              return res.redirect('/business/list?'+'user='+id);
+            }
+            else if (user.data.get('type')==USER_ALL.owner) {
+              console.log('Propietario');
+              usersType.owner=true;
+              req.session.admin=false;
+              req.session.owner=true;
+              req.session.employee=false;
+              req.session.userId=id;
+              //return res.redirect('/owner?'+'user='+id);
+              return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
+              //return res.redirect('/service/'+id);
+            }
+            else if (user.data.get('type')==USER_ALL.employee) {
+              console.log('Empleado');
+              req.session.admin=false;
+              req.session.owner=false;
+              req.session.employee=true;
+              req.session.userId=id;
+              return res.redirect('/employee?'+'user='+id);
+            }else {
+              return res.status(user.code).send(user.data);
+            }
           }else {
-            return res.status(user.code).send(user.data);
+            return res.redirect('/'+'?inactive=true');
           }
-        }else {
-          return res.redirect('/'+'?inactive=true');
-        }
 
-      }).then(null, function (error) {
-        console.log('Error al logearse');
-        console.log(error);
-        //return res.status(409).send({error:'Error al logearse.'});
-        return res.redirect('/'+'?invalid=true');
-      });
-    }else {
-      return res.status(409).send({error:'Email or Password are required'});
+        }).then(null, function (error) {
+          console.log('Error al logearse');
+          console.log(error);
+          //return res.status(409).send({error:'Error al logearse.'});
+          return res.redirect('/'+'?invalid=true');
+        });
+      }else {
+        return res.status(409).send({error:'Email or Password are required'});
+      }
     }
 	});
 
 //Logout user
 app.get('/logout', function(req, res) {
-  req.session['x-parse-session-token'] = "";
   req.session.destroy();
+  enabled=false;
   return res.redirect('/');
 });
 

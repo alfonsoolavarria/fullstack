@@ -23,7 +23,7 @@ var FC = $.fullCalendar = {
 	internalApiVersion: 7
 };
 var fcViews = FC.views = {};
-var colorStatus;
+var colorStatus='';
 
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
@@ -54,6 +54,7 @@ $.fn.fullCalendar = function(options) {
 			//nota:aqui puedo hacer cualquier config de calendar segun la doc
 			options.events= data.data;
 			options.defaultView= 'agendaWeek'; //vista por defecto
+			options.slotLabelFormat= 'H:mm'; //tipo de horario
 			calendar = new Calendar(element, options);
 			element.data('fullCalendar', calendar);
 			$(".loader-circle").css("visibility","hidden");
@@ -7761,7 +7762,7 @@ TimeGrid.mixin({
 						) +
 					(event.title ?
 						'<div class="fc-title">' +
-							htmlEscape(event.title) +
+							htmlEscape(event.title+' - '+event.serviceName) +
 						'</div>'+'<div id="alfonso" style="border-radius:50%;background:'+colorStatus+';width:17px;">.'+'</div>':
 						''
 						) +
