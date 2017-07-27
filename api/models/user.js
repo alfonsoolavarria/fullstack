@@ -2,14 +2,15 @@ var Parse = require('parse/node');
 var ParseInit = require('../../default/parseInit.js');
 var _ = require('lodash');
 var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
+var moment2 = require('moment');
 
 var Datadays = {
   0:'Lunes',
   1:'Martes',
-  2:'Mi&eacute;rcoles',
+  2:'Miércoles',
   3:'Jueves',
   4:'Viernes',
-  5:'S&aacute;bado',
+  5:'Sábado',
   6:'Domingo'
 }
 
@@ -147,7 +148,11 @@ UsersModel.getEmployeeBusiness2 = function getEmployeeBusiness2 (id,reqparams) {
   var cantpage=10;
   var page=reqparams.page ? reqparams.page : 0;
   var query = new Parse.Query('Business');
-  query.equalTo('owner', new Parse.Object('_User', { id:id }));
+  if (reqparams.employee) {
+    query.equalTo('owner', new Parse.Object('_User', { id:reqparams.idowner }));
+  }else {
+    query.equalTo('owner', new Parse.Object('_User', { id:id }));
+  }
   return query.find().then(function(dataE){
     return dataE[0].relation('employee').query().find().then(function(employess2){
       if (reqparams.flag) {
@@ -209,17 +214,18 @@ UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
       });
       //filter six data
       _.forEach(dataUsers, function(allD) {
-        moment.locale('es');
+        moment2.locale('es');
         if (filters.indexOf(allD.get('client').id)<0) {
+          var finalHour = new Date(allD.createdAt);
           promises.push({
             name:allD.get('client').get('name'),
             email:allD.get('client').get('username'),
             objectId:allD.get('client').id,
             phone:allD.get('client').get('phone'),
-            dayName:Datadays[moment(allD.createdAt).weekday()],
+            dayName:Datadays[moment2(allD.createdAt).weekday()],
             dayNumber:moment(allD.createdAt).get('date'),
             month:(moment(allD.createdAt).month())+1,
-            hour:moment(allD.createdAt).get('hour')+'hs'
+            hour:finalHour.getHours()+'hs'
           });
           filters.push(allD.get('client').id);
         }

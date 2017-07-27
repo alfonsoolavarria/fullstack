@@ -230,6 +230,7 @@ BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (op
                 return {
                   business:JSON.parse(JSON.stringify(allD)).objectId,
                   nameEmployee:JSON.parse(JSON.stringify(employess[i])).name,
+                  owner:JSON.parse(JSON.stringify(allD)).owner.objectId,
                   idEmployeeorOwner:JSON.parse(JSON.stringify(employess[i])).objectId,
                 };
               }

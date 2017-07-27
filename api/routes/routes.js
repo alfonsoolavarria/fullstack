@@ -36,7 +36,7 @@ module.exports = function(app) {
       }else if (req.session.owner) {
         return res.redirect('/calendar?'+'owner='+req.session.userId+'&twoService='+1);
       }else if (req.session.employee) {
-        return res.redirect('/employee?'+'user='+req.session.userId);
+        return res.redirect('/calendar?'+'employee='+req.session.userId);
       }
     }
     var message = '';
@@ -646,6 +646,7 @@ module.exports = function(app) {
         idUserEmploOwner = req.query.owner;
       }
       BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
+        if (req.query.employee) req.query.idowner = dataBusiness1[0].owner //filtro de solo empleado
         Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
           var id = 10;
           if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
@@ -933,7 +934,8 @@ module.exports = function(app) {
               req.session.owner=false;
               req.session.employee=true;
               req.session.userId=id;
-              return res.redirect('/employee?'+'user='+id);
+              return res.redirect('/calendar?'+'employee='+id);
+              //return res.redirect('/employee?'+'user='+id);
             }else {
               return res.status(user.code).send(user.data);
             }

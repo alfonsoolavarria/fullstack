@@ -48,13 +48,13 @@
                       <%if (serviceData.length>0){%>
                         <% for(var o=0; o<serviceData.length; o++) {%>
                             <li class="list-group-item">
-                              <label><b><%=serviceData[o].category%>:</b></label>
+
                                 <div class="media">
                                   <div class="pr-20">
-                                      <div class="avatar avatar-online">
+                                      <!--<div class="avatar avatar-online">
                                           <img src="/public/assets/images/service.svg" alt="...">
                                           <i class="avatar avatar-busy"></i>
-                                      </div>
+                                      </div>-->
                                   </div>
                                   <div class="media-body">
                                       <form class="form-horizontal">
@@ -67,12 +67,12 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group row form-material row">
-                                                      <label class="col-md-6 form-control-label">Duracion:</label>
+                                                      <label class="col-md-6 form-control-label">Duraci&oacute;n:</label>
                                                       <div class="col-md-6">
                                                           <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
                                                           <div class="example-wrap">
                                                             <div class="example mt-30">
-                                                              <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
+                                                              <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="5" data-min="15" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
                                                               </div>
                                                             </div>
                                                           </div>
