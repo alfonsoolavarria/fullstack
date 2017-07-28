@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
 <link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
 <body class="animsition page-user">
   <!-- Headear barra -->
   <% include ../templates/header.ejs %>
@@ -119,6 +121,16 @@
                                       </div>
                                     <%}%>
                               </div>
+
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 iconstyle image-icon-<%= valores[i].objectId %>">
+                                <label style="margin-left:14%;"><b>Imagen tipo Icon:</b></label>
+                                <input type="file" id="input-file-now-icon" class="iconIcon" data-plugin="dropify" data-default-file="<%if (valores[i].imageIcon){%><%=valores[i].imageIcon.url%><%}%>" disabled/>
+                              </div>
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 bannerstyle image-banner-<%= valores[i].objectId %>">
+                                <label><b>Imagen tipo Banner:</b></label>
+                                <input type="file" id="input-file-now-banner" class="banner" data-plugin="dropify" data-default-file="<%if (valores[i].imageBanner){%><%=valores[i].imageBanner.url%><%}%>" disabled/>
+                              </div>
+
                             </div>
                           </div>
                         </form>
@@ -181,6 +193,21 @@
     <script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
     <script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
     <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+
+    <script src="/public/assets/material/global/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-tmpl/tmpl.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-load-image/load-image.all.min.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-process.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-image.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-video.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
+    <script src="/public/assets/material/global/vendor/dropify/dropify.min.js"></script>
+
+
     <!-- Scripts -->
     <script src="/public/assets/material/global/js/State.js"></script>
     <script src="/public/assets/material/global/js/Component.js"></script>
@@ -206,6 +233,8 @@
     <script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
     <script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
     <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
+    <script src="/public/assets/material/examples/js/forms/uploads.js"></script>
     <script src="/public/assets/js/business.js"></script>
     <script>
     (function(document, window, $) {
@@ -214,9 +243,6 @@
       $(document).ready(function() {
         Site.run();
         //buttom next-prev disabled
-        console.log($(".pagination-next"));
-        console.log($(".pagination-next")[0]);
-        console.log($(".pagination-next")[0].className);
         var cadena = $(".pagination-next")[0].className;
         if (cadena.indexOf('disabled') != -1) {
           $(".pagination-next").prop("onclick", null);

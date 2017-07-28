@@ -3,6 +3,7 @@ $(document).ready(function() {
   var flagBusiness = 0;
   var dataSend = {};
   var flag = 0;
+  var icon = '' , banner='';
 
   $('.registerBusiness').click(function () {
     $('form').submit(function (e) {
@@ -24,8 +25,8 @@ $(document).ready(function() {
         web : $("#web").val(),
         password : $("#pass").val(),
         type:'Propietario',
-        icon:$('.image-icon .dropify-render img').attr('src'),
-        banner:$('.image-banner .dropify-render img').attr('src'),
+        icon:$('.image-icon2 .dropify-render img').attr('src'),
+        banner:$('.image-banner2 .dropify-render img').attr('src'),
       }
 
       //var latitude=0,longitude=0;
@@ -95,6 +96,20 @@ $(document).ready(function() {
     var iduser = button.data('user-bus');
     $('.btn-'+id).empty();
     if (text=='Guardar') {
+      if (icon != $('.image-icon-'+id+' .dropify-render img').attr('src')) {
+        dataSend.icon=$('.image-icon-'+id+' .dropify-render img').attr('src');
+        dataSend.nameicon=$('.image-icon-'+id+' .dropify-wrapper .dropify-preview .dropify-infos .dropify-infos-inner .dropify-filename .dropify-filename-inner').text();
+        flag=1;
+        dataSend.flagBusiness=1;
+        icon = '';
+      }
+      if (banner != $('.image-banner-'+id+' .dropify-render img').attr('src')) {
+        dataSend.banner=$('.image-banner-'+id+' .dropify-render img').attr('src');
+        dataSend.namebanner=$('.image-banner-'+id+' .dropify-wrapper .dropify-preview .dropify-infos .dropify-infos-inner .dropify-filename .dropify-filename-inner').text();
+        dataSend.flagBusiness=1;
+        flag=1;
+        banner='';
+      }
       dataSend.id=id;
       dataSend.iduser=iduser;
       if (flag==1) {
@@ -127,6 +142,12 @@ $(document).ready(function() {
       $("#telefono-"+id).attr("disabled",true);
       $("#email-"+id).attr("disabled",true);
       $("#tipo-"+id).attr("disabled",true);
+
+      $('.image-icon-'+id+' .dropify-wrapper .iconIcon').attr("disabled",true);
+      $('.image-icon-'+id+' .dropify-wrapper').addClass("disabled");
+      $('.image-banner-'+id+' .dropify-wrapper .banner').attr("disabled",true);
+      $('.image-banner-'+id+' .dropify-wrapper').addClass("disabled");
+
       $('.btn-'+id).append("<span id='nameE-"+id+"'>Editar</span>");
 
     }else {
@@ -141,6 +162,13 @@ $(document).ready(function() {
       $("#telefono-"+id).removeAttr("disabled");
       $("#email-"+id).removeAttr("disabled");
       $("#tipo-"+id).removeAttr("disabled");
+      $('.image-icon-'+id+' .dropify-wrapper .iconIcon').removeAttr("disabled");
+      $('.image-icon-'+id+' .dropify-wrapper').removeClass("disabled");
+      $('.image-banner-'+id+' .dropify-wrapper .banner').removeAttr("disabled");
+      $('.image-banner-'+id+' .dropify-wrapper').removeClass("disabled");
+      icon = $('.image-icon-'+id+' .dropify-render img').attr('src');
+      banner = $('.image-banner-'+id+' .dropify-render img').attr('src');
+
       $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
       $("#name-"+id).keyup(function () {
         dataSend.nameCommerce = $("#name-"+id).val();
@@ -251,8 +279,11 @@ $('.cancel').click(function () {
 
 
 
-$('.image-icon .dropify-wrapper').css({ borderRadius:"150px",width:"154px", height:"167px", marginLeft:"70px" });
-$('.image-banner .dropify-wrapper').css({ width:"34%", height:"100%", marginLeft:"34%" });
+$('.image-icon2 .dropify-wrapper').css({ borderRadius:"150px",width:"154px", height:"167px", marginLeft:"70px" });
+$('.image-banner2 .dropify-wrapper').css({ width:"34%", height:"100%", marginLeft:"34%" });
+
+$('.iconstyle .dropify-wrapper').css({ borderRadius:"150px",width:"154px", height:"167px", marginLeft:"70px" });
+$('.bannerstyle .dropify-wrapper').css({ width:"34%", height:"100%", marginLeft:"34%" });
 
 
 });

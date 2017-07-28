@@ -152,20 +152,46 @@ BusinessControllers.addPointerBusiness = function addPointerBusiness (idBusiness
 };
 
 BusinessControllers.updateBusiness = function updateBusiness (options) {
-    var query = new Parse.Query('Business');
-    return query.get(options.id).then(function(dataB){
-      if (options.address) dataB.set({'address':options.address});
-      if (options.city) dataB.set({'city':options.city});
-      if (options.country) dataB.set({'country':options.country});
-      if (options.cp) dataB.set({'postalCode':options.cp});
-      if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
-      if (options.nameCommerce) dataB.set({'nameCommerce':options.nameCommerce});
-      dataB.save(null, { useMasterKey: true });
-      return{success:true,code:200};
-    }, function(error) {
-      console.log('Business update Error',error);
-      return {ready:false,error:'Business update Error '+error, code:500};
+  function filesImages(data) {
+    var promise = new Parse.Promise();
+    try {
+      var avatarImg;
+      if (data.icon) {
+        avatarImg = new Parse.File(data.name?data.name:data.nameicon+'icon' + '-img.png', { base64: data.icon });
+      }else if(data.banner) {
+        avatarImg = new Parse.File(data.name?data.name:data.namebanner+'banner' + '-img.png', { base64: data.banner });
+      }
+      avatarImg.save();
+      promise.resolve(avatarImg);
+      return promise;
+    } catch (e) {
+      promise.resolve(0);
+      return promise;
+    }
+  }
+
+  return filesImages(options).then(function(base64icon){
+    options.icon2 = options.icon;
+    options.icon = null;
+    return filesImages(options).then(function(base64banner){
+      var query = new Parse.Query('Business');
+      return query.get(options.id).then(function(dataB){
+        if (options.address) dataB.set({'address':options.address});
+        if (options.city) dataB.set({'city':options.city});
+        if (options.country) dataB.set({'country':options.country});
+        if (options.cp) dataB.set({'postalCode':options.cp});
+        if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
+        if (options.nameCommerce) dataB.set({'nameCommerce':options.nameCommerce});
+        if (options.icon2) dataB.set('imageIcon', base64icon);
+        if (options.banner) dataB.set('imageBanner', base64banner);
+        dataB.save(null, { useMasterKey: true });
+        return{success:true,code:200};
+      }, function(error) {
+        console.log('Business update Error',error);
+        return {ready:false,error:'Business update Error '+error, code:500};
+      });
     });
+  });
 };
 
 BusinessControllers.deleteBusiness = function deleteBusiness (options) {
