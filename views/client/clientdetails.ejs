@@ -17,30 +17,24 @@
     <% include ../templates/menuvertical.ejs %>
     <div class="page">
       <div class="page-content">
+        <div class="panel">
+          <div class="panel-body">
+            <div class="navBusiness">
+              <ul class="nav nav-tabs nav-tabs-line">
+                <li class="nav-item" style="margin-left:70%;"><a class="nav-link <%=detailsString%>"  href="/client/<%=idclient%>/details">Detalles</a></li>
+                <li class="nav-item"><a class="nav-link <%=historialString%>"  href="/client/<%=idclient%>/details?historial=true">Historial de Citas</a></li>
+              </ul>
+            </div>
+              <%if (details==1){%>
+                <% include clientdetail.ejs %>
+              <%}else{%>
+                <% include clienthistorial.ejs %>
+              <%}%>
+            </div>
+          </div>
+        </div>
 
-
-<div class="panel">
-  <div class="panel-body">
-
-    <div class="navBusiness">
-      <ul class="nav nav-tabs nav-tabs-line">
-        <li class="nav-item" style="margin-left:70%;"><a class="nav-link <%=detailsString%>"  href="/client/<%=idclient%>/details">Detalles</a></li>
-        <li class="nav-item"><a class="nav-link <%=historialString%>"  href="/client/<%=idclient%>/details?historial=true">Historial de Citas</a></li>
-      </ul>
-    </div>
-    <%if (details==1){%>
-      <% include clientdetail.ejs %>
-    <%}else{%>
-      <% include clienthistorial.ejs %>
-    <%}%>
-
-  </div>
-</div>
-</div>
-
-</div>
-</div>
-
+      </div>
 
 
 <!-- Footer -->

@@ -814,12 +814,12 @@ module.exports = function(app) {
            detailsString:'',
            historialString:'active',
            idclient:req.params.id,
-           businessSelec:0,
            calendarSelec:0,
            dashSelec:0,
            session:req.session,
            categorySelec:0,
            serviSelect:0,
+           businessSelec:1,
            clientSelect:1,
          });
        });
@@ -832,12 +832,12 @@ module.exports = function(app) {
            detailsString:'active',
            historialString:'',
            idclient:req.params.id,
-           businessSelec:0,
            calendarSelec:0,
            dashSelec:0,
            session:req.session,
            categorySelec:0,
            serviSelect:0,
+           businessSelec:1,
            clientSelect:1,
          });
        });
