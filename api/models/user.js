@@ -251,6 +251,35 @@ UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
 
 };
 
+UsersModel.getOneClient = function getOneClient (id) {
+  var query = new Parse.Query('_User');
+  return query.get(id).then(function(dataE){
+    return JSON.parse(JSON.stringify(dataE));
+  });
+}
+
+UsersModel.getHistorialClient = function getOneClient (id) {
+  var queryU = new Parse.Query('Booking');
+  var data = [];
+  queryU.include('service');
+  queryU.include('employee');
+  queryU.equalTo('client', new Parse.Object('_User', { id:id }));
+  return queryU.find().then(function(dataE){
+    for (var i = 0; i < dataE.length; i++) {
+      /*var finalHour = new Date(JSON.parse(JSON.stringify(dataE[i])).startDate.iso);
+      console.log(finalHour);
+      console.log('22222 ',finalHour.getHours());*/
+      data.push({
+        service:JSON.parse(JSON.stringify(dataE[i])).service.serviceName,
+        precio:JSON.parse(JSON.stringify(dataE[i])).service.price,
+        employee:JSON.parse(JSON.stringify(dataE[i])).employee.name,
+        dia:Datadays[moment2(dataE[i].createdAt).weekday()],
+        horario:'',
+      });
+    }
+    return data;
+  });
+}
 
 
 

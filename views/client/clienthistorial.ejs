@@ -1,0 +1,22 @@
+<div class="media-body">
+  <form style="padding: 50px;">
+    <div class="row" style="color:#36459b;">
+      <div class="col-md-1"> </div>
+      <div class="col-md-2"><b>Día</b></div>
+      <div class="col-md-2"><b>Horario</b></div>
+      <div class="col-md-2"><b>Servicios</b></div>
+      <div class="col-md-2"><b>Empleado</b></div>
+      <div class="col-md-2"><b>Precio</b></div>
+    </div>
+    <%for(var i=0; i<clientData.length; i++) {%>
+    <div class="row">
+        <div class="col-md-1"> </div>
+        <div class="col-md-2"><%=clientData[i].dia%></div>
+        <div class="col-md-2"><%if(clientData[i].horario){%><%=clientData[i].horario%><%}else{%>Sin horario<%}%></div>
+        <div class="col-md-2"><%=clientData[i].service%></div>
+        <div class="col-md-2"><%=clientData[i].service%></div>
+        <div class="col-md-2"><%=clientData[i].precio%></div>
+    </div>
+    <%}%>
+  </form>
+<div>

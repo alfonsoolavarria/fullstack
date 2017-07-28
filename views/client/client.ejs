@@ -54,7 +54,7 @@
             <li style="border-bottom-style: solid;border-bottom-width: thin;">
               <div class="row">
                 <div class="col-md-3">
-                  <label id="client-name-<%= dataClient[i].objectId%>" style="border:0px;background:none;"><%=dataClient[i].name%></label>
+                  <a href="/client/<%=dataClient[i].objectId%>/details"><label id="client-name-<%= dataClient[i].objectId%>" style="border:0px;background:none;cursor:pointer;"><%=dataClient[i].name%></label></a>
                 </div>
                 <div class="col-md-3">
                   <label id="client-email-<%= dataClient[i].objectId%>" style="border:0px;background:none;width:140%;"><%=dataClient[i].email%></label>

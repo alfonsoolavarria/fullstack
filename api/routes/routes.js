@@ -804,6 +804,46 @@ module.exports = function(app) {
      });
    });
 
+   app.get('/client/:id/details',middle.checkSession, function(req,res) {
+     if (req.query.historial) {
+       Users.getHistorialClient(req.params.id).then(function(dataClient){
+         res.render('client/clientdetails.ejs',{
+           clientData:dataClient,
+           employeeSelec:0,
+           details:0,
+           detailsString:'',
+           historialString:'active',
+           idclient:req.params.id,
+           businessSelec:0,
+           calendarSelec:0,
+           dashSelec:0,
+           session:req.session,
+           categorySelec:0,
+           serviSelect:0,
+           clientSelect:1,
+         });
+       });
+     }else {
+       Users.getOneClient(req.params.id).then(function(userClient){
+         res.render('client/clientdetails.ejs',{
+           clientData:userClient,
+           employeeSelec:0,
+           details:1,
+           detailsString:'active',
+           historialString:'',
+           idclient:req.params.id,
+           businessSelec:0,
+           calendarSelec:0,
+           dashSelec:0,
+           session:req.session,
+           categorySelec:0,
+           serviSelect:0,
+           clientSelect:1,
+         });
+       });
+     }
+   });
+
    app.post('/client',middle.checkSession, function(req, res) {
      Users.checkUser(req.body).then(function(result) {
        if (result.code==409) {
@@ -960,6 +1000,25 @@ app.get('/logout', function(req, res) {
   req.session.destroy();
   enabled=false;
   return res.redirect('/');
+});
+
+//Forgot Password
+app.get('/forgot', function(req, res) {
+  res.render('templates/forgot.ejs',{});
+});
+
+app.post('/forgot', function(req, res) {
+  console.log(req.body);
+  return Parse.User.requestPasswordReset(req.body.email, {
+    success: function() {
+      console.log('listooo');
+    // Password reset request was sent successfully
+    },
+    error: function(error) {
+      console.log('error-->'+JSON.stringify(error));
+    }
+  });
+
 });
 
 

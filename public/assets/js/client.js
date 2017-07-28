@@ -1,6 +1,16 @@
 $(document).ready(function() {
   var dataSend = {}, flag=0;
 
+  $(".one").click(function() {
+    $(".one").addClass("active");
+    $(".two").removeClass("active");
+  });
+
+  $(".two").click(function() {
+    $(".one").removeClass("active");
+    $(".two").addClass("active");
+  });
+
   $("#clienteCreate").click(function() {
     $(".loadgif").css("visibility","");
     $("#clienteCreate").css("visibility","hidden");
