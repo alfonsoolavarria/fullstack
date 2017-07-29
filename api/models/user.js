@@ -225,7 +225,8 @@ UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
             dayName:Datadays[moment2(allD.createdAt).weekday()],
             dayNumber:moment(allD.createdAt).get('date'),
             month:(moment(allD.createdAt).month())+1,
-            hour:finalHour.getHours()+'hs'
+            //hour:finalHour.getHours()+'hs'
+            hour:moment(allD.createdAt).format('HH')+'hs'
           });
           filters.push(allD.get('client').id);
         }
@@ -266,15 +267,12 @@ UsersModel.getHistorialClient = function getOneClient (id) {
   queryU.equalTo('client', new Parse.Object('_User', { id:id }));
   return queryU.find().then(function(dataE){
     for (var i = 0; i < dataE.length; i++) {
-      /*var finalHour = new Date(JSON.parse(JSON.stringify(dataE[i])).startDate.iso);
-      console.log(finalHour);
-      console.log('22222 ',finalHour.getHours());*/
       data.push({
         service:JSON.parse(JSON.stringify(dataE[i])).service.serviceName,
         precio:JSON.parse(JSON.stringify(dataE[i])).service.price,
         employee:JSON.parse(JSON.stringify(dataE[i])).employee.name,
         dia:Datadays[moment2(dataE[i].createdAt).weekday()],
-        horario:'',
+        horario:moment(JSON.parse(JSON.stringify(dataE[i])).startDate.iso).format('HH:mm')+'hs',
       });
     }
     return data;

@@ -1021,6 +1021,27 @@ app.post('/forgot', function(req, res) {
 
 });
 
+//pruebas postman
+/*app.get('/test/:id',function(req,res) {
+  console.log('aquiiii');
+  Users.getHistorialClient(req.params.id).then(function(dataClient){
+    res.render('client/clientdetails.ejs',{
+      clientData:dataClient,
+      employeeSelec:0,
+      details:0,
+      detailsString:'',
+      historialString:'active',
+      idclient:req.params.id,
+      calendarSelec:0,
+      dashSelec:0,
+      session:req.session,
+      categorySelec:0,
+      serviSelect:0,
+      businessSelec:1,
+      clientSelect:1,
+    });
+  });
+});*/
 
 
 };
