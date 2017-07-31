@@ -141,6 +141,23 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/employee/:id/details',middle.checkSession, function(req, res) {
+    Users.getOneClient(req.params.id,req.query).then(function(employeeB) {
+      res.render('business/employeedetails.ejs',{
+        employeeB,
+        usersType,
+        businessSelec:0,
+        employeeSelec:1,
+        calendarSelec:0,
+        dashSelec:0,
+        session:req.session,
+        categorySelec:0,
+        serviSelect:0,
+        clientSelect:0,
+      });
+    });
+  });
+
   app.post('/employee',middle.checkSession, function(req, res) {
     Users.checkUser(req.body).then(function(result) {
       if (result.code==409) {

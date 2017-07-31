@@ -3,7 +3,7 @@ $(document).ready(function() {
 //employeeCreate
 var dataSend = {};
 var flag = 0;
-
+var icon = '';
 
 $('#employeeCreate').click(function () {
     $(".loadgif").css("visibility","");
@@ -67,6 +67,12 @@ $('#employeeCreate').click(function () {
     var id = button.data('edit-id');
     $('.btn-'+id).empty();
     if (text=='Guardar') {
+      if (icon != $('.icon-empl-'+id+' .dropify-render img').attr('src')) {
+        dataSend.icon=$('.icon-empl-'+id+' .dropify-render img').attr('src');
+        dataSend.nameicon=$('.icon-empl-'+id+' .dropify-wrapper .dropify-preview .dropify-infos .dropify-infos-inner .dropify-filename .dropify-filename-inner').text();
+        flag=1;
+        icon = '';
+      }
       dataSend.id=id;
       if (flag==1) {
         flag = 0;
@@ -87,6 +93,9 @@ $('#employeeCreate').click(function () {
         $("#employeeDelay").trigger("click");
       }
 
+      $('.icon-empl-'+id+' .dropify-wrapper .iconIcon2').attr("disabled",true);
+      $('.icon-empl-'+id+' .dropify-wrapper').addClass("disabled");
+
       $("#emplo-name-"+id).attr("disabled",true);
       $("#emplo-phone-"+id).attr("disabled",true);
       $("#emplo-email-"+id).attr("disabled",true);
@@ -98,6 +107,11 @@ $('#employeeCreate').click(function () {
       $("#emplo-phone-"+id).removeAttr("disabled");
       $("#emplo-email-"+id).removeAttr("disabled");
       $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+
+      $('.icon-empl-'+id+' .dropify-wrapper .iconIcon2').removeAttr("disabled");
+      $('.icon-empl-'+id+' .dropify-wrapper').removeClass("disabled");
+
+      icon = $('.icon-empl-'+id+' .dropify-render img').attr('src');
 
       $("#emplo-name-"+id).keyup(function () {
         dataSend.name = $("#emplo-name-"+id).val();
@@ -173,5 +187,5 @@ $('#employeeCreate').click(function () {
     }, delayMillis);
   });
 
-
+$('.iconstyle2 .dropify-wrapper').css({ borderRadius:"150px",width:"154px", height:"167px", marginLeft:"70px" });
 });

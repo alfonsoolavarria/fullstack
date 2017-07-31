@@ -43,13 +43,11 @@
                     <div class="tab-content">
                       <%if (employeeB.employee.length>0){%>
                         <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
-                          <div class="row">
-                            <div class="col-md-2 col-sm-2"></div>
-                            <div class="col-md-2 col-sm-2"><label><b>Nombre</b></label></div>
-                            <div class="col-md-2 col-sm-2"><label><b>Email</b></label></div>
-                            <div class="col-md-2 col-sm-2"><label><b>Tel&eacute;fono</b></label></div>
-                            <div class="col-md-2 col-sm-2"></div>
-                            <div class="col-md-2 col-sm-2"></div>
+                          <div class="row" style="margin-left:10px;">
+                            <div class="col-md-3 col-sm-12"></div>
+                            <div class="col-md-3 col-sm-12"><label><b>Nombre</b></label></div>
+                            <div class="col-md-3 col-sm-12"><label><b>Email</b></label></div>
+                            <div class="col-md-3 col-sm-12"><label><b>Tel&eacute;fono</b></label></div>
                           </div>
                             <ul class="list-group">
                                 <% for(var o=0; o<employeeB.employee.length; o++) {%>
@@ -62,7 +60,7 @@
                                             <div class="media-body">
                                               <form class="form-horizontal">
                                                 <div class="row">
-                                                  <div class="col-md-2 col-sm-2">
+                                                  <div class="col-md-3 col-sm-12">
                                                     <div class="avatar avatar-online" style="border-style:solid;border-color:#523eba;">
                                                       <%if (employeeB.employee[o].image){%>
                                                           <img src="<%=employeeB.employee[o].image.url%>" alt="...">
@@ -72,24 +70,15 @@
                                                       <i class="avatar avatar-busy"></i>
                                                     </div>
                                                   </div>
-                                                  <div class="col-md-2 col-sm-2">
-                                                    <input class="form-control" id="emplo-name-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].name%>" disabled></input>
+                                                  <div class="col-md-3 col-sm-12">
+                                                    <a href="/employee/<%=employeeB.employee[o].objectId%>/details"><input class="form-control" id="emplo-name-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;cursor:pointer;" value="<%=employeeB.employee[o].name%>" disabled></input></a>
                                                   </div>
-                                                  <div class="col-md-2 col-sm-2">
+                                                  <div class="col-md-3 col-sm-12">
                                                     <input class="form-control" id="emplo-email-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;width:140%;" value="<%=employeeB.employee[o].username%>" disabled></input>
                                                   </div>
-                                                  <div class="col-md-2 col-sm-2">
+                                                  <div class="col-md-3 col-sm-12">
                                                     <input class="form-control" id="emplo-phone-<%=employeeB.employee[o].objectId%>" style="border:0px;background:none;" value="<%=employeeB.employee[o].phone%>" disabled></input>
                                                   </div>
-                                                  <div class="col-md-2 col-sm-2">
-                                                    <%if (employeeB.employee[o].isActive==false){%>
-                                                      <button type="button" class="btn btn-primary btn-warning disabledEmpl waves-effect" data-activate-id="<%=employeeB.employee[o].objectId%>" id="confirmA-<%=employeeB.employee[o].objectId%>" style="height:32px;">Activar</button>
-                                                      <%}else{%>
-                                                        <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.employee[o].objectId%>" data-edit-id="<%=employeeB.employee[o].objectId%>" ><span id="nameE-<%=employeeB.employee[o].objectId%>">Editar</span></button>
-                                                        <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.employee[o].objectId%>" id="confirm-<%=employeeB.employee[o].objectId%>" style="height:32px;">Eliminar</button>
-                                                        <%}%>
-                                                      </div>
-                                                  <div class="col-md-2 col-sm-2"></div>
                                                 </div>
                                               </form>
                                             </div>

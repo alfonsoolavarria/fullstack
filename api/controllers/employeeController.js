@@ -42,25 +42,42 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
 };
 
 EmployeeModel.updateEmployee = function updateEmployee (options) {
+
+  function filesImages(data) {
+    var promise = new Parse.Promise();
+    try {
+      var avatarImg = new Parse.File(data.nameicon + '-img.png', { base64: data.icon });
+      avatarImg.save();
+      promise.resolve(avatarImg);
+      return promise;
+    } catch (e) {
+      promise.resolve(0);
+      return promise;
+    }
+  }
+
     var query = new Parse.Query('_User');
-    return query.get(options.id).then(function(dataB){
-      if (options.deleteB) {
-          dataB.set({'isActive':false});
-      }else if (options.activa) {
-        dataB.set({'isActive':true});
-      }else {
-        if (options.name) dataB.set({'name':options.name});
-        if (options.phone) dataB.set({'phone':options.phone});
-        if (options.email) {
-          dataB.set({'email':options.email});
-          dataB.set({'username':options.email});
+    return filesImages(options).then(function(base64imagen){
+      return query.get(options.id).then(function(dataB){
+        if (options.deleteB) {
+            dataB.set({'isActive':false});
+        }else if (options.activa) {
+          dataB.set({'isActive':true});
+        }else {
+          if (options.icon) dataB.set('image', base64imagen);
+          if (options.name) dataB.set({'name':options.name});
+          if (options.phone) dataB.set({'phone':options.phone});
+          if (options.email) {
+            dataB.set({'email':options.email});
+            dataB.set({'username':options.email});
+          }
         }
-      }
-      dataB.save(null, { useMasterKey: true });
-      return{success:true,code:200};
-    }, function(error) {
-      console.log('Employee update Error',error);
-      return {ready:false,error:'Employee update Error '+error,code:500};
+        dataB.save(null, { useMasterKey: true });
+        return{success:true,code:200};
+      }, function(error) {
+        console.log('Employee update Error',error);
+        return {ready:false,error:'Employee update Error '+error,code:500};
+      });
     });
 };
 
