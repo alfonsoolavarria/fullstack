@@ -18,8 +18,6 @@ var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
 var USER_ALL = GloVariable.TYPES;
 var usersType = {};
 
-var enabled = false;
-
 var useTemplate = {
   dashboard:false,
   employee:false,
@@ -939,83 +937,75 @@ module.exports = function(app) {
 
  //Login User
   app.post('/login', function(req, res) {
-    if (enabled) {
-      return res.redirect('/');
-    }else {
-      enabled=true;
-      function dataUser(id) {
-        var query = new Parse.Query('UserData');
-        return query.get(id, {
-          success: function(object) {},
-          error: function(error) {
-            // error is an instance of Parse.Error.
-            console.log('error search UserData');
-            console.log('%j', error);
+    function dataUser(id) {
+      var query = new Parse.Query('UserData');
+      return query.get(id, {
+        success: function(object) {},
+        error: function(error) {
+          // error is an instance of Parse.Error.
+          console.log('error search UserData');
+          console.log('%j', error);
+        }
+      });
+    }
+    if (req.body && req.body.email && req.body.password) {
+      UsersContro.logIn({ email: req.body.email, password: req.body.password })
+      .then(function (user) {
+        if (user.data.get('isActive')==true) {
+          req.session['x-parse-session-token'] = user.data.get('sessionToken');
+          req.session.name = user.data.get('name');
+          req.session.id = user.data.id;
+          var id = user.data.id;
+          if (user.data.get('type')==USER_ALL.admin) {
+            console.log('Administrador');
+            //return res.redirect('/admin?'+'user='+id);
+            usersType.admin = true;
+            req.session.admin=true;
+            req.session.owner=false;
+            req.session.employee=false;
+            req.session.userId=id;
+            return res.redirect('/business/list?'+'user='+id);
           }
-        });
-      }
-
-      if (req.body && req.body.email && req.body.password) {
-        UsersContro.logIn({ email: req.body.email, password: req.body.password })
-        .then(function (user) {
-          if (user.data.get('isActive')==true) {
-            req.session['x-parse-session-token'] = user.data.get('sessionToken');
-            req.session.enabled=true;
-            req.session.name = user.data.get('name');
-            req.session.id = user.data.id;
-            var id = user.data.id;
-            if (user.data.get('type')==USER_ALL.admin) {
-              console.log('Administrador');
-              //return res.redirect('/admin?'+'user='+id);
-              usersType.admin = true;
-              req.session.admin=true;
-              req.session.owner=false;
-              req.session.employee=false;
-              req.session.userId=id;
-              return res.redirect('/business/list?'+'user='+id);
-            }
-            else if (user.data.get('type')==USER_ALL.owner) {
-              console.log('Propietario');
-              usersType.owner=true;
-              req.session.admin=false;
-              req.session.owner=true;
-              req.session.employee=false;
-              req.session.userId=id;
-              //return res.redirect('/owner?'+'user='+id);
-              return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
-              //return res.redirect('/service/'+id);
-            }
-            else if (user.data.get('type')==USER_ALL.employee) {
-              console.log('Empleado');
-              req.session.admin=false;
-              req.session.owner=false;
-              req.session.employee=true;
-              req.session.userId=id;
-              return res.redirect('/calendar?'+'employee='+id);
-              //return res.redirect('/employee?'+'user='+id);
-            }else {
-              return res.status(user.code).send(user.data);
-            }
+          else if (user.data.get('type')==USER_ALL.owner) {
+            console.log('Propietario');
+            usersType.owner=true;
+            req.session.admin=false;
+            req.session.owner=true;
+            req.session.employee=false;
+            req.session.userId=id;
+            //return res.redirect('/owner?'+'user='+id);
+            return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
+            //return res.redirect('/service/'+id);
+          }
+          else if (user.data.get('type')==USER_ALL.employee) {
+            console.log('Empleado');
+            req.session.admin=false;
+            req.session.owner=false;
+            req.session.employee=true;
+            req.session.userId=id;
+            return res.redirect('/calendar?'+'employee='+id);
+            //return res.redirect('/employee?'+'user='+id);
           }else {
-            return res.redirect('/'+'?inactive=true');
+            return res.status(user.code).send(user.data);
           }
+        }else {
+          return res.redirect('/'+'?inactive=true');
+        }
 
-        }).then(null, function (error) {
-          console.log('Error al logearse');
-          console.log(error);
-          //return res.status(409).send({error:'Error al logearse.'});
-          return res.redirect('/'+'?invalid=true');
-        });
-      }else {
-        return res.status(409).send({error:'Email or Password are required'});
-      }
+      }).then(null, function (error) {
+        console.log('Error al logearse');
+        console.log(error);
+        //return res.status(409).send({error:'Error al logearse.'});
+        return res.redirect('/'+'?invalid=true');
+      });
+    }else {
+      return res.status(409).send({error:'Email or Password are required'});
     }
 	});
 
 //Logout user
 app.get('/logout', function(req, res) {
   req.session.destroy();
-  enabled=false;
   return res.redirect('/');
 });
 
