@@ -49,7 +49,7 @@ $.fn.fullCalendar = function(options) {
 		// a new calendar initialization
 		if (!calendar) { // don't initialize twice
 		$.get( "/booking", function( data ) {
-			colorStatus=data.data[0].colorState;
+			if (data.data[0]) colorStatus=data.data[0].colorState;
 			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
 			//nota:aqui puedo hacer cualquier config de calendar segun la doc
 			options.events= data.data;
