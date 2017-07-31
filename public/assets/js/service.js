@@ -216,14 +216,20 @@ $(document).ready(function() {
 
       $(".loadgif").css("visibility","");
       $(".service").css("visibility","hidden");
-      $("#serviceDelay").trigger("click");
 
-      $.post('/service',dataSend)
-      .done(function (result) {
-        location.reload();
-      }).fail(function(error) {
-        console.log(error.responseText);
-      });
+      if (dataSend.employee.length>0) {
+        $("#serviceDelay").trigger("click");
+        $.post('/service',dataSend)
+        .done(function (result) {
+          location.reload();
+        }).fail(function(error) {
+          console.log(error.responseText);
+        });
+      }else {
+        $("#CompletaEmplo").trigger("click");
+        $(".loadgif").css("visibility","hidden");
+        $(".service").css("visibility","");
+      }
 
 
   });
@@ -465,7 +471,7 @@ $(document).ready(function() {
 
         var stringDuration2 = $("#service-duration-"+id).text();
         dataSend.duration = stringDuration2.trim();
-        //if (flag==1) {
+        if (dataSend.employee.length>0) {
           flag = 0;
           $.ajax({
             url:'/service',
@@ -477,7 +483,11 @@ $(document).ready(function() {
           });
           dataSend={};
           $("#serviceDelay").trigger("click");
-        //}
+        }else {
+          $("#CompletaEmplo").trigger("click");
+          $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+          return;
+        }
 
         /*horario*/
         for (var i = 0; i < she.length; i++) {
@@ -539,6 +549,7 @@ $(document).ready(function() {
       $(".modalS-"+id).css("visibility", "visible");
 
     });
+
     $('.Sok').click(function () {
       var button = $(this);
       var id = button.data('ok-id');
@@ -568,5 +579,11 @@ $(document).ready(function() {
     $('.timepicker').click(function () {
       $('.popover').css('z-index',10000);
     });
+
+    $('.cancelService').click(function () {
+      $(".loadgif").css("visibility","hidden");
+      $(".service").css("visibility","");
+    });
+
 
 });
