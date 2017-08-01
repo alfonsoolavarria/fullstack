@@ -5,7 +5,7 @@ $(document).ready(function() {
   var flag = 0;
   var icon = '' , banner='';
 
-  $('.registerBusiness').click(function () {
+  //$('.registerBusiness').click(function () {
     $('form').submit(function (e) {
       $(".loadgif").css("visibility","");
       $(".registerBusiness").css("visibility","hidden");
@@ -65,13 +65,16 @@ $(document).ready(function() {
         .done(function (result) {
           $(".loadgif").css("visibility","hidden");
           $(".registerBusiness").css("visibility","");
-          if (result.data.code==409) {
+          if (result.result && result.result.code==409) {
             $("#businessConflict").trigger("click");
+            $(".tagemail").css("color","red");
+            $("#email").focus();
           }else {
             $(".clean").trigger("click");
             $(".image-icon .dropify-render img").attr("src","");
             $(".image-banner .dropify-render img").attr("src","");
             $("#businessSave").trigger("click");
+            window.location.href = "/business/list?user="+$("#userId").val();
           }
         }).fail(function(error) {
           console.log(error.responseText);
@@ -85,7 +88,7 @@ $(document).ready(function() {
       }
       //});
     });
-  });
+  //});
 
 
 

@@ -115,7 +115,7 @@
                   </div>
                 </div>
                 <div class="form-group row form-material row">
-                  <label class="col-md-3 form-control-label">Email:</label>
+                  <label class="col-md-3 form-control-label tagemail">Email:</label>
                   <div class="col-md-9">
                     <input type="email" id="email" class="form-control" name="email" placeholder="Email" autocomplete="off"
                     required/>
@@ -155,7 +155,7 @@
                 <button type="button" class="btn btn-primary waves-effect" id="businessDelaysucc" data-plugin="alertify"
                 data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
                 <button type="button" class="btn btn-primary waves-effect" id="businessConflict" data-plugin="alertify"
-                data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
+                data-type="log" data-delay="5000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
                 <button type="button" class="btn btn-primary waves-effect" id="businessSave" data-plugin="alertify"
                 data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
             </div>
@@ -189,11 +189,11 @@
       </div>
     </form>
     </div>
+    <input type="text" id="userId" style="visibility:hidden;" value="<%=session.userId%>"/>
   </div>
 
 
   <!--seccion 2 modal 2 -->
-
       <!-- End Panel Input Grid -->
   </div>
   <!-- End Page -->

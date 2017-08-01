@@ -456,6 +456,7 @@ module.exports = function(app) {
       Users.checkUser(req.body).then(function(result) {
         if (result.code==409) {
           res.json({usersType,valores,result});
+          return;
         }
         BusinessControllers.createBusiness(req.body).then(function(dataBusiness){
           if (dataBusiness.ready) {
