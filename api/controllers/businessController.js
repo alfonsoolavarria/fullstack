@@ -121,6 +121,8 @@ BusinessControllers.createBusiness = function createBusiness (options) {
       business.set({'schedule':options.horario});
       business.set({'web':options.web});
       business.set({'details':options.detalles});
+      business.set({'phone':options.phonecont});
+      business.set({'email':options.emailcont});
       if (options.icon2) business.set('imageIcon', base64icon);
       if (options.banner) business.set('imageBanner', base64banner);
       var acl = new Parse.ACL();
@@ -182,6 +184,11 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
         if (options.cp) dataB.set({'postalCode':options.cp});
         if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
         if (options.nameCommerce) dataB.set({'nameCommerce':options.nameCommerce});
+        if (options.phonecont) dataB.set({'phone':options.phonecont});
+        if (options.emailcont) dataB.set({'email':options.emailcont});
+        if (options.schedule) dataB.set({'schedule':options.schedule});
+        if (options.details) dataB.set({'details':options.details});
+        if (options.web) dataB.set({'web':options.web});
         if (options.icon2) dataB.set('imageIcon', base64icon);
         if (options.banner) dataB.set('imageBanner', base64banner);
         dataB.save(null, { useMasterKey: true });

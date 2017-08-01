@@ -17,6 +17,8 @@ $(document).ready(function() {
         cp : $("#cp").val(),
         horario : $("#horario").val(),
         detalles : $("#detalles").val(),
+        emailcont:$("#emailCon").val(),
+        phonecont:$("#phoneCon").val(),
         typeCommerce : $("#selectCategories").val(),
         nameCommerce : $("#negocio").val(),
         name : $("#nombreP").val(),
@@ -146,6 +148,12 @@ $(document).ready(function() {
       $("#email-"+id).attr("disabled",true);
       $("#tipo-"+id).attr("disabled",true);
 
+      $("#phonecont-"+id).attr("disabled",true);
+      $("#emailcont-"+id).attr("disabled",true);
+      $("#horario-"+id).attr("disabled",true);
+      $("#details-"+id).attr("disabled",true);
+      $("#web-"+id).attr("disabled",true);
+
       $('.image-icon-'+id+' .dropify-wrapper .iconIcon').attr("disabled",true);
       $('.image-icon-'+id+' .dropify-wrapper').addClass("disabled");
       $('.image-banner-'+id+' .dropify-wrapper .banner').attr("disabled",true);
@@ -156,6 +164,13 @@ $(document).ready(function() {
     }else {
       //console.log('poner aqui para poder editar');
       $("#name-"+id).removeAttr("disabled");
+
+      $("#phonecont-"+id).removeAttr("disabled");
+      $("#emailcont-"+id).removeAttr("disabled");
+      $("#horario-"+id).removeAttr("disabled");
+      $("#details-"+id).removeAttr("disabled");
+      $("#web-"+id).removeAttr("disabled");
+
       $("#address-"+id).removeAttr("disabled");
       $("#address-"+id).focus();
       $("#country-"+id).removeAttr("disabled");
@@ -218,6 +233,33 @@ $(document).ready(function() {
         flag = 1;
         dataSend.flagBusiness=1;
         dataSend.typeCommerce = $("#tipo-"+id).val();
+      });
+
+
+      $("#phonecont-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.phonecont = $("#phonecont-"+id).val();
+      });
+      $("#horario-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.schedule = $("#horario-"+id).val();
+      });
+      $("#emailcont-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.emailcont = $("#emailcont-"+id).val();
+      });
+      $("#details-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.details = $("#details-"+id).val();
+      });
+      $("#web-"+id).change(function () {
+        flag = 1;
+        dataSend.flagBusiness=1;
+        dataSend.web = $("#web-"+id).val();
       });
     }
 

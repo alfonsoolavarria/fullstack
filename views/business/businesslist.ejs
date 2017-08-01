@@ -65,9 +65,15 @@
                                   </div>
                                 </div>
                                 <div class="form-group row form-material row">
-                                  <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">CP:</label>
+                                  <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Tel&eacute;fono de Contacto:</label>
                                   <div class="col-xs-12 col-sm-12 col-md-8">
-                                    <input class="form-control" id="cp-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].postalCode%>" disabled></input>
+                                    <input class="form-control" id="phonecont-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].phone%>" disabled></input>
+                                  </div>
+                                </div>
+                                <div class="form-group row form-material row">
+                                  <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Email de Contacto:</label>
+                                  <div class="col-xs-12 col-sm-12 col-md-8">
+                                    <input class="form-control" id="emailcont-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].email%>" disabled></input>
                                   </div>
                                 </div>
                                 <div class="form-group row form-material row">
@@ -95,15 +101,39 @@
                                       </div>
                                     </div>
                                     <div class="form-group row form-material row">
-                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Teléfono:</label>
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Teléfono del Propietario:</label>
                                       <div class="col-xs-12 col-sm-12 col-md-8">
                                         <input class="form-control" id="telefono-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).phone%>" disabled></input>
                                       </div>
                                     </div>
                                     <div class="form-group row form-material row">
-                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Email:</label>
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Email del Propietario:</label>
                                       <div class="col-xs-12 col-sm-12 col-md-8">
                                         <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;width:130%;" value="<%-JSON.parse(JSON.stringify(valores[i].owner)).username%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">CP:</label>
+                                      <div class="col-xs-12 col-sm-12 col-md-8">
+                                        <input class="form-control" id="cp-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].postalCode%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Horario:</label>
+                                      <div class="col-xs-12 col-sm-12 col-md-8">
+                                        <input class="form-control" id="horario-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].schedule%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Detalles:</label>
+                                      <div class="col-xs-12 col-sm-12 col-md-8">
+                                        <input class="form-control" id="details-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].details%>" disabled></input>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row form-material row">
+                                      <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Web:</label>
+                                      <div class="col-xs-12 col-sm-12 col-md-8">
+                                        <input class="form-control" id="web-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].web%>" disabled></input>
                                       </div>
                                     </div>
                                 </div>
