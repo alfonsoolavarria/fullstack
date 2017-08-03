@@ -269,14 +269,17 @@ Config.set('assets', '../../assets');
   var Site = window.Site;
   $(document).ready(function() {
     Site.run();
-    var cadena = $(".pagination-next")[0].className;
-    if (cadena.indexOf('disabled') != -1) {
-      $(".pagination-next").prop("onclick", null);
+    if ($(".pagination-next") && $(".pagination-next")[0] ) {
+      var cadena = $(".pagination-next")[0].className;
+      if (cadena.indexOf('disabled') != -1) {
+        $(".pagination-next").prop("onclick", null);
+      }
+      var cadena2 = $(".pagination-prev")[0].className;
+      if (cadena2.indexOf('disabled') != -1) {
+        $(".pagination-prev").prop("onclick", null);
+      }
     }
-    var cadena2 = $(".pagination-prev")[0].className;
-    if (cadena2.indexOf('disabled') != -1) {
-      $(".pagination-prev").prop("onclick", null);
-    }
+
   });
 })(document, window, jQuery);
 
