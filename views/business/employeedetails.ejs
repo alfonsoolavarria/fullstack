@@ -83,8 +83,8 @@
                     <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
                       data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
                     <input id="flagPaginator" value="2" style="visibility:hidden;">
-                    <input id="Bid" value="<%if (session.owner==true){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
-                    <input id="BidFlag" value="<%if (session.owner==true){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
+                    <input id="Bid" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                    <input id="BidFlag" value="<%if (session.owner || session.ownerAdmin){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                   </div>
                 </div>
               </div>
