@@ -612,13 +612,13 @@ module.exports = function(app) {
       if (data) {
         valores=JSON.parse(JSON.stringify(data.data));
         branch=data.branch[0];
-      }
-      if (req.query.buss && req.query.owner) {
-        varbuss = req.query.buss;
-        varowner = req.query.owner;
-      }else {
-        varbuss = data.branch[0][0].objectId;
-        varowner = data.branch[0][0].owner.objectId;
+        if (req.query.buss && req.query.owner) {
+          varbuss = req.query.buss;
+          varowner = req.query.owner;
+        }else if(data.branch[0].length>0) {
+          varbuss = data.branch[0][0].objectId;
+          varowner = data.branch[0][0].owner.objectId;
+        }
       }
 
       list.push(varowner);

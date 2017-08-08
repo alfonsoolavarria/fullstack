@@ -2,7 +2,11 @@
   <div class="navbar-header">
     <%if (session.ownerAdmin){%>
       <label class="col-md-0 form-control-label">Sucursales para:</label>
-      <label class="col-md-0 form-control-label" style="color:#8ce0e0;margin-left:20px;"><b><%=session.valores[0].name%></b></label>
+      <%if (session.valores.length>0){%>
+        <label class="col-md-0 form-control-label" style="color:#8ce0e0;margin-left:20px;"><b><%=session.valores[0].name%></b></label>
+      <%}else {%>
+        <label class="col-md-0 form-control-label" style="color:#8ce0e0;margin-left:20px;"><b>Sin sucursal</b></label>
+      <%}%>
     <%}%>
   </div>
   <div class="navbar-container container-fluid">
@@ -21,7 +25,7 @@
                 <%}%>
             <%}%>
           <%} else{%>
-            <option value="">No Existe a&uacute;n</option>
+            <option value="">No Existen</option>
           <%}%>
         </select>
       <%}%>
