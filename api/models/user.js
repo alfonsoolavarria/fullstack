@@ -102,9 +102,14 @@ UsersModel.checkUser = function checkUser (options) {
 };
 
 UsersModel.activateDesactivate = function activateDesactivate (options,data) {
-
+  var id=0;
+  if (data.business) {
+    id = data.business.get('owner').id;
+  }else {
+    id = options.iduser;
+  }
   var query = new Parse.Query('_User');
-  return query.get(data.business.get('owner').id).then(function(userB){
+  return query.get(id).then(function(userB){
     if (options.deleteB) {
       userB.set({'isActive':false});
     }else {

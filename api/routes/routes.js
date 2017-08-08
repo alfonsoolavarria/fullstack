@@ -35,6 +35,8 @@ module.exports = function(app) {
         return res.redirect('/calendar?'+'owner='+req.session.userId+'&twoService='+1);
       }else if (req.session.employee) {
         return res.redirect('/calendar?'+'employee='+req.session.userId);
+      }else if (req.session.ownerAdmin) {
+        return res.redirect('/branch?ownerAdmin='+req.session.userId);
       }
     }
     var message = '';
@@ -62,6 +64,7 @@ module.exports = function(app) {
       session:req.session,
       businessSelec:0,
       dashSelec:1,
+      branchSelect:0,
       employeeSelec:0,
       calendarSelec:0,
       categorySelec:0,
@@ -106,6 +109,7 @@ module.exports = function(app) {
       session:req.session,
       businessSelec:0,
       dashSelec:1,
+      branchSelect:0,
       calendarSelec:0,
       employeeSelec:0,
       categorySelec:0,
@@ -129,6 +133,7 @@ module.exports = function(app) {
         catpageE:JSON.parse(JSON.stringify(employeeB.cantPage)),
         businessSelec:0,
         employeeSelec:1,
+        branchSelect:0,
         calendarSelec:0,
         dashSelec:0,
         session:req.session,
@@ -146,6 +151,7 @@ module.exports = function(app) {
         usersType,
         businessSelec:0,
         employeeSelec:1,
+        branchSelect:0,
         calendarSelec:0,
         dashSelec:0,
         session:req.session,
@@ -180,15 +186,32 @@ module.exports = function(app) {
   |*******Business-Empresas********|
   ********************************/
   app.get('/business',middle.checkSession, function(req, res) {
-    usersType.userId = req.query.user;
-    var valores={};
-    Users.getTypeBusiness().then(function(typeBusiness) {
+    if (req.params.branch) {
+      usersType.userId = req.query.user;
+      var valores={};
+      Users.getTypeBusiness().then(function(typeBusiness) {
+        res.render('business/newbranch.ejs',{
+          usersType,
+          valores,
+          session:req.session,
+          typeBusiness,
+          businessSelec:1,
+          dashSelec:0,
+          branchSelect:0,
+          employeeSelec:0,
+          calendarSelec:0,
+          categorySelec:0,
+          serviSelect:0,
+          clientSelect:0,
+        });
+      });
+    }else {
       res.render('business/newbusiness.ejs',{
         usersType,
         valores,
         session:req.session,
-        typeBusiness,
         businessSelec:1,
+        branchSelect:0,
         dashSelec:0,
         employeeSelec:0,
         calendarSelec:0,
@@ -196,7 +219,7 @@ module.exports = function(app) {
         serviSelect:0,
         clientSelect:0,
       });
-    });
+    }
 	});
 
   app.get('/business/list',middle.checkSession, function(req, res) {
@@ -224,6 +247,7 @@ module.exports = function(app) {
           selectPage:selectPage,
           typeBusiness,
           businessSelec:1,
+          branchSelect:0,
           calendarSelec:0,
           dashSelec:0,
           employeeSelec:0,
@@ -231,6 +255,36 @@ module.exports = function(app) {
           serviSelect:0,
           clientSelect:0,
         });
+      });
+    });
+	});
+
+  app.get('/mainbusiness/list',middle.checkSession, function(req, res) {
+    var valores={},selectPage=1;
+    if (req.query.user && usersType.admin){
+      req.session.userId = req.query.user;
+    }
+    if (req.query.page) {
+      selectPage=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+    BusinessControllers.searchListMainBusiness(req.body,req.query.page).then(function(data){
+      if (data) {
+        valores=JSON.parse(JSON.stringify(data.data));
+      }
+      res.render('business/mainbusinesslist.ejs',{
+        valores,
+        session:req.session,
+        catpage:JSON.parse(JSON.stringify(data.cantPage)),
+        selectPage:selectPage,
+        businessSelec:1,
+        branchSelect:0,
+        calendarSelec:0,
+        dashSelec:0,
+        employeeSelec:0,
+        categorySelec:0,
+        serviSelect:0,
+        clientSelect:0,
       });
     });
 	});
@@ -278,6 +332,7 @@ module.exports = function(app) {
           dataClient:dataClient,
           client:'active',
           businessSelec:1,
+          branchSelect:0,
           calendarSelec:0,
           dashSelec:0,
           session:req.session,
@@ -359,6 +414,7 @@ module.exports = function(app) {
                     listService,
                     schedule,
                     businessSelec:1,
+                    branchSelect:0,
                     employeeSelec:0,
                     calendarSelec:0,
                     dashSelec:0,
@@ -391,6 +447,7 @@ module.exports = function(app) {
                   schedule,
                   businessSelec:1,
                   calendarSelec:0,
+                  branchSelect:0,
                   dashSelec:0,
                   employeeSelec:0,
                   session:req.session,
@@ -421,6 +478,7 @@ module.exports = function(app) {
               client,
               businessSelec:1,
               calendarSelec:0,
+              branchSelect:0,
               dashSelec:0,
               employeeSelec:0,
               session:req.session,
@@ -434,48 +492,79 @@ module.exports = function(app) {
     }
 	});
 
-  /*app.get('/business/:id/employee', function(req, res) {
-    console.log('employeeeeeeeeeeee mando');
-    useTemplate.employee=true;
-    res.render('business/dashboard.ejs',{
-      usersType,
-      useTemplate
-    });
-	});*/
 
   app.post('/business',middle.checkSession, function(req, res) {
-    var valores={};
-    if (req.body.latlon && req.body.latlon.latitude && req.body.latlon.latitude) {
-      BusinessControllers.searchBusiness(req.body.latlon).then(function(data){
-        if (data) {
-          valores=data;
-        }
-        res.json({usersType,valores});
-      });
+    if (req.body.branch=='true') {
+      var valores={};
+      if (req.body.latlon && req.body.latlon.latitude && req.body.latlon.latitude) {
+        BusinessControllers.searchBusiness(req.body.latlon).then(function(data){
+          if (data) {
+            valores=data;
+          }
+          res.json({usersType,valores});
+        });
+      }else {
+        Users.checkUser(req.body).then(function(result) {
+          if (result.code==409) {
+            res.json({usersType,valores,result});
+            return;
+          }
+          BusinessControllers.createBusiness(req.body).then(function(dataBusiness){
+            if (dataBusiness.ready) {
+              Users.createUser(req.body,dataBusiness)
+              .then(function (user) {
+                BusinessControllers.addPointerBusiness(dataBusiness,user.id)
+                .then(function(data){
+                  BusinessControllers.addRelationMainBusiness(req.body,dataBusiness)
+                  .then(function(data){
+                  res.json({usersType,valores,data});
+                  });
+                });
+              });
+            }else {
+              res.json({usersType,valores,data});
+            }
+          });
+        });
+      }
     }else {
       Users.checkUser(req.body).then(function(result) {
         if (result.code==409) {
-          res.json({usersType,valores,result});
+          res.json(result);
           return;
         }
-        BusinessControllers.createBusiness(req.body).then(function(dataBusiness){
-          if (dataBusiness.ready) {
-            Users.createUser(req.body,dataBusiness)
-            .then(function (user) {
-              BusinessControllers.addPointerBusiness(dataBusiness,user.id)
-              .then(function(data){
-                res.json({usersType,valores,data});
-              });
-            });
-          }else {
-            res.json({usersType,valores,data});
-          }
+        Users.createUser(req.body).then(function (user) {
+          BusinessControllers.createMainBusiness(req.body,user.id,req.session.userId).then(function(dataBusiness){
+            res.json(dataBusiness);
+          });
         });
       });
-    }
+    }//end else
 	});
 
   app.put('/business',middle.checkSession, function(req, res) {
+
+    if (req.body.main =='1') {
+      if (req.body.deleteB || req.body.activa) {
+        return BusinessControllers.updateMainBusiness(req.body).then(function(data) {
+          return Users.activateDesactivate(req.body,data).then(function() {
+            return res.json({code:200});
+          });
+        });
+      }
+      return BusinessControllers.updateMainBusiness(req.body).then(function(data) {
+        if (data.code==500) {
+          return res.json({code:500});
+        }
+        if (req.body.flaguser) {
+          Users.updateUserBusiness(req.body).then(function (user) {
+            return res.json({code:200});
+          });
+        }else {
+          return res.json({code:200});
+        }
+      });
+    }
 
     if (req.body.deleteB || req.body.activa) {
       BusinessControllers.deleteBusiness(req.body).then(function(data) {
@@ -506,6 +595,60 @@ module.exports = function(app) {
       return res.json({code:200});
     }
   });
+
+
+  /*******************************|
+  |*******Main Branch********|
+  ********************************/
+
+  app.get('/branch',middle.checkSession, function(req, res) {
+    var valores={},branch={},selectPage=1;
+    var varbuss=0,varowner=0, list=[];
+    if (req.query.page) {
+      selectPage=req.query.page;
+      req.query.page=req.query.page-1;
+    }
+    BusinessControllers.searchListMainBranches(req.session.userId,req.query.page).then(function(data){
+      if (data) {
+        valores=JSON.parse(JSON.stringify(data.data));
+        branch=data.branch[0];
+      }
+      if (req.query.buss && req.query.owner) {
+        varbuss = req.query.buss;
+        varowner = req.query.owner;
+      }else {
+        varbuss = data.branch[0][0].objectId;
+        varowner = data.branch[0][0].owner.objectId;
+      }
+
+      list.push(varowner);
+      Users.getTypeBusiness().then(function(typeBusiness) {
+        req.session.valores=valores;
+        req.session.branch=branch;
+        req.session.varbuss=varbuss;
+        req.session.varowner=varowner;
+        req.session.list=list;
+        res.render('ownerAdmin/newbranch.ejs',{
+          usersType,
+          valores,
+          branch,
+          list,
+          typeBusiness,
+          session:req.session,
+          catpage:JSON.parse(JSON.stringify(data.cantPage)),
+          selectPage:selectPage,
+          businessSelec:0,
+          branchSelect:1,
+          calendarSelec:0,
+          dashSelec:0,
+          employeeSelec:0,
+          categorySelec:0,
+          serviSelect:0,
+          clientSelect:0,
+        });
+      });
+    });
+	});
 
 
   /*******************************|
@@ -550,6 +693,7 @@ module.exports = function(app) {
           businessSelec:0,
           employeeSelec:0,
           calendarSelec:0,
+          branchSelect:0,
           dashSelec:0,
           session:req.session,
           categorySelec:0,
@@ -614,6 +758,7 @@ module.exports = function(app) {
           session:req.session,
           categorySelec:0,
           serviSelect:1,
+          branchSelect:0,
           clientSelect:0,
         });
       });
@@ -655,7 +800,7 @@ module.exports = function(app) {
   app.get('/calendar',middle.checkSession, function(req, res) {
     //session.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
     Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
-      var idUserEmploOwner = 0;
+      var idUserEmploOwner = 0, idgetservice=0;
       if (req.query.employee) {
         idUserEmploOwner = req.query.employee;
       }else if (req.query.owner) {
@@ -666,8 +811,14 @@ module.exports = function(app) {
         Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
           var id = 10;
           if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+          if (req.session.ownerAdmin) {
+            idgetservice=req.query.owner;
+          }else {
+            idgetservice=req.session.userId
+          }
+
           if (req.query.twoService=='1') {
-            var queryQuery = ServiceControllers.getService2(req.session.userId,{type:'',page:0});
+            var queryQuery = ServiceControllers.getService2(idgetservice,{type:'',page:0});
           }else {
             var queryQuery = ServiceControllers.getService(id,{type:'',page:0});
           }
@@ -706,6 +857,7 @@ module.exports = function(app) {
               businessSelec:0,
               dashSelec:0,
               calendarSelec:1,
+              branchSelect:0,
               categorySelec:0,
               employeeSelec:0,
               serviSelect:0,
@@ -811,6 +963,7 @@ module.exports = function(app) {
          dataClient:dataClient,
          businessSelec:0,
          calendarSelec:0,
+         branchSelect:0,
          dashSelec:0,
          session:req.session,
          categorySelec:0,
@@ -837,6 +990,7 @@ module.exports = function(app) {
            serviSelect:0,
            businessSelec:1,
            clientSelect:1,
+           branchSelect:0,
          });
        });
      }else {
@@ -854,6 +1008,7 @@ module.exports = function(app) {
            categorySelec:0,
            serviSelect:0,
            businessSelec:1,
+           branchSelect:0,
            clientSelect:1,
          });
        });
@@ -893,6 +1048,7 @@ module.exports = function(app) {
         dashSelec:0,
         calendarSelec:0,
         categorySelec:1,
+        branchSelect:0,
         employeeSelec:0,
         serviSelect:0,
         clientSelect:0,
@@ -909,6 +1065,7 @@ module.exports = function(app) {
           listCateg:JSON.parse(dataC),
           calendarSelec:0,
           categorySelec:1,
+          branchSelect:0,
           employeeSelec:0,
           serviSelect:0,
           clientSelect:0,
@@ -963,25 +1120,41 @@ module.exports = function(app) {
             usersType.admin = true;
             req.session.admin=true;
             req.session.owner=false;
+            req.session.ownerAdmin=false;
             req.session.employee=false;
             req.session.userId=id;
-            return res.redirect('/business/list?'+'user='+id);
+            //return res.redirect('/business/list?'+'user='+id);
+            return res.redirect('/mainbusiness/list?'+'user='+id);
           }
           else if (user.data.get('type')==USER_ALL.owner) {
             console.log('Propietario');
             usersType.owner=true;
             req.session.admin=false;
             req.session.owner=true;
+            req.session.ownerAdmin=false;
             req.session.employee=false;
             req.session.userId=id;
             //return res.redirect('/owner?'+'user='+id);
             return res.redirect('/calendar?'+'owner='+id+'&twoService='+1);
             //return res.redirect('/service/'+id);
           }
+          else if (user.data.get('type')==USER_ALL.ownerAdmin) {
+            console.log('Propietario Administrador');
+            usersType.owner=true;
+            req.session.admin=false;
+            req.session.ownerAdmin=true;
+            req.session.owner=false;
+            req.session.employee=false;
+            req.session.userId=id;
+            //return res.redirect('/owner?'+'user='+id);
+            return res.redirect('/branch?'+'ownerAdmin='+id);
+            //return res.redirect('/service/'+id);
+          }
           else if (user.data.get('type')==USER_ALL.employee) {
             console.log('Empleado');
             req.session.admin=false;
             req.session.owner=false;
+            req.session.ownerAdmin=false;
             req.session.employee=true;
             req.session.userId=id;
             return res.redirect('/calendar?'+'employee='+id);

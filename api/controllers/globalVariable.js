@@ -6,6 +6,7 @@ GlobalV.TYPES={
   employee: 'Empleado',
   owner: 'Propietario',
   client: 'Client',
+  ownerAdmin:'Propietario Administrador',
 };
 
 module.exports = GlobalV;

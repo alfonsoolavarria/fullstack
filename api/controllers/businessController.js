@@ -68,6 +68,70 @@ BusinessControllers.searchListBusiness = function searchListBusiness (options,pa
   });
 };
 
+BusinessControllers.searchListMainBusiness = function searchListMainBusiness (options,pageparams) {
+  var query = new Parse.Query('MainBusiness');
+  var cantpage=1;
+  var flag = 0;
+  var page=pageparams ? pageparams : 0;
+
+  function twicequery(boolflag) {
+    var query2 = new Parse.Query('MainBusiness');
+    //cantidad de paginas, paginador para el html
+    return query2.find().then(function (a) {
+      if ((a.length/2)>0 && (a.length/2)%1==0) {
+        //entero
+        return cantpage=(a.length/2)*10;
+      }else if ((a.length/2)>0 && (a.length/2)%1!=0) {
+        //redondeo
+        return cantpage=(parseInt(a.length/2)+1)*10;
+      }else {
+        //una sola pagina
+        return cantpage=1*10;
+      }
+    });
+  }
+
+  //pagination businesslist
+  query.descending('createdAt');
+  query.limit(2);
+  query.skip(page*2);
+
+  query.include('ownerAdmin.name');
+  query.include('ownerAdmin.email');
+  query.include('ownerAdmin.phone');
+  query.include('ownerAdmin.username');
+
+  return query.find().then(function (objectData) {
+    return twicequery(flag).then(function() {
+      if (objectData.length<1) {
+        cantpage=0;
+      }
+      //hacer una validacion de paginacion para cuando sea el Propietario
+      return {data:objectData,cantPage:cantpage};
+    });
+  });
+};
+
+BusinessControllers.searchListMainBranches = function searchListMainBranches (id,pageparams) {
+  var query = new Parse.Query('MainBusiness');
+  query.include('branch.name');
+  query.equalTo('ownerAdmin', new Parse.Object('_User', { id:id }));
+  return query.find().then(function (objectData) {
+    var promises = [], branchs=[];
+
+    _.forEach(objectData, function(allD) {
+        promises.push(allD.relation('branch').query().find());
+    });
+    return Parse.Promise.when(promises).then(function(resultados, index) {
+      for (var i = 0; i < resultados.length; i++) {
+        branchs.push(JSON.parse(JSON.stringify(resultados[i])));
+      }
+      return {data:objectData,cantPage:10,branch:branchs};
+    });
+  });
+
+};
+
 BusinessControllers.searchGetBusiness = function searchGetBusiness (id) {
   var query = new Parse.Query('Business');
   query.include('owner.name');
@@ -86,6 +150,35 @@ BusinessControllers.searchGetBusiness = function searchGetBusiness (id) {
 };
 
 /*Registro de Empresa*/
+BusinessControllers.createMainBusiness = function createMainBusiness (options,userId,adminId) {
+  var mainbusiness = new Parse.Object('MainBusiness');
+  mainbusiness.set('status',true);
+  mainbusiness.set({'name':options.nameB});
+  mainbusiness.set('ownerAdmin', {"__type":"Pointer","className":"_User","objectId":userId});
+  return mainbusiness.save().then(function(saveData) {
+    // The save was successful.
+    return {ready:true,successful:'Created Business',id:saveData.id};
+  }, function(error) {
+    console.log('Business Save Error',error);
+    return {ready:false,error:'Business Save Error '+error};
+  });
+};
+
+BusinessControllers.updateMainBusiness = function updateMainBusiness (options) {
+  var query = new Parse.Query('MainBusiness');
+  return query.get(options.id).then(function(dataB){
+    if (options.name) dataB.set({'name':options.name});
+    if (options.deleteB=='true') dataB.set({'status':false});
+    if (options.activa=='true') dataB.set({'status':true});
+    dataB.save(null, { useMasterKey: true });
+    return{success:true,code:200};
+  }, function(error) {
+    console.log('Business update Error',error);
+    return {ready:false,error:'Business update Error '+error, code:500};
+  });
+
+};
+
 BusinessControllers.createBusiness = function createBusiness (options) {
 
   function filesImages(data) {
@@ -131,7 +224,7 @@ BusinessControllers.createBusiness = function createBusiness (options) {
       business.setACL(acl);
       return business.save().then(function(saveData) {
         // The save was successful.
-        return {ready:true,successful:'Created Business',id:saveData.id};
+        return {ready:true,successful:'Created Business',id:saveData.id, rela:saveData};
       }, function(error) {
         console.log('Business Save Error',error);
         return {ready:false,error:'Business Save Error '+error};
@@ -240,6 +333,19 @@ BusinessControllers.addRelationBusiness = function addRelationBusiness (userId,p
         return {ready:false,error:'Business Add relation Error '+error};
       });
     }
+};
+
+BusinessControllers.addRelationMainBusiness = function addRelationMainBusiness (params,dataBusiness) {
+    var query = new Parse.Query('MainBusiness');
+    return query.get(params.idmain).then(function(dataB){
+      dataB.relation('branch').add(dataBusiness.rela);
+      dataB.save(null, { useMasterKey: true });
+      return{success:true,code:200};
+    }, function(error) {
+      console.log('Branch Add relation Error',error);
+      return {ready:false,error:'Branch Add relation Error '+error};
+    });
+
 };
 
 BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (options,idEmployeeorOwner) {

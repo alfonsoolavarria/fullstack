@@ -1,6 +1,6 @@
 <%var flag='false';%>
 <%var count;%>
-<%if (session.owner){%>
+<%if (session.owner || session.ownerAdmin){%>
   <% include ../templates/head.ejs %>
   <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
   <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
@@ -99,18 +99,7 @@
                   <%}%>
                     <%flag=serviceData[o].category%>
                   <%}%>
-                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceDelay" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
-                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceok" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
-                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="servicecancel" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
-                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
-                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaEmplo" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Es necesario un empleado" style="visibility:hidden;" >delay</button>
               </ul>
-
                     <%}else{%>
                       No hay Servicios disponibles
                     <%}%>
@@ -375,7 +364,6 @@
                             </span>
                             <input type="text" id="serviceSabado2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
                           </div>
-
                           <div class="input-group" style="width:20%;margin-left: 0px;">
                             <span class="input-group-addon">
                               <span class="md-time"></span>
@@ -431,11 +419,11 @@
                   <div class="form-group row form-material row">
                     <label class="col-md-4 form-control-label"></label>
                 </div>
-            <input style="visibility:hidden;" id="businessid" value="<%if (session.owner){%><%=bussiId%><%}else{%><%=valores.objectId%><%}%>"></input>
+            <input style="visibility:hidden;" id="businessid" value="<%if (session.owner || session.ownerAdmin){%><%=bussiId%><%}else{%><%=valores.objectId%><%}%>"></input>
             <input style="visibility:hidden;" id="asRangevalue" value=""></input>
           </form>
           <div class="modal-footer text-left">
-            <button class="btn btn-primary service" type="submit">Crear</button>
+            <button class="btn btn-primary service" id="btnS" type="submit">Crear</button>
             <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
             <a class="btn btn-sm btn-white btn-flat cancelService" data-dismiss="modal" href="javascript:void(0)">Cancelar</a>
           </div>
@@ -444,8 +432,18 @@
     </div>
     </div>
     </div>
+    <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceDelay" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+    <button type="button" class="btn btn-sm btn-primary waves-effect" id="serviceok" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Borrada" style="visibility:hidden;" >delay</button>
+    <button type="button" class="btn btn-sm btn-primary waves-effect" id="servicecancel" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+    <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
+    <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaEmplo" data-plugin="alertify"
+      data-type="log" data-delay="3000" data-log-message="Es necesario un empleado" style="visibility:hidden;" >delay</button>
 
-<%if (session.owner){%>
+<%if (session.owner || session.ownerAdmin){%>
 <!-- Footer -->
 <% include ../templates/footer.ejs %>
 <!-- Core  -->
@@ -510,7 +508,6 @@ Config.set('assets', '../../assets');
 <script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
 <script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
 <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
-<script src="/public/assets/js/service.js"></script>
 <script src="/public/assets/material/global/vendor/select2/select2.min.js"></script>
 <script src="/public/assets/material/global/js/Plugin/select2.min.js"></script>
 <script src="/public/assets/material/global/js/Plugin/clockpicker.js"></script>
@@ -518,7 +515,9 @@ Config.set('assets', '../../assets');
 <script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
 <script src="/public/assets/material/examples/js/forms/uploads.js"></script>
 <script src="/public/assets/material/global/js/Plugin/asrange.js"></script>
+<script src="/public/assets/js/service.js"></script>
 
 </body>
 </html>
+<div class="alertify-logs"></div>
 <%}%>

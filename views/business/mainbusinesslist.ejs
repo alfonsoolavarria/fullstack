@@ -1,0 +1,256 @@
+<%var idGeneral=0;%>
+<% include ../templates/head.ejs %>
+<link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+<link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+<link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+<body class="animsition page-user">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+  <!-- Menu-->
+  <% include ../templates/menuvertical.ejs %>
+
+    <!-- Page -->
+    <div class="page">
+      <div class="page-content">
+        <!-- Panel-->
+        <div class="panel">
+          <div class="panel-body">
+            <div class="nav-tabs-horizontal nav-tabs-animate" data-plugin="tabs">
+              <div class="tab-content">
+                <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+                  <ul class="list-group">
+                    <% for(var i=0; i<valores.length; i++) {%>
+                      <% if (valores[i].status){%>
+                        <li class="list-group-item">
+                      <%}else{%>
+                        <li class="list-group-item" style="background-color: gainsboro;">
+                      <%}%>
+                          <div class="pr-20">
+                            <div class="avatar avatar-online">
+                              <%if(valores[i].imageIcon){%>
+                                <img src="<%=valores[i].imageIcon.url%>" alt="...">
+                              <%}else{%>
+                                <img src="/public/assets/images/buss.png" alt="...">
+                              <%}%>
+                              <i class="avatar avatar-busy"></i>
+                            </div>
+                            <% if (valores[i].status){%>
+                                <input class="form-control" style="background-color:white;border-color:white;" value="<%=valores[i].name%>" id="nameE-<%=valores[i].objectId%>" disabled></input>
+                            <%}else{%>
+                              <input class="form-control" style="background-color:gainsboro;" value="<%=valores[i].name%>" id="nameE-<%=valores[i].objectId%>" disabled></input>
+                            <%}%>
+                          </div>
+                          <div class="container">
+                            <h4 class="mt-0 mb-5">
+                              <!-- -->
+                            </h4>
+                            <form class="form-horizontal">
+                            <div class="row">
+                              <div class="panel-body container-fluid">
+                                  <div class="form-group row form-material row">
+                                    <label class="col-xs-12 col-sm-12 col-md-6 form-control-label">Nombre del propietario:</label>
+                                    <div class="col-xs-12 col-sm-12 col-md-6">
+                                      <input class="form-control" id="owner-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].ownerAdmin)).name%>" disabled></input>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row form-material row">
+                                    <label class="col-xs-12 col-sm-12 col-md-6 form-control-label">Teléfono del Propietario:</label>
+                                    <div class="col-xs-12 col-sm-12 col-md-6">
+                                      <input class="form-control" id="telefono-<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%-JSON.parse(JSON.stringify(valores[i].ownerAdmin)).phone%>" disabled></input>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row form-material row">
+                                    <label class="col-xs-12 col-sm-12 col-md-6 form-control-label">Email del Propietario:</label>
+                                    <div class="col-xs-12 col-sm-12 col-md-6">
+                                      <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;width:130%;" value="<%-JSON.parse(JSON.stringify(valores[i].ownerAdmin)).username%>" disabled></input>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <%if (session.admin || session.ownerAdmin ){%>
+                                  <div class="pl-20 align-self-center">
+                                    <% if (valores[i].status){%>
+                                      <button type="button" class="btn btn-primary btn-sm btn-sm-edit2 btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="editE-<%= valores[i].objectId %>">Editar</span></button>
+                                      <button type="button" class="btn btn-primary btn-danger danger-2 waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
+                                      <%}else{%>
+                                        <button type="button" class="btn btn-primary btn-warning warning2 waves-effect" data-activate-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Activar</button>
+                                      <%}%>
+                                      </div>
+                                    <%}%>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessDelaylist-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="4500" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessok-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Desactivada" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessactivada-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Activada" style="visibility:hidden;" >delay</button>
+                        <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinesscancel-<%= valores[i].objectId %>" data-plugin="alertify"
+                        data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+                      </li>
+                      <input id="user-<%=valores[i].objectId%>" style="visibility:hidden;" value="<%-JSON.parse(JSON.stringify(valores[i].ownerAdmin)).objectId%>" disabled></input>
+                      <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessCorrect-<%= valores[i].objectId %>" data-plugin="alertify"
+                      data-type="log" data-delay="4500" data-log-message="Se ha guardado correctamente" style="visibility:hidden;" >delay</button>
+                      <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessError-<%= valores[i].objectId %>" data-plugin="alertify"
+                      data-type="log" data-delay="3000" data-log-message="Error al guardar datos" style="visibility:hidden;" >delay</button>
+                      <label style="visibility:hidden;" id="delete-bu-<%= valores[i].objectId %>"></label>
+                      <%idGeneral=valores[i].objectId%>
+                    <% } %>
+                  </ul>
+                  <%if(catpage!=0){%>
+                    <%if(catpage!=10){%>
+                      <nav>
+                        <ul data-plugin="paginator" id="paginationId" data-total="<%=catpage%>" data-skin="pagination-no-border"></ul>
+                      </nav>
+                    <%}%>
+                  <%}else{%>
+                    No hay Empresas disponibles/activas
+                  <%}%>
+                  <input id="pageN" value="<%=selectPage%>" style="visibility:hidden;">
+                  <input id="user" value="<%=session.userId%>" style="visibility:hidden;">
+                  <input id="flagPaginator" value="1" style="visibility:hidden;">
+                  <a class="next-prev" href="" style="visibility:hidden;"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Panel -->
+      </div>
+    </div>
+    <!-- End Page -->
+    <!-- Footer -->
+      <% include ../templates/footer.ejs %>
+    <!-- Core  -->
+    <script src="/public/assets/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
+    <script src="/public/assets/material/global/vendor/tether/tether.js"></script>
+    <script src="/public/assets/material/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/public/assets/material/global/vendor/animsition/animsition.js"></script>
+    <script src="/public/assets/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+    <!-- Plugins -->
+    <script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
+    <script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
+    <script src="/public/assets/material/global/vendor/screenfull/screenfull.js"></script>
+    <script src="/public/assets/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+    <script src="/public/assets/material/global/vendor/aspaginator/jquery.asPaginator.min.js"></script>
+    <script src="/public/assets/material/global/vendor/alertify/alertify.js"></script>
+
+    <script src="/public/assets/material/global/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-tmpl/tmpl.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-load-image/load-image.all.min.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-process.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-image.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-video.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+    <script src="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
+    <script src="/public/assets/material/global/vendor/dropify/dropify.min.js"></script>
+
+
+    <!-- Scripts -->
+    <script src="/public/assets/material/global/js/State.js"></script>
+    <script src="/public/assets/material/global/js/Component.js"></script>
+    <script src="/public/assets/material/global/js/Plugin.js"></script>
+    <script src="/public/assets/material/global/js/Base.js"></script>
+    <script src="/public/assets/material/global/js/Config.js"></script>
+    <script src="/public/assets/material/js/Section/Menubar.js"></script>
+    <script src="/public/assets/material/js/Section/Sidebar.js"></script>
+    <script src="/public/assets/material/js/Section/PageAside.js"></script>
+    <script src="/public/assets/material/js/Plugin/menu.js"></script>
+    <!-- Config -->
+    <script src="/public/assets/material/global/js/config/colors.js"></script>
+    <script src="/public/assets/material/js/config/tour.js"></script>
+    <script>
+    Config.set('assets', '../../assets');
+    </script>
+    <!-- Page -->
+    <script src="/public/assets/material/js/Site.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/slidepanel.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/switchery.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/aspaginator.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/responsive-tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/tabs.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/alertify.js"></script>
+    <script src="/public/assets/material/global/js/Plugin/dropify.js"></script>
+    <script src="/public/assets/material/examples/js/forms/uploads.js"></script>
+    <script src="/public/assets/js/mainbusiness.js"></script>
+    <script>
+    (function(document, window, $) {
+      'use strict';
+      var Site = window.Site;
+      $(document).ready(function() {
+        Site.run();
+        //buttom next-prev disabled
+        if ($(".pagination-next") && $(".pagination-next")[0]) {
+          var cadena = $(".pagination-next")[0].className;
+          if (cadena.indexOf('disabled') != -1) {
+            $(".pagination-next").prop("onclick", null);
+          }
+          var cadena2 = $(".pagination-prev")[0].className;
+          if (cadena2.indexOf('disabled') != -1) {
+            $(".pagination-prev").prop("onclick", null);
+          }
+        }
+
+      });
+    })(document, window, jQuery);
+
+    function prevC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").text(lis.prevObject[i].textContent);
+              window.location.href = $(".next-prev").attr("href");
+            }
+        }
+      }, delayMillis);
+    }
+
+    function nextC() {
+      var delayMillis = 100;
+      setTimeout(function() {
+        var lis = $("li.pagination-items").find("active");
+        for (var i = 0; i < lis.prevObject.length; i++) {
+            var nameclass = lis.prevObject[i].className;
+            if (nameclass.search("active")!="-1") {
+              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").text(lis.prevObject[i].textContent);
+              window.location.href = $(".next-prev").attr("href");
+            }
+        }
+      }, delayMillis);
+    }
+
+    </script>
+  </body>
+  </html>
+  <div class="alertify-logs"></div>
+  <% for(var i=0; i<valores.length; i++) {%>
+  <div class="alertify modal-<%=valores[i].objectId%>" style="visibility:hidden;">
+    <div class="dialog">
+      <div><p class="msg">Si desactiva la empresa, no podr&aacute; verla en el app m&oacute;vil</p>
+        <nav>
+          <button class="cancel2 btn btn-default" data-cancel-id="<%=valores[i].objectId%>" tabindex="2">Cancelar</button>
+          <button class="ok2 btn btn-primary" id="ok2-<%=valores[i].objectId%>" data-ok-id="<%=valores[i].objectId%>" tabindex="1">Desactivar</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+<%}%>

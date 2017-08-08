@@ -1,0 +1,221 @@
+
+<% include ../templates/head.ejs %>
+
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/notie/notie.css">
+  <link rel="stylesheet" href="/public/assets/material/examples/css/advanced/alertify.css">
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/blueimp-file-upload/jquery.fileupload.css">
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/dropify/dropify.css">
+
+
+<body class="animsition">
+  <!-- Headear barra -->
+  <% include ../templates/header.ejs %>
+
+<!-- Menu-->
+<% include ../templates/menuvertical.ejs %>
+
+  <div class="page">
+    <div class="page-header">
+      <h1 class="page-title">Nueva Empresa</h1>
+    </div>
+    <div class="page-content container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Panel Static Labels -->
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body container-fluid">
+              <form class="form-horizontal" method="post">
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Direccion:</label>
+                  <div class="col-md-3">
+                    <input type="text" id="direccion" class="form-control" name="direccion" placeholder="Direccion" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Ciudad:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="ciudad" class="form-control" name="ciudad" placeholder="Ciudad" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Pa&iacute;s:</label>
+                  <div class="col-md-4">
+                    <input type="text" id="pais" class="form-control" name="pais" placeholder="Pa&iacute;s" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">CP:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="cp" class="form-control" name="cp" placeholder="CP" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Tipo de Negocio:</label>
+                  <div class="col-md-9">
+                    <select class="form-control" id="selectCategories">
+                      <%if(typeBusiness.length>0){%>
+                        <% typeBusiness.forEach(function(tb) { %>
+                          <option value="<%=tb.id%>"><%= tb.name %></option>
+                        <% }); %>
+                      <%}%>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Horario:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="horario" class="form-control" name="horario" placeholder="Horario" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Tel&eacute;fono de Contacto:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="phoneCon" class="form-control" name="phonecon" placeholder="Tel&eacute;fono de Contacto" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Email de Contacto:</label>
+                  <div class="col-md-9">
+                    <input type="email" id="emailCon" class="form-control" name="email2" placeholder="Email de Contacto" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <!-- End Panel Static Labels -->
+        </div>
+        <div class="col-md-6">
+          <!-- Panel Floating Labels -->
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body container-fluid">
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Nombre del negocio:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="negocio" class="form-control negocio" name="negocio" placeholder="Nombre del negocio" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Nombre del propietario:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="nombreP" class="form-control" name="propietario" placeholder="Nombre del propietario" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Teléfono del Propietario:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="phone" class="form-control" name="teléfono" placeholder="Teléfono del Propietario" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label tagemail">Email del Propietario:</label>
+                  <div class="col-md-9">
+                    <input type="email" id="email" class="form-control" name="email" placeholder="Email del Propietario" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Web:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="web" class="form-control" name="web" placeholder="Web" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label">Detalles:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="detalles" class="form-control" name="detalles" placeholder="Detalles" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row" style="margin-bottom:-14px;">
+                  <label class="col-md-3 form-control-label">Password:</label>
+                  <div class="col-md-9">
+                    <input type="text" id="pass" class="form-control" name="password" placeholder="Password" autocomplete="off"
+                    required/>
+                  </div>
+                </div>
+                <div class="form-group row form-material row">
+                  <label class="col-md-3 form-control-label"></label>
+                  <div class="col-md-9">
+                    <input type="text" id="" style="visibility:hidden;"/>
+                  </div>
+                </div>
+
+                <!-- oculto mientras
+                <div class="form-group row form-material row">
+                  <div class="col-md-9 offset-md-3">
+                    <button type="submit" class="btn btn-primary newempresa">Verificar</button>
+                    <button type="button" class="btn btn-primary waves-effect" id="businessDelayerr" data-plugin="alertify"
+                    data-type="log" data-delay="1000" data-log-message="Error al Enviar datos " style="visibility:hidden;" >delay</button>
+                  </div>
+                </div>-->
+                <button type="reset" class="btn btn-warning clean" style="visibility:hidden;">Limpiar</button>
+                <button type="button" class="btn btn-primary waves-effect" id="businessDelaysucc" data-plugin="alertify"
+                data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+                <button type="button" class="btn btn-primary waves-effect" id="businessConflict" data-plugin="alertify"
+                data-type="log" data-delay="5000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;" >delay</button>
+                <button type="button" class="btn btn-primary waves-effect" id="businessSave" data-plugin="alertify"
+                data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+            </div>
+          </div>
+          <!-- End Panel Floating Labels -->
+        </div>
+      </div>
+      <div class="panel">
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <label style="margin-left:14%;"><b>Imagen tipo Icon:</b></label>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <label style="margin-left:40%;"><b>Imagen tipo Banner:</b></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 image-icon2">
+            <input type="file" id="input-file-now-icon" data-plugin="dropify"/>
+          </div>
+          <div class="col-sm-6 col-md-6 image-banner2">
+            <input type="file" id="input-file-now-banner" data-plugin="dropify" data-default-file=""/>
+          </div>
+      </div>
+    </div>
+      <div class="form-group row form-material row">
+        <div class="col-md-9 offset-md-3">
+          <button type="submit" class="btn btn-primary registerBusiness" style="margin-left: 28%;">Registrar</button>
+          <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-65px; visibility:hidden;">
+        </div>
+      </div>
+    </form>
+    </div>
+    <input type="text" id="userId" style="visibility:hidden;" value="<%=session.userId%>"/>
+  </div>
+
+
+  <!--seccion 2 modal 2 -->
+      <!-- End Panel Input Grid -->
+  </div>
+  <!-- End Page -->
+  <!-- Footer -->
+  <% include ../templates/footer.ejs %>
+  <!-- Core  -->
+  <% include ../templates/core.ejs %>
+    <script src="/public/assets/js/business.js"></script>
+  <div class="alertify-logs"></div>
+</body>
+</html>

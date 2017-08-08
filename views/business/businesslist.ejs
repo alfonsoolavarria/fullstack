@@ -273,13 +273,17 @@
       $(document).ready(function() {
         Site.run();
         //buttom next-prev disabled
-        var cadena = $(".pagination-next")[0].className;
-        if (cadena.indexOf('disabled') != -1) {
-          $(".pagination-next").prop("onclick", null);
+        if ($(".pagination-next")[0]) {
+          var cadena = $(".pagination-next")[0].className;
+          if (cadena.indexOf('disabled') != -1) {
+            $(".pagination-next").prop("onclick", null);
+          }
         }
-        var cadena2 = $(".pagination-prev")[0].className;
-        if (cadena2.indexOf('disabled') != -1) {
-          $(".pagination-prev").prop("onclick", null);
+        if ($(".pagination-prev")[0]) {
+          var cadena2 = $(".pagination-prev")[0].className;
+          if (cadena2.indexOf('disabled') != -1) {
+            $(".pagination-prev").prop("onclick", null);
+          }
         }
 
       });

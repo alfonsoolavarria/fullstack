@@ -1,4 +1,4 @@
-<%if (session.owner==true){%>
+<%if (session.owner || session.ownerAdmin){%>
 <% include ../templates/head.ejs %>
 <link rel="stylesheet" href="/public/assets/material/examples/css/pages/user.css">
 <link rel="stylesheet" href="/public/assets/material/global/vendor/alertify/alertify.css">
@@ -109,8 +109,8 @@
                               No hay Empleados disponibles
                             <%}%>
                             <input id="flagPaginator" value="2" style="visibility:hidden;">
-                            <input id="Bid" value="<%if (session.owner==true){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
-                            <input id="BidFlag" value="<%if (session.owner==true){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
+                            <input id="Bid" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                            <input id="BidFlag" value="<%if (session.owner || session.ownerAdmin){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                             <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                         </div>
                       </div>
                     </div>
-                    <input type="text" class="form-control" id="idBusiness" value="<%if (session.owner==true){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                    <input type="text" class="form-control" id="idBusiness" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                 </div>
             </div>
           </div>
@@ -186,7 +186,7 @@
   </div>
 </div>
 
-<%if (session.owner==true){%>
+<%if (session.owner || session.ownerAdmin){%>
 <!-- Footer -->
   <% include ../templates/footer.ejs %>
 <!-- Core  -->

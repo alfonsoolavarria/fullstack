@@ -5,7 +5,6 @@ $(document).ready(function() {
   var flag = 0;
   var icon = '' , banner='';
 
-  //$('.registerBusiness').click(function () {
     $('form').submit(function (e) {
       $(".loadgif").css("visibility","");
       $(".registerBusiness").css("visibility","hidden");
@@ -27,6 +26,7 @@ $(document).ready(function() {
         web : $("#web").val(),
         password : $("#pass").val(),
         type:'Propietario',
+        branch:true,
         icon:$('.image-icon2 .dropify-render img').attr('src'),
         banner:$('.image-banner2 .dropify-render img').attr('src'),
       }
@@ -90,7 +90,6 @@ $(document).ready(function() {
       }
       //});
     });
-  //});
 
 
 

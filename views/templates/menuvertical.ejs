@@ -12,7 +12,7 @@ if (session.admin){
 if (session.userId){
   userId=session.userId;
 }
-var Em='', Das='', Cal='', Cat='', Emplo='', Servi='', Clie='';
+var Em='', Das='', Cal='', Cat='', Emplo='', Servi='', Clie='', Branch='';
 
 if(businessSelec==1){
   Em = 'active';
@@ -35,6 +35,9 @@ if (serviSelect==1){
 }
 if (clientSelect==1){
   Clie = 'active';
+}
+if (branchSelect==1){
+  Branch = 'active';
 }
 %>
 
@@ -63,6 +66,59 @@ if (clientSelect==1){
               </a>
               </li>
           <%}%>
+          <%if (session.ownerAdmin){%>
+            <li class="site-menu-item has-sub <%=Branch%>">
+              <!--<a href="javascript:void(0)">
+                <span class="site-menu-title">Sucursales</span>
+              </a>
+              <ul class="site-menu-sub">
+                <li class="site-menu-item">
+                  <a class="animsition-link" href="/business/list?user=<%=session.userId%>">
+                    <span class="site-menu-title">Listado de Sucursales</span>
+                  </a>
+                </li>
+              </ul>
+                <li class="site-menu-item">-->
+                  <a class="animsition-link" href="/branch?ownerAdmin=<%=session.userId%>">
+                    <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
+                    <span class="site-menu-title">Nueva Sucursal</span>
+                  </a>
+                <!--</li>-->
+              </li>
+              <%if(session.varbuss!='0' && session.varowner!=0) {%>
+                <li class="site-menu-item has-sub <%=Cal%>">
+                  <a href="/calendar?owner=<%=session.varowner%>&twoService=1">
+                    <i class="site-menu-icon md-calendar" aria-hidden="true" style="color:#523eba"></i>
+                    <span class="site-menu-title">Calendario</span>
+                  </a>
+                </li>
+                <li class="site-menu-item has-sub <%=Servi%>">
+                  <a href="/servicelist/<%=session.varowner%>">
+                  <!--<a href="/service/<%=session.userId%>">-->
+                    <i class="site-menu-icon md-store" aria-hidden="true" style="color:#523eba"></i>
+                    <span class="site-menu-title">Servicios</span>
+                  </a>
+                </li>
+                <li class="site-menu-item has-sub <%=Emplo%>">
+                  <a href="/employee/<%=session.varowner%>">
+                    <i class="site-menu-icon md-accounts" aria-hidden="true" style="color:#523eba"></i>
+                    <span class="site-menu-title">Empleados</span>
+                  </a>
+                </li>
+                <li class="site-menu-item has-sub <%=Clie%>">
+                  <a href="/client/<%=session.varbuss%>">
+                    <i class="site-menu-icon md-accounts-list" aria-hidden="true" style="color:#523eba"></i>
+                    <span class="site-menu-title">Clientes</span>
+                  </a>
+                </li>
+              <%}%>
+              <li class="site-menu-item has-sub <%=Em%>">
+                <a href="/business/list?owner=<%=session.varowner%>">
+                  <i class="site-menu-icon md-settings" aria-hidden="true" style="color:#523eba"></i>
+                  <span class="site-menu-title">Ajustes</span>
+                </a>
+                </li>
+          <%}%>
           <%if (session.admin){%>
           <li class="site-menu-item has-sub <%=Em%>">
             <a href="javascript:void(0)">
@@ -71,12 +127,12 @@ if (clientSelect==1){
             </a>
             <ul class="site-menu-sub">
               <li class="site-menu-item">
-                <a class="animsition-link" href="/business/list?user=<%=session.userId%>">
+                <a class="animsition-link" href="/mainbusiness/list?user=<%=session.userId%>">
                   <span class="site-menu-title">Listado de Empresas</span>
                 </a>
               </li>
               <li class="site-menu-item">
-                <a class="animsition-link" href="/business?user=<%=session.userId%>">
+                <a class="animsition-link" href="/business?user=<%=session.userId%>&branch=false">
                   <span class="site-menu-title">Nueva Empresa</span>
                 </a>
               </li>
@@ -122,7 +178,7 @@ if (clientSelect==1){
                 </a>
                 </li>
 
-              <li class="site-menu-item has-sub ">
+              <li class="site-menu-item has-sub <%=Em%> ">
                 <a href="/business/list?owner=<%=session.userId%>">
                   <i class="site-menu-icon md-settings" aria-hidden="true" style="color:#523eba"></i>
                   <span class="site-menu-title">Ajustes</span>
