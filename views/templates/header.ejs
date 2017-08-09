@@ -157,7 +157,27 @@
     <!-- End Site Navbar Seach -->
   </div>
 </nav>
-
+<!-- flagParamas 0:business 1:branch 2:calendar 3:employee y servicelist 4:client  -->
+<%if(session.varbuss!='0' && session.varowner!=0) {%>
+  <%if (businessSelec==1){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="0" />
+    <input id="optionSelect" style="visibility:hidden;display:none;" value="/business/list?" />
+  <%}else if (branchSelect==1){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="1" />
+  <%}else if (calendarSelec){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="2" />
+    <input id="optionSelect" style="visibility:hidden;display:none;" value="/calendar?twoService=1" />
+  <%}else if (employeeSelec==1){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="3" />
+    <input id="optionSelect" style="visibility:hidden;display:none;" value="/employee/" />
+  <%}else if (serviSelect==1){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="3" />
+    <input id="optionSelect" style="visibility:hidden;display:none;" value="/servicelist/" />
+  <%}else if (clientSelect==1){%>
+    <input id="flagParamas" style="visibility:hidden;display:none;" value="4" />
+    <input id="optionSelect" style="visibility:hidden;display:none;" value="/client/" />
+  <%}%>
+<%}%>
 <!-- Plugins -->
 <script src="/public/assets/material/global/vendor/jquery/jquery.js"></script>
 <script src="/public/assets/js/header.js"></script>

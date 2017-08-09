@@ -228,7 +228,10 @@ module.exports = function(app) {
       req.session.userId = req.query.user;
     } else {
       req.body.owner = req.query.owner?req.query.owner:req.query.user;
-      req.session.userId = req.query.owner;
+
+      if (!req.session.ownerAdmin) {
+        req.session.userId = req.query.owner;
+      }
     }
     if (req.query.page) {
       selectPage=req.query.page;
@@ -628,24 +631,35 @@ module.exports = function(app) {
         req.session.varbuss=varbuss;
         req.session.varowner=varowner;
         req.session.list=list;
-        res.render('ownerAdmin/newbranch.ejs',{
-          usersType,
-          valores,
-          branch,
-          list,
-          typeBusiness,
-          session:req.session,
-          catpage:JSON.parse(JSON.stringify(data.cantPage)),
-          selectPage:selectPage,
-          businessSelec:0,
-          branchSelect:1,
-          calendarSelec:0,
-          dashSelec:0,
-          employeeSelec:0,
-          categorySelec:0,
-          serviSelect:0,
-          clientSelect:0,
-        });
+        //flagParamas 0:business 1:branch 2:calendar 3:employee y servicelist 4:client
+        if (req.query.flagParamas=='0') {
+          return res.redirect(req.query.value+'owner='+varowner);
+        }else if (req.query.flagParamas=='2') {
+          return res.redirect(req.query.value+'&owner='+varowner);
+        }else if (req.query.flagParamas=='3') {
+          return res.redirect(req.query.value+varowner);
+        }else if (req.query.flagParamas=='4') {
+          return res.redirect(req.query.value+varbuss);
+        }else {
+          res.render('ownerAdmin/newbranch.ejs',{
+            usersType,
+            valores,
+            branch,
+            list,
+            typeBusiness,
+            session:req.session,
+            catpage:JSON.parse(JSON.stringify(data.cantPage)),
+            selectPage:selectPage,
+            businessSelec:0,
+            branchSelect:1,
+            calendarSelec:0,
+            dashSelec:0,
+            employeeSelec:0,
+            categorySelec:0,
+            serviSelect:0,
+            clientSelect:0,
+          });
+        }
       });
     });
 	});
