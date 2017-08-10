@@ -1,34 +1,44 @@
 <nav class="site-navbar navbar navbar-default navbar-inverse navbar-fixed-top navbar-mega" role="navigation" style="background-color:#523eba;">
   <div class="navbar-header">
-    <%if (session.ownerAdmin){%>
-      <label class="col-md-0 form-control-label">Sucursales para:</label>
-      <%if (session.valores.length>0){%>
-        <label class="col-md-0 form-control-label" style="color:#8ce0e0;margin-left:20px;"><b><%=session.valores[0].name%></b></label>
-      <%}else {%>
-        <label class="col-md-0 form-control-label" style="color:#8ce0e0;margin-left:20px;"><b>Sin sucursal</b></label>
-      <%}%>
-    <%}%>
   </div>
   <div class="navbar-container container-fluid">
     <!-- Navbar Collapse -->
     <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
-      <!-- Navbar Toolbar
-      <!-- End Navbar Toolbar -->
-      <%if (session.ownerAdmin){%>
-        <select class="form-control" id="SelectBranch" style="width:10%;margin-bottom:-38px;position:absolute;margin-top:15px;">
-          <%if (session.branch.length>0) {%>
-            <%for(var i=0; i<session.branch.length; i++) {%>
-              <%if(session.list[0].indexOf(session.branch[i].owner.objectId)>=0){%>
-                <option value="<%=session.branch[i].nameCommerce%>" data-buss="<%=session.branch[i].objectId%>" data-owner="<%=session.branch[i].owner.objectId%>" selected><%=session.branch[i].nameCommerce%></option>
-                <%}else{%>
-                  <option value="<%=session.branch[i].nameCommerce%>" data-buss="<%=session.branch[i].objectId%>" data-owner="<%=session.branch[i].owner.objectId%>"><%=session.branch[i].nameCommerce%></option>
+      <!-- Navbar Toolbar-->
+      <ul class="nav navbar-toolbar">
+        <li class="nav-item dropdown dropdown-fw dropdown-mega">
+          <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade"
+          role="button">Sucursales <i class="icon md-chevron-down" aria-hidden="true"></i></a>
+          <div class="dropdown-menu" role="menu" style="width:17%;">
+            <%if (session.ownerAdmin){%>
+              <%if (session.valores.length>0){%>
+                <i class="icon" aria-hidden="true" style="margin-left:40px;color:#36459b;"><b><%=session.valores[0].name%></b></i>
+              <%}else {%>
+                <i class="icon" aria-hidden="true" style="margin-left:37px;color:#36459b;"><b>Sin sucursal</b></i>
+              <%}%>
+            <%}%>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-divider"></div>
+            <%if (session.ownerAdmin){%>
+                <%if (session.branch.length>0) {%>
+                  <%for(var i=0; i<session.branch.length; i++) {%>
+                    <%if(session.list[0].indexOf(session.branch[i].owner.objectId)>=0){%>
+                      <a class="dropdown-item selectData"  role="menuitem" data-buss="<%=session.branch[i].objectId%>" data-owner="<%=session.branch[i].owner.objectId%>" style="background: #F2F2F2;"><i class="icon md-check" aria-hidden="true"></i><%=session.branch[i].nameCommerce%></a>
+                      <%}else{%>
+                        <a class="dropdown-item selectData"  role="menuitem" data-buss="<%=session.branch[i].objectId%>" data-owner="<%=session.branch[i].owner.objectId%>"><i class="icon md-check" aria-hidden="true"></i><%=session.branch[i].nameCommerce%></a>
+                      <%}%>
+                  <%}%>
+                <%} else{%>
+                  <a class="dropdown-item" href="" role="menuitem" data-buss="" data-owner=""><i class="icon md-check" aria-hidden="true"></i>No Existen</a>
                 <%}%>
             <%}%>
-          <%} else{%>
-            <option value="">No Existen</option>
-          <%}%>
-        </select>
-      <%}%>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/branch?ownerAdmin=<%=session.userId%>&buss=<%=session.varbuss%>&owner=<%=session.varowner%>" role="menuitem"><i class="icon md-flickr" aria-hidden="true"></i> Nueva Sucursal</a>
+          </div>
+        </li>
+      </ul>
+      <!-- End Navbar Toolbar -->
+
       <img style="margin-left:370px;padding:7px;" class="brand-img" src="/public/assets/images/logo.png" alt="...">
       <!-- Navbar Toolbar Right -->
       <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right" style="margin-right: 90px;">

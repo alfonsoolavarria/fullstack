@@ -120,7 +120,7 @@ BusinessControllers.searchListMainBranches = function searchListMainBranches (id
     var promises = [], branchs=[];
 
     _.forEach(objectData, function(allD) {
-        promises.push(allD.relation('branch').query().find());
+        promises.push(allD.relation('branch').query().descending('createdAt').find());
     });
     return Parse.Promise.when(promises).then(function(resultados, index) {
       for (var i = 0; i < resultados.length; i++) {
