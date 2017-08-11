@@ -115,6 +115,7 @@ BusinessControllers.searchListMainBusiness = function searchListMainBusiness (op
 BusinessControllers.searchListMainBranches = function searchListMainBranches (id,pageparams) {
   var query = new Parse.Query('MainBusiness');
   query.include('branch.name');
+  query.include('typeCommerce');
   query.equalTo('ownerAdmin', new Parse.Object('_User', { id:id }));
   return query.find().then(function (objectData) {
     var promises = [], branchs=[];
@@ -154,6 +155,7 @@ BusinessControllers.createMainBusiness = function createMainBusiness (options,us
   var mainbusiness = new Parse.Object('MainBusiness');
   mainbusiness.set('status',true);
   mainbusiness.set({'name':options.nameB});
+  mainbusiness.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
   mainbusiness.set('ownerAdmin', {"__type":"Pointer","className":"_User","objectId":userId});
   return mainbusiness.save().then(function(saveData) {
     // The save was successful.
@@ -275,7 +277,7 @@ BusinessControllers.updateBusiness = function updateBusiness (options) {
         if (options.city) dataB.set({'city':options.city});
         if (options.country) dataB.set({'country':options.country});
         if (options.cp) dataB.set({'postalCode':options.cp});
-        if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
+        //if (options.typeCommerce) dataB.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
         if (options.nameCommerce) dataB.set({'nameCommerce':options.nameCommerce});
         if (options.phonecont) dataB.set({'phone':options.phonecont});
         if (options.emailcont) dataB.set({'email':options.emailcont});

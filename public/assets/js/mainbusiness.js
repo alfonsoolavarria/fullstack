@@ -13,11 +13,11 @@ $(document).ready(function() {
       phone: $("#phonePA").val(),
       password: $("#passPA").val(),
       branch:false,
+      typeCommerce : $("#selectCategories").val(),
       type:'Propietario Administrador',
     }
     $.post('/business',dataSend)
     .done(function (result) {
-      console.log('resultadoooo',result);
       $(".loadgif").css("visibility","hidden");
       $(".registerMainBusiness").css("visibility","");
       if (result.result && result.result.code==409) {

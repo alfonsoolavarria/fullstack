@@ -57,18 +57,15 @@
                     required/>
                   </div>
                 </div>
+
                 <div class="form-group row form-material row">
                   <label class="col-md-3 form-control-label">Tipo de Negocio:</label>
                   <div class="col-md-9">
-                    <select class="form-control" id="selectCategories">
-                      <%if(typeBusiness.length>0){%>
-                        <% typeBusiness.forEach(function(tb) { %>
-                          <option value="<%=tb.id%>"><%= tb.name %></option>
-                        <% }); %>
-                      <%}%>
-                    </select>
+                    <input type="text" id="selectCategories" style="visibility:hidden;display:none;" value="<%=session.valores[0].typeCommerce.objectId%>" readonly disabled/>
+                    <label class="form-control" readonly disabled><%=session.valores[0].typeCommerce.name%></label>
                   </div>
                 </div>
+
                 <div class="form-group row form-material row">
                   <label class="col-md-3 form-control-label">Horario:</label>
                   <div class="col-md-9">
@@ -189,13 +186,13 @@
     </div>
       <div class="form-group row form-material row">
         <div class="col-md-9 offset-md-3">
-          <button type="submit" class="btn btn-primary mainregisterBusiness" style="margin-left: 28%;">Registrar</button>
+          <button type="submit" class="btn btn-primary mainregisterMainBusiness" style="margin-left: 28%;">Registrar</button>
           <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-65px; visibility:hidden;">
         </div>
       </div>
     </form>
     </div>
-    <input type="text" id="mainbranch" style="visibility:hidden;" value="<%=valores[0].objectId%>"/>
+    <input type="text" id="mainbranch" style="visibility:hidden;" value="<%=session.valores[0].objectId%>"/>
     <input type="text" id="userId" style="visibility:hidden;" value="<%=session.userId%>"/>
   </div>
 

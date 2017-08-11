@@ -5,21 +5,19 @@
     <!-- Navbar Collapse -->
     <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
       <!-- Navbar Toolbar-->
-      <ul class="nav navbar-toolbar">
-        <li class="nav-item dropdown dropdown-fw dropdown-mega">
-          <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade"
-          role="button">Sucursales <i class="icon md-chevron-down" aria-hidden="true"></i></a>
-          <div class="dropdown-menu" role="menu" style="width:17%;">
-            <%if (session.ownerAdmin){%>
-              <%if (session.valores.length>0){%>
-                <i class="icon" aria-hidden="true" style="margin-left:40px;color:#36459b;"><b><%=session.valores[0].name%></b></i>
-              <%}else {%>
-                <i class="icon" aria-hidden="true" style="margin-left:37px;color:#36459b;"><b>Sin sucursal</b></i>
-              <%}%>
-            <%}%>
+      <%if (session.ownerAdmin){%>
+        <ul class="nav navbar-toolbar">
+          <li class="nav-item dropdown dropdown-fw dropdown-mega">
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade"
+            role="button">Sucursales <i class="icon md-chevron-down" aria-hidden="true"></i></a>
+            <div class="dropdown-menu" role="menu" style="width:17%;">
+                <%if (session.valores.length>0){%>
+                  <i class="icon" aria-hidden="true" style="margin-left:40px;color:#36459b;"><b><%=session.valores[0].name%></b></i>
+                <%}else {%>
+                  <i class="icon" aria-hidden="true" style="margin-left:37px;color:#36459b;"><b>Sin sucursal</b></i>
+                <%}%>
             <div class="dropdown-divider"></div>
             <div class="dropdown-divider"></div>
-            <%if (session.ownerAdmin){%>
                 <%if (session.branch.length>0) {%>
                   <%for(var i=0; i<session.branch.length; i++) {%>
                     <%if(session.list[0].indexOf(session.branch[i].owner.objectId)>=0){%>
@@ -31,12 +29,12 @@
                 <%} else{%>
                   <a class="dropdown-item" href="" role="menuitem" data-buss="" data-owner=""><i class="icon md-check" aria-hidden="true"></i>No Existen</a>
                 <%}%>
-            <%}%>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/branch?ownerAdmin=<%=session.userId%>&buss=<%=session.varbuss%>&owner=<%=session.varowner%>" role="menuitem"><i class="icon md-flickr" aria-hidden="true"></i> Nueva Sucursal</a>
+            <a class="dropdown-item" href="/branch?ownerAdmin=<%=session.userId%>&buss=<%=session.varbuss%>&owner=<%=session.varowner%>&flag=true" role="menuitem"><i class="icon md-flickr" aria-hidden="true"></i> Nueva Sucursal</a>
           </div>
         </li>
       </ul>
+      <%}%>
       <!-- End Navbar Toolbar -->
 
       <img style="margin-left:370px;padding:7px;" class="brand-img" src="/public/assets/images/logo.png" alt="...">

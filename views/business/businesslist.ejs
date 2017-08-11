@@ -79,15 +79,7 @@
                                 <div class="form-group row form-material row">
                                   <label class="col-xs-12 col-sm-12 col-md-4 form-control-label">Tipo de Negocio:</label>
                                   <div class="col-xs-12 col-sm-12 col-md-8">
-                                    <select class="form-control" id="tipo-<%=valores[i].objectId%>" style="border-bottom: 0px;" disabled>
-                                      <% for(var o=0; o<typeBusiness.length; o++) {%>
-                                        <%if (JSON.parse(JSON.stringify(valores[i].typeCommerce)).name==typeBusiness[o].name){%>
-                                          <option value="<%-JSON.parse(JSON.stringify(valores[i].typeCommerce)).objectId%>" selected><%=typeBusiness[o].name%></option>
-                                        <%}else{%>
-                                          <option value="<%=typeBusiness[o].id%>"><%=typeBusiness[o].name%></option>
-                                        <%}%>
-                                      <%}%>
-                                    </select>
+                                    <input class="form-control" id="<%=valores[i].objectId%>" style="border:0px;background:none;" value="<%=valores[i].typeCommerce.name%>" readonly disabled></input>
                                   </div>
                                 </div>
                                 </div>

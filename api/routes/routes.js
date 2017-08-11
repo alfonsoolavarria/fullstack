@@ -186,11 +186,12 @@ module.exports = function(app) {
   |*******Business-Empresas********|
   ********************************/
   app.get('/business',middle.checkSession, function(req, res) {
-    if (req.params.branch) {
       usersType.userId = req.query.user;
-      var valores={};
+      var valores={}; var templat = '';
       Users.getTypeBusiness().then(function(typeBusiness) {
-        res.render('business/newbranch.ejs',{
+        if (req.params.branch) templat = 'business/newbranch.ejs';
+        else templat = 'business/newbusiness.ejs';
+        res.render(templat,{
           usersType,
           valores,
           session:req.session,
@@ -205,21 +206,6 @@ module.exports = function(app) {
           clientSelect:0,
         });
       });
-    }else {
-      res.render('business/newbusiness.ejs',{
-        usersType,
-        valores,
-        session:req.session,
-        businessSelec:1,
-        branchSelect:0,
-        dashSelec:0,
-        employeeSelec:0,
-        calendarSelec:0,
-        categorySelec:0,
-        serviSelect:0,
-        clientSelect:0,
-      });
-    }
 	});
 
   app.get('/business/list',middle.checkSession, function(req, res) {
@@ -241,23 +227,20 @@ module.exports = function(app) {
       if (data) {
         valores=JSON.parse(JSON.stringify(data.data));
       }
-      Users.getTypeBusiness().then(function(typeBusiness) {
-        res.render('business/businesslist.ejs',{
-          usersType,
-          valores,
-          session:req.session,
-          catpage:JSON.parse(JSON.stringify(data.cantPage)),
-          selectPage:selectPage,
-          typeBusiness,
-          businessSelec:1,
-          branchSelect:0,
-          calendarSelec:0,
-          dashSelec:0,
-          employeeSelec:0,
-          categorySelec:0,
-          serviSelect:0,
-          clientSelect:0,
-        });
+      res.render('business/businesslist.ejs',{
+        usersType,
+        valores,
+        session:req.session,
+        catpage:JSON.parse(JSON.stringify(data.cantPage)),
+        selectPage:selectPage,
+        businessSelec:1,
+        branchSelect:0,
+        calendarSelec:0,
+        dashSelec:0,
+        employeeSelec:0,
+        categorySelec:0,
+        serviSelect:0,
+        clientSelect:0,
       });
     });
 	});
@@ -641,24 +624,25 @@ module.exports = function(app) {
         }else if (req.query.flagParamas=='4') {
           return res.redirect(req.query.value+varbuss);
         }else {
-          res.render('ownerAdmin/newbranch.ejs',{
-            usersType,
-            valores,
-            branch,
-            list,
-            typeBusiness,
-            session:req.session,
-            catpage:JSON.parse(JSON.stringify(data.cantPage)),
-            selectPage:selectPage,
-            businessSelec:0,
-            branchSelect:1,
-            calendarSelec:0,
-            dashSelec:0,
-            employeeSelec:0,
-            categorySelec:0,
-            serviSelect:0,
-            clientSelect:0,
-          });
+          if (req.session.branch.length<1 || req.query.flag=='true') {
+            res.render('ownerAdmin/newbranch.ejs',{
+              usersType,
+              typeBusiness,
+              session:req.session,
+              catpage:JSON.parse(JSON.stringify(data.cantPage)),
+              selectPage:selectPage,
+              businessSelec:0,
+              branchSelect:1,
+              calendarSelec:0,
+              dashSelec:0,
+              employeeSelec:0,
+              categorySelec:0,
+              serviSelect:0,
+              clientSelect:0,
+            });
+          }else {
+            return res.redirect('/calendar?owner='+req.session.varowner+'&twoService=1');
+          }
         }
       });
     });

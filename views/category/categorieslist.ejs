@@ -23,7 +23,7 @@
                   <ul class="list-group">
                     <li class="list-group-item">
                         <div class="avatar avatar-online">
-                          <img src="<%=listCateg[i].image.url%>" alt="...">
+                          <img src="<%if (listCateg[i].image){%><%=listCateg[i].image.url%><%}else{%>""<%}%>" alt="...">
                         </div>
                       </div>
                       <div class="container">

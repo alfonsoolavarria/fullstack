@@ -67,8 +67,8 @@ if (branchSelect==1){
               </li>
           <%}%>
           <%if (session.ownerAdmin){%>
-            <li class="site-menu-item has-sub <%=Branch%>">
-              <!--<a href="javascript:void(0)">
+            <!--<li class="site-menu-item has-sub <%=Branch%>">
+              <a href="javascript:void(0)">
                 <span class="site-menu-title">Sucursales</span>
               </a>
               <ul class="site-menu-sub">
@@ -78,12 +78,12 @@ if (branchSelect==1){
                   </a>
                 </li>
               </ul>
-                <li class="site-menu-item">-->
+                <li class="site-menu-item">
                   <a class="animsition-link" href="/branch?ownerAdmin=<%=session.userId%>">
                     <i class="site-menu-icon md-chart" aria-hidden="true" style="color:#523eba"></i>
                     <span class="site-menu-title">Nueva Sucursal</span>
                   </a>
-                <!--</li>-->
+                </li>-->
               </li>
               <%if(session.varbuss!='0' && session.varowner!=0) {%>
                 <li class="site-menu-item has-sub <%=Cal%>">
