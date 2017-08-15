@@ -554,8 +554,10 @@ module.exports = function(app) {
 
     if (req.body.deleteB || req.body.activa) {
       BusinessControllers.deleteBusiness(req.body).then(function(data) {
-        Users.activateDesactivate(req.body,data).then(function() {
-          return res.json({code:200});
+        BusinessControllers.searchListMainBranchesSubtract(req.body).then(function(data2) {
+          Users.activateDesactivate(req.body,data).then(function() {
+            return res.json({code:200});
+          });
         });
       });
     }

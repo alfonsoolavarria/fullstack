@@ -121,7 +121,7 @@ BusinessControllers.searchListMainBranches = function searchListMainBranches (id
     var promises = [], branchs=[];
 
     _.forEach(objectData, function(allD) {
-        promises.push(allD.relation('branch').query().descending('createdAt').find());
+        promises.push(allD.relation('branch').query().descending('createdAt').equalTo('status',true).find());
     });
     return Parse.Promise.when(promises).then(function(resultados, index) {
       for (var i = 0; i < resultados.length; i++) {
@@ -155,6 +155,7 @@ BusinessControllers.createMainBusiness = function createMainBusiness (options,us
   var mainbusiness = new Parse.Object('MainBusiness');
   mainbusiness.set('status',true);
   mainbusiness.set({'name':options.nameB});
+  mainbusiness.set({'branchCount':0});
   mainbusiness.set('typeCommerce',{"__type":"Pointer","className":"TypeBusiness","objectId":options.typeCommerce});
   mainbusiness.set('ownerAdmin', {"__type":"Pointer","className":"_User","objectId":userId});
   return mainbusiness.save().then(function(saveData) {
@@ -312,6 +313,35 @@ BusinessControllers.deleteBusiness = function deleteBusiness (options) {
     });
 };
 
+BusinessControllers.searchListMainBranchesSubtract = function searchListMainBranches (params) {
+  var query = new Parse.Query('MainBusiness');
+  return query.find().then(function (objectData) {
+    var promises = [], promises2 = [], branchs=0;
+    _.forEach(objectData, function(allD,index) {
+        promises.push(allD.relation('branch').query().descending('createdAt').equalTo('objectId',params.id).find());
+        promises2.push(JSON.parse(JSON.stringify(objectData[index])).objectId);
+    });
+
+    return Parse.Promise.when(promises).then(function(resultados, index) {
+      for (var i = 0; i < resultados.length; i++) {
+        if (JSON.parse(JSON.stringify(resultados[i])).length>0) {
+          branchs = promises2[i];
+        }
+      }
+      return query.get(branchs).then(function (objectMain) {
+        if (params.deleteB) {
+          objectMain.set({'branchCount':JSON.parse(JSON.stringify(objectMain)).branchCount-1});
+        }else {
+          objectMain.set({'branchCount':JSON.parse(JSON.stringify(objectMain)).branchCount+1});
+        }
+        objectMain.save(null, { useMasterKey: true });
+        return{success:true,code:200};
+      });
+    });
+  });
+
+};
+
 BusinessControllers.addRelationBusiness = function addRelationBusiness (userId,params) {
     var query = new Parse.Query('Business');
     if (params.flag=='2') {
@@ -340,6 +370,7 @@ BusinessControllers.addRelationBusiness = function addRelationBusiness (userId,p
 BusinessControllers.addRelationMainBusiness = function addRelationMainBusiness (params,dataBusiness) {
     var query = new Parse.Query('MainBusiness');
     return query.get(params.idmain).then(function(dataB){
+      dataB.set({'branchCount':JSON.parse(JSON.stringify(dataB)).branchCount+1});
       dataB.relation('branch').add(dataBusiness.rela);
       dataB.save(null, { useMasterKey: true });
       return{success:true,code:200};
