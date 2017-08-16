@@ -20,13 +20,14 @@ $(document).ready(function() {
     .done(function (result) {
       $(".loadgif").css("visibility","hidden");
       $(".registerMainBusiness").css("visibility","");
-      if (result.result && result.result.code==409) {
+      if (result && result.code==409) {
         $("#emailerror").trigger("click");
         $(".tagemail2").css("color","red");
         $("#emailPA").focus();
       }else {
         $(".clean").trigger("click");
         $("#mainbusinessSave").trigger("click");
+        $(".tagemail2").css("color","");
         //redirecciono
         window.location.href = "/mainbusiness/list?user="+$("#userId").val();
       }
