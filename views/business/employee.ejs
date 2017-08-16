@@ -169,7 +169,7 @@
                         </div>
                       </div>
                     </div>
-                    <input type="text" class="form-control" id="idBusiness" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                    <input type="text" class="form-control" id="idBusiness" value="<%if (session.owner){%><%=session.userId%><%}else if (session.ownerAdmin){%><%=session.varowner%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                 </div>
             </div>
           </div>
