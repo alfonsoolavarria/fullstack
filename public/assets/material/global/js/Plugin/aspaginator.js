@@ -240,6 +240,29 @@
                   }
 
                 }
+
+                if ($("#flagPaginator").val()==5) {
+                    for (var k = 1; k < remainder; k++) {
+                      lists += '<li class="' + this.namespace + '-items page-item" data-value="' + (this.currentPage - remainder + k) + '"><a class="page-link" href="/mainbusiness/list?user='+user+'&page='+(this.currentPage - remainder + k)+'">' + (this.currentPage - remainder + k) + '</a></li>';
+                    }
+
+                    for (var ii = 1; ii <= this.currentPage; ii++) {
+                      if (this.currentPage==ii) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="'+ii+'"><a class="page-link" href="/mainbusiness/list?user='+user+'&page='+ii+'">'+ii+'</a></li>';
+                      }
+                    }
+
+                    for (var i = this.currentPage + 1, limit = i + this.visible - remainder - 1 > this.totalPages ? this.totalPages : i + this.visible - remainder - 1; i <= limit; i++) {
+                      if (this.currentPage==i) {
+                        lists += '<li class="' + this.namespace + '-items page-item active" data-value="' + i + '"><a class="page-link" href="/mainbusiness/list?user='+user+'&page='+i+'">' + i + '</a></li>';
+                        $(".next").attr("disabled");
+                      }else {
+                        lists += '<li class="' + this.namespace + '-items page-item" data-value="' + i + '"><a class="page-link" href="/mainbusiness/list?user='+user+'&page='+i+'">' + i + '</a></li>';
+                      }
+                    }
+
+
+                }
                 return lists;
               }
             }

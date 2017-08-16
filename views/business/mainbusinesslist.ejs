@@ -113,7 +113,7 @@
                   <%}%>
                   <input id="pageN" value="<%=selectPage%>" style="visibility:hidden;">
                   <input id="user" value="<%=session.userId%>" style="visibility:hidden;">
-                  <input id="flagPaginator" value="1" style="visibility:hidden;">
+                  <input id="flagPaginator" value="5" style="visibility:hidden;">
                   <a class="next-prev" href="" style="visibility:hidden;"></a>
                 </div>
               </div>
@@ -215,7 +215,7 @@
         for (var i = 0; i < lis.prevObject.length; i++) {
             var nameclass = lis.prevObject[i].className;
             if (nameclass.search("active")!="-1") {
-              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").attr("href","/mainbusiness/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
               $(".next-prev").text(lis.prevObject[i].textContent);
               window.location.href = $(".next-prev").attr("href");
             }
@@ -230,7 +230,7 @@
         for (var i = 0; i < lis.prevObject.length; i++) {
             var nameclass = lis.prevObject[i].className;
             if (nameclass.search("active")!="-1") {
-              $(".next-prev").attr("href","/business/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
+              $(".next-prev").attr("href","/mainbusiness/list?user="+$("#user").val()+"&page="+lis.prevObject[i].textContent+"");
               $(".next-prev").text(lis.prevObject[i].textContent);
               window.location.href = $(".next-prev").attr("href");
             }
