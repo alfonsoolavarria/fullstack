@@ -172,16 +172,238 @@
                     <input type="text" class="form-control" id="idBusiness" value="<%if (session.owner){%><%=session.userId%><%}else if (session.ownerAdmin){%><%=session.varowner%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                 </div>
             </div>
+            <div class="row" style="margin-top:-50px;">
+            <div class="col-md-12">
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Dia</label>
+                <label class="col-md-4 form-control-label">Horario1</label>
+                <label class="col-md-4 form-control-label">Horario2</label>
+            </div>
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Lunes</label>
+                <div class="input-group" style="width:20%;margin-left:25px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceLunes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceLunes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceLunes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceLunes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Martes</label>
+                <div class="input-group" style="width:20%;margin-left:24px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceMartes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMartes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMartes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMartes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Miercoles</label>
+                <div class="input-group" style="width:20%;margin-left:24px">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceMiercoles1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMiercoles2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMiercoles3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceMiercoles4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Jueves</label>
+                <div class="input-group" style="width:20%;margin-left:24px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceJueves1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceJueves2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceJueves3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceJueves4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Viernes</label>
+                <div class="input-group" style="width:20%;margin-left:24px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceViernes1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceViernes2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceViernes3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceViernes4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Sabado</label>
+                <div class="input-group" style="width:20%;margin-left:24px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceSabado1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceSabado2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceSabado3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceSabado4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+              <div class="form-group row form-material row">
+                <label class="col-md-2 form-control-label">Domingo</label>
+                <div class="input-group" style="width:20%;margin-left:24px;">
+                  <span class="input-group-addon">
+                    <span class="md-time">
+                    </span>
+                  </span>
+                  <input type="text" id="serviceDomingo1" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left:-8px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceDomingo2" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceDomingo3" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+                <div class="input-group" style="width:20%;margin-left: 0px;">
+                  <span class="input-group-addon">
+                    <span class="md-time"></span>
+                  </span>
+                  <input type="text" id="serviceDomingo4" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true">
+                </div>
+              </div>
+
+            </div>
           </div>
-        </form>
+        </div>
+      </form>
         <div class="modal-footer text-left">
           <button class="btn btn-primary" type="submit" id="employeeCreate">Crear</button>
           <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
-          <a class="btn btn-sm btn-white btn-pure" data-dismiss="modal" >Cancelar</a>
+          <a class="btn btn-sm btn-white btn-pure cancelar" data-dismiss="modal" >Cancelar</a>
         </div>
       </div>
       <button type="button" class="btn btn-primary waves-effect" id="employeeDelaysucc" data-plugin="alertify"
       data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+      <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
+        data-type="log" data-delay="3500" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
+      <button type="button" class="btn btn-sm btn-primary waves-effect" id="EmailInvalid" data-plugin="alertify"
+        data-type="log" data-delay="3500" data-log-message="Email Inv&aacute;lido" style="visibility:hidden;" >delay</button>
     </div>
   </div>
 </div>

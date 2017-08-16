@@ -25,6 +25,7 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
       var employee =  new Parse.User();
       if (options.imagen) employee.set('image', base64imagen);
       employee.set('username', options.email);
+      employee.set('schedule', options.schedule);
       employee.set('color', options.color);
       employee.set('name', options.name);
       employee.set('phone', options.phone);
@@ -67,6 +68,7 @@ EmployeeModel.updateEmployee = function updateEmployee (options) {
           if (options.icon) dataB.set('image', base64imagen);
           if (options.name) dataB.set({'name':options.name});
           if (options.phone) dataB.set({'phone':options.phone});
+          if (options.schedule) dataB.set({'schedule':options.schedule});
           if (options.email) {
             dataB.set({'email':options.email});
             dataB.set({'username':options.email});

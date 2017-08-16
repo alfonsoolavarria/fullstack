@@ -54,6 +54,49 @@
                               <input class="form-control" id="emplo-phone-<%=employeeB.objectId%>" style="border:0px;background:none;" value="<%=employeeB.phone%>" disabled></input>
                             </div>
                           </div>
+                          <div class="col-md-10">
+                            <div class="form-group row form-material row">
+                              <label class="col-md-4 form-control-label">Dia</label>
+                              <label class="col-md-2 form-control-label">Horario1</label>
+                              <label class="col-md-4 form-control-label">Horario2</label>
+                          </div>
+                          <% for(var w=0; w<employeeB.schedule.length; w++) {%>
+
+                              <% for (var kk in employeeB.schedule[w]){%>
+
+                              <div class="form-group row form-material row">
+                                <label class="col-md-4 form-control-label"><%=kk%></label>
+                                <div class="input-group col-md-2" style="">
+                                  <span class="input-group-addon">
+                                    <span class="md-time">
+                                    </span>
+                                  </span>
+                                  <input type="text" id="<%=kk%>-0-<%=employeeB.objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=employeeB.schedule[w][kk][0].horario1[0]%>" disabled>
+                                </div>
+                                <div class="input-group col-md-2" style="">
+                                  <span class="input-group-addon">
+                                    <span class="md-time"></span>
+                                  </span>
+                                  <input type="text" id="<%=kk%>-1-<%=employeeB.objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=employeeB.schedule[w][kk][0].horario1[1]%>" disabled>
+                                </div>
+
+                                <div class="input-group col-md-2" style="">
+                                  <span class="input-group-addon">
+                                    <span class="md-time"></span>
+                                  </span>
+                                  <input type="text" id="<%=kk%>-2-<%=employeeB.objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=employeeB.schedule[w][kk][0].horario2[0]%>" disabled>
+                                </div>
+                                <div class="input-group col-md-2" style="">
+                                  <span class="input-group-addon">
+                                    <span class="md-time"></span>
+                                  </span>
+                                  <input type="text" id="<%=kk%>-3-<%=employeeB.objectId%>" class="timepicker form-control" data-plugin="clockpicker" data-autoclose="true" value="<%=employeeB.schedule[w][kk][0].horario2[1]%>" disabled>
+                                </div>
+                              </div>
+                            <%}%>
+                          <%}%>
+
+                          </div>
                           <div class="row">
                             <div class="col-md-5"></div>
                             <div class="col-md-6">
@@ -68,6 +111,8 @@
                         </form>
                       </div>
                     </div>
+                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
+                      data-type="log" data-delay="3500" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
                     <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
                       data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
                     <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
