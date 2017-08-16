@@ -318,16 +318,21 @@ BusinessControllers.searchListMainBranchesSubtract = function searchListMainBran
   return query.find().then(function (objectData) {
     var promises = [], promises2 = [], branchs=0;
     _.forEach(objectData, function(allD,index) {
-        promises.push(allD.relation('branch').query().descending('createdAt').equalTo('objectId',params.id).find());
-        promises2.push(JSON.parse(JSON.stringify(objectData[index])).objectId);
+        promises.push(allD.relation('branch').query().descending('createdAt').equalTo('objectId',params.id).find().then(function (data) {
+          _.each(data, function(ids) {
+             var ids = ids.toJSON();
+             promises2.push({idbuss:ids.objectId,branch:JSON.parse(JSON.stringify(objectData[index])).objectId});
+          });
+        }));
     });
 
-    return Parse.Promise.when(promises).then(function(resultados, index) {
-      for (var i = 0; i < resultados.length; i++) {
-        if (JSON.parse(JSON.stringify(resultados[i])).length>0) {
-          branchs = promises2[i];
+    return Parse.Promise.when(promises).then(function(result) {
+      for (var i = 0; i < promises2.length; i++) {
+        if (promises2[i]) {
+          branchs = promises2[i].branch;
         }
       }
+
       return query.get(branchs).then(function (objectMain) {
         if (params.deleteB) {
           objectMain.set({'branchCount':JSON.parse(JSON.stringify(objectMain)).branchCount-1});
