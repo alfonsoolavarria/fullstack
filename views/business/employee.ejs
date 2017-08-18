@@ -109,7 +109,7 @@
                               No hay Empleados disponibles
                             <%}%>
                             <input id="flagPaginator" value="2" style="visibility:hidden;">
-                            <input id="Bid" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
+                            <input id="Bid" value="<%if (session.owner){%><%=session.userId%><%}else if (session.ownerAdmin){%><%=session.varowner%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                             <input id="BidFlag" value="<%if (session.owner || session.ownerAdmin){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                             <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                         </div>

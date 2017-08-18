@@ -233,6 +233,8 @@ $('#employeeCreate').click(function () {
       .done(function (result) {
         if (result.code==409) {
           $("#employeeConflict").trigger("click");
+          $(".loadgif").css("visibility","hidden");
+          $("#employeeCreate").css("visibility","");
         }else {
           location.reload();
         }
