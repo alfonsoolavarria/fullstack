@@ -427,7 +427,8 @@ $('.finish-booking').click(function () {
 
     if (flag) {
       $("#booking-deleateada").trigger("click");
-      $(".loader-circle").css("visibility","");
+      $("#deteBooking").css("visibility","hidden");
+      $(".loadgif").css("visibility","");
     }else {
       $("#booking-nopresente").trigger("click");
     }
