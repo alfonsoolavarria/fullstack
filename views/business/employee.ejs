@@ -85,20 +85,6 @@
                                         </div>
                                     </li>
                                     <%}%>
-                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
-                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
-                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
-                                    <button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
-                                    <button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;">delay</button>
-                                    <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
-                                    <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
-                                      data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
                             </ul>
                             <%if(catpageE!=10){%>
                               <nav>
@@ -148,7 +134,7 @@
                         </div>
                     </div>
                     <div class="">
-                        <label class="form-control-label">Email:</label>
+                        <label class="form-control-label tagemail">Email:</label>
                         <div class="col-md-10">
                             <input type="email" class="form-control" id="email" required></input>
                         </div>
@@ -446,8 +432,6 @@
 
 <script src="/public/assets/material/global/vendor/asrange/jquery-asRange.min.js"></script>
 
-
-
 <!-- Scripts -->
 <script src="/public/assets/material/global/js/State.js"></script>
 <script src="/public/assets/material/global/js/Component.js"></script>
@@ -537,4 +521,19 @@ function nextC() {
 </script>
 <%}%>
 </body>
+<button type="button" class="btn btn-sm btn-primary waves-effect" id="employeeDelay" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Datos Enviados" style="visibility:hidden;" >delay</button>
+<button type="button" class="btn btn-sm btn-primary waves-effect" id="emplook" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Borrado" style="visibility:hidden;" >delay</button>
+<button type="button" class="btn btn-sm btn-primary waves-effect" id="emploDesactivate" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Activado" style="visibility:hidden;" >delay</button>
+<button type="button" class="btn btn-sm btn-primary waves-effect" id="emplocancel" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Cancelada" style="visibility:hidden;" >delay</button>
+<button type="button" class="btn btn-primary waves-effect" id="employeeConflict" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Propietario " style="visibility:hidden;">delay</button>
+<button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
+<button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
+  data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
+
 </html>

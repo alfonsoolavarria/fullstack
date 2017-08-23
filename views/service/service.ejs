@@ -137,6 +137,7 @@
                                             <div class="pl-20 align-self-center">
                                               <button type="button" class="btn btn-primary btn-sm editS btnS-<%=serviceData[o].objectId%>" data-edit-id="<%=serviceData[o].objectId%>" ><span id="nameS-<%=serviceData[o].objectId%>">Editar</span></button>
                                               <button type="button" class="btn btn-primary btn-danger waves-effect deleteS" data-delete-id="<%=serviceData[o].objectId%>" id="confirmS-<%=serviceData[o].objectId%>" style="height:32px;">Eliminar</button>
+                                              <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
                                             </div>
                                           </div>
                                           <div class="col-md-10">
@@ -197,6 +198,8 @@
                             data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
                             <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaEmplo" data-plugin="alertify"
                               data-type="log" data-delay="3000" data-log-message="Es necesario un empleado" style="visibility:hidden;" >delay</button>
+                            <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
+                              data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
                     </ul>
                     <%}else{%>
                       No hay Servicios disponibles
@@ -204,7 +207,7 @@
 
                     <input id="flagPaginator" value="3" style="visibility:hidden;">
                     <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
-                    <input id="session" value="<%=session.userId%>" style="visibility:hidden;">
+                    <input id="session" value="<%if (session.owner){%><%=session.userId%><%}else if (session.ownerAdmin){%><%=session.varowner%><%}%>" style="visibility:hidden;">
                     <input id="BidFlag" value="<%if (session.owner){%>1<%}else{%>2<%}%>" style="visibility:hidden;">
                     <input id="pageN" value="<%=selectPageE%>" style="visibility:hidden;">
                 </div>
@@ -301,13 +304,17 @@ Config.set('assets', '../../assets');
   var Site = window.Site;
   $(document).ready(function() {
     Site.run();
-    var cadena = $(".pagination-next")[0].className;
-    if (cadena.indexOf('disabled') != -1) {
-      $(".pagination-next").prop("onclick", null);
+    if ($(".pagination-next")[0] && $(".pagination-next")[0].className) {
+      var cadena = $(".pagination-next")[0].className;
+      if (cadena.indexOf('disabled') != -1) {
+        $(".pagination-next").prop("onclick", null);
+      }
     }
-    var cadena2 = $(".pagination-prev")[0].className;
-    if (cadena2.indexOf('disabled') != -1) {
-      $(".pagination-prev").prop("onclick", null);
+    if ($(".pagination-prev")[0] &&  $(".pagination-prev")[0].className) {
+      var cadena2 = $(".pagination-prev")[0].className;
+      if (cadena2.indexOf('disabled') != -1) {
+        $(".pagination-prev").prop("onclick", null);
+      }
     }
   });
 })(document, window, jQuery);

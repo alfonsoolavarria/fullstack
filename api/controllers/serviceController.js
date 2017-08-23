@@ -43,6 +43,7 @@ ServiceControllers.updateService = function updateService (options) {
       if (options.description) dataS.set({'description':options.description});
       if (options.employee) dataS.set({'employee':options.employee});
       if (options.schedule) dataS.set({'schedule':options.schedule});
+      if (options.category) dataS.set({'category':options.category});
     }
     return dataS.save().then(function(saveData) {
         // The save was successful.

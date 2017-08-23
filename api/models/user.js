@@ -94,9 +94,16 @@ UsersModel.checkUser = function checkUser (options) {
   query.equalTo('email',options.email);
   return query.find().then(function(userB){
     if (userB.length>0) {
-        return {code:409,message:'Email Existente'};
+        return {code:409,message:'Email Existente',tag:0};
     }else {
-        return {code:200,message:''};
+      query.equalTo('email',options.emailcont);
+      return query.find().then(function(userB){
+        if (userB.length>0) {
+            return {code:409,message:'Email Existente',tag:2};
+        }else {
+          return {code:200,message:''};
+        }
+      });
     }
   });
 };

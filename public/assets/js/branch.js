@@ -34,11 +34,17 @@ $(document).ready(function() {
       $.post('/business',dataSend)
       .done(function (result) {
         $(".loadgif").css("visibility","hidden");
-        $(".mainregisterBusiness").css("visibility","");
-        if (result.result && result.result.code==409) {
+        $(".mainregisterMainBusiness").css("visibility","");
+        if (result.result && result.result.code==409 && result.result.tag==0) {
           $("#mainbusinessConflict").trigger("click");
           $(".maintagemail").css("color","red");
+          $(".maintagemail2").css("color","");
           $("#email").focus();
+        }else if (result.result && result.result.code==409 && result.result.tag==2) {
+          $("#mainbusinessConflict").trigger("click");
+          $(".maintagemail2").css("color","red");
+          $(".maintagemail").css("color","");
+          $("#emailCon").focus();
         }else {
           $(".clean").trigger("click");
           $(".image-icon .dropify-render img").attr("src","");

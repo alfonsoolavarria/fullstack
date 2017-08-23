@@ -176,8 +176,15 @@ module.exports = function(app) {
 	});
 
   app.put('/employee',middle.checkSession, function(req, res) {
-    EployeeControllers.updateEmployee(req.body).then(function(user) {
-      res.json(user);
+    ///console.log('lleguee',req.body);
+    return Users.checkUser(req.body).then(function(result) {
+      if (result.code==409) {
+        res.json(result);
+        return;
+      }
+      EployeeControllers.updateEmployee(req.body).then(function(user) {
+        res.json(user);
+      });
     });
 
   });
@@ -784,7 +791,7 @@ module.exports = function(app) {
       if (req.body.employee) {
         for (var i = 0; i < req.body.employee.length; i++) {
           ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
-            res.json(ready);
+            res.json({code:200});
           });
         }
       }else {

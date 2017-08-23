@@ -266,24 +266,34 @@ $('#employeeCreate').click(function () {
       if ($('#Lunes-0-'+id).val().length>0 || $('#Lunes-1-'+id).val().length>0 || $('#Lunes-2-'+id).val().length>0 || $('#Lunes-3-'+id).val().length>0) {
         if ($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Lunes-0-'+id).val().length<1 && $('#Lunes-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
           flag = 0;
         }else if ($('#Lunes-2-'+id).val().length<1 && $('#Lunes-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length>0) && ($('#Lunes-2-'+id).val().length<1 || $('#Lunes-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Lunes-0-'+id).val().length<1 || $('#Lunes-1-'+id).val().length<1) && ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
 
       }
@@ -291,24 +301,36 @@ $('#employeeCreate').click(function () {
       if ($('#Martes-0-'+id).val().length>0 || $('#Martes-1-'+id).val().length>0 || $('#Martes-2-'+id).val().length>0 || $('#Martes-3-'+id).val().length>0) {
         if ($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Martes-0-'+id).val().length<1 && $('#Martes-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Martes-2-'+id).val().length<1 && $('#Martes-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length>0) && ($('#Martes-2-'+id).val().length<1 || $('#Martes-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Martes-0-'+id).val().length<1 || $('#Martes-1-'+id).val().length<1) && ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
 
       }
@@ -316,48 +338,72 @@ $('#employeeCreate').click(function () {
       if ($('#Miercoles-0-'+id).val().length>0 || $('#Miercoles-1-'+id).val().length>0 || $('#Miercoles-2-'+id).val().length>0 || $('#Miercoles-3-'+id).val().length>0) {
         if ($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Miercoles-0-'+id).val().length<1 && $('#Miercoles-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Miercoles-2-'+id).val().length<1 && $('#Miercoles-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length>0) && ($('#Miercoles-2-'+id).val().length<1 || $('#Miercoles-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Miercoles-0-'+id).val().length<1 || $('#Miercoles-1-'+id).val().length<1) && ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
       }
 
       if ($('#Jueves-0-'+id).val().length>0 || $('#Jueves-1-'+id).val().length>0 || $('#Jueves-2-'+id).val().length>0 || $('#Jueves-3-'+id).val().length>0) {
         if ($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Jueves-0-'+id).val().length<1 && $('#Jueves-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Jueves-2-'+id).val().length<1 && $('#Jueves-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length>0) && ($('#Jueves-2-'+id).val().length<1 || $('#Jueves-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Jueves-0-'+id).val().length<1 || $('#Jueves-1-'+id).val().length<1) && ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
 
       }
@@ -365,48 +411,72 @@ $('#employeeCreate').click(function () {
       if ($('#Viernes-0-'+id).val().length>0 || $('#Viernes-1-'+id).val().length>0 || $('#Viernes-2-'+id).val().length>0 || $('#Viernes-3-'+id).val().length>0) {
         if ($('#Viernes-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Viernes-0-'+id).val().length<1 && $('#Viernes-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Viernes-2-'+id).val().length<1 && $('#Viernes-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('Vierness-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Viernes-0-'+id).val().length<1 || $('#Viernes-1-'+id).val().length<1) && ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
       }
 
       if ($('#Sabado-0-'+id).val().length>0 || $('#Sabado-1-'+id).val().length>0 || $('#Sabado-2-'+id).val().length>0 || $('#Sabado-3-'+id).val().length>0) {
         if ($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Sabado-0-'+id).val().length<1 && $('#Sabado-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Sabado-2-'+id).val().length<1 && $('#Sabado-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length>0) && ($('#Sabado-2-'+id).val().length<1 || $('#Sabado-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Sabado-0-'+id).val().length<1 || $('#Sabado-1-'+id).val().length<1) && ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
 
       }
@@ -414,24 +484,36 @@ $('#employeeCreate').click(function () {
       if ($('#Domingo-0-'+id).val().length>0 || $('#Domingo-1-'+id).val().length>0 || $('#Domingo-2-'+id).val().length>0 || $('#Domingo-3-'+id).val().length>0) {
         if ($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Domingo-0-'+id).val().length<1 && $('#Domingo-1-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length<1) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if ($('#Domingo-2-'+id).val().length<1 && $('#Domingo-3-'+id).val().length>0) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
         if (($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length>0) && ($('#Domingo-2-'+id).val().length<1 || $('#Domingo-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }else if (($('#Domingo-0-'+id).val().length<1 || $('#Domingo-1-'+id).val().length<1) && ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length>0)) {
           $("#CompletaHoraS").trigger("click");
-          flag = 0;
+          $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
+          return;
+
         }
 
       }
@@ -470,6 +552,9 @@ $('#employeeCreate').click(function () {
       }];
 
       /******/
+      $(".loadgif").css("visibility","");
+      $(".edit").css("visibility","hidden");
+      $(".btn-danger").css("visibility","hidden");
 
       if (flag==1) {
         flag = 0;
@@ -480,8 +565,17 @@ $('#employeeCreate').click(function () {
           success: function functionName(data) {
             if (data.code!=200) {
               $("#EditEmpleoyeeError").trigger("click");
+              $(".loadgif").css("visibility","hidden");
+              $(".edit").css("visibility","");
+              $(".btn-danger").css("visibility","");
+              $(".tagemail").css("color","red");
+              return;
             }else {
               $("#EditEmployeeSave").trigger("click");
+              $(".tagemail").css("color","");
+              $(".loadgif").css("visibility","hidden");
+              $(".edit").css("visibility","");
+              $(".btn-danger").css("visibility","");
             }
 
           }

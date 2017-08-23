@@ -32,7 +32,7 @@
                           <div class="row" style="margin-left:10px;">
                             <div class="col-md-3"></div>
                             <div class="col-md-3"><label><b>Nombre</b></label></div>
-                            <div class="col-md-3"><label><b>Email</b></label></div>
+                            <div class="col-md-3 tagemail"><label><b>Email</b></label></div>
                             <div class="col-md-3"><label><b>Tel&eacute;fono</b></label></div>
                           </div>
                           <div class="row">
@@ -105,6 +105,7 @@
                               <%}else{%>
                                 <button type="button" class="btn btn-primary btn-sm edit btn-<%=employeeB.objectId%>" data-edit-id="<%=employeeB.objectId%>" ><span id="nameE-<%=employeeB.objectId%>">Editar</span></button>
                                 <button type="button" class="btn btn-primary btn-danger waves-effect" data-delete-id="<%=employeeB.objectId%>" id="confirm-<%=employeeB.objectId%>" style="height:32px;">Eliminar</button>
+                                <img class="loadgif" src="/public/assets/images/load.svg" style="margin-left:-40px; visibility:hidden;">
                               <%}%>
                             </div>
                           </div>
@@ -126,7 +127,7 @@
                     <button type="button" class="btn btn-primary waves-effect" id="EditEmployeeSave" data-plugin="alertify"
                       data-type="log" data-delay="3000" data-log-message="Se guardo con Exito" style="visibility:hidden;" >delay</button>
                     <button type="button" class="btn btn-primary waves-effect" id="EditEmpleoyeeError" data-plugin="alertify"
-                      data-type="log" data-delay="3000" data-log-message="Error al guardar" style="visibility:hidden;" >delay</button>
+                      data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Usuario" style="visibility:hidden;" >delay</button>
                     <input id="flagPaginator" value="2" style="visibility:hidden;">
                     <input id="Bid" value="<%if (session.owner || session.ownerAdmin){%><%=session.userId%><%}else{%><%=bussiId%><%}%>" style="visibility:hidden;">
                     <input id="BidFlag" value="<%if (session.owner || session.ownerAdmin){%>1<%}else{%>2<%}%>" style="visibility:hidden;">

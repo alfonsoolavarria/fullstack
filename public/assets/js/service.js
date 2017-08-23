@@ -248,24 +248,30 @@ $(document).ready(function() {
         if ($('#Lunes-0-'+id).val().length>0 || $('#Lunes-1-'+id).val().length>0 || $('#Lunes-2-'+id).val().length>0 || $('#Lunes-3-'+id).val().length>0) {
           if ($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Lunes-0-'+id).val().length<1 && $('#Lunes-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Lunes-2-'+id).val().length<1 && $('#Lunes-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Lunes-0-'+id).val().length>0 && $('#Lunes-1-'+id).val().length>0) && ($('#Lunes-2-'+id).val().length<1 || $('#Lunes-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Lunes-0-'+id).val().length<1 || $('#Lunes-1-'+id).val().length<1) && ($('#Lunes-2-'+id).val().length>0 && $('#Lunes-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
 
         }
@@ -273,24 +279,30 @@ $(document).ready(function() {
         if ($('#Martes-0-'+id).val().length>0 || $('#Martes-1-'+id).val().length>0 || $('#Martes-2-'+id).val().length>0 || $('#Martes-3-'+id).val().length>0) {
           if ($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Martes-0-'+id).val().length<1 && $('#Martes-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Martes-2-'+id).val().length<1 && $('#Martes-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Martes-0-'+id).val().length>0 && $('#Martes-1-'+id).val().length>0) && ($('#Martes-2-'+id).val().length<1 || $('#Martes-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Martes-0-'+id).val().length<1 || $('#Martes-1-'+id).val().length<1) && ($('#Martes-2-'+id).val().length>0 && $('#Martes-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
 
         }
@@ -298,48 +310,60 @@ $(document).ready(function() {
         if ($('#Miercoles-0-'+id).val().length>0 || $('#Miercoles-1-'+id).val().length>0 || $('#Miercoles-2-'+id).val().length>0 || $('#Miercoles-3-'+id).val().length>0) {
           if ($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Miercoles-0-'+id).val().length<1 && $('#Miercoles-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Miercoles-2-'+id).val().length<1 && $('#Miercoles-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Miercoles-0-'+id).val().length>0 && $('#Miercoles-1-'+id).val().length>0) && ($('#Miercoles-2-'+id).val().length<1 || $('#Miercoles-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Miercoles-0-'+id).val().length<1 || $('#Miercoles-1-'+id).val().length<1) && ($('#Miercoles-2-'+id).val().length>0 && $('#Miercoles-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
         }
 
         if ($('#Jueves-0-'+id).val().length>0 || $('#Jueves-1-'+id).val().length>0 || $('#Jueves-2-'+id).val().length>0 || $('#Jueves-3-'+id).val().length>0) {
           if ($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Jueves-0-'+id).val().length<1 && $('#Jueves-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Jueves-2-'+id).val().length<1 && $('#Jueves-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Jueves-0-'+id).val().length>0 && $('#Jueves-1-'+id).val().length>0) && ($('#Jueves-2-'+id).val().length<1 || $('#Jueves-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Jueves-0-'+id).val().length<1 || $('#Jueves-1-'+id).val().length<1) && ($('#Jueves-2-'+id).val().length>0 && $('#Jueves-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
 
         }
@@ -347,48 +371,60 @@ $(document).ready(function() {
         if ($('#Viernes-0-'+id).val().length>0 || $('#Viernes-1-'+id).val().length>0 || $('#Viernes-2-'+id).val().length>0 || $('#Viernes-3-'+id).val().length>0) {
           if ($('#Viernes-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Viernes-0-'+id).val().length<1 && $('#Viernes-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Viernes-2-'+id).val().length<1 && $('#Viernes-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('Vierness-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Viernes-0-'+id).val().length<1 || $('#Viernes-1-'+id).val().length<1) && ($('#Viernes-2-'+id).val().length>0 && $('#Viernes-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
         }
 
         if ($('#Sabado-0-'+id).val().length>0 || $('#Sabado-1-'+id).val().length>0 || $('#Sabado-2-'+id).val().length>0 || $('#Sabado-3-'+id).val().length>0) {
           if ($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Sabado-0-'+id).val().length<1 && $('#Sabado-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Sabado-2-'+id).val().length<1 && $('#Sabado-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Sabado-0-'+id).val().length>0 && $('#Sabado-1-'+id).val().length>0) && ($('#Sabado-2-'+id).val().length<1 || $('#Sabado-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Sabado-0-'+id).val().length<1 || $('#Sabado-1-'+id).val().length<1) && ($('#Sabado-2-'+id).val().length>0 && $('#Sabado-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
 
         }
@@ -396,24 +432,30 @@ $(document).ready(function() {
         if ($('#Domingo-0-'+id).val().length>0 || $('#Domingo-1-'+id).val().length>0 || $('#Domingo-2-'+id).val().length>0 || $('#Domingo-3-'+id).val().length>0) {
           if ($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Domingo-0-'+id).val().length<1 && $('#Domingo-1-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length<1) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if ($('#Domingo-2-'+id).val().length<1 && $('#Domingo-3-'+id).val().length>0) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
           if (($('#Domingo-0-'+id).val().length>0 && $('#Domingo-1-'+id).val().length>0) && ($('#Domingo-2-'+id).val().length<1 || $('#Domingo-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }else if (($('#Domingo-0-'+id).val().length<1 || $('#Domingo-1-'+id).val().length<1) && ($('#Domingo-2-'+id).val().length>0 && $('#Domingo-3-'+id).val().length>0)) {
             $("#CompletaHoraS").trigger("click");
-            dataSend.flag = 0;
+            $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
+            return;
           }
 
         }
@@ -469,8 +511,15 @@ $(document).ready(function() {
 
         /******/
 
+
+        dataSend.category=$("#selectcateO-"+id).val();
+
+
         var stringDuration2 = $("#service-duration-"+id).text();
         dataSend.duration = stringDuration2.trim();
+        $('.btn-sm').css("visibility", "hidden");
+        $('.btn-danger').css("visibility", "hidden");
+        $(".loadgif").css("visibility","");
         if (dataSend.employee.length>0) {
           flag = 0;
           $.ajax({
@@ -478,12 +527,18 @@ $(document).ready(function() {
             data:dataSend,
             type: 'PUT',
             success: function functionName(data) {
-              console.log('*************',data);
+              $("#EditEmployeeSave").trigger("click");
+              $('.btn-sm').css("visibility", "");
+              $('.btn-danger').css("visibility", "");
+              $(".loadgif").css("visibility","hidden");
             }
           });
           dataSend={};
           $("#serviceDelay").trigger("click");
         }else {
+          $('.btn-sm').css("visibility", "");
+          $('.btn-danger').css("visibility", "");
+          $(".loadgif").css("visibility","hidden");
           $("#CompletaEmplo").trigger("click");
           $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
           return;
@@ -523,8 +578,8 @@ $(document).ready(function() {
         $("#selectcateO-"+id).removeAttr("disabled");
         $("#catenameO-"+id).removeAttr("disabled");
 
-        $("#service-serviceName-"+id).keyup(function () {
-          dataSend.serviceName = $("#service-serviceName-"+id).val();
+        $("#service-name-"+id).keyup(function () {
+          dataSend.serviceName = $("#service-name-"+id).val();
           flag=1;
         });
         /*$("#service-duration-"+id).keyup(function () {
@@ -554,12 +609,15 @@ $(document).ready(function() {
       var button = $(this);
       var id = button.data('ok-id');
       $('.modalS-'+id).css("visibility", "hidden");
+      $('.btn-sm').css("visibility", "hidden");
+      $('.btn-danger').css("visibility", "hidden");
+      $(".loadgif").css("visibility","");
       $.ajax({
         url:'/service',
         data:{delete:true,id:id},
         type: 'PUT',
         success: function functionName(data) {
-          location.reload();
+          window.location.href = "/servicelist/"+$("#session").val();
         }
       });
       $("#serviceok").trigger("click");
