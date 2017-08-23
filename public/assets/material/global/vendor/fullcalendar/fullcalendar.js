@@ -23,7 +23,6 @@ var FC = $.fullCalendar = {
 	internalApiVersion: 7
 };
 var fcViews = FC.views = {};
-var colorStatus='';
 
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
@@ -49,7 +48,6 @@ $.fn.fullCalendar = function(options) {
 		// a new calendar initialization
 		if (!calendar) { // don't initialize twice
 		$.get( "/booking", function( data ) {
-			if (data.data[0]) colorStatus=data.data[0].colorState;
 			options.defaultDate=moment().format("YYYY-MM-DD"); // defaultDate Calendar
 			//nota:aqui puedo hacer cualquier config de calendar segun la doc
 			options.events= data.data;
@@ -7763,7 +7761,7 @@ TimeGrid.mixin({
 					(event.title ?
 						'<div class="fc-title">' +
 							htmlEscape(event.title+' - '+event.serviceName) +
-						'</div>'+'<div id="alfonso" style="border-radius:50%;background:'+colorStatus+';width:17px;">.'+'</div>':
+						'</div>'+'<div id="alfonso" style="border-radius:50%;background:'+event.colorState+';width:17px;">.'+'</div>':
 						''
 						) +
 				'</div>' +
