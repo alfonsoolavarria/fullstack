@@ -272,12 +272,14 @@ $(document).ready(function() {
         $("#cl-invalido").trigger("click");
         return;
       }
+      $(".loadgif").css("visibility","");
+      $(".sect1").css("visibility","hidden");
+      $(".sect2").css("visibility","hidden");
       $.ajax({
         url:'/booking',
         data:dataSendBooking2,
         type: 'PUT',
         success: function functionName(data) {
-
           location.reload();
         }
       });
@@ -296,6 +298,7 @@ $(document).ready(function() {
     e.preventDefault();
     $(".loadgif").css("visibility","");
     $("#modalNewService").css("visibility","hidden");
+    $(".btn-pure").css("visibility","hidden");
     var duration = $('#durationB').val();
     var startdateinit = new Date($('#fechaA').val()+" "+$('#horaH').val());
     var startdatefinish = moment(startdateinit).format("YYYY-MM-DD HH:mm");
@@ -318,6 +321,7 @@ $(document).ready(function() {
       $("#booking-invalido").trigger("click");
       $(".loadgif").css("visibility","hidden");
       $("#modalNewService").css("visibility","");
+      $(".btn-pure").css("visibility","hidden");
       return;
     }
     $.post('/booking',dataSendBooking)
@@ -362,6 +366,11 @@ $('.finish-booking').click(function () {
     deleteBooking:true,
     idBooking:$('#data-id-booking').val(),
   }
+  //alfonso
+  $(".loadgif").css("visibility","");
+  $(".sect1").css("visibility","hidden");
+  $(".sect2").css("visibility","hidden");
+
   $.ajax({
     url:'/booking',
     data:dataFinish,
@@ -398,6 +407,11 @@ $('.finish-booking').click(function () {
 
   $('.delete-booking').click(function () {
     var dataDelete,flag=false;
+    $(".loadgif").css("visibility","");
+    $(".sect1").css("visibility","hidden");
+    $(".sect2").css("visibility","hidden");
+
+
     $('#modal-'+$('#data-id-booking').val()).css("visibility", "hidden");
     if ($('.delete-booking').text()=='Borrar') {
       dataDelete ={
@@ -428,7 +442,6 @@ $('.finish-booking').click(function () {
     if (flag) {
       $("#booking-deleateada").trigger("click");
       $("#deteBooking").css("visibility","hidden");
-      $(".loadgif").css("visibility","");
     }else {
       $("#booking-nopresente").trigger("click");
     }
