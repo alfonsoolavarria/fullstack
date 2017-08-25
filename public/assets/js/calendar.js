@@ -18,6 +18,12 @@ $(document).ready(function() {
   var options = {
     data:jsonCliente,
   	getValue: "name",
+    template: {
+  		type: "description",
+  		fields: {
+  			description: "email"
+  		}
+	   },
     list: {
       maxNumberOfElements: 10,
       match: {
