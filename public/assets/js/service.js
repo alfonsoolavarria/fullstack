@@ -387,7 +387,7 @@ $(document).ready(function() {
             $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
             return;
           }
-          if (($('Vierness-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
+          if (($('#Viernes-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
             $("#CompletaHoraS").trigger("click");
             $('.btnS-'+id).append("<span id='nameS-"+id+"'>Guardar</span>");
             return;
@@ -531,6 +531,12 @@ $(document).ready(function() {
               $('.btn-sm').css("visibility", "");
               $('.btn-danger').css("visibility", "");
               $(".loadgif").css("visibility","hidden");
+              $("#serviceDelay").css("visibility","hidden");
+              $("#serviceok").css("visibility","hidden");
+              $("#servicecancel").css("visibility","hidden");
+              $("#CompletaHoraS").css("visibility","hidden");
+              $("#CompletaEmplo").css("visibility","hidden");
+              $("#EditEmployeeSave").css("visibility","hidden");
             }
           });
           dataSend={};

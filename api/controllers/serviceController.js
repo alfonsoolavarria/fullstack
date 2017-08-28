@@ -204,6 +204,26 @@ ServiceControllers.addReationEmployee = function addReationEmployee (serviceId,e
 
 };
 
+ServiceControllers.removeReationEmployee = function removeReationEmployee (serviceId) {
+    var query = new Parse.Query('Service');
+    return query.get(serviceId).then(function(dataS) {
+      return dataS.relation('employee2').query().find().then(function(userdelete) {
+        dataS.relation('employee2').remove(userdelete);
+        dataS.save(null, {
+            useMasterKey: true
+        });
+        return {
+            success: true,
+            code: 200
+        };
+      });
+
+    }, function(error) {
+        console.log('Service Get', error);
+        return {};
+    });
+};
+
 
 
 module.exports = ServiceControllers;

@@ -789,11 +789,13 @@ module.exports = function(app) {
   app.put('/service',middle.checkSession, function(req, res) {
     ServiceControllers.updateService(req.body).then(function(data){
       if (req.body.employee) {
-        for (var i = 0; i < req.body.employee.length; i++) {
-          ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
-            res.json({code:200});
-          });
-        }
+        ServiceControllers.removeReationEmployee(data.id).then(function() {
+          for (var i = 0; i < req.body.employee.length; i++) {
+            ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
+              res.json({code:200});
+            });
+          }
+        });
       }else {
         res.json({code:200});
       }
