@@ -545,6 +545,14 @@ module.exports = function(app) {
           });
         });
       }
+      if (req.body.flaguser) {
+        Users.checkUser(req.body).then(function(result) {
+          if (result.code==409) {
+            res.json(result);
+            return;
+          }
+        });
+      }
       return BusinessControllers.updateMainBusiness(req.body).then(function(data) {
         if (data.code==500) {
           return res.json({code:500});

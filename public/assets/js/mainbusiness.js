@@ -49,15 +49,39 @@ $(document).ready(function() {
     $('.btn-'+id).empty();
     if (text=='Guardar') {
       if (dataSend.flag==1) {
+        $('.btn-'+id).css('visibility','hidden');
+        $('#confirm-'+id).css('visibility','hidden');
+        $('.loadgif-'+id).css('visibility','');
         $.ajax({
           url:'/business',
           data:dataSend,
           type: 'PUT',
           success: function functionName(data) {
-            console.log('respuest',data);
-            if (data.code!=200) {
+            if (data.code==409) {
+              $("#mainbusinessEmail-"+id).trigger("click");
+              $('.btn-'+id).css('visibility','');
+              $('#confirm-'+id).css('visibility','');
+              $('.loadgif-'+id).css('visibility','hidden');
+              $('.btn-'+id).empty();
+
+              $('.emailtag-'+id).css('color','red');
+              $("#nameE-"+id).removeAttr("disabled");
+              $("#owner-"+id).removeAttr("disabled");
+              $("#telefono-"+id).removeAttr("disabled");
+              $("#email-"+id).removeAttr("disabled");
+              $('.btn-'+id).append("<span id='editE-"+id+"'>Guardar</span>");
+              $("#email-"+id).focus();
+            }else if (data.code==500){
               $("#mainbusinessError-"+id).trigger("click");
+              $('.btn-'+id).css('visibility','');
+              $('#confirm-'+id).css('visibility','');
+              $('.loadgif-'+id).css('visibility','hidden');
             }else {
+              $('.btn-'+id).css('visibility','');
+              $('#confirm-'+id).css('visibility','');
+              $('.loadgif-'+id).css('visibility','hidden');
+              $('.emailtag-'+id).css('color','');
+
               $("#mainbusinessCorrect-"+id).trigger("click");
             }
 

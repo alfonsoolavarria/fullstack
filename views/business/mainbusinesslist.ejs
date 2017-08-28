@@ -63,7 +63,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group row form-material row">
-                                    <label class="col-xs-12 col-sm-12 col-md-6 form-control-label">Email del Propietario:</label>
+                                    <label class="col-xs-12 col-sm-12 col-md-6 form-control-label emailtag-<%= valores[i].objectId %>">Email del Propietario:</label>
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                       <input class="form-control" id="email-<%=valores[i].objectId%>" style="border:0px;background:none;width:130%;" value="<%-JSON.parse(JSON.stringify(valores[i].ownerAdmin)).username%>" disabled></input>
                                     </div>
@@ -75,6 +75,7 @@
                                     <% if (valores[i].status){%>
                                       <button type="button" class="btn btn-primary btn-sm btn-sm-edit2 btn-<%= valores[i].objectId %>" data-edit-id="<%= valores[i].objectId %>"><span id="editE-<%= valores[i].objectId %>">Editar</span></button>
                                       <button type="button" class="btn btn-primary btn-danger danger-2 waves-effect" data-delete-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Eliminar</button>
+                                      <img class="loadgif-<%= valores[i].objectId %>" src="/public/assets/images/load.svg" style="margin-left:-65px; visibility:hidden;">
                                       <%}else{%>
                                         <button type="button" class="btn btn-primary btn-warning warning2 waves-effect" data-activate-id="<%= valores[i].objectId %>" id="confirm-<%= valores[i].objectId %>" style="height:32px;">Activar</button>
                                       <%}%>
@@ -98,6 +99,8 @@
                       data-type="log" data-delay="4500" data-log-message="Se ha guardado correctamente" style="visibility:hidden;" >delay</button>
                       <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessError-<%= valores[i].objectId %>" data-plugin="alertify"
                       data-type="log" data-delay="3000" data-log-message="Error al guardar datos" style="visibility:hidden;" >delay</button>
+                      <button type="button" class="btn btn-sm btn-primary waves-effect" id="mainbusinessEmail-<%= valores[i].objectId %>" data-plugin="alertify"
+                      data-type="log" data-delay="3000" data-log-message="Ya este Email Existe para otro Usuario" style="visibility:hidden;" >delay</button>
                       <label style="visibility:hidden;" id="delete-bu-<%= valores[i].objectId %>"></label>
                       <%idGeneral=valores[i].objectId%>
                     <% } %>
