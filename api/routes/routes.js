@@ -816,7 +816,7 @@ module.exports = function(app) {
   ********************************/
   app.get('/calendar',middle.checkSession, function(req, res) {
     //session.userId = req.query.employee ? req.query.employee : req.query.owner ?req.query.owner: req.query.admin ? req.query.admin:0;
-    Users.getUsersClient('Cliente',{type:'',page:0}).then(function(data){
+    Users.getUsersClient('Cliente',{type:'special',page:0}).then(function(data){
       var idUserEmploOwner = 0, idgetservice=0;
       if (req.query.employee) {
         idUserEmploOwner = req.query.employee;

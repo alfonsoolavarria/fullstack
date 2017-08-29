@@ -479,6 +479,7 @@ $('.finish-booking').click(function () {
     }else {
       $(".loadgif").css("visibility","");
       $("#newClienteM").css("visibility","hidden");
+      $(".close-modal-client").css("visibility","hidden");
       var dataSendC = {
         name:$("#clientname").val(),
         phone:$("#phonecliente").val(),
@@ -488,6 +489,16 @@ $('.finish-booking').click(function () {
       };
       $.post('/client',dataSendC)
         .done(function (result) {
+          console.log('rrr',result);
+          if (result.code==409) {
+            $("#email-invalido").trigger("click");
+            $(".tagemail").css("color","red");
+            $(".loadgif").css("visibility","hidden");
+            $("#newClienteM").css("visibility","");
+            $(".close-modal-client").css("visibility","");
+            return;
+          }
+
           if (result.data) {
             var newdata = JSON.parse($("#valores-json").val());
             newdata.push(result.data);
@@ -499,6 +510,12 @@ $('.finish-booking').click(function () {
             var options = {
               data:jsonClientet,
               getValue: "name",
+              template: {
+            		type: "description",
+            		fields: {
+            			description: "email"
+            		}
+          	   },
               list: {
                 maxNumberOfElements: 10,
                 match: {
@@ -516,8 +533,10 @@ $('.finish-booking').click(function () {
             $("#eac-container-clienteE").css("zIndex","1710");
           }
 
+          $(".tagemail").css("color","");
           $(".loadgif").css("visibility","hidden");
           $("#newClienteM").css("visibility","");
+          $(".close-modal-client").css("visibility","");
           $('#addNewCalendar').modal('show');
           $('#addClient').modal('hide');
 
@@ -526,6 +545,7 @@ $('.finish-booking').click(function () {
         console.log('error poner alertify');
         $(".loadgif").css("visibility","hidden");
         $("#newClienteM").css("visibility","");
+        $(".close-modal-client").css("visibility","");
       });
     }
     e.preventDefault();

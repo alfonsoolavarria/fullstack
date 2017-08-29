@@ -278,7 +278,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="ename">Email:</label>
+                <label class="col-md-2 form-control-label tagemail" for="ename">Email:</label>
                 <div class="col-md-8">
                   <input type="text" class="form-control" id="emailcliente" name="email" required/>
                 </div>
@@ -314,6 +314,8 @@
   data-type="log" data-delay="3000" data-log-message="Cliente/Servicio/Empleado Invalido" style="visibility:hidden;" >delay</button>
   <button type="button" class="btn btn-sm btn-primary waves-effect" id="cl-invalido" data-plugin="alertify"
   data-type="log" data-delay="3000" data-log-message="Debe llenar los campos" style="visibility:hidden;" >delay</button>
+  <button type="button" class="btn btn-primary waves-effect" id="email-invalido" data-plugin="alertify"
+  data-type="log" data-delay="5000" data-log-message="Ya este Email Existe para otro Usuario " style="visibility:hidden;" >delay</button>
   <!-- Site Action -->
   <div class="site-action" data-plugin="actionBtn">
     <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating">

@@ -205,63 +205,78 @@ UsersModel.getEmployeeBusinessOne = function getEmployeeBusinessOne (id) {
 };
 
 UsersModel.getUsersClient = function getUsersClient (typeUser,reqparams) {
-
   var page=reqparams.page ? reqparams.page : 0;
   var cantpage=10;
   var consulta;
+  var promises2 = [];
+  var queryUser = new Parse.Query('_User');
+  queryUser.equalTo('type','Cliente')
   var queryU = new Parse.Query('Booking');
   queryU.include('client');
-  return queryU.find().then(function(cantData) {
-
-    if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(6).skip(page*6).find();
-    else consulta = queryU.descending('createdAt').find();
-
-    return consulta.then(function(dataUsers){
-      var promises = [], filters=[],filters2=[];
-      //filter all data
-      _.forEach(cantData, function(allData) {
-        if (filters2.indexOf(allData.get('client').id)<0) {
-          filters2.push(allData.get('client').id);
-        }
-      });
-      //filter six data
-      _.forEach(dataUsers, function(allD) {
-        moment2.locale('es');
-        if (filters.indexOf(allD.get('client').id)<0) {
-          var finalHour = new Date(allD.createdAt);
-          promises.push({
-            name:allD.get('client').get('name'),
-            email:allD.get('client').get('username'),
-            objectId:allD.get('client').id,
-            phone:allD.get('client').get('phone'),
-            dayName:Datadays[moment2(allD.createdAt).weekday()],
-            dayNumber:moment(allD.createdAt).get('date'),
-            month:(moment(allD.createdAt).month())+1,
-            //hour:finalHour.getHours()+'hs'
-            hour:moment(allD.createdAt).format('HH')+'hs'
-          });
-          filters.push(allD.get('client').id);
-        }
-      });
-
-      if ((filters2.length/6)>0 && (filters2.length/6)%1==0) {
-        //entero
-        cantpage=(filters2.length/6)*10;
-      }else if ((filters2.length/6)>0 && (filters2.length/6)%1!=0) {
-        //redondeo
-        cantpage=(parseInt(filters2.length/6)+1)*10;
-      }else {
-        //una sola pagina
-        cantpage=1*10;
-      }
-      return Parse.Promise.when(promises).then(function(resultados, index) {
-        dataUsers=resultados;
-        if (reqparams.type=='client') dataUsers.push({catpageE:cantpage});
-        return JSON.stringify(dataUsers);
+  return queryUser.find().then(function(Clientes) {
+    _.forEach(Clientes, function(uc) {
+      promises2.push({
+        name:uc.get('name'),
+        email:uc.get('username'),
+        objectId:uc.id,
       });
     });
-  });
+    if (reqparams.type!='special') {
+      return queryU.find().then(function(cantData) {
 
+        if (reqparams.type=='client') consulta = queryU.descending('createdAt').limit(6).skip(page*6).find();
+        else consulta = queryU.descending('createdAt').find();
+
+        return consulta.then(function(dataUsers){
+          var promises = [], filters=[],filters2=[];
+          //filter all data
+          _.forEach(cantData, function(allData) {
+            if (filters2.indexOf(allData.get('client').id)<0) {
+              filters2.push(allData.get('client').id);
+            }
+          });
+          //filter six data
+          _.forEach(dataUsers, function(allD) {
+            moment2.locale('es');
+            if (filters.indexOf(allD.get('client').id)<0) {
+              var finalHour = new Date(allD.createdAt);
+              promises.push({
+                name:allD.get('client').get('name'),
+                email:allD.get('client').get('username'),
+                objectId:allD.get('client').id,
+                phone:allD.get('client').get('phone'),
+                dayName:Datadays[moment2(allD.createdAt).weekday()],
+                dayNumber:moment(allD.createdAt).get('date'),
+                month:(moment(allD.createdAt).month())+1,
+                //hour:finalHour.getHours()+'hs'
+                hour:moment(allD.createdAt).format('HH')+'hs'
+              });
+              filters.push(allD.get('client').id);
+            }
+          });
+
+          if ((filters2.length/6)>0 && (filters2.length/6)%1==0) {
+            //entero
+            cantpage=(filters2.length/6)*10;
+          }else if ((filters2.length/6)>0 && (filters2.length/6)%1!=0) {
+            //redondeo
+            cantpage=(parseInt(filters2.length/6)+1)*10;
+          }else {
+            //una sola pagina
+            cantpage=1*10;
+          }
+          return Parse.Promise.when(promises).then(function(resultados, index) {
+            dataUsers=resultados;
+            if (reqparams.type=='client') dataUsers.push({catpageE:cantpage});
+            return JSON.stringify(dataUsers);
+          });
+        });
+      });
+    }else {
+      dataUsers=promises2;
+      return JSON.stringify(dataUsers);
+    }
+  });
 };
 
 UsersModel.getOneClient = function getOneClient (id) {
