@@ -226,6 +226,7 @@ $('#employeeCreate').click(function () {
 
     $(".loadgif").css("visibility","");
     $("#employeeCreate").css("visibility","hidden");
+    $(".cancelar").css("visibility","hidden");
 
     if (validateEmail($('#email').val())) {
       $("#employeeDelaysucc").trigger("click");
@@ -235,6 +236,9 @@ $('#employeeCreate').click(function () {
           $("#employeeConflict").trigger("click");
           $(".loadgif").css("visibility","hidden");
           $("#employeeCreate").css("visibility","");
+          $(".cancelar").css("visibility","");
+          $(".tagemail").css("color","red");
+          $("#email").focus();
         }else {
           location.reload();
         }
@@ -246,6 +250,9 @@ $('#employeeCreate').click(function () {
       $("#EmailInvalid").trigger("click");
       $(".loadgif").css("visibility","hidden");
       $("#employeeCreate").css("visibility","");
+      $(".cancelar").css("visibility","");
+      $(".tagemail").css("color","red");
+      $("#email").focus();
     }
 });
 

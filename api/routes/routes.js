@@ -582,6 +582,7 @@ module.exports = function(app) {
         if (data.code==500) {
           return res.json({code:500});
         }
+
         if (req.body.flagUser) {
           Users.updateUserBusiness(req.body).then(function (user) {
             return res.json({code:200});
@@ -657,6 +658,8 @@ module.exports = function(app) {
               serviSelect:0,
               clientSelect:0,
             });
+          }else if (req.query.updateValue=='1') {
+            return res.redirect('/business/list?owner='+req.session.varowner);
           }else {
             return res.redirect('/calendar?owner='+req.session.varowner+'&twoService=1');
           }

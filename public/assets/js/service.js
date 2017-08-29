@@ -216,6 +216,7 @@ $(document).ready(function() {
 
       $(".loadgif").css("visibility","");
       $(".service").css("visibility","hidden");
+      $(".cancelService").css("visibility","hidden");
 
       if (dataSend.employee.length>0) {
         $("#serviceDelay").trigger("click");
@@ -229,6 +230,7 @@ $(document).ready(function() {
         $("#CompletaEmplo").trigger("click");
         $(".loadgif").css("visibility","hidden");
         $(".service").css("visibility","");
+        $(".cancelService").css("visibility","");
       }
 
 

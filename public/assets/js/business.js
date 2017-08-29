@@ -117,6 +117,11 @@ $(document).ready(function() {
       dataSend.id=id;
       dataSend.iduser=iduser;
       if (flag==1) {
+
+        $('.btn-sm-edit').css("visibility", "hidden");
+        $('.btn-danger').css("visibility", "hidden");
+        $('.loadgif').css("visibility", "");
+
         flag = 0;
         flagUser = 0;
         flagBusiness=0;
@@ -127,8 +132,16 @@ $(document).ready(function() {
           success: function functionName(data) {
             if (data.code!=200) {
               $("#businessError-"+id).trigger("click");
+              $('.btn-sm-edit').css("visibility", "");
+              $('.btn-danger').css("visibility", "");
+              $('.loadgif').css("visibility", "hidden");
             }else {
               $("#businessCorrect-"+id).trigger("click");
+              if ($("#reloadFlag").val()=='1') {
+                window.location.href = "/branch?updateValue=1";
+              }else {
+                location.reload();
+              }
             }
 
           }
