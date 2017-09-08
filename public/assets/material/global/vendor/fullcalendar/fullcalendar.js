@@ -13359,7 +13359,7 @@ var AgendaView = FC.AgendaView = View.extend({
 	timeGrid: null, // the main time-grid subcomponent of this view
 
 	dayGridClass: DayGrid, // class used to instantiate the dayGrid. subclasses can override
-	dayGrid: null, // the "all-day" subcomponent. if all-day is turned off, this will be null
+	//dayGrid: null, // the "all-day" subcomponent. if all-day is turned off, this will be null, removido el all-day
 
 	axisWidth: null, // the width of the time axis running down the side
 
@@ -13372,10 +13372,10 @@ var AgendaView = FC.AgendaView = View.extend({
 
 	initialize: function() {
 		this.timeGrid = this.instantiateTimeGrid();
-
-		if (this.opt('allDaySlot')) { // should we display the "all-day" area?
+		//removido el all-day
+		/*if (this.opt('allDaySlot')) { // should we display the "all-day" area?
 			this.dayGrid = this.instantiateDayGrid(); // the all-day subcomponent of this view
-		}
+		}*/
 
 		this.scroller = new Scroller({
 			overflowX: 'hidden',
@@ -13573,7 +13573,7 @@ var AgendaView = FC.AgendaView = View.extend({
 		uncompensateScroll(this.noScrollRowEls);
 
 		// limit number of events in the all-day area
-		if (this.dayGrid) {
+		/*if (this.dayGrid) {
 			this.dayGrid.removeSegPopover(); // kill the "more" popover if displayed
 
 			eventLimit = this.opt('eventLimit');
@@ -13583,7 +13583,7 @@ var AgendaView = FC.AgendaView = View.extend({
 			if (eventLimit) {
 				this.dayGrid.limitRows(eventLimit);
 			}
-		}
+		}*/
 
 		if (!isAuto) { // should we force dimensions of the scroll container?
 

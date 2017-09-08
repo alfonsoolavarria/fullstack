@@ -894,7 +894,7 @@ module.exports = function(app) {
   ********************************/
   app.get('/booking', function(req,res) {
     Booking.getBooking(req.session.business).then(function (data) {
-      var colors = {'0':'green','1':'blue','3':'orange'}
+      var colors = {'0':'#FDD835','1':'#4CAF50','3':'#FF5252'}
       var nuevo = [];
       for (var i = 0; i < data.length; i++) {
         var pos = JSON.parse(JSON.stringify(data[i])).state;
