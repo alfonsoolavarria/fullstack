@@ -904,6 +904,7 @@ module.exports = function(app) {
           serviceName:JSON.parse(JSON.stringify(data[i])).service.serviceName,
           backgroundColor:JSON.parse(JSON.stringify(data[i])).employee.color,
           colorState:colors[pos],
+          end:moment(JSON.parse(JSON.stringify(data[i])).endDate.iso).format(),
           color:JSON.parse(JSON.stringify(data[i])).employee.color,
           alfonso: {
             end: moment(JSON.parse(JSON.stringify(data[i])).startDate.iso).format("HH:mm"),
