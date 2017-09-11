@@ -395,6 +395,7 @@ $('.finish-booking').click(function () {
     $(".modal-confirm").attr("id","modal-"+$('#data-id-booking').val());
     $("#modal-"+$('#data-id-booking').val()).css("visibility", "visible");
   });
+
   //No presentada
   $('.no-present').click(function () {
     $(".modal-confirm").attr("id","modal-"+$('#data-id-booking').val());
@@ -453,6 +454,11 @@ $('.finish-booking').click(function () {
     }
 
 
+  });
+
+  $(".site-action-toggle").click(function() {
+    $("#fechaA").val(moment().tz('Europe/Madrid').format("MM/DD/YYYY"));
+    $("#horaH").val(moment().tz('Europe/Madrid').format("HH:mm"));
   });
 
   $("#modalCliente").click(function() {

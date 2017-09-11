@@ -4296,6 +4296,7 @@ Grid.mixin({
 
 			// only call the handlers if there is not a drag/resize in progress
 			if (seg && !_this.isDraggingSeg && !_this.isResizingSeg) {
+				//comentado arrastrar y redimensionar por ahora
 				return handler.call(_this, seg, ev); // context will be the Grid
 			}
 		});
@@ -4364,11 +4365,12 @@ Grid.mixin({
 	},
 
 
-	handleSegMousedown: function(seg, ev) {
+	/*handleSegMousedown: function(seg, ev) {
 		var isResizing = this.startSegResize(seg, ev, { distance: 5 });
 
 		if (!isResizing && this.view.isEventDraggable(seg.event)) {
-			this.buildSegDragListener(seg)
+			//comentado arrastrar y redimensionar por ahora
+			/*this.buildSegDragListener(seg)
 				.startInteraction(ev, {
 					distance: 5
 				});
@@ -4422,6 +4424,7 @@ Grid.mixin({
 	// returns boolean whether resizing actually started or not.
 	// assumes the seg allows resizing.
 	// `dragOptions` are optional.
+	//comenatro el redimensionar por ahora
 	startSegResize: function(seg, ev, dragOptions) {
 		if ($(ev.target).is('.fc-resizer')) {
 			this.buildSegResizeListener(seg, $(ev.target).is('.fc-start-resizer'))
@@ -4429,7 +4432,7 @@ Grid.mixin({
 			return true;
 		}
 		return false;
-	},
+	},*/
 
 
 
@@ -4440,7 +4443,7 @@ Grid.mixin({
 	// Builds a listener that will track user-dragging on an event segment.
 	// Generic enough to work with any type of Grid.
 	// Has side effect of setting/unsetting `segDragListener`
-	buildSegDragListener: function(seg) {
+	/*buildSegDragListener: function(seg) {
 		var _this = this;
 		var view = this.view;
 		var calendar = view.calendar;
@@ -4584,6 +4587,7 @@ Grid.mixin({
 
 
 	// Called before event segment dragging starts
+	//Comentado arrastrar por ahora
 	segDragStart: function(seg, ev) {
 		this.isDraggingSeg = true;
 		this.view.publiclyTrigger('eventDragStart', seg.el[0], seg.event, ev, {}); // last argument is jqui dummy
@@ -4595,7 +4599,6 @@ Grid.mixin({
 		this.isDraggingSeg = false;
 		this.view.publiclyTrigger('eventDragStop', seg.el[0], seg.event, ev, {}); // last argument is jqui dummy
 	},
-
 
 	// Given the spans an event drag began, and the span event was dropped, calculates the new zoned start/end/allDay
 	// values for the event. Subclasses may override and set additional properties to be used by renderDrag.
@@ -4651,7 +4654,7 @@ Grid.mixin({
 		if (opacity != null) {
 			els.css('opacity', opacity);
 		}
-	},
+	},/*
 
 
 	/* External Element Dragging
@@ -4659,7 +4662,7 @@ Grid.mixin({
 
 
 	// Called when a jQuery UI drag is initiated anywhere in the DOM
-	externalDragStart: function(ev, ui) {
+	/*externalDragStart: function(ev, ui) {
 		var view = this.view;
 		var el;
 		var accept;
@@ -4750,9 +4753,7 @@ Grid.mixin({
 		}
 
 		return dropLocation;
-	},
-
-
+	},*/
 
 	/* Drag Rendering (for both events and an external elements)
 	------------------------------------------------------------------------------------------------------------------*/
@@ -4780,7 +4781,7 @@ Grid.mixin({
 
 	// Creates a listener that tracks the user as they resize an event segment.
 	// Generic enough to work with any type of Grid.
-	buildSegResizeListener: function(seg, isStart) {
+	/*buildSegResizeListener: function(seg, isStart) {
 		var _this = this;
 		var view = this.view;
 		var calendar = view.calendar;
@@ -4854,11 +4855,12 @@ Grid.mixin({
 		});
 
 		return dragListener;
-	},
+	},*/
 
 
 	// Called before event segment resizing starts
-	segResizeStart: function(seg, ev) {
+	//comentado el resize de las cajas del clenario por ahora
+	/*segResizeStart: function(seg, ev) {
 		this.isResizingSeg = true;
 		this.view.publiclyTrigger('eventResizeStart', seg.el[0], seg.event, ev, {}); // last argument is jqui dummy
 	},
@@ -4939,7 +4941,7 @@ Grid.mixin({
 	// Unrenders a visual indication of an event being resized.
 	unrenderEventResize: function() {
 		// subclasses must implement
-	},
+	},*/
 
 
 	/* Rendering Utils
@@ -7018,7 +7020,6 @@ var TimeGrid = FC.TimeGrid = Grid.extend(DayTableMixin, {
 		var slotDate; // will be on the view's first day, but we only care about its time
 		var isLabeled;
 		var axisHtml;
-
 		// Calculate the time for each slot
 		while (slotTime < this.maxTime) {
 			slotDate = this.start.clone().time(slotTime);
