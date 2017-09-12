@@ -4342,7 +4342,22 @@ Grid.mixin({
 		) {
 			this.mousedOverSeg = seg;
 			if (this.view.isEventResizable(seg.event)) {
-				seg.el.addClass('fc-allow-mouse-resize');
+				//tooltip anadido
+				var tooltip = '<div class="tooltipevent" style="width:170px;height:230px;background:white;position:absolute;z-index:10001;">'
+				 + '<h3 class="popover-title">Detalles</h3>'
+				 + '<b>Cliente:</b> '+seg.event.title
+				 + '<br><b>Servicio:</b> '+seg.event.alfonso.serviceName
+				 + '<br><b>Duración:</b> '+seg.event.alfonso.duration
+				 + '<br><b>Fecha:</b> '+moment(seg.event.start._i).format("MM/DD/YYYY")
+				 + '<br><b>Hora</b> '+seg.event.alfonso.end
+				 + '<br><b>Empleado</b> '+seg.event.alfonso.employee.name
+				 + '<br><b>Información Ad. :</b> '+seg.event.alfonso.additionalInfo+'</div>';
+    		var $tooltip = $(tooltip).appendTo('body');
+				$tooltip.css('top', ev.pageY + 10);
+				$tooltip.css('left', ev.pageX + 20);
+				//fin del tooltip anadido
+
+				//seg.el.addClass('fc-allow-mouse-resize');
 			}
 			this.view.publiclyTrigger('eventMouseover', seg.el[0], seg.event, ev);
 		}
@@ -4354,6 +4369,10 @@ Grid.mixin({
 	handleSegMouseout: function(seg, ev) {
 		ev = ev || {}; // if given no args, make a mock mouse event
 
+		//tooltip anadido
+		$(this).css('z-index', 8);
+	 	$('.tooltipevent').remove();
+		//fin del tooltip
 		if (this.mousedOverSeg) {
 			seg = seg || this.mousedOverSeg; // if given no args, use the currently moused-over segment
 			this.mousedOverSeg = null;
@@ -7749,7 +7768,7 @@ TimeGrid.mixin({
 				''
 				) +
 			'>' +
-				'<div class="fc-content">' +
+				'<div class="fc-content '+event._id+'">' +
 					(timeText ?
 						'<div class="fc-time"' +
 						' data-start="' + htmlEscape(startTimeText) + '"' +
@@ -7761,8 +7780,10 @@ TimeGrid.mixin({
 						) +
 					(event.title ?
 						'<div class="fc-title">' +
-							htmlEscape(event.title+' - '+event.serviceName) +
-						'</div>'+'<div id="alfonso" style="border-radius:50%;background:'+event.colorState+';width:17px;">.'+'</div>':
+							//htmlEscape(event.title+' - '+event.serviceName) +
+							'<div id="alfonso" style="border-radius:50%;background:'+event.colorState+';position:absolute;height:9px;width:10px;">.'+'</div>&nbsp;&nbsp;&nbsp;&nbsp;'+
+							htmlEscape('- '+event.serviceName) +
+						'</div>':
 						''
 						) +
 				'</div>' +
@@ -7773,10 +7794,11 @@ TimeGrid.mixin({
 					''
 					) +
 				*/
-				(isResizableFromEnd ?
-					'<div class="fc-resizer fc-end-resizer" />' :
+				//comentado mientras redimensionar y arrastrar
+				/*(isResizableFromEnd ?
+					//'<div class="fc-resizer fc-end-resizer" />' :
 					''
-					) +
+				) +/*/
 			'</a>';
 	},
 

@@ -557,4 +557,8 @@ $('.finish-booking').click(function () {
     e.preventDefault();
   });
 
+  //
+  
+
+
 });
