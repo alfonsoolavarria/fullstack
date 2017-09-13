@@ -72,32 +72,44 @@ $(document).ready(function() {
   			var value = $("#servicioO2").getSelectedItemData().id;
         //pongo el id del cliente
   			$("#data-id-service").val(value).trigger("change");
+
+        //autocomplete Edit-employee
+        var dataEe = JSON.parse($("#valoresEm-json").val());
+        if ($("#data-id-service").val().length>0) {
+          var dataE2 = [];
+          for (var i = 0; i < dataEe.length; i++) {
+            if (dataEe[i].servi==$("#data-id-service").val()) {
+              dataE2.push(dataEe[i]);//filtra solo los empleados del servicio seleccionado
+            }
+          }
+        }else {
+          var dataE2 = dataEe;
+        }
+        var options = {
+          data:dataE2,
+        	getValue: "name",
+          list: {
+            maxNumberOfElements: 10,
+            match: {
+              enabled: true
+            },
+        		onSelectItemEvent: function() {
+        			var value = $("#employeeE2").getSelectedItemData().id;
+              //pongo el id del empleado
+        			$("#data-id-emple").val(value).trigger("change");
+        		}
+        	}
+        };
+        $("#employeeE2").easyAutocomplete(options);
+        //fin autocomplete Edit-employee
+
   		}
   	}
   };
   $("#servicioO2").easyAutocomplete(options);
   //fin autocomplete Edit-service
 
-  //autocomplete Edit-employee
-  var dataEe = JSON.parse($("#valoresEm-json").val());
-  var options = {
-    data:dataEe,
-  	getValue: "name",
-    list: {
-      maxNumberOfElements: 10,
-      match: {
-        enabled: true
-      },
-  		onSelectItemEvent: function() {
-  			var value = $("#employeeE2").getSelectedItemData().objectId;
-        console.log(value);
-        //pongo el id del cliente
-  			$("#data-id-emple").val(value).trigger("change");
-  		}
-  	}
-  };
-  $("#employeeE2").easyAutocomplete(options);
-  //fin autocomplete Edit-employee
+
 
 
   //autocomplete service
@@ -124,6 +136,38 @@ $(document).ready(function() {
           $("#durationB").val(duravalue)
           //pongo el id del servicio
           $("#data-id-service").val(value2).trigger("change");
+
+          //autocomplete empledo
+          var dataE = JSON.parse($("#valoresEm-json").val());
+          if (dataE.length<1) {dataE=[{name:'No hay empleado disponible'}] }
+          if ($("#data-id-service").val().length>0) {
+            var dataE2 = [];
+            for (var i = 0; i < dataE.length; i++) {
+              if (dataE[i].servi==$("#data-id-service").val()) {
+                dataE2.push(dataE[i]);//filtra solo los empleados del servicio seleccionado
+              }
+            }
+          }else {
+            var dataE2 = dataE;
+          }
+          var options3 = {
+            data:dataE2,
+            getValue: "name",
+            list: {
+              maxNumberOfElements: 10,
+              match: {
+                enabled: true
+              },
+              onSelectItemEvent: function() {
+                var value2 = $("#employeeE").getSelectedItemData().id;
+                //pongo el id del empleado
+                console.log('ide del employeee',value2);
+                $("#data-id-emple").val(value2).trigger("change");
+              }
+            }
+          };
+          $("#employeeE").easyAutocomplete(options3);
+          //fin autocomplete empledo
         }
       }
     };
@@ -132,26 +176,7 @@ $(document).ready(function() {
   //fin autocomplete service
 
 
-  //autocomplete empledo
-  var dataE = JSON.parse($("#valoresEm-json").val());
-  if (dataE.length<1) {dataE=[{name:'No hay empleado disponible'}] }
-  var options3 = {
-    data:dataE,
-    getValue: "name",
-    list: {
-      maxNumberOfElements: 10,
-      match: {
-        enabled: true
-      },
-      onSelectItemEvent: function() {
-        var value2 = $("#employeeE").getSelectedItemData().objectId;
-        //pongo el id del empleado
-        $("#data-id-emple").val(value2).trigger("change");
-      }
-    }
-  };
-  $("#employeeE").easyAutocomplete(options3);
-  //fin autocomplete empledo
+
 
 
   $("#servicioO").click(function () {
@@ -557,8 +582,6 @@ $('.finish-booking').click(function () {
     e.preventDefault();
   });
 
-  //
-  
 
 
 });
