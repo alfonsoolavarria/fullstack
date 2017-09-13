@@ -4343,7 +4343,7 @@ Grid.mixin({
 			this.mousedOverSeg = seg;
 			if (this.view.isEventResizable(seg.event)) {
 				//tooltip anadido
-				var tooltip = '<div class="tooltipevent" style="width:170px;height:230px;background:white;position:absolute;z-index:10001;">'
+				var tooltip = '<div class="tooltipevent" style="padding:10px;width:170px;height:230px;background:white;position:absolute;z-index:10001;border:solid;border-color:black;">'
 				 + '<h3 class="popover-title">Detalles</h3>'
 				 + '<b>Cliente:</b> '+seg.event.title
 				 + '<br><b>Servicio:</b> '+seg.event.alfonso.serviceName
