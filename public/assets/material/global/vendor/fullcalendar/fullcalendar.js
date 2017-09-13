@@ -4353,8 +4353,8 @@ Grid.mixin({
 				 + '<br><b>Empleado</b> '+seg.event.alfonso.employee.name
 				 + '<br><b>Información Ad. :</b> '+seg.event.alfonso.additionalInfo+'</div>';
     		var $tooltip = $(tooltip).appendTo('body');
-				$tooltip.css('top', ev.pageY + 10);
-				$tooltip.css('left', ev.pageX + 20);
+				$tooltip.css('top', ev.pageY + -220); //10
+				$tooltip.css('left', ev.pageX + -190); //20
 				//fin del tooltip anadido
 
 				//seg.el.addClass('fc-allow-mouse-resize');
