@@ -93,7 +93,7 @@ ServiceControllers.getService = function getService (id,reqparams) {
         var promises = [];
         var kk = 0;
         _.forEach(data, function(allD) {
-            promises.push(allD.relation('employee2').query().find());
+            promises.push(allD.relation('employee2').query().equalTo('isActive',true).find());
         });
         return Parse.Promise.when(promises).then(function(resultados, index) {
             for (var i = 0; i < resultados.length; i++) {
@@ -136,7 +136,7 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
           var promises = [];
           var kk = 0;
           _.forEach(data, function(allD) {
-            promises.push(allD.relation('employee2').query().find());
+            promises.push(allD.relation('employee2').query().equalTo('isActive',true).find());
           });
           return Parse.Promise.when(promises).then(function(resultados, index) {
             for (var i = 0; i < resultados.length; i++) {
