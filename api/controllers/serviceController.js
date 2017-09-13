@@ -4,7 +4,6 @@ var _ = require('lodash');
 
 var ServiceControllers = {};
 
-
 ServiceControllers.createService = function createService (options) {
   var service = new Parse.Object('Service');
   service.set('status',true);
