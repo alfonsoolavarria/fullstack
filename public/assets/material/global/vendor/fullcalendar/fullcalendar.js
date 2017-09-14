@@ -9476,6 +9476,11 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 	// Triggers handlers to 'dayClick'
 	// Span has start/end of the clicked area. Only the start is useful.
 	triggerDayClick: function(span, dayEl, ev) {
+		//anadido para cambiar la vista desde el month a diario cuando se hace clikc en un dia
+		if (this.calendar.getView().name == 'month') {
+			this.calendar.gotoDate(moment(span.start).format("YYYY-MM-DD"));//establece el dia con el click
+			this.calendar.changeView('agendaDay'); // cambia a la vista diaria al dia con el click
+		}
 		this.publiclyTrigger(
 			'dayClick',
 			dayEl,
