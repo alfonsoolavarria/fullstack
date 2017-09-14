@@ -4304,7 +4304,7 @@ Grid.mixin({
 
 
 	handleSegClick: function(seg, ev) {
-		console.log(seg.event);
+		//console.log(seg.event);
 		$('#hourup').val(seg.event.alfonso.end);
 		$('#durationC').val(seg.event.alfonso.duration);
 		$('#editEname').val(seg.event.alfonso.clientName);
@@ -9480,7 +9480,14 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 		if (this.calendar.getView().name == 'month') {
 			this.calendar.gotoDate(moment(span.start).format("YYYY-MM-DD"));//establece el dia con el click
 			this.calendar.changeView('agendaDay'); // cambia a la vista diaria al dia con el click
+		}else {
+			if (this.calendar.getView().name == 'agendaWeek' || this.calendar.getView().name == 'agendaDay') {
+				$('#fechaA').val(moment(span.start).format("MM/DD/YYYY"));
+				$('#horaH').val(moment(span.start).format("HH:mm"));
+				$("#addNewCalendar").modal('show');
+			}
 		}
+
 		this.publiclyTrigger(
 			'dayClick',
 			dayEl,
