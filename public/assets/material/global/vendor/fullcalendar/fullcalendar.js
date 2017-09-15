@@ -3714,12 +3714,13 @@ var Grid = FC.Grid = Class.extend(ListenerMixin, MouseIgnorerMixin, {
 							_this.getHitSpan(origHit),
 							_this.getHitSpan(hit)
 						);
-						if (selectionSpan) {
+						//comentado para desaparecer el clikc en el espacio vacio
+						/*if (selectionSpan) {
 							_this.renderSelection(selectionSpan);
 						}
 						else if (selectionSpan === false) {
 							disableCursor();
-						}
+						}*/
 					}
 				}
 			},
@@ -4296,7 +4297,6 @@ Grid.mixin({
 
 			// only call the handlers if there is not a drag/resize in progress
 			if (seg && !_this.isDraggingSeg && !_this.isResizingSeg) {
-				//comentado arrastrar y redimensionar por ahora
 				return handler.call(_this, seg, ev); // context will be the Grid
 			}
 		});
@@ -4384,12 +4384,12 @@ Grid.mixin({
 	},
 
 
-	/*handleSegMousedown: function(seg, ev) {
+	handleSegMousedown: function(seg, ev) {
 		var isResizing = this.startSegResize(seg, ev, { distance: 5 });
 
 		if (!isResizing && this.view.isEventDraggable(seg.event)) {
 			//comentado arrastrar y redimensionar por ahora
-			/*this.buildSegDragListener(seg)
+			this.buildSegDragListener(seg)
 				.startInteraction(ev, {
 					distance: 5
 				});
@@ -4451,7 +4451,7 @@ Grid.mixin({
 			return true;
 		}
 		return false;
-	},*/
+	},
 
 
 
