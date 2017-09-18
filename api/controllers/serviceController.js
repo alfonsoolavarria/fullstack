@@ -123,11 +123,171 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
     return query.find().then(function(cate) {
         var listC = [];
+        //tool de schedule
+        var dow = [];
+        var lun1 = [], lun2 = [], lun3 = [], lun4 = [],
+            mart1 = [], mart2 = [], mart3 = [], mart4 = [],
+            mier1 = [] , mier2 = [], mier3 = [], mier4 = [],
+            jue1 = [], jue2 = [], jue3 = [], jue4 = [],
+            vie1 = [] , vie2 = [], vie3 = [], vie4 = [],
+            sab1 = [] , sab2 = [], sab3 = [], sab4 = [],
+            dom1 = [] , dom2 = [], dom3 = [], dom4 = [];
+        function orderforDay(days) {
+          if (days[0].Lunes[0].horario1[0].length>0) {
+            //lunes
+            lun1.push(days[0].Lunes[0].horario1[0]);
+
+            lun2.push(days[0].Lunes[0].horario1[1]);
+            lun3.push(days[0].Lunes[0].horario2[0]);
+
+            lun4.push(days[0].Lunes[0].horario2[1]);
+            dow.push(1);
+          }
+          if (days[0].Martes[0].horario1[0].length>0) {
+            //martes
+            mart1.push(days[0].Martes[0].horario1[0]);
+
+            mart2.push(days[0].Martes[0].horario1[1]);
+            mart3.push(days[0].Martes[0].horario2[0]);
+
+            mart4.push(days[0].Martes[0].horario2[1]);
+            dow.push(2);
+          }
+          if (days[0].Miercoles[0].horario1[0].length>0) {
+            //miercoles
+            mier1.push(days[0].Miercoles[0].horario1[0]);
+
+            mier2.push(days[0].Miercoles[0].horario1[1]);
+            mier3.push(days[0].Miercoles[0].horario2[0]);
+
+            mier4.push(days[0].Miercoles[0].horario2[1]);
+            dow.push(3);
+          }
+          if (days[0].Jueves[0].horario1[0].length>0) {
+            //jueves
+            jue1.push(days[0].Jueves[0].horario1[0]);
+
+            jue2.push(days[0].Jueves[0].horario1[1]);
+            jue3.push(days[0].Jueves[0].horario2[0]);
+
+            jue4.push(days[0].Jueves[0].horario2[1]);
+            dow.push(4);
+          }
+          if (days[0].Viernes[0].horario1[0].length>0) {
+            //viernes
+            vie1.push(days[0].Viernes[0].horario1[0]);
+
+            vie2.push(days[0].Viernes[0].horario1[1]);
+            vie3.push(days[0].Viernes[0].horario2[0]);
+
+            vie4.push(days[0].Viernes[0].horario2[1]);
+            dow.push(5);
+          }
+          if (days[0].Sabado[0].horario1[0].length>0) {
+            //sabados
+            sab1.push(days[0].Sabado[0].horario1[0]);
+
+            sab2.push(days[0].Sabado[0].horario1[1]);
+            sab3.push(days[0].Sabado[0].horario2[0]);
+
+            sab4.push(days[0].Sabado[0].horario2[1]);
+            dow.push(6);
+          }
+          if (days[0].Domingo[0].horario1[0].length>0) {
+            //domingos
+            dom1.push(days[0].Domingo[0].horario1[0]);
+
+            dom2.push(days[0].Domingo[0].horario1[1]);
+            dom3.push(days[0].Domingo[0].horario2[0]);
+
+            dom4.push(days[0].Domingo[0].horario2[1]);
+            dow.push(0);
+          }
+          return;
+        }
+        //ates de abrir
+        function sortByhours(array1) {
+          array1.sort();
+          var num = array1[0];
+          return num;
+        }
+
+        function sortReverseByhours(array1) {
+          array1.sort();
+          array1.reverse();
+          var num = array1[0];
+          return num;
+        }
+
+
+        //fin del tool de schedule
         _.forEach(cate, function(categories) {
+          orderforDay(categories.get('schedule'));
           if (listC.indexOf(categories.get('category'))<0) {
             listC.push(categories.get('category'));
           }
         });
+        for (var i = 0; i < [1,2,3,4,5,6,7].length; i++) {
+          if (i==0) {
+            // fase 1 cierre-antes de abrir el negocio
+            lun1 = sortByhours(lun1);
+            // fase 2 hora de descando
+            lun2 = sortReverseByhours(lun2);
+            lun3 = sortByhours(lun3);
+            //fase 3 hora de cierre
+            lun4 = sortReverseByhours(lun4);
+          }else if (i==1) {
+            // fase 1 cierre-antes de abrir el negocio
+            mart1 = sortByhours(mart1);
+            // fase 2 hora de descando
+            mart2 = sortReverseByhours(mart2);
+            mart3 = sortByhours(mart3);
+            //fase 3 hora de cierre
+            mart4 = sortReverseByhours(mart4);
+          }else if (i==2) {
+            // fase 1 cierre-antes de abrir el negocio
+            mier1 = sortByhours(mier1);
+            // fase 2 hora de descando
+            mier2 = sortReverseByhours(mier2);
+            mier3 = sortByhours(mier3);
+            //fase 3 hora de cierre
+            mier4 = sortReverseByhours(mier4);
+          }else if (i==3) {
+            // fase 1 cierre-antes de abrir el negocio
+            jue1 = sortByhours(jue1);
+            // fase 2 hora de descando
+            jue2 = sortReverseByhours(jue2);
+            jue3 = sortByhours(jue3);
+            //fase 3 hora de cierre
+            jue4 = sortReverseByhours(jue4);
+          }else if (i==4) {
+            // fase 1 cierre-antes de abrir el negocio
+            vie1 = sortByhours(vie1);
+            // fase 2 hora de descando
+            vie2 = sortReverseByhours(vie2);
+            vie3 = sortByhours(vie3);
+            //fase 3 hora de cierre
+            vie4 = sortReverseByhours(vie4);
+          }else if (i==5) {
+            // fase 1 cierre-antes de abrir el negocio
+            sab1 = sortByhours(sab1);
+            // fase 2 hora de descando
+            sab2 = sortReverseByhours(sab2);
+            sab3 = sortByhours(sab3);
+            //fase 3 hora de cierre
+            sab4 = sortReverseByhours(sab4);
+          }else if (i==6) {
+            // fase 1 cierre-antes de abrir el negocio
+            dom1 = sortByhours(dom1);
+            // fase 2 hora de descando
+            dom2 = sortReverseByhours(dom2);
+            dom3 = sortByhours(dom3);
+            //fase 3 hora de cierre
+            dom4 = sortReverseByhours(dom4);
+          }else {
+            console.log('nada');
+          }
+        };
 
         if (reqparams.type=='service') consulta = query.descending('createdAt').limit(2).skip(page*2).find();
         else consulta = query.find();
@@ -145,6 +305,18 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
             }
             if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
             if (reqparams.type=='listcate') data.push({liscate:listC});
+            // ad:antes de abrir, d:descanso, c:Cerrado
+            data.push({
+              lunes:{ad:lun1,d:[lun2,lun3],c:lun4},
+              martes:{ad:mart1,d:[mart2,mart3],c:mart4},
+              miercoles:{ad:mier1,d:[mier2,mier3],c:mier4},
+              jueves:{ad:jue1,d:[jue2,jue3],c:jue4},
+              viernes:{ad:vie1,d:[vie2,vie3],c:vie4},
+              sabado:{ad:sab1,d:[sab2,sab3],c:sab4},
+              domingo:{ad:dom1,d:[dom2,dom3],c:dom4},
+              dias:_.uniq(dow),
+            });
+
             return data;
           });
         });

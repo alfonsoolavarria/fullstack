@@ -740,6 +740,9 @@ module.exports = function(app) {
         serviceData = serviceData.filter(function(el) {
           return !el.liscate;
         });
+        serviceData = serviceData.filter(function(el) {
+          return !el.lunes;
+        });
 
         if (serviceData.length>0) {
           serviceData = JSON.parse(JSON.stringify(serviceData));
@@ -845,6 +848,35 @@ module.exports = function(app) {
           queryQuery.then(function(serviceData) {
             var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
             var datakk = JSON.parse(JSON.stringify(serviceData));
+            var lun,mar,mier,jue,vie,sab,dom,dow;
+            datakk = datakk.filter(function(el) {
+              if (el.lunes) {
+                lun = JSON.parse(JSON.stringify(el.lunes));
+              }
+              if (el.martes) {
+                mar = JSON.parse(JSON.stringify(el.martes));
+              }
+              if (el.miercoles) {
+                mier = JSON.parse(JSON.stringify(el.miercoles));
+              }
+              if (el.jueves) {
+                jue = JSON.parse(JSON.stringify(el.jueves));
+              }
+              if (el.viernes) {
+                vie = JSON.parse(JSON.stringify(el.viernes));
+              }
+              if (el.sabado) {
+                sab = JSON.parse(JSON.stringify(el.sabado));
+              }
+              if (el.domingo) {
+                dom = JSON.parse(JSON.stringify(el.domingo));
+              }
+              if (el.dias) {
+                dow = el.dias;
+              }
+              return !el.lunes;
+            });
+
             for (var i = 0; i < datakk.length; i++) {
               bussiId=datakk[i].business.objectId;
               listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
@@ -870,6 +902,14 @@ module.exports = function(app) {
               usersType,
               session:req.session,
               client:data,
+              dias:dow,
+              lunes:JSON.stringify(lun),
+              martes:JSON.stringify(mar),
+              miercoles:JSON.stringify(mier),
+              jueves:JSON.stringify(jue),
+              viernes:JSON.stringify(vie),
+              sabado:JSON.stringify(sab),
+              domingo:JSON.stringify(dom),
               service:JSON.stringify(listaservice),
               employee:JSON.stringify(listaemploye),
               employee2:JSON.stringify(employeeB.employee),

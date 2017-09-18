@@ -4240,13 +4240,132 @@ Grid.mixin({
 	buildBusinessHourEvents: function(wholeDay, businessHours) {
 		var calendar = this.view.calendar;
 		var events;
-
+		//alfonsoo
+		//console.log('55555');
 		if (businessHours == null) {
 			// fallback
 			// access from calendawr. don't access from view. doesn't update with dynamic options.
 			businessHours = calendar.options.businessHours;
 		}
+		var dias = $("#hiddenDays").val();
+		var lunes = JSON.parse($("#hiddenHoursL").val());
+		var martes = JSON.parse($("#hiddenHoursM").val());
+		var miercoles = JSON.parse($("#hiddenHoursMC").val());
+		var jueves = JSON.parse($("#hiddenHoursJ").val());
+		var viernes = JSON.parse($("#hiddenHoursV").val());
+		var sabado = JSON.parse($("#hiddenHoursS").val());
+		var domingo = JSON.parse($("#hiddenHoursD").val());
+		var businessHours = [];
+		//media hora de aumento para el end ya que el plugin lo termina media hora antes
+		/*if (lunes.d[0]) {
+			lunes.d[0] = lunes.d[0].split("");
+			lunes.d[0][3] = '3';
+			lunes.d[0] = lunes.d[0].join("");
 
+			lunes.c = lunes.c.split("");
+			lunes.c[3] = '3';
+			lunes.c = lunes.c.join("");
+		}*/
+
+		if (dias.indexOf(1)>=0) {
+			businessHours.push(
+				{
+					dow: [1], // Lunes fase 1
+					start: lunes.ad,
+					end: lunes.d[0],
+				},
+				{
+					dow: [1], // Lunes fase 2
+					start: lunes.d[1],
+					end: lunes.c,
+				},
+			);
+
+		}
+		if (dias.indexOf(2)>=0) {
+			businessHours.push(
+				{
+					dow: [2], // Martes fase 1
+					start: martes.ad,
+					end: martes.d[0],
+				},
+				{
+					dow: [2], // Martes fase 2
+					start: martes.d[1],
+					end: martes.c,
+				},
+			);
+		}
+		if (dias.indexOf(3)>=0) {
+			businessHours.push(
+				{
+					dow: [3], // Miercoles fase 1
+					start: miercoles.ad,
+					end: miercoles.d[0],
+				},
+				{
+					dow: [3], // Miercoles fase 2
+					start: miercoles.d[1],
+					end: miercoles.c,
+				},
+			);
+		}
+		if (dias.indexOf(4)>=0) {
+			businessHours.push(
+				{
+					dow: [4], // Miercoles fase 1
+					start: jueves.ad,
+					end: jueves.d[0],
+				},
+				{
+					dow: [4], // Miercoles fase 2
+					start: jueves.d[1],
+					end: jueves.c,
+				},
+			);
+		}
+		if (dias.indexOf(5)>=0) {
+			businessHours.push(
+				{
+					dow: [5], // Miercoles fase 1
+					start: viernes.ad,
+					end: viernes.d[0],
+				},
+				{
+					dow: [5], // Miercoles fase 2
+					start: viernes.d[1],
+					end: viernes.c,
+				},
+			);
+		}
+		if (dias.indexOf(6)>=0) {
+			businessHours.push(
+				{
+					dow: [6], // Miercoles fase 1
+					start: sabado.ad,
+					end: sabado.d[0],
+				},
+				{
+					dow: [6], // Miercoles fase 2
+					start: sabado.d[1],
+					end: sabado.c,
+				},
+			);
+		}
+		if (dias.indexOf(0)>=0) {
+			businessHours.push(
+				{
+					dow: [0], // Miercoles fase 1
+					start: domingo.ad,
+					end: domingo.d[0],
+				},
+				{
+					dow: [0], // Miercoles fase 2
+					start: domingo.d[1],
+					end: domingo.c,
+				},
+			);
+		}
 		events = calendar.computeBusinessHourEvents(wholeDay, businessHours);
 
 		// HACK. Eventually refactor business hours "events" system.
@@ -5751,11 +5870,16 @@ var DayTableMixin = FC.DayTableMixin = {
 	renderBgCellHtml: function(date, otherAttrs) {
 		var view = this.view;
 		var classes = this.getDayClasses(date);
-
+		var styleCustom = '';
 		classes.unshift('fc-day', view.widgetContentClass);
-
+		//0: dom , 1:Lun 2:Mar 3:Mie 4:Jue 5:Vie 6:Sa
+		//console.log('dias a ocultar',$("#hiddenDays").val());
+		//alfonso
+		//if (classes[2]=='fc-dom') {
+		//	styleCustom = 'background:#d7d7d7;';
+		//}
 		return '<td class="' + classes.join(' ') + '"' +
-			' data-date="' + date.format('YYYY-MM-DD') + '"' + // if date has a time, won't format it
+			'style="'+styleCustom+'" data-date="' + date.format('YYYY-MM-DD') + '"' + // if date has a time, won't format it
 			(otherAttrs ?
 				' ' + otherAttrs :
 				'') +
@@ -6997,6 +7121,8 @@ var TimeGrid = FC.TimeGrid = Grid.extend(DayTableMixin, {
 	// Relies on the view's colCnt. In the future, this component should probably be self-sufficient.
 	renderDates: function() {
 		this.el.html(this.renderHtml());
+		console.log('busco fc-dom');
+		console.log(this.el.find('.fc-dom'));
 		this.colEls = this.el.find('.fc-day');
 		this.slatContainerEl = this.el.find('.fc-slats');
 		this.slatEls = this.slatContainerEl.find('tr');
@@ -7016,6 +7142,7 @@ var TimeGrid = FC.TimeGrid = Grid.extend(DayTableMixin, {
 
 	// Renders the basic HTML skeleton for the grid
 	renderHtml: function() {
+		//pista 1
 		return '' +
 			'<div class="fc-bg">' +
 				'<table>' +
