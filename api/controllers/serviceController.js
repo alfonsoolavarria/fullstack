@@ -124,7 +124,7 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     return query.find().then(function(cate) {
         var listC = [];
         //tool de schedule
-        var dow = [];
+        var dow = [], allhours = [];
         var lun1 = [], lun2 = [], lun3 = [], lun4 = [],
             mart1 = [], mart2 = [], mart3 = [], mart4 = [],
             mier1 = [] , mier2 = [], mier3 = [], mier4 = [],
@@ -142,6 +142,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             lun4.push(days[0].Lunes[0].horario2[1]);
             dow.push(1);
+            allhours.push(days[0].Lunes[0].horario1[0]);
+            allhours.push(days[0].Lunes[0].horario1[1]);
+            allhours.push(days[0].Lunes[0].horario2[0]);
+            allhours.push(days[0].Lunes[0].horario2[1]);
           }
           if (days[0].Martes[0].horario1[0].length>0) {
             //martes
@@ -152,6 +156,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             mart4.push(days[0].Martes[0].horario2[1]);
             dow.push(2);
+            allhours.push(days[0].Martes[0].horario1[0]);
+            allhours.push(days[0].Martes[0].horario1[1]);
+            allhours.push(days[0].Martes[0].horario2[0]);
+            allhours.push(days[0].Martes[0].horario2[1]);
           }
           if (days[0].Miercoles[0].horario1[0].length>0) {
             //miercoles
@@ -162,6 +170,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             mier4.push(days[0].Miercoles[0].horario2[1]);
             dow.push(3);
+            allhours.push(days[0].Miercoles[0].horario1[0]);
+            allhours.push(days[0].Miercoles[0].horario1[1]);
+            allhours.push(days[0].Miercoles[0].horario2[0]);
+            allhours.push(days[0].Miercoles[0].horario2[1]);
           }
           if (days[0].Jueves[0].horario1[0].length>0) {
             //jueves
@@ -172,6 +184,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             jue4.push(days[0].Jueves[0].horario2[1]);
             dow.push(4);
+            allhours.push(days[0].Jueves[0].horario1[0]);
+            allhours.push(days[0].Jueves[0].horario1[1]);
+            allhours.push(days[0].Jueves[0].horario2[0]);
+            allhours.push(days[0].Jueves[0].horario2[1]);
           }
           if (days[0].Viernes[0].horario1[0].length>0) {
             //viernes
@@ -182,6 +198,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             vie4.push(days[0].Viernes[0].horario2[1]);
             dow.push(5);
+            allhours.push(days[0].Viernes[0].horario1[0]);
+            allhours.push(days[0].Viernes[0].horario1[1]);
+            allhours.push(days[0].Viernes[0].horario2[0]);
+            allhours.push(days[0].Viernes[0].horario2[1]);
           }
           if (days[0].Sabado[0].horario1[0].length>0) {
             //sabados
@@ -192,6 +212,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             sab4.push(days[0].Sabado[0].horario2[1]);
             dow.push(6);
+            allhours.push(days[0].Sabado[0].horario1[0]);
+            allhours.push(days[0].Sabado[0].horario1[1]);
+            allhours.push(days[0].Sabado[0].horario2[0]);
+            allhours.push(days[0].Sabado[0].horario2[1]);
           }
           if (days[0].Domingo[0].horario1[0].length>0) {
             //domingos
@@ -202,6 +226,10 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
 
             dom4.push(days[0].Domingo[0].horario2[1]);
             dow.push(0);
+            allhours.push(days[0].Domingo[0].horario1[0]);
+            allhours.push(days[0].Domingo[0].horario1[1]);
+            allhours.push(days[0].Domingo[0].horario2[0]);
+            allhours.push(days[0].Domingo[0].horario2[1]);
           }
           return;
         }
@@ -305,6 +333,8 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
             }
             if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
             if (reqparams.type=='listcate') data.push({liscate:listC});
+            var minimo = _.uniq(allhours).sort();
+            var maximo = _.uniq(allhours).sort().reverse();
             // ad:antes de abrir, d:descanso, c:Cerrado
             data.push({
               lunes:{ad:lun1,d:[lun2,lun3],c:lun4},
@@ -315,6 +345,8 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
               sabado:{ad:sab1,d:[sab2,sab3],c:sab4},
               domingo:{ad:dom1,d:[dom2,dom3],c:dom4},
               dias:_.uniq(dow),
+              minimo:minimo[0],
+              maximo:maximo[0],
             });
 
             return data;

@@ -23,7 +23,7 @@ var FC = $.fullCalendar = {
 	internalApiVersion: 7
 };
 var fcViews = FC.views = {};
-
+var topCalCustom = 717;
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
 	var res = this; // what this function will return (this jQuery object by default)
@@ -4506,13 +4506,13 @@ Grid.mixin({
 	handleSegMousedown: function(seg, ev) {
 		var isResizing = this.startSegResize(seg, ev, { distance: 5 });
 
-		if (!isResizing && this.view.isEventDraggable(seg.event)) {
+		/*if (!isResizing && this.view.isEventDraggable(seg.event)) {
 			//comentado arrastrar y redimensionar por ahora
 			this.buildSegDragListener(seg)
 				.startInteraction(ev, {
 					distance: 5
 				});
-		}
+		}*/
 	},
 
 
@@ -4581,7 +4581,7 @@ Grid.mixin({
 	// Builds a listener that will track user-dragging on an event segment.
 	// Generic enough to work with any type of Grid.
 	// Has side effect of setting/unsetting `segDragListener`
-	/*buildSegDragListener: function(seg) {
+	buildSegDragListener: function(seg) {
 		var _this = this;
 		var view = this.view;
 		var calendar = view.calendar;
@@ -4792,7 +4792,7 @@ Grid.mixin({
 		if (opacity != null) {
 			els.css('opacity', opacity);
 		}
-	},/*
+	},
 
 
 	/* External Element Dragging
@@ -4919,7 +4919,7 @@ Grid.mixin({
 
 	// Creates a listener that tracks the user as they resize an event segment.
 	// Generic enough to work with any type of Grid.
-	/*buildSegResizeListener: function(seg, isStart) {
+	buildSegResizeListener: function(seg, isStart) {
 		var _this = this;
 		var view = this.view;
 		var calendar = view.calendar;
@@ -4993,12 +4993,12 @@ Grid.mixin({
 		});
 
 		return dragListener;
-	},*/
+	},
 
 
 	// Called before event segment resizing starts
 	//comentado el resize de las cajas del clenario por ahora
-	/*segResizeStart: function(seg, ev) {
+	segResizeStart: function(seg, ev) {
 		this.isResizingSeg = true;
 		this.view.publiclyTrigger('eventResizeStart', seg.el[0], seg.event, ev, {}); // last argument is jqui dummy
 	},
@@ -5079,7 +5079,7 @@ Grid.mixin({
 	// Unrenders a visual indication of an event being resized.
 	unrenderEventResize: function() {
 		// subclasses must implement
-	},*/
+	},
 
 
 	/* Rendering Utils
@@ -9816,7 +9816,8 @@ var Scroller = FC.Scroller = Class.extend({
 
 
 	setHeight: function(height) {
-		this.scrollEl.height(height);
+		//alfonsoo
+		this.scrollEl.height(Math.round(topCalCustom));
 	},
 
 
@@ -11325,7 +11326,8 @@ Calendar.defaults = {
 
 	//nowIndicator: false,
 
-	scrollTime: '06:00:00',
+	//scrollTime: '06:00:00',
+	scrollTime: $("#maximoHour").val(),
 
 	// event ajax
 	lazyFetching: true,
@@ -11372,7 +11374,7 @@ Calendar.defaults = {
 	//eventResizableFromStart: false,
 	dragOpacity: .75,
 	dragRevertDuration: 500,
-	dragScroll: true,
+	dragScroll: false, //cambie a false
 
 	//selectable: false,
 	unselectAuto: true,
@@ -13540,9 +13542,9 @@ var AgendaView = FC.AgendaView = View.extend({
 	initialize: function() {
 		this.timeGrid = this.instantiateTimeGrid();
 		//removido el all-day
-		/*if (this.opt('allDaySlot')) { // should we display the "all-day" area?
+		if (this.opt('allDaySlot')) { // should we display the "all-day" area?
 			this.dayGrid = this.instantiateDayGrid(); // the all-day subcomponent of this view
-		}*/
+		}
 
 		this.scroller = new Scroller({
 			overflowX: 'hidden',
@@ -13796,7 +13798,7 @@ var AgendaView = FC.AgendaView = View.extend({
 	computeInitialScroll: function() {
 		var scrollTime = moment.duration(this.opt('scrollTime'));
 		var top = this.timeGrid.computeTimeTop(scrollTime);
-
+		topCalCustom = top;
 		// zoom can give weird floating-point values. rather scroll a little bit further
 		top = Math.ceil(top);
 
@@ -14056,10 +14058,10 @@ var AGENDA_STOCK_SUB_DURATIONS = [
 fcViews.agenda = {
 	'class': AgendaView,
 	defaults: {
-		allDaySlot: true,
+		allDaySlot: false, // quitar el allday
 		slotDuration: '00:30:00',
-		minTime: '00:00:00',
-		maxTime: '24:00:00',
+		minTime: $("#minimoHour").val(),
+		maxTime: $("#maximoHour").val(),
 		slotEventOverlap: false // a bad name. confused with overlap/constraint system
 		//cambie el slotEventOverlap a false para que no se solapen las cajas del mismo dia
 	}

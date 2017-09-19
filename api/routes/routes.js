@@ -848,7 +848,7 @@ module.exports = function(app) {
           queryQuery.then(function(serviceData) {
             var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
             var datakk = JSON.parse(JSON.stringify(serviceData));
-            var lun,mar,mier,jue,vie,sab,dom,dow;
+            var lun,mar,mier,jue,vie,sab,dom,dow,minimo,maximo;
             datakk = datakk.filter(function(el) {
               if (el.lunes) {
                 lun = JSON.parse(JSON.stringify(el.lunes));
@@ -873,6 +873,12 @@ module.exports = function(app) {
               }
               if (el.dias) {
                 dow = el.dias;
+              }
+              if (el.minimo) {
+                minimo = el.minimo;
+              }
+              if (el.maximo) {
+                maximo = el.maximo;
               }
               return !el.lunes;
             });
@@ -903,6 +909,8 @@ module.exports = function(app) {
               session:req.session,
               client:data,
               dias:dow,
+              minimo:minimo,
+              maximo:maximo,
               lunes:JSON.stringify(lun),
               martes:JSON.stringify(mar),
               miercoles:JSON.stringify(mier),
