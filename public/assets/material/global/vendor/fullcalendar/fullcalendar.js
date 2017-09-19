@@ -4313,12 +4313,12 @@ Grid.mixin({
 		if (dias.indexOf(4)>=0) {
 			businessHours.push(
 				{
-					dow: [4], // Miercoles fase 1
+					dow: [4], // Jueves fase 1
 					start: jueves.ad,
 					end: jueves.d[0],
 				},
 				{
-					dow: [4], // Miercoles fase 2
+					dow: [4], // Jueves fase 2
 					start: jueves.d[1],
 					end: jueves.c,
 				},
@@ -4327,12 +4327,12 @@ Grid.mixin({
 		if (dias.indexOf(5)>=0) {
 			businessHours.push(
 				{
-					dow: [5], // Miercoles fase 1
+					dow: [5], // Viernes fase 1
 					start: viernes.ad,
 					end: viernes.d[0],
 				},
 				{
-					dow: [5], // Miercoles fase 2
+					dow: [5], // Viernes fase 2
 					start: viernes.d[1],
 					end: viernes.c,
 				},
@@ -4341,12 +4341,12 @@ Grid.mixin({
 		if (dias.indexOf(6)>=0) {
 			businessHours.push(
 				{
-					dow: [6], // Miercoles fase 1
+					dow: [6], // Sabado fase 1
 					start: sabado.ad,
 					end: sabado.d[0],
 				},
 				{
-					dow: [6], // Miercoles fase 2
+					dow: [6], // Sabado fase 2
 					start: sabado.d[1],
 					end: sabado.c,
 				},
@@ -4355,12 +4355,12 @@ Grid.mixin({
 		if (dias.indexOf(0)>=0) {
 			businessHours.push(
 				{
-					dow: [0], // Miercoles fase 1
+					dow: [0], // Domingo fase 1
 					start: domingo.ad,
 					end: domingo.d[0],
 				},
 				{
-					dow: [0], // Miercoles fase 2
+					dow: [0], // Domingo fase 2
 					start: domingo.d[1],
 					end: domingo.c,
 				},
@@ -9603,24 +9603,29 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 	// Triggers handlers to 'dayClick'
 	// Span has start/end of the clicked area. Only the start is useful.
 	triggerDayClick: function(span, dayEl, ev) {
-		//anadido para cambiar la vista desde el month a diario cuando se hace clikc en un dia
-		if (this.calendar.getView().name == 'month') {
-			this.calendar.gotoDate(moment(span.start).format("YYYY-MM-DD"));//establece el dia con el click
-			this.calendar.changeView('agendaDay'); // cambia a la vista diaria al dia con el click
-		}else {
-			if (this.calendar.getView().name == 'agendaWeek' || this.calendar.getView().name == 'agendaDay') {
-				$('#fechaA').val(moment(span.start).format("MM/DD/YYYY"));
-				$('#horaH').val(moment(span.start).format("HH:mm"));
-				$("#addNewCalendar").modal('show');
+		var target = ev.target.className;//para validar y desactivar el click en cualquier periodo de hora-dia que este deshabilitado
+		if (target.indexOf('fc-nonbusiness')<0) {
+			//anadido para cambiar la vista desde el month a diario cuando se hace clikc en un dia
+			if (this.calendar.getView().name == 'month') {
+				this.calendar.gotoDate(moment(span.start).format("YYYY-MM-DD"));//establece el dia con el click
+				this.calendar.changeView('agendaDay'); // cambia a la vista diaria al dia con el click
+			}else {
+				if (this.calendar.getView().name == 'agendaWeek' || this.calendar.getView().name == 'agendaDay') {
+					$('#fechaA').val(moment(span.start).format("MM/DD/YYYY"));
+					$('#horaH').val(moment(span.start).format("HH:mm"));
+					$("#addNewCalendar").modal('show');
+				}
 			}
-		}
 
-		this.publiclyTrigger(
-			'dayClick',
-			dayEl,
-			this.calendar.applyTimezone(span.start), // convert to calendar's timezone for external API
-			ev
-		);
+			this.publiclyTrigger(
+				'dayClick',
+				dayEl,
+				this.calendar.applyTimezone(span.start), // convert to calendar's timezone for external API
+				ev
+			);
+		}else {
+			return false;
+		}
 	},
 
 
