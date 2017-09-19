@@ -14059,7 +14059,7 @@ fcViews.agenda = {
 	'class': AgendaView,
 	defaults: {
 		allDaySlot: false, // quitar el allday
-		slotDuration: '00:30:00',
+		slotDuration: '00:20:00',
 		minTime: $("#minimoHour").val(),
 		maxTime: $("#maximoHour").val(),
 		slotEventOverlap: false // a bad name. confused with overlap/constraint system
