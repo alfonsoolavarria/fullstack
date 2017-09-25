@@ -345,10 +345,9 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
               sabado:{ad:sab1,d:[sab2,sab3],c:sab4},
               domingo:{ad:dom1,d:[dom2,dom3],c:dom4},
               dias:_.uniq(dow),
-              minimo:minimo[0],
-              maximo:maximo[0],
+              minimo:minimo[0] ? minimo[0] : '00:00:00',
+              maximo:maximo[0] ? maximo[0] : '24:00:00',
             });
-
             return data;
           });
         });
