@@ -4462,15 +4462,42 @@ Grid.mixin({
 			this.mousedOverSeg = seg;
 			if (this.view.isEventResizable(seg.event)) {
 				//tooltip anadido
-				var tooltip = '<div class="tooltipevent" style="padding:10px;width:170px;height:230px;background:white;position:absolute;z-index:10001;border:solid;border-color:black;">'
+				var infoCustom = "", nameCustom = "", emploCustom = "", serviCustom = "";
+				if (seg.event.alfonso.additionalInfo.length>20) {
+					infoCustom = seg.event.alfonso.additionalInfo.substr(0,17);
+					infoCustom += "...";
+				}else {
+					infoCustom = seg.event.alfonso.additionalInfo;
+				}
+				if (seg.event.title.length>20) {
+					nameCustom = seg.event.title.substr(0,17);
+					nameCustom += "...";
+				}else {
+					nameCustom = seg.event.title;
+				}
+				if (seg.event.alfonso.serviceName.length>20) {
+					serviCustom = seg.event.alfonso.serviceName.substr(0,17);
+					serviCustom += "...";
+				}else {
+					serviCustom = seg.event.alfonso.serviceName;
+				}
+				if (seg.event.alfonso.employee.name.length>20) {
+					emploCustom = seg.event.alfonso.employee.name.substr(0,17);
+					emploCustom += "...";
+				}else {
+					emploCustom = seg.event.alfonso.employee.name;
+				}
+
+				var tooltip = '<div class="tooltipevent" style="padding:10px;width:170px;height:256px;background:white;position:absolute;z-index:10001;border:solid;border-color:black;">'
 				 + '<h3 class="popover-title">Detalles</h3>'
-				 + '<b>Cliente:</b> '+seg.event.title
-				 + '<br><b>Servicio:</b> '+seg.event.alfonso.serviceName
+				 + '<b>Cliente:</b> '+nameCustom
+				 + '<br><b>Servicio:</b> '+serviCustom
 				 + '<br><b>Duración:</b> '+seg.event.alfonso.duration
 				 + '<br><b>Fecha:</b> '+moment(seg.event.start._i).format("MM/DD/YYYY")
 				 + '<br><b>Hora</b> '+seg.event.alfonso.end
-				 + '<br><b>Empleado</b> '+seg.event.alfonso.employee.name
-				 + '<br><b>Información Ad. :</b> '+seg.event.alfonso.additionalInfo+'</div>';
+				 + '<br><b>Empleado</b> '+emploCustom
+				 + '<br><b>Información Ad. :</b> '+infoCustom
+				 + '</div>';
     		var $tooltip = $(tooltip).appendTo('body');
 				$tooltip.css('top', ev.pageY + -220); //10
 				$tooltip.css('left', ev.pageX + -190); //20
