@@ -12,9 +12,10 @@ ServiceControllers.createService = function createService (options) {
   service.set({'price':options.price});
   service.set({'description':options.description});
   service.set('business', {"__type":"Pointer","className":"Business","objectId":options.idBusiness});
-  service.set('employee',options.employee);
+  service.set('serviCategory', {"__type":"Pointer","className":"serviceCategory","objectId":options.category});
+  //service.set('employee',options.employee);
   service.set('schedule',options.schedule);
-  service.set('category',options.category);
+  //service.set('category',options.category);
   var acl = new Parse.ACL();
   acl.setPublicWriteAccess(true);
   acl.setPublicReadAccess(true);
@@ -42,7 +43,8 @@ ServiceControllers.updateService = function updateService (options) {
       if (options.description) dataS.set({'description':options.description});
       if (options.employee) dataS.set({'employee':options.employee});
       if (options.schedule) dataS.set({'schedule':options.schedule});
-      if (options.category) dataS.set({'category':options.category});
+      if (options.category) dataS.set('serviCategory', {"__type":"Pointer","className":"serviceCategory","objectId":options.category});
+      //if (options.category) dataS.set({'category':options.category});
     }
     return dataS.save().then(function(saveData) {
         // The save was successful.
@@ -122,6 +124,24 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     query.equalTo('status', true);
 
     return query.find().then(function(cate) {
+      var promises1 = [], cateselected=[], onlylistcat=[];
+      return dataE[0].relation('serviCategory').query().find().then(function(services) {
+        _.each(services, function(serviceonettoone,index) {
+          for (var i = 0; i < cate.length; i++) {
+            /*console.log('11111111111111');
+            console.log('iddd1',JSON.parse(JSON.stringify(cate[i])).objectId);
+            console.log('idd222',JSON.parse(JSON.stringify(services[index])).objectId);
+            console.log('2222222');*/
+            if (JSON.parse(JSON.stringify(cate[i])).serviCategory.objectId == JSON.parse(JSON.stringify(serviceonettoone)).objectId) {
+              cateselected.push({
+                name:JSON.parse(JSON.stringify(serviceonettoone)).name,
+                id:JSON.parse(JSON.stringify(serviceonettoone)).objectId
+              });
+            }
+          }
+          onlylistcat.push(JSON.parse(JSON.stringify(serviceonettoone)).name);
+          promises1.push({id:JSON.parse(JSON.stringify(serviceonettoone)).objectId,name:JSON.parse(JSON.stringify(serviceonettoone)).name});
+        });
         var listC = [];
         //tool de schedule
         var dow = [], allhours = [];
@@ -325,14 +345,27 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
           _.forEach(data, function(allD) {
             promises.push(allD.relation('employee2').query().equalTo('isActive',true).find());
           });
-          return Parse.Promise.when(promises).then(function(resultados, index) {
+          return Parse.Promise.when(promises).then(function(resultados) {
             for (var i = 0; i < resultados.length; i++) {
               data[i] = data[i].toJSON();
               data[i].alfonso = [];
               data[i].alfonso.push(resultados[i]);
             }
+            for (var ii = 0; ii < data.length; ii++) {
+              for (var iii = 0; iii < cateselected.length; iii++) {
+                if (cateselected[iii].id==data[ii].serviCategory.objectId) {
+                  data[ii].serviCategoryName = cateselected[iii].name;
+                }
+              }
+            }
             if (reqparams.type=='service') data.push({catpageE:cantpage,liscate:listC});
             if (reqparams.type=='listcate') data.push({liscate:listC});
+            if (reqparams.type=='listcate2') {
+              data.push({liscate2:promises1});
+              data.push({cateselected:cateselected});
+              data.push({listOnly:onlylistcat});
+            }
+
             var minimo = _.uniq(allhours).sort();
             var maximo = _.uniq(allhours).sort().reverse();
             // ad:antes de abrir, d:descanso, c:Cerrado
@@ -351,6 +384,8 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
             return data;
           });
         });
+        });
+
     });
   });
 };
@@ -360,22 +395,39 @@ ServiceControllers.getServiceOne = function getServiceOne (id) {
   query.equalTo('status', true);
   return query.find().then(function(cate) {
     return query.get(id).then(function(data) {
-      var listC = [];
-      _.forEach(cate, function(categories) {
-        if (listC.indexOf(categories.get('category'))<0) {
-          listC.push(categories.get('category'));
-        }
-      });
-      var promises = [];
-      promises.push(data.relation('employee2').query().find());
-      return Parse.Promise.when(promises).then(function(resultados,index) {
-        for (var i = 0; i < resultados.length; i++) {
-          data = data.toJSON();
-          data.alfonso = [];
-          data.alfonso.push(resultados[i]);
-        }
-        data.liscate=listC;
-        return [data];
+      var query1 = new Parse.Query('Business');
+      return query1.get(JSON.parse(JSON.stringify(data)).business.objectId).then(function(dataS) {
+        return dataS.relation('serviCategory').query().find().then(function(services) {
+          var promises1 = [], cateselected={};
+          _.each(services, function(serviceonettoone) {
+            if (JSON.parse(JSON.stringify(data)).serviCategory.objectId == JSON.parse(JSON.stringify(serviceonettoone)).objectId) {
+              cateselected={
+                name:JSON.parse(JSON.stringify(serviceonettoone)).name,
+                id:JSON.parse(JSON.stringify(serviceonettoone)).objectId
+              }
+            }
+            promises1.push({id:JSON.parse(JSON.stringify(serviceonettoone)).objectId,name:JSON.parse(JSON.stringify(serviceonettoone)).name});
+          });
+          var listC = [];
+          _.forEach(cate, function(categories) {
+            if (listC.indexOf(categories.get('category'))<0) {
+              listC.push(categories.get('category'));
+            }
+          });
+          var promises = [];
+          promises.push(data.relation('employee2').query().find());
+          return Parse.Promise.when(promises).then(function(resultados,index) {
+            for (var i = 0; i < resultados.length; i++) {
+              data = data.toJSON();
+              data.alfonso = [];
+              data.alfonso.push(resultados[i]);
+            }
+            data.categories=promises1;
+            data.categoriesSelected=cateselected;
+            data.liscate=listC;
+            return [data];
+          });
+        });
       });
     });
   });
@@ -424,6 +476,52 @@ ServiceControllers.removeReationEmployee = function removeReationEmployee (servi
         console.log('Service Get', error);
         return {};
     });
+};
+
+ServiceControllers.createServiceCategory = function createServiceCategory (options) {
+  var serviceCate = new Parse.Object('serviceCategory');
+  var query = new Parse.Query('serviceCategory');
+  query.equalTo('name',options.categoryservice);
+  return query.find().then(function(dataSerCat) {
+    if (dataSerCat.length<1) {
+        serviceCate.set({'name':options.categoryservice});
+        serviceCate.set('business', {"__type":"Pointer","className":"Business","objectId":options.idBusiness});
+        var acl = new Parse.ACL();
+        acl.setPublicWriteAccess(true);
+        acl.setPublicReadAccess(true);
+        serviceCate.setACL(acl);
+        return serviceCate.save().then(function(saveData) {
+            // The save was successful.
+            return {code:200,id:saveData.id};
+          }, function(error) {
+            console.log('Service Save Error',error);
+            return {code:500,error:'Service Save Error '+error};
+          });
+    }else {
+      return {code:409,error:'Category Duplicate'};
+    }
+  });
+
+
+};
+
+ServiceControllers.addRelationServiceCategory = function addRelationServiceCategory (serviceCateId,options) {
+  var query = new Parse.Query('Business');
+  return query.get(options.idBusiness).then(function(dataS) {
+    var query2 = new Parse.Query('serviceCategory');
+    return query2.get(serviceCateId).then(function(dataService) {
+      dataS.relation('serviCategory').add(dataService);
+      dataS.save(null, {
+          useMasterKey: true
+      });
+      return {code:200};
+    }, function(error) {
+      console.log('Service Get in Category', error);
+      return {code:409};
+    });
+
+  });
+
 };
 
 

@@ -14,6 +14,7 @@ var GloVariable = require('../controllers/globalVariable');
 var _ = require('lodash');
 var moment2 = require('moment');
 var moment = require('moment-timezone').tz.setDefault('Europe/Madrid');
+var nodemailer = require('nodemailer');
 
 var USER_ALL = GloVariable.TYPES;
 var usersType = {};
@@ -674,13 +675,19 @@ module.exports = function(app) {
   ********************************/
 
   app.get('/service/:id/:bussines',middle.checkSession, function(req, res) {
-    var selectPageE=1, catpage=10, serviceData={};
-    var listService = [], final=[], schedule=[], dataClient=[], listCateSelect,listCategory=[];
+    var selectPageE=1, catpage=10, serviceData={}, selectedCustom={};
+    var listService = [], final=[], schedule=[], dataClient=[], listCateSelect, listCateSelect2,listCategory=[];
     Users.getEmployeeBusinessOne(req.params.bussines).then(function(employeeB) {
       ServiceControllers.getServiceOne(req.params.id).then(function(serviceData) {
         for (var ii = 0; ii < serviceData.length; ii++) {
           if (serviceData[ii].liscate) {
             listCateSelect = serviceData[ii].liscate;
+          }
+          if (serviceData[ii].categories) {
+            listCateSelect2 = serviceData[ii].categories;
+          }
+          if (serviceData[ii].categoriesSelected) {
+            selectedCustom = serviceData[ii].categoriesSelected;
           }
         }
         if (serviceData.length>0) {
@@ -707,6 +714,8 @@ module.exports = function(app) {
           final,
           listCategory,
           listCateSelect,
+          listCateSelect2,
+          selectedCustom,
           bussiId:employeeB.idBusiness,
           businessSelec:0,
           employeeSelec:0,
@@ -723,7 +732,8 @@ module.exports = function(app) {
   });
 
   app.get('/servicelist/:id',middle.checkSession, function(req, res) {
-    var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[], listCateSelect;
+    var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[],
+        listCateSelect, listCateSelect2,selectedCustom='', listOnly2=[];
     if (req.query.page) {
       selectPageE=req.query.page;
       req.query.page=req.query.page-1;
@@ -731,21 +741,43 @@ module.exports = function(app) {
     req.query.flag=false;
     Users.getEmployeeBusiness2(req.params.id,req.query).then(function(employeeB) {
       req.query.type='listcate';
+      req.query.type='listcate2';
       ServiceControllers.getService2(req.params.id,req.query).then(function(serviceData) {
         for (var ii = 0; ii < serviceData.length; ii++) {
           if (serviceData[ii].liscate) {
             listCateSelect = serviceData[ii].liscate;
           }
+          if (serviceData[ii].liscate2) {
+            listCateSelect2 = serviceData[ii].liscate2;
+          }
+
+          if (serviceData[ii].listOnly) {
+            listOnly2 = serviceData[ii].listOnly;
+          }
+          if (serviceData[ii].cateselected) {
+            selectedCustom = serviceData[ii].cateselected;
+          }
+
         }
         serviceData = serviceData.filter(function(el) {
           return !el.liscate;
         });
         serviceData = serviceData.filter(function(el) {
+          return !el.cateselected;
+        });
+        serviceData = serviceData.filter(function(el) {
+          return !el.listOnly;
+        });
+        serviceData = serviceData.filter(function(el) {
+          return !el.liscate2;
+        });
+
+        serviceData = serviceData.filter(function(el) {
           return !el.lunes;
         });
 
-        if (serviceData.length>0) {
-          serviceData = JSON.parse(JSON.stringify(serviceData));
+        serviceData = JSON.parse(JSON.stringify(serviceData));
+        /*if (serviceData.length>0) {
           for (var i = 0; i < serviceData.length; i++) {
             if (listCategory.indexOf(serviceData[i].category)<0) {
               listCategory.push(serviceData[i].category);
@@ -760,8 +792,8 @@ module.exports = function(app) {
               final.push(['']);
             }
           }
-        }
-        serviceData = _.orderBy(serviceData, ['category'], ['desc']);
+        }*/
+        serviceData = _.orderBy(serviceData, ['serviCategoryName'], ['asc']);
         res.render('service/servicelist.ejs',{
           employeeB,
           usersType,
@@ -771,6 +803,9 @@ module.exports = function(app) {
           final,
           listCategory,
           listCateSelect,
+          listCateSelect2,
+          selectedCustom,
+          listOnly2,
           bussiId:employeeB.idBusiness,
           businessSelec:0,
           employeeSelec:0,
@@ -787,16 +822,26 @@ module.exports = function(app) {
   });
 
   app.post('/service',middle.checkSession, function(req, res) {
-    ServiceControllers.createService(req.body).then(function(data){
-      if (req.body.employee) {
-        for (var i = 0; i < req.body.employee.length; i++) {
-          ServiceControllers.addReationEmployee(data.id,req.body.employee[i].id).then(function(ready) {
-            res.json({code:200});
-          });
+    ServiceControllers.createService(req.body).then(function(data1){
+      ServiceControllers.addRelationServiceCategory(req.body.category,req.body).then(function(data){
+        if (req.body.employee) {
+          for (var i = 0; i < req.body.employee.length; i++) {
+            ServiceControllers.addReationEmployee(data1.id,req.body.employee[i].id).then(function(ready) {
+              res.json({code:200});
+            });
+          }
+        }else {
+          res.json({code:200});
         }
-      }else {
-        res.json({code:200});
-      }
+      });
+    });
+  });
+
+  app.post('/service/category',middle.checkSession, function(req, res) {
+    ServiceControllers.createServiceCategory(req.body).then(function(data1){
+      ServiceControllers.addRelationServiceCategory(data1.id,req.body).then(function(data){
+        res.json({code:data.code,data:req.body.categoryservice,id:data1.id});
+      });
     });
   });
 
@@ -1258,16 +1303,32 @@ app.get('/forgot', function(req, res) {
 });
 
 app.post('/forgot', function(req, res) {
-  console.log(req.body);
-  return Parse.User.requestPasswordReset(req.body.email, {
-    success: function() {
-      console.log('listooo');
-    // Password reset request was sent successfully
-    },
-    error: function(error) {
-      console.log('error-->'+JSON.stringify(error));
+  Users.checkUser(req.body).then(function(result) {
+    if (result.code==409) {
+      res.json(result);
+    }else {
+      res.json({code:500, message:"Email No existe"});
+      return;
     }
+
+    //mail en proceso
+    /*var transporter = nodemailer.createTransport('smtps://no-reply%40timesapp.com.ar');
+    var mailOptions = {
+      from: '"no-reply" <no-reply@timesapp.com.ar>', // sender address
+      to: "alfonsojn15@gmail.com", // list of receivers
+      subject: "Test", // Subject line
+      text: "Test1", // plaintext body
+    };
+    console.log('vyyyy',mailOptions);
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+        console.log(error);
+      }
+      console.log('Message sent: ' + info.response);
+    });
+    */
   });
+
 
 });
 

@@ -57,10 +57,10 @@
                   </div>
                   <ul class="list-group">
                    <% for(var o=0; o<serviceData.length; o++) {%>
-                   <%if (listCategory.indexOf(serviceData[o].category)>=0) {%>
+                   <%if (listOnly2.indexOf(serviceData[o].serviCategoryName)>=0) {%>
                     <li class="list-group-item">
-                      <%if (flag!=serviceData[o].category){%>
-                        <label style="color:#36459b;text-transform: uppercase;"><b><%=serviceData[o].category%>:</b></label>
+                      <%if (flag!=serviceData[o].serviCategoryName){%>
+                        <label style="color:#36459b;text-transform: uppercase;"><b><%=serviceData[o].serviCategoryName%>:</b></label>
                       <%}%>
                       <div class="media">
                         <div class="media-body">
@@ -82,10 +82,10 @@
                                 <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
                                 <label class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].duration%></label>
                                 <!--<div class="example-wrap" style="width: 60%;">
-                                  <div class="example mt-30">
-                                     <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
-                                    </div>
-                                  </div>
+                                <div class="example mt-30">
+                                <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
+                                </div>
+                                </div>
                                   <span class="form-control-label" style="margin-left: 60%;margin-top: -95px;position:absolute;">min</span>
                                 </div>-->
                               </div>
@@ -93,11 +93,13 @@
                                 <label class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].price%></label>
                               </div>
                               <!--/service/idservicio/idempresa-->
+                            </div>
                             </form>
                         </div>
                     </li>
+
                   <%}%>
-                    <%flag=serviceData[o].category%>
+                    <%flag=serviceData[o].serviCategoryName%>
                   <%}%>
               </ul>
                     <%}else{%>
@@ -156,15 +158,21 @@
                     <div class="form-group">
                       <div class="row">
                         <select class="col-md-6 form-control" style="width: 50%;" id="selectcate">
-                          <%if (listCateSelect.length>0){%>
-                            <%for (ai in listCateSelect){%>
-                              <option value="<%=listCategory[ai]%>"><%=listCateSelect[ai]%></option>
+                          <%if (listCateSelect2.length>0){%>
+                            <%for (ai in listCateSelect2){%>
+                              <option value="<%=listCateSelect2[ai].id%>"><%=listCateSelect2[ai].name%></option>
                             <%}%>
                           <%}else{%>
                             <option value="Otros servicios">Otros servicios</option>
                           <%}%>
                         </select>
-                        <input type="text" class="col-md-6 form-control" id="catename" placeholder="Nueva Categoria" />
+                        <input type="text" class="col-md-4 form-control" id="catename" placeholder="Nueva Categoria" />
+                        <div class="col-md-2 newcateservi" data-target="#">
+                          <button type="button" class="site-action-toggle btn-raised btn btn-success btn-floating" style="position: absolute;margin-right: 54px;border-radius: 6px;width: 40px;height: 30px;background-color: #523eba;border-color: #523eba;">
+                            <i class="icon md-plus" aria-hidden="true" style="position:absolute;font-size:1.7145rem;margin-left:-12px;margin-top: -4px;"></i>
+                          </button>
+                      </div>
+                      <img class="loadgif2" src="/public/assets/images/load.svg" style="margin-left:-86px; visibility:hidden;">
                       </div>
                     </div>
                     <!-- Example Multi Balue -->
@@ -441,7 +449,7 @@
     <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaHoraS" data-plugin="alertify"
       data-type="log" data-delay="3000" data-log-message="Debes completar el par de horas" style="visibility:hidden;" >delay</button>
     <button type="button" class="btn btn-sm btn-primary waves-effect" id="CompletaEmplo" data-plugin="alertify"
-      data-type="log" data-delay="3000" data-log-message="Es necesario un empleado" style="visibility:hidden;" >delay</button>
+      data-type="log" data-delay="3000" data-log-message="Es necesario un Empleado/Categoria" style="visibility:hidden;" >delay</button>
 
 <%if (session.owner || session.ownerAdmin){%>
 <!-- Footer -->
