@@ -91,9 +91,16 @@ $(document).ready(function() {
     //Apendo el destacado en la categoria
 
     if (JSON.parse($("#valueDestacados").val()).length>0) { //section 1
-      //console.log('en desarroll---------------------------------o---->');
+      console.log('en desarroll---------------------------------o---->');
       if ($('.append-'+id)[0]==undefined) {
-        //console.log('apendar aunnn end esrrollo');
+        console.log('apendar aunnn end esrrollo');
+        
+        if (cantidad==1) {
+          $("#texto").before("<div class='apendo' data-currentflag='"+1+"' data-gs-current-height='0' style=''><div data-gs-x='0' data-gs-y='0' data-gs-width='12' data-gs-height='1' class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2' style=''></div></div>");
+        }else {
+          $(".apendo").attr('data-currentflag',cantidad);
+        }
+
         var empl = "";
         if ($("#input-"+id).val().length>0) {
           for (var i = 0; i <= $("#input-"+id).val().length; i++) {
