@@ -12,7 +12,7 @@
  */
 var Grid = (function () {
 
-    
+
 
     /**
      * @param  {Array}  rects array of Rect objects
@@ -100,7 +100,6 @@ var Grid = (function () {
      * @return {Grid}          self
      */
     Grid.prototype.update = function (rect, params) {
-
         rect.x = ('x' in params) ? params.x : rect.x
         rect.y = ('y' in params) ? params.y : rect.y
         rect.w = ('w' in params) ? params.w : rect.w
@@ -116,7 +115,7 @@ var Grid = (function () {
 
 var LTData = (function ($) {
 
-    
+
 
     var NAME     = 'ltData'
 
@@ -159,7 +158,7 @@ var LTData = (function ($) {
 
 var LTGrid = (function ($) {
 
-    
+
 
     /**
      * ------------------------------------------------------------------------
@@ -170,6 +169,8 @@ var LTGrid = (function ($) {
     var NAME                = 'ltGrid'
     var DATA_KEY            = 'lt.grid'
     var EVENT_KEY           = '.' + DATA_KEY
+
+    var globalCategory = ''
 
     var Event = {
         UPDATE  : 'update',
@@ -186,7 +187,8 @@ var LTGrid = (function ($) {
     }
 
     var Default = {
-        resize: true,
+      //0414 4674841 miguel vivas
+        resize: false,
         overlap: false,
         compact: true,
         params: {
@@ -331,6 +333,9 @@ var LTGrid = (function ($) {
      */
     LTGrid.prototype.grid = function (size, grid) {
         var $items = this.$element.children('[draggable]')
+        /*console.log('---->');
+        console.log($items);
+        console.log($items.context.id);*/
 
         if (undefined !== grid) {
             grid.rects.forEach(function (rect, index) {
@@ -353,9 +358,14 @@ var LTGrid = (function ($) {
      * @param  {Object} params An object with optional keys x, y, w, h to modify the rect
      */
     LTGrid.prototype.reposition = function ($widget, params) {
+      console.log('-------***pongooo');
         var size = this.size()
         var rect = $widget[LTRect.NAME](size)
         var grid = this.grid(size)
+        console.log($widget);
+        console.log($widget[0].classList.value);
+        console.log(typeof($widget[0].classList.value));
+        //console.log($widget[0].classList.indexOf(globalCategory));
 
         if (this._options.overlap) {
             grid.update(rect, params)
@@ -430,6 +440,8 @@ var LTGrid = (function ($) {
         var $parent = $widget.parent()
         var $ghost = this._getGhost($widget)
         var pos = $ghost[LTRect.NAME](size)
+        console.log('$parent',$parent);
+        globalCategory = $parent[0].id;
 
         this.$element.append($widget)
 
@@ -567,8 +579,11 @@ var LTGrid = (function ($) {
         })
 
         .on(Event.DROP, Selector.GRID, function (event) {
+          console.log('1111');
             var $widget = $(Store.get(event.originalEvent))
-
+            console.log('finnn');
+            console.log($widget.length);
+            console.log($widget);
             if ($widget.length) {
                 var $this = $(this)
                 var grid = $this[NAME]().data(DATA_KEY)
@@ -597,7 +612,7 @@ var LTGrid = (function ($) {
 
 var LTGridOnly = (function ($) {
 
-    
+
 
     /**
      * ------------------------------------------------------------------------
@@ -742,7 +757,7 @@ var LTGridOnly = (function ($) {
 
 var LTRect = (function ($) {
 
-    
+
 
     var NAME     = 'ltRect'
     var DATA_KEY = 'lt.rect'
@@ -784,7 +799,7 @@ var LTRect = (function ($) {
 
 var LTSize = (function ($) {
 
-    
+
 
     var NAME = 'ltSize'
 
@@ -810,7 +825,7 @@ var LTSize = (function ($) {
  */
 var Rect = (function () {
 
-    
+
 
     var paramNames = ['x', 'y', 'w', 'h']
 
@@ -901,7 +916,7 @@ var Rect = (function () {
  */
 var Store = (function () {
 
-    
+
 
     var Store = {}
 

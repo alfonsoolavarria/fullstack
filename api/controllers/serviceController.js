@@ -44,11 +44,11 @@ ServiceControllers.updateService = function updateService (options) {
       if (options.employee) dataS.set({'employee':options.employee});
       if (options.schedule) dataS.set({'schedule':options.schedule});
       if (options.category) dataS.set('serviCategory', {"__type":"Pointer","className":"serviceCategory","objectId":options.category});
-      //if (options.category) dataS.set({'category':options.category});
+      if (options.isFeatured) dataS.set({'isFeatured':JSON.parse(options.isFeatured)});
     }
     return dataS.save().then(function(saveData) {
         // The save was successful.
-        return {ready:true,successful:'Created Service',id:saveData.id};
+        return {ready:true,successful:'Created Service',id:saveData.id,dataCustom:JSON.stringify(dataS)};
       }, function(error) {
         console.log('Service Save Error',error);
         return {ready:false,error:'Service Save Error '+error};
@@ -124,8 +124,13 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
     query.equalTo('status', true);
 
     return query.find().then(function(cate) {
-      var promises1 = [], cateselected=[], onlylistcat=[];
+      var promises1 = [], cateselected=[], onlylistcat=[], destacados = [];
       return dataE[0].relation('serviCategory').query().find().then(function(services) {
+        /*_.each(cate, function(servidata,index) {
+          if (JSON.parse(JSON.stringify(servidata)).isFeatured==true && JSON.parse(JSON.stringify(servidata)).status==true) {
+            destacados.push(JSON.parse(JSON.stringify(servidata)));
+          }
+        });*/
         _.each(services, function(serviceonettoone,index) {
           for (var i = 0; i < cate.length; i++) {
             /*console.log('11111111111111');
@@ -364,6 +369,7 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
               data.push({liscate2:promises1});
               data.push({cateselected:cateselected});
               data.push({listOnly:onlylistcat});
+              //data.push({destacadosO:destacados});
             }
 
             var minimo = _.uniq(allhours).sort();

@@ -733,7 +733,7 @@ module.exports = function(app) {
 
   app.get('/servicelist/:id',middle.checkSession, function(req, res) {
     var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[],
-        listCateSelect, listCateSelect2,selectedCustom='', listOnly2=[];
+        listCateSelect, listCateSelect2,selectedCustom='', listOnly2=[], destacadosEnd=[];
     if (req.query.page) {
       selectPageE=req.query.page;
       req.query.page=req.query.page-1;
@@ -750,6 +750,9 @@ module.exports = function(app) {
           if (serviceData[ii].liscate2) {
             listCateSelect2 = serviceData[ii].liscate2;
           }
+          /*if (serviceData[ii].destacadosO) {
+            destacadosEnd = serviceData[ii].destacadosO;
+          }*/
 
           if (serviceData[ii].listOnly) {
             listOnly2 = serviceData[ii].listOnly;
@@ -768,6 +771,9 @@ module.exports = function(app) {
         serviceData = serviceData.filter(function(el) {
           return !el.listOnly;
         });
+        /*serviceData = serviceData.filter(function(el) {
+          return !el.destacadosO;
+        });*/
         serviceData = serviceData.filter(function(el) {
           return !el.liscate2;
         });
@@ -793,7 +799,42 @@ module.exports = function(app) {
             }
           }
         }*/
+
+        var flagName = "",
+
         serviceData = _.orderBy(serviceData, ['serviCategoryName'], ['asc']);
+        //console.log(serviceData);
+
+        var tests = [];
+        for (var i = 0; i < serviceData.length; i++) {
+          if (i==0) {
+            if (serviceData[i].serviCategoryName != flagName) {
+             tests.push([{"categoria":serviceData[i].serviCategoryName},serviceData[i]]);
+            }
+          }else {
+            if (serviceData[i].serviCategoryName == flagName) {
+             for (var ii = 0; ii < tests.length; ii++) {
+               for (var iii = 0; iii< tests[ii].length; iii++) {
+                 if (tests[ii][iii].categoria && tests[ii][iii].categoria == serviceData[i].serviCategoryName) {
+                   tests[ii].push(serviceData[i]);
+               }
+               }
+             }
+           }
+          else {
+             if (serviceData[i].serviCategoryName != flagName) {
+               tests.push([{"categoria":serviceData[i].serviCategoryName},serviceData[i]]);
+             }
+           }
+
+         }//fin primer else
+          flagName=serviceData[i].serviCategoryName;
+
+          if (serviceData[i].status==true && serviceData[i].isFeatured==true) {
+            destacadosEnd.push(serviceData[i]);
+          }
+        }
+
         res.render('service/servicelist.ejs',{
           employeeB,
           usersType,
@@ -801,6 +842,8 @@ module.exports = function(app) {
           selectPageE,
           catpageE:catpage,
           final,
+          destacados:JSON.stringify(destacadosEnd),
+          arreglo:JSON.parse(JSON.stringify(tests)),
           listCategory,
           listCateSelect,
           listCateSelect2,
@@ -834,6 +877,12 @@ module.exports = function(app) {
           res.json({code:200});
         }
       });
+    });
+  });
+
+  app.put('/service/featured/',middle.checkSession, function(req, res) {
+    ServiceControllers.updateService(req.body).then(function(data1){
+      res.json({code:200,data:data1});
     });
   });
 

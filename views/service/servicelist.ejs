@@ -14,6 +14,8 @@
 
   <link rel="stylesheet" href="/public/assets/material/global/vendor/asrange/asRange.css">
 
+  <link rel="stylesheet" href="/public/assets/material/global/vendor/layout-grid/css-grid.css"/>
+
   <body class="animsition page-user">
     <!-- Headear barra -->
     <% include ../templates/header.ejs %>
@@ -22,6 +24,16 @@
     <div class="page">
       <div class="page-content">
 <%}%>
+
+
+<style type="text/css">
+      .grid-stack-item-content {
+          color: #2c3e50;
+          text-align: center;
+          /*background-color: #18bc9c;*/
+          background-color: aliceblue;
+      }
+  </style>
 
 <div class="panel">
     <div class="panel-body">
@@ -55,53 +67,74 @@
                       <b>Precio</b>
                     </div>
                   </div>
-                  <ul class="list-group">
-                   <% for(var o=0; o<serviceData.length; o++) {%>
-                   <%if (listOnly2.indexOf(serviceData[o].serviCategoryName)>=0) {%>
-                    <li class="list-group-item">
-                      <%if (flag!=serviceData[o].serviCategoryName){%>
-                        <label style="color:#36459b;text-transform: uppercase;"><b><%=serviceData[o].serviCategoryName%>:</b></label>
-                      <%}%>
-                      <div class="media">
-                        <div class="media-body">
-                          <form class="form-horizontal">
-                            <div class="row">
-                              <div class="col-md-3">
-                                  <a href="/service/<%=serviceData[o].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=serviceData[o].objectId%>" style="border:0px;background:none;cursor:pointer;"><%=serviceData[o].serviceName%></label></a>
-                              </div>
-                              <div class="col-md-3">
-                                <%for (var list = 0; list < serviceData[o].alfonso[0].length; list++) {%>
-                                  <% if (serviceData[o].alfonso[0].length >1) {%>
-                                    <label><%=serviceData[o].alfonso[0][list].name%><%if(list+1!=serviceData[o].alfonso[0].length){%>,<%}%> </label>
-                                  <%}else{%>
-                                    <label><%=serviceData[o].alfonso[0][list].name%></label>
-                                  <%}%>
-                                <%}%>
-                              </div>
-                              <div class="col-md-3">
-                                <!--<input class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;" value="<%=serviceData[o].duration%>" disabled></input>-->
-                                <label class="form-control" id="service-duration-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].duration%></label>
-                                <!--<div class="example-wrap" style="width: 60%;">
-                                <div class="example mt-30">
-                                <div class="asRange rangeUi" id="service-duration-<%=serviceData[o].objectId%>"  data-plugin="asRange" data-namespace="rangeUi" data-step="1" data-min="1" data-tip="true" data-max="240" data-value="<%=serviceData[o].duration%>" style="pointer-events: none;">
-                                </div>
-                                </div>
-                                  <span class="form-control-label" style="margin-left: 60%;margin-top: -95px;position:absolute;">min</span>
-                                </div>-->
-                              </div>
-                              <div class="col-md-2">
-                                <label class="form-control" id="service-price-<%=serviceData[o].objectId%>" style="border:0px;background:none;"><%=serviceData[o].price%></label>
-                              </div>
-                              <!--/service/idservicio/idempresa-->
-                            </div>
-                            </form>
-                        </div>
-                    </li>
+                  <label style="color:#36459b;text-transform: uppercase;"><b>Destacados:</b></label>
+                  <input style="visibility:hidden;" id="valueDestacados" value="<%=destacados%>"><br>
+                  <!--Detacados -->
+                  <b id="texto" style="margin-top:-2px;position:absolute;visibility:hidden;">No Tiene Servicios Destacados</b>
+                  <br id="provition">
 
+
+                    <% for(var aa=0; aa<arreglo.length; aa++) {%>
+                      <br><label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][0].categoria%>:</b></label>
+                      <br><br>
+                      <div class="grid-stack grid-stack-instance-3266" data-gs-current-height="1">
+                      <!--<ul class="list-group">-->
+                      <% for(var aaa=0; aaa<arreglo[aa].length; aaa++) {%>
+                        <!--<li class="list-group-item">-->
+                         <%if ((typeof(arreglo[aa][aaa].categoria)=='string')) {%>
+                           <%flag=arreglo[aa][aaa].categoria%>
+                           <!--<label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][aaa].categoria%>:</b></label>-->
+                           <br><br>
+                         <%}else if((typeof(arreglo[aa][aaa].categoria)=='undefined')){%>
+                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="1" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide" style="">
+                             <div style="position:absolute;left:96%;cursor:pointer">
+                               <%if (arreglo[aa][aaa].isFeatured==true){%>
+                                   <img class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">
+                               <%}else{%>
+                                  <img class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="false" src="/public/assets/images/fav_off.png">
+                               <%}%>
+                             </div>
+                             <div class="media">
+                               <div class="media-body">
+                                 <form class="form-horizontal">
+                                   <div class="grid-stack-item-content ui-draggable-handle">
+                                   <div class="row">
+                                     <div class="col-md-1">
+                                         <a href="/service/<%=arreglo[aa][aaa].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;cursor:pointer;"><%=arreglo[aa][aaa].serviceName%></label></a>
+                                     </div>
+                                     <div class="col-md-5">
+                                       <%for (var list = 0; list < arreglo[aa][aaa].alfonso[0].length; list++) {%>
+                                         <% if (arreglo[aa][aaa].alfonso[0].length >1) {%>
+                                           <label id="service-employee-<%=list%>-<%=arreglo[aa][aaa].objectId%>"> <%=arreglo[aa][aaa].alfonso[0][list].name%><%if(list+1!=arreglo[aa][aaa].alfonso[0].length){%>,<%}%> </label>
+                                         <%}else{%>
+                                           <label id="service-employee-<%=list%>-<%=arreglo[aa][aaa].objectId%>"><%=arreglo[aa][aaa].alfonso[0][list].name%></label>
+                                         <%}%>
+                                       <%}%>
+                                       <% if (arreglo[aa][aaa].alfonso[0].length >1) {%>
+                                         <input style="visibility:hidden;position:absolute;" id="input-<%=arreglo[aa][aaa].objectId%>" value="<%=arreglo[aa][aaa].alfonso[0].length%>">
+                                       <%}else{%>
+                                         <input style="visibility:hidden;position:absolute;" id="input-<%=arreglo[aa][aaa].objectId%>" value="0">
+                                        <%}%>
+                                     </div>
+                                     <div class="col-md-1">
+                                       <label class="form-control" id="service-duration-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;"><%=arreglo[aa][aaa].duration%></label>
+                                     </div>
+                                     <div class="col-md-4">
+                                       <label class="form-control" id="service-price-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;margin-left: 37px;"><%=arreglo[aa][aaa].price%></label>
+                                     </div>
+                                   </div>
+                                   </div>
+                                   </form>
+                               </div>
+                               </div>
+                               </div>
+                           <%flag=arreglo[aa][aaa].serviCategoryName%>
+                        <%}%>
+                   <!--</li>-->
+                    <%}%>
+                  <!--</ul>-->
+                </div>
                   <%}%>
-                    <%flag=serviceData[o].serviCategoryName%>
-                  <%}%>
-              </ul>
                     <%}else{%>
                       No hay Servicios disponibles
                     <%}%>
@@ -110,7 +143,7 @@
                     <input id="Bid" value="<%=bussiId%>" style="visibility:hidden;">
                     <input id="session" value="<%=session.userId%>" style="visibility:hidden;">
 
-                </div>
+
             </div>
         </div>
     </div>
@@ -465,6 +498,10 @@
 <script src="/public/assets/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
 <script src="/public/assets/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
 <script src="/public/assets/material/global/vendor/waves/waves.js"></script>
+<script src="/public/assets/material/global/vendor/layout-grid/lodash-p.js"></script>
+<script src="/public/assets/material/global/vendor/layout-grid/gridstack.js"></script>
+<script src="/public/assets/material/global/vendor/layout-grid/gridstack.jQueryUI.js"></script>
+
 <!-- Plugins -->
 <script src="/public/assets/material/global/vendor/switchery/switchery.min.js"></script>
 <script src="/public/assets/material/global/vendor/intro-js/intro.js"></script>
@@ -528,4 +565,13 @@ Config.set('assets', '../../assets');
 </body>
 </html>
 <div class="alertify-logs"></div>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            float: true
+        };
+        $('.grid-stack').gridstack(options);
+
+    });
+    </script>
 <%}%>
