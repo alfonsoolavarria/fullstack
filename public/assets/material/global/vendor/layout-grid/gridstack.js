@@ -922,6 +922,7 @@
     };
 
     GridStack.prototype._triggerChangeEvent = function(forceTrigger) {
+      console.log('movee22');
         var elements = this.grid.getDirtyNodes();
         var hasChanges = false;
 
@@ -932,6 +933,9 @@
         }
 
         if (hasChanges || forceTrigger === true) {
+          console.log('moveee11');
+          console.log(eventParams[0][0].el);
+          //console.log(eventParams[0][1]._id);
             this.container.trigger('change', eventParams);
         }
     };

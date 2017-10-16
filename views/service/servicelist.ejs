@@ -31,7 +31,7 @@
           color: #2c3e50;
           text-align: center;
           /*background-color: #18bc9c;*/
-          background-color: aliceblue;
+          background-color: #c5cae9;;
       }
   </style>
 
@@ -86,21 +86,21 @@
                            <!--<label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][aaa].categoria%>:</b></label>-->
                            <br><br>
                          <%}else if((typeof(arreglo[aa][aaa].categoria)=='undefined')){%>
-                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="1" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide" style="">
+                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="2" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide" style="" id="<%=aaa%>">
                              <div style="position:absolute;left:96%;cursor:pointer">
                                <%if (arreglo[aa][aaa].isFeatured==true){%>
-                                   <img class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">
+                                   <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">
                                <%}else{%>
-                                  <img class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="false" src="/public/assets/images/fav_off.png">
+                                  <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="false" src="/public/assets/images/fav_off.png">
                                <%}%>
                              </div>
-                             <div class="media">
-                               <div class="media-body">
-                                 <form class="form-horizontal">
-                                   <div class="grid-stack-item-content ui-draggable-handle">
+                             <div class="media" style="height:100%;background-color:#c5cae9;">
+                               <div class="media-body" style="height:100%;">
+                                 <form class="form-horizontal" style="height:100%;">
+                                   <div class="grid-stack-item-content ui-draggable-handle" style="height:100%;">
                                    <div class="row">
                                      <div class="col-md-1">
-                                         <a href="/service/<%=arreglo[aa][aaa].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;cursor:pointer;"><%=arreglo[aa][aaa].serviceName%></label></a>
+                                         <a href="/service/<%=arreglo[aa][aaa].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;"><%=arreglo[aa][aaa].serviceName%></label></a>
                                      </div>
                                      <div class="col-md-5">
                                        <%for (var list = 0; list < arreglo[aa][aaa].alfonso[0].length; list++) {%>
@@ -568,7 +568,7 @@ Config.set('assets', '../../assets');
 <script type="text/javascript">
     $(function () {
         var options = {
-            float: true
+            //float: true
         };
         $('.grid-stack').gridstack(options);
 

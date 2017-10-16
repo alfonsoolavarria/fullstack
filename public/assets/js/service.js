@@ -1,4 +1,12 @@
 $(document).ready(function() {
+///ya resolvi lo de a variable floar para que no hiciera espacios en blanco
+//me falta es:
+//1---> cuadrar el tamano de las cajas de las inserciones de destacados para
+//que sean del mismo tamano que las normales
+//2---> cuadrar el tamano de las imagenes
+//3---> el mas complicado que es guardar el orden que mueva en el drag and drog hacr el save en la bd
+// y luego al recargar que salga el orden elegido
+
 
   var height = 1;
   var cantidad = 1;
@@ -12,11 +20,20 @@ $(document).ready(function() {
   if (JSON.parse($("#valueDestacados").val()).length>0) {
     var dataDestacada = JSON.parse($("#valueDestacados").val());
     for (var ii = 0; ii < dataDestacada.length; ii++) {
-      if (cantidad==1) {
-        $("#texto").before("<div class='apendo' data-currentflag='"+1+"' data-gs-current-height='0' style=''><div data-gs-x='0' data-gs-y='0' data-gs-width='12' data-gs-height='1' class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2' style=''></div></div>");
+    /*  if (cantidad==1) {
+        $("#texto").before("<div class='apendo' data-currentflag='"+1+"' data-gs-current-height='0' style=''><div data-gs-x='0' data-gs-y='0' data-gs-width='12' data-gs-height='2' class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2' style=''></div></div>");
       }else {
         $(".apendo").attr('data-currentflag',cantidad);
+      }*/
+      $("#texto").before("<div class='apendo-"+dataDestacada[ii].objectId+"' style='height:120px;'></div>");
+      //$(".apendo").attr('data-currentflag',cantidad);
+      $(".apendo-"+dataDestacada[ii].objectId).append("<div class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2-"+dataDestacada[ii].objectId+"' style='height:100%;position:relative;width:100%;'></div>");
+      var toP = 20;
+      if (cantidad!=1) {
+        toP +=10;
+        $(".apendo-"+dataDestacada[ii].objectId).css("margin-top", toP+"px");
       }
+
       var empl = "";
       if ($("#input-"+dataDestacada[ii].objectId).val().length>0) {
         for (var i = 0; i <= $("#input-"+dataDestacada[ii].objectId).val().length; i++) {
@@ -25,31 +42,32 @@ $(document).ready(function() {
       }
       if ($('.append-'+dataDestacada[ii].objectId)[0]==undefined) {
         cantidad +=1;
-        height += 80;
+        height += 130;
         var listo = height+40;
-        $("#texto").remove();
-        $('.apendo').css('min-height', listo+'px');
-        $(".apendo").css('height',listo);
-        $(".apendo2").append("<div style='position:absolute;left:93%;cursor:pointer'><img class='appendFlag append-destacados-"+dataDestacada[ii].objectId+"' data-id-service-append='"+dataDestacada[ii].objectId+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-        $(".apendo2").append("<div class='media append-"+dataDestacada[ii].objectId+"'><div class='media-body'>\
+        //$("#texto").remove();
+        //$('.apendo-'+dataDestacada[ii].objectId).css('min-height', listo+'px');
+        //$(".apendo-"+dataDestacada[ii].objectId).css('height',listo);
+        $(".apendo2-"+dataDestacada[ii].objectId).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+dataDestacada[ii].objectId+"' data-id-service-append='"+dataDestacada[ii].objectId+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+        $(".apendo2-"+dataDestacada[ii].objectId).append("<div class='media append-"+dataDestacada[ii].objectId+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
         <form class='form-horizontal'>\
         <div class='grid-stack-item-content ui-draggable-handle'>\
         <div class='row'>\
         <div class='col-md-1'>\
         <a href='/service/"+dataDestacada[ii].objectId+"/"+$("#businessid").val()+"'>\
-        <label class='form-control' id='"+dataDestacada[ii].objectId+"' style='border:0px;background:none;cursor:pointer;'>"+$("#service-name-"+dataDestacada[ii].objectId).text()+"</label></a>\
+        <label class='form-control' id='"+dataDestacada[ii].objectId+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+dataDestacada[ii].objectId).text()+"</label></a>\
         </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+dataDestacada[ii].objectId+"' style='border:0px;background:none;'>"+dataDestacada[ii].duration+"</label></div>\
         <div class='col-md-4'><label class='form-control' id='append-service-price-"+dataDestacada[ii].objectId+"' style='border:0px;background:none;margin-left:37px;'>"+dataDestacada[ii].price+"</label></div></div></div></form></div></div>");
       }else {
         //console.log('existe y lo borooo');
         $('.append-'+dataDestacada[ii].objectId).remove();
-        height -=80;
+        $('.append-destacados-'+dataDestacada[ii].objectId).remove();
+        height -=130;
         cantidad -=1;
-        $('.apendo').css('min-height', height+'px');
-        $(".apendo").css('height',height);
-        $(".apendo").attr('data-currentflag',cantidad);
+        //$('.apendo').css('min-height', height+'px');
+        //$(".apendo").css('height',height);
+        //$(".apendo").attr('data-currentflag',cantidad);
         if (cantidad==1) {
-          $(".apendo").remove();
+          $(".apendo-"+dataDestacada[ii].objectId).remove();
           $("#provition").before("<b id='texto' style='margin-top:-2px;position:absolute;'>No Tiene Servicios Destacados</b>");
         }
       }
@@ -91,15 +109,21 @@ $(document).ready(function() {
     //Apendo el destacado en la categoria
 
     if (JSON.parse($("#valueDestacados").val()).length>0) { //section 1
-      console.log('en desarroll---------------------------------o---->');
-      if ($('.append-'+id)[0]==undefined) {
-        console.log('apendar aunnn end esrrollo');
-        
-        if (cantidad==1) {
-          $("#texto").before("<div class='apendo' data-currentflag='"+1+"' data-gs-current-height='0' style=''><div data-gs-x='0' data-gs-y='0' data-gs-width='12' data-gs-height='1' class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2' style=''></div></div>");
-        }else {
-          $(".apendo").attr('data-currentflag',cantidad);
+      //console.log('en desarroll---------------------------------o---->');
+      if ($('.apendo2-'+id)[0]==undefined) {
+        //console.log('apendar aunnn end esrrollo');
+
+        $("#texto").before("<div class='apendo-"+id+"' style='height:120px;'></div>");
+        var toP = 20;
+        if (cantidad!=1) {
+          toP +=10;
+          $(".apendo-"+id).css("margin-top", toP+"px");
         }
+        //if (cantidad==1) {
+        //}//else {
+        //$(".apendo").attr('data-currentflag',cantidad);
+        $(".apendo-"+id).append("<div class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2-"+id+"' style='height:100%;position:relative;width:100%;'></div>");
+        //}
 
         var empl = "";
         if ($("#input-"+id).val().length>0) {
@@ -108,45 +132,54 @@ $(document).ready(function() {
           }
         }
         cantidad +=1;
-        height += 80;
-        var listo = height+40;
-        $("#texto").remove();
-        $('.apendo').css('min-height', listo+'px');
-        $(".apendo").css('height',listo);
-        $(".apendo2").append("<div style='position:absolute;left:93%;cursor:pointer'><img class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-        $(".apendo2").append("<div class='media append-"+id+"'><div class='media-body'>\
+        height += 130;
+        var listo = height+60;
+        $("#texto").css("visibility","hidden");
+        //$("#texto").remove();
+        //$('.apendo').css('min-height', listo+'px');
+        //$(".apendo").css('height',listo);
+        $(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
         <form class='form-horizontal'>\
         <div class='grid-stack-item-content ui-draggable-handle'>\
         <div class='row'>\
         <div class='col-md-1'>\
         <a href='/service/"+id+"/"+$("#businessid").val()+"'>\
-        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;'>"+$("#service-name-"+id).text()+"</label></a>\
+        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+id).text()+"</label></a>\
         </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+id+"' style='border:0px;background:none;'>"+$("#service-duration-"+id).text()+"</label></div>\
         <div class='col-md-4'><label class='form-control' id='append-service-price-"+id+"' style='border:0px;background:none;margin-left:37px;'>"+$("#service-price-"+id).text()+"</label></div></div></div></form></div></div>");
       }else {
         //console.log('existe y lo borooo');
+        $(".apendo-"+id).remove();
         $('.append-destacados-'+id).remove();
-        $('.append-'+id).remove();
-        height -=80;
+        $('.apendo2-'+id).remove();
+        height -=100;
         cantidad -=1;
-        $('.apendo').css('min-height', height+'px');
-        $(".apendo").css('height',height);
-        $(".apendo").attr('data-currentflag',cantidad);
+        //$('.apendo').css('min-height', height+'px');
+        //$(".apendo").css('height',height);
+        //$(".apendo").attr('data-currentflag',cantidad);
         if (cantidad==1) {
-          $(".apendo").remove();
-          $("#provition").before("<b id='texto' style='margin-top:-2px;position:absolute;'>No Tiene Servicios Destacados</b>");
+          $(".apendo-"+id).remove();
+          $("#texto").css("visibility","visible");
+          //$("#provition").before("<b id='texto' style='margin-top:-2px;position:absolute;'>No Tiene Servicios Destacados</b>");
+          height =1;
         }
       }
 
     }else {//section 2
 
-      if (cantidad==1) {
-        $("#texto").before("<div class='grid-stack grid-stack-instance-3266 apendo' data-currentflag='"+1+"' data-gs-current-height='0' style=''><div data-gs-x='0' data-gs-y='0' data-gs-width='12' data-gs-height='1' class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2' style=''></div></div>");
-      }else {
-        $(".apendo").attr('data-currentflag',cantidad);
+      if ($('.apendo2-'+id)[0]==undefined) {
+      $("#texto").before("<div class='apendo-"+id+"' style='height:120px;'></div>");
+
+      var toP = 20;
+      if (cantidad!=1) {
+        toP +=10;
+        $(".apendo-"+id).css("margin-top", toP+"px");
       }
+
+      $(".apendo-"+id).append("<div class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2-"+id+"' style='height:100%;position:relative;width:100%;'></div>");
+
       var empl = "";
-      if ($('.append-'+id)[0]==undefined) {
         if ($("#input-"+id).val().length>0) {
           for (var i = 0; i <= $("#input-"+id).val().length; i++) {
             empl+=$("#service-employee-"+i+"-"+id).text();
@@ -155,29 +188,36 @@ $(document).ready(function() {
 
         cantidad +=1;
         height += 80;
-        var listo = height+40;
-        $("#texto").remove();
-        $('.apendo').css('min-height', listo+'px');
-        $(".apendo").css('height',listo);
-        $(".apendo2").append("<div style='position:absolute;left:93%;cursor:pointer'><img class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-        $(".apendo2").append("<div class='media append-"+id+"'><div class='media-body'>\
+        var listo = height+60;
+        //$("#texto").remove();
+        $("#texto").css("visibility","hidden");
+        //$('.apendo-'+id).css('min-height', listo+'px');
+        //$(".apendo-"+id).css('height',listo);
+        $(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
         <form class='form-horizontal'>\
         <div class='grid-stack-item-content ui-draggable-handle'>\
         <div class='row'>\
         <div class='col-md-1'>\
         <a href='/service/"+id+"/"+$("#businessid").val()+"'>\
-        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;'>"+$("#service-name-"+id).text()+"</label></a></div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+id+"' style='border:0px;background:none;'>"+$("#service-duration-"+id).text()+"</label></div><div class='col-md-4'><label class='form-control' id='append-service-price-"+id+"' style='border:0px;background:none;margin-left:37px;'>"+$("#service-price-"+id).text()+"</label></div></div></div></form></div></div>");
+        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+id).text()+"</label></a>\
+        </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+id+"' style='border:0px;background:none;'>"+$("#service-duration-"+id).text()+"</label></div>\
+        <div class='col-md-4'><label class='form-control' id='append-service-price-"+id+"' style='border:0px;background:none;margin-left:37px;'>"+$("#service-price-"+id).text()+"</label></div></div></div></form></div></div>");
       }else {
         //console.log('existe y lo borooo');
-        $('.append-'+id).remove();
+        $('.apendo-'+id).remove();
+        $('.append-destacados-'+id).remove();
+        $('.apendo2-'+id).remove();
         height -=80;
         cantidad -=1;
-        $(".apendo").attr('data-currentflag',cantidad);
-        $('.apendo').css('min-height', height+'px');
-        $(".apendo").css('height',height);
+        //$(".apendo").attr('data-currentflag',cantidad);
+        //$('.apendo').css('min-height', height+'px');
+        //$(".apendo").css('height',height);
         if (cantidad==1) {
-          $(".apendo").remove();
-          $("#provition").before("<b id='texto' style='margin-top:-2px;position:absolute;'>No Tiene Servicios Destacados</b>");
+          $(".apendo-"+id).remove();
+          //$("#provition").before("<b id='texto' style='margin-top:-2px;position:absolute;'>No Tiene Servicios Destacados</b>");
+          $("#texto").css("visibility","visible");
+          height = 1;
         }
       }
 
