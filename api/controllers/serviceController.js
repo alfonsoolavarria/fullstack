@@ -369,7 +369,6 @@ ServiceControllers.getService2 = function getService2 (id,reqparams) {
               data.push({liscate2:promises1});
               data.push({cateselected:cateselected});
               data.push({listOnly:onlylistcat});
-              //data.push({destacadosO:destacados});
             }
 
             var minimo = _.uniq(allhours).sort();
@@ -526,6 +525,16 @@ ServiceControllers.addRelationServiceCategory = function addRelationServiceCateg
       return {code:409};
     });
 
+  });
+
+};
+
+ServiceControllers.updateOrder = function updateOrder (idServiceOrder,idB,position) {
+  var query = new Parse.Query('Service');
+  query.equalTo('status',true);
+  return query.get(idServiceOrder).then(function(dataB) {
+    dataB.set({'categoryOrder':position});
+    return dataB.save(null, {useMasterKey: true});
   });
 
 };

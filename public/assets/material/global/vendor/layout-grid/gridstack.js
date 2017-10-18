@@ -922,7 +922,7 @@
     };
 
     GridStack.prototype._triggerChangeEvent = function(forceTrigger) {
-      console.log('movee22');
+
         var elements = this.grid.getDirtyNodes();
         var hasChanges = false;
 
@@ -933,10 +933,30 @@
         }
 
         if (hasChanges || forceTrigger === true) {
-          console.log('moveee11');
-          console.log(eventParams[0][0].el);
+          //console.log('moveee11----');
+          //console.log(this.grid);
+          //console.log(padre);
+          //var hijos = padre.children();
+          var padre = this.grid.nodes[0].el.parent();
+          var posicionesGrids = [padre[0].id];
+          for (var i = 0; i < eventParams[0].length; i++) {
+            posicionesGrids.push(eventParams[0][i].el[0].id);
+          }
+          posicionesGrids = posicionesGrids.reverse();
+
+          //console.log('posicionesGrids',posicionesGrids );
           //console.log(eventParams[0][1]._id);
             this.container.trigger('change', eventParams);
+            if (posicionesGrids.length>0) {
+              $.ajax({
+                url:'/service/order/',
+                data:{category:padre[0].id,order:posicionesGrids,idBusiness:$("#Bid").val()},
+                type: 'PUT',
+                success: function functionName(data) {
+                  console.log('successful mande el orden');
+                }
+              });
+            }
         }
     };
 

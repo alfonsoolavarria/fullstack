@@ -733,7 +733,7 @@ module.exports = function(app) {
 
   app.get('/servicelist/:id',middle.checkSession, function(req, res) {
     var selectPageE=1, serviceData={}, catpage=10, listService = [], final=[], listCategory=[],
-        listCateSelect, listCateSelect2,selectedCustom='', listOnly2=[], destacadosEnd=[];
+        listCateSelect, listCateSelect2,selectedCustom='', listOnly2=[], destacadosEnd=[], order;
     if (req.query.page) {
       selectPageE=req.query.page;
       req.query.page=req.query.page-1;
@@ -750,9 +750,9 @@ module.exports = function(app) {
           if (serviceData[ii].liscate2) {
             listCateSelect2 = serviceData[ii].liscate2;
           }
-          /*if (serviceData[ii].destacadosO) {
-            destacadosEnd = serviceData[ii].destacadosO;
-          }*/
+          if (serviceData[ii].order) {
+            order = serviceData[ii].order;
+          }
 
           if (serviceData[ii].listOnly) {
             listOnly2 = serviceData[ii].listOnly;
@@ -771,9 +771,9 @@ module.exports = function(app) {
         serviceData = serviceData.filter(function(el) {
           return !el.listOnly;
         });
-        /*serviceData = serviceData.filter(function(el) {
-          return !el.destacadosO;
-        });*/
+        serviceData = serviceData.filter(function(el) {
+          return !el.order;
+        });
         serviceData = serviceData.filter(function(el) {
           return !el.liscate2;
         });
@@ -803,7 +803,7 @@ module.exports = function(app) {
         var flagName = "",
 
         serviceData = _.orderBy(serviceData, ['serviCategoryName'], ['asc']);
-        //console.log(serviceData);
+
 
         var tests = [];
         for (var i = 0; i < serviceData.length; i++) {
@@ -819,6 +819,7 @@ module.exports = function(app) {
                    tests[ii].push(serviceData[i]);
                }
                }
+               tests[ii] = _.orderBy(tests[ii], ['categoryOrder'], ['asc']); //ordenar por el orden drag
              }
            }
           else {
@@ -826,7 +827,6 @@ module.exports = function(app) {
                tests.push([{"categoria":serviceData[i].serviCategoryName},serviceData[i]]);
              }
            }
-
          }//fin primer else
           flagName=serviceData[i].serviCategoryName;
 
@@ -884,6 +884,14 @@ module.exports = function(app) {
     ServiceControllers.updateService(req.body).then(function(data1){
       res.json({code:200,data:data1});
     });
+  });
+
+  app.put('/service/order/',middle.checkSession, function(req, res) {
+    for (var i = 0; i < req.body.order.length; i++) {
+      ServiceControllers.updateOrder(req.body.order[i],req.body.idBusiness,i).then(function(data1){
+        res.json({code:200});
+      });
+    }
   });
 
   app.post('/service/category',middle.checkSession, function(req, res) {

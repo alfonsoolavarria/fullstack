@@ -1,9 +1,4 @@
 $(document).ready(function() {
-///ya resolvi lo de a variable floar para que no hiciera espacios en blanco
-//me falta es:
-//1---> cuadrar el tamano de las cajas de las inserciones de destacados para
-//que sean del mismo tamano que las normales
-//2---> cuadrar el tamano de las imagenes
 //3---> el mas complicado que es guardar el orden que mueva en el drag and drog hacr el save en la bd
 // y luego al recargar que salga el orden elegido
 
@@ -15,6 +10,9 @@ $(document).ready(function() {
   var flag = 0, category='';
   var she = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
   var cant = [1,2,3,4];
+
+
+  
 
   if ($("#valueDestacados").val()) {
     if (JSON.parse($("#valueDestacados").val()).length>0) {

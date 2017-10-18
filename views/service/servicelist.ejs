@@ -1,4 +1,5 @@
 <%var flag='false';%>
+<%var flag2='false';%>
 <%var count;%>
 <%if (session.owner || session.ownerAdmin){%>
   <% include ../templates/head.ejs %>
@@ -75,9 +76,14 @@
 
 
                     <% for(var aa=0; aa<arreglo.length; aa++) {%>
-                      <br><label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][0].categoria%>:</b></label>
-                      <br><br>
-                      <div class="grid-stack grid-stack-instance-3266" data-gs-current-height="1">
+                      <% for(var cate=0; cate<arreglo[aa].length; cate++) {%>
+                        <%if ((typeof(arreglo[aa][cate].categoria)=='string')) {%>
+                          <br><label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][cate].categoria%>:</b></label>
+                          <br><br>
+                          <%flag2=arreglo[aa][cate].categoria%>
+                        <%}%>
+                      <%}%>
+                      <div class="grid-stack grid-stack-instance-3266 aqui" data-id-nose="<%=flag2%>" id="<%=flag2%>" data-gs-current-height="1">
                       <!--<ul class="list-group">-->
                       <% for(var aaa=0; aaa<arreglo[aa].length; aaa++) {%>
                         <!--<li class="list-group-item">-->
@@ -86,7 +92,7 @@
                            <!--<label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][aaa].categoria%>:</b></label>-->
                            <br><br>
                          <%}else if((typeof(arreglo[aa][aaa].categoria)=='undefined')){%>
-                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="2" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide" style="" id="<%=aaa%>">
+                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="2" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide generalGrid-<%=arreglo[aa][aaa].objectId%>" data-id-gg="<%=arreglo[aa][0].categoria%>"  style="" id="<%=arreglo[aa][aaa].objectId%>" >
                              <div style="position:absolute;left:96%;cursor:pointer">
                                <%if (arreglo[aa][aaa].isFeatured==true){%>
                                    <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">

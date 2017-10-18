@@ -208,6 +208,7 @@ BusinessControllers.createBusiness = function createBusiness (options) {
     return filesImages(options).then(function(base64banner){
       var business = new Parse.Object('Business');
       business.set('status',true);
+      business.set('categoryOrder',[]);
       business.set({'address':options.address});
       business.set({'city':options.city});
       business.set({'country':options.country});
