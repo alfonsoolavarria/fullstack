@@ -32,7 +32,7 @@
           color: #2c3e50;
           text-align: center;
           /*background-color: #18bc9c;*/
-          background-color: #c5cae9;;
+          //ackground-color: #c5cae9;;
       }
   </style>
 
@@ -78,7 +78,7 @@
                     <% for(var aa=0; aa<arreglo.length; aa++) {%>
                       <% for(var cate=0; cate<arreglo[aa].length; cate++) {%>
                         <%if ((typeof(arreglo[aa][cate].categoria)=='string')) {%>
-                          <br><label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][cate].categoria%>:</b></label>
+                          <br><label style="margin-left: 2px;color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][cate].categoria%>:</b></label>
                           <br><br>
                           <%flag2=arreglo[aa][cate].categoria%>
                         <%}%>
@@ -92,23 +92,16 @@
                            <!--<label style="color:#36459b;text-transform: uppercase;"><b><%=arreglo[aa][aaa].categoria%>:</b></label>-->
                            <br><br>
                          <%}else if((typeof(arreglo[aa][aaa].categoria)=='undefined')){%>
-                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="2" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide generalGrid-<%=arreglo[aa][aaa].objectId%>" data-id-gg="<%=arreglo[aa][0].categoria%>"  style="" id="<%=arreglo[aa][aaa].objectId%>" >
-                             <div style="position:absolute;left:96%;cursor:pointer">
-                               <%if (arreglo[aa][aaa].isFeatured==true){%>
-                                   <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">
-                               <%}else{%>
-                                  <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="false" src="/public/assets/images/fav_off.png">
-                               <%}%>
-                             </div>
-                             <div class="media" style="height:100%;background-color:#c5cae9;">
+                           <div data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="1" class="grid-stack-item ui-draggable ui-resizable ui-resizable autohide generalGrid-<%=arreglo[aa][aaa].objectId%>" data-id-gg="<%=arreglo[aa][0].categoria%>"  style="margin-left: -9px;" id="<%=arreglo[aa][aaa].objectId%>" >
+                             <div class="grid-stack-item-content ui-draggable-handle" style="height:100%;">
+                             <div class="media" style="height:100%;cursor:move;border-style:solid;border-top-color:white;border-left-color:white;border-right-color:white;border-bottom-color:silver;border-width:thin;">
                                <div class="media-body" style="height:100%;">
                                  <form class="form-horizontal" style="height:100%;">
-                                   <div class="grid-stack-item-content ui-draggable-handle" style="height:100%;">
                                    <div class="row">
-                                     <div class="col-md-1">
-                                         <a href="/service/<%=arreglo[aa][aaa].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;"><%=arreglo[aa][aaa].serviceName%></label></a>
+                                     <div class="col-md-3" style="text-align:initial;">
+                                         <a href="/service/<%=arreglo[aa][aaa].objectId%>/<%=bussiId%>"><label class="form-control" id="service-name-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;cursor:pointer;margin-left:-12px;"><%=arreglo[aa][aaa].serviceName%></label></a>
                                      </div>
-                                     <div class="col-md-5">
+                                     <div class="col-md-3" style="text-align:initial;margin-left:2px;">
                                        <%for (var list = 0; list < arreglo[aa][aaa].alfonso[0].length; list++) {%>
                                          <% if (arreglo[aa][aaa].alfonso[0].length >1) {%>
                                            <label id="service-employee-<%=list%>-<%=arreglo[aa][aaa].objectId%>"> <%=arreglo[aa][aaa].alfonso[0][list].name%><%if(list+1!=arreglo[aa][aaa].alfonso[0].length){%>,<%}%> </label>
@@ -122,11 +115,20 @@
                                          <input style="visibility:hidden;position:absolute;" id="input-<%=arreglo[aa][aaa].objectId%>" value="0">
                                         <%}%>
                                      </div>
-                                     <div class="col-md-1">
-                                       <label class="form-control" id="service-duration-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;"><%=arreglo[aa][aaa].duration%></label>
+                                     <div class="col-md-3" style="text-align:initial;margin-left:7px;" id="service-duration-<%=arreglo[aa][aaa].objectId%>">
+                                       <%=arreglo[aa][aaa].duration%>
                                      </div>
-                                     <div class="col-md-4">
-                                       <label class="form-control" id="service-price-<%=arreglo[aa][aaa].objectId%>" style="border:0px;background:none;margin-left: 37px;"><%=arreglo[aa][aaa].price%></label>
+                                     <div class="col-md-2" style="text-align:initial;margin-left:5px;" id="service-price-<%=arreglo[aa][aaa].objectId%>">
+                                       <%=arreglo[aa][aaa].price%>
+                                     </div>
+                                     <div class="col-md-1" style="margin-left:-40px;">
+                                       <div style="position:absolute;cursor:pointer">
+                                         <%if (arreglo[aa][aaa].isFeatured==true){%>
+                                             <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="true" src="/public/assets/images/fav_on.png">
+                                         <%}else{%>
+                                            <img style='width:70%;' class="isfeaturedFlag destacados-<%=arreglo[aa][aaa].objectId%>" data-id-service="<%=arreglo[aa][aaa].objectId%>"  data-id-flag="false" src="/public/assets/images/fav_off.png">
+                                         <%}%>
+                                       </div>
                                      </div>
                                    </div>
                                    </div>

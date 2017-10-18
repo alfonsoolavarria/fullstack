@@ -12,7 +12,7 @@ $(document).ready(function() {
   var cant = [1,2,3,4];
 
 
-  
+
 
   if ($("#valueDestacados").val()) {
     if (JSON.parse($("#valueDestacados").val()).length>0) {
@@ -23,7 +23,7 @@ $(document).ready(function() {
         }else {
           $(".apendo").attr('data-currentflag',cantidad);
         }*/
-        $("#texto").before("<div class='apendo-"+dataDestacada[ii].objectId+"' style='height:120px;'></div>");
+        $("#texto").before("<div class='apendo-"+dataDestacada[ii].objectId+"' style='height:70px;'></div>");
         //$(".apendo").attr('data-currentflag',cantidad);
         $(".apendo-"+dataDestacada[ii].objectId).append("<div class='grid-stack-item ui-draggable ui-resizable ui-resizable autohide apendo2-"+dataDestacada[ii].objectId+"' style='height:100%;position:relative;width:100%;'></div>");
         var toP = 20;
@@ -40,26 +40,26 @@ $(document).ready(function() {
         }
         if ($('.append-'+dataDestacada[ii].objectId)[0]==undefined) {
           cantidad +=1;
-          height += 130;
+          height += 80;
           var listo = height+40;
           //$("#texto").remove();
           //$('.apendo-'+dataDestacada[ii].objectId).css('min-height', listo+'px');
           //$(".apendo-"+dataDestacada[ii].objectId).css('height',listo);
-          $(".apendo2-"+dataDestacada[ii].objectId).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+dataDestacada[ii].objectId+"' data-id-service-append='"+dataDestacada[ii].objectId+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-          $(".apendo2-"+dataDestacada[ii].objectId).append("<div class='media append-"+dataDestacada[ii].objectId+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
+          //$(".apendo2-"+dataDestacada[ii].objectId).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+dataDestacada[ii].objectId+"' data-id-service-append='"+dataDestacada[ii].objectId+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+          $(".apendo2-"+dataDestacada[ii].objectId).append("<div class='media append-"+dataDestacada[ii].objectId+"' style='height:100%;border-style:solid;border-top-color:white;border-left-color:white;border-right-color:white;border-bottom-color:silver;border-width:thin;'><div class='media-body'>\
           <form class='form-horizontal'>\
           <div class='grid-stack-item-content ui-draggable-handle'>\
           <div class='row'>\
-          <div class='col-md-1'>\
+          <div class='col-md-3' style='text-align:initial;'>\
           <a href='/service/"+dataDestacada[ii].objectId+"/"+$("#businessid").val()+"'>\
-          <label class='form-control' id='"+dataDestacada[ii].objectId+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+dataDestacada[ii].objectId).text()+"</label></a>\
-          </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+dataDestacada[ii].objectId+"' style='border:0px;background:none;'>"+dataDestacada[ii].duration+"</label></div>\
-          <div class='col-md-4'><label class='form-control' id='append-service-price-"+dataDestacada[ii].objectId+"' style='border:0px;background:none;margin-left:37px;'>"+dataDestacada[ii].price+"</label></div></div></div></form></div></div>");
+          <label class='form-control' id='"+dataDestacada[ii].objectId+"' style='border:0px;background:none;cursor:pointer;margin-left:-12px;'>"+$("#service-name-"+dataDestacada[ii].objectId).text()+"</label></a>\
+          </div><div class='col-md-3' style='text-align: initial;'>"+empl+"</div><div class='col-md-3' style='text-align: initial;'>"+dataDestacada[ii].duration+"</div>\
+          <div class='col-md-3' style='text-align: initial;'>"+dataDestacada[ii].price+"</div></div></div></form></div></div>");
         }else {
           //console.log('existe y lo borooo');
           $('.append-'+dataDestacada[ii].objectId).remove();
           $('.append-destacados-'+dataDestacada[ii].objectId).remove();
-          height -=130;
+          height -=80;
           cantidad -=1;
           //$('.apendo').css('min-height', height+'px');
           //$(".apendo").css('height',height);
@@ -111,7 +111,7 @@ $(document).ready(function() {
       if ($('.apendo2-'+id)[0]==undefined) {
         //console.log('apendar aunnn end esrrollo');
 
-        $("#texto").before("<div class='apendo-"+id+"' style='height:120px;'></div>");
+        $("#texto").before("<div class='apendo-"+id+"' style='height:70px;'></div>");
         var toP = 20;
         if (cantidad!=1) {
           toP +=10;
@@ -130,28 +130,28 @@ $(document).ready(function() {
           }
         }
         cantidad +=1;
-        height += 130;
+        height += 80;
         var listo = height+60;
         $("#texto").css("visibility","hidden");
         //$("#texto").remove();
         //$('.apendo').css('min-height', listo+'px');
         //$(".apendo").css('height',listo);
-        $(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
+        //$(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;border-style:solid;border-top-color: white;border-left-color: white;border-right-color: white;border-bottom-color: silver;border-width: thin;'><div class='media-body'>\
         <form class='form-horizontal'>\
         <div class='grid-stack-item-content ui-draggable-handle'>\
         <div class='row'>\
-        <div class='col-md-1'>\
+        <div class='col-md-3' style='text-align: initial;'>\
         <a href='/service/"+id+"/"+$("#businessid").val()+"'>\
-        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+id).text()+"</label></a>\
-        </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+id+"' style='border:0px;background:none;'>"+$("#service-duration-"+id).text()+"</label></div>\
-        <div class='col-md-4'><label class='form-control' id='append-service-price-"+id+"' style='border:0px;background:none;margin-left:37px;'>"+$("#service-price-"+id).text()+"</label></div></div></div></form></div></div>");
+        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;margin-left:-12px;'>"+$("#service-name-"+id).text()+"</label></a>\
+        </div><div class='col-md-3' style='text-align: initial;'>"+empl+"</div><div class='col-md-3' style='text-align: initial;'>"+$("#service-duration-"+id).text()+"</div>\
+        <div class='col-md-3' style='text-align: initial;'>"+$("#service-price-"+id).text()+"</div></div></div></form></div></div>");
       }else {
         //console.log('existe y lo borooo');
         $(".apendo-"+id).remove();
         $('.append-destacados-'+id).remove();
         $('.apendo2-'+id).remove();
-        height -=100;
+        height -=80;
         cantidad -=1;
         //$('.apendo').css('min-height', height+'px');
         //$(".apendo").css('height',height);
@@ -167,7 +167,7 @@ $(document).ready(function() {
     }else {//section 2
 
       if ($('.apendo2-'+id)[0]==undefined) {
-      $("#texto").before("<div class='apendo-"+id+"' style='height:120px;'></div>");
+      $("#texto").before("<div class='apendo-"+id+"' style='height:70px;'></div>");
 
       var toP = 20;
       if (cantidad!=1) {
@@ -191,16 +191,16 @@ $(document).ready(function() {
         $("#texto").css("visibility","hidden");
         //$('.apendo-'+id).css('min-height', listo+'px');
         //$(".apendo-"+id).css('height',listo);
-        $(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
-        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;background-color:#c5cae9;'><div class='media-body'>\
+        //$(".apendo2-"+id).append("<div style='position:absolute;left:96%;cursor:pointer'><img style='width:70%;' class='appendFlag append-destacados-"+id+"' data-id-service-append='"+id+"' data-id-flag='true' src='/public/assets/images/fav_on.png'></div>");
+        $(".apendo2-"+id).append("<div class='media append-"+id+"' style='height:100%;border-style:solid;border-top-color: white;border-left-color: white;border-right-color: white;border-bottom-color: silver;border-width: thin;'><div class='media-body'>\
         <form class='form-horizontal'>\
         <div class='grid-stack-item-content ui-draggable-handle'>\
         <div class='row'>\
-        <div class='col-md-1'>\
+        <div class='col-md-3' style='text-align: initial;'>\
         <a href='/service/"+id+"/"+$("#businessid").val()+"'>\
-        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;width:200%;margin-left: -20px;'>"+$("#service-name-"+id).text()+"</label></a>\
-        </div><div class='col-md-5'>"+empl+"</div><div class='col-md-1'><label class='form-control' id='append-service-duration-"+id+"' style='border:0px;background:none;'>"+$("#service-duration-"+id).text()+"</label></div>\
-        <div class='col-md-4'><label class='form-control' id='append-service-price-"+id+"' style='border:0px;background:none;margin-left:37px;'>"+$("#service-price-"+id).text()+"</label></div></div></div></form></div></div>");
+        <label class='form-control' id='"+id+"' style='border:0px;background:none;cursor:pointer;margin-left:-12px;'>"+$("#service-name-"+id).text()+"</label></a>\
+        </div><div class='col-md-3' style='text-align: initial;'>"+empl+"</div><div class='col-md-3' style='text-align: initial;'>"+$("#service-duration-"+id).text()+"</div>\
+        <div class='col-md-3' style='text-align: initial;'>"+$("#service-price-"+id).text()+"</div></div></div></form></div></div>");
       }else {
         //console.log('existe y lo borooo');
         $('.apendo-'+id).remove();
