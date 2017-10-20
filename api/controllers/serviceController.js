@@ -41,7 +41,7 @@ ServiceControllers.updateService = function updateService (options) {
       if (options.price) dataS.set({'price':options.price});
       if (options.duration) dataS.set({'duration':options.duration});
       if (options.description) dataS.set({'description':options.description});
-      if (options.employee) dataS.set({'employee':options.employee});
+      //if (options.employee) dataS.set({'employee':options.employee});
       if (options.schedule) dataS.set({'schedule':options.schedule});
       if (options.category) dataS.set('serviCategory', {"__type":"Pointer","className":"serviceCategory","objectId":options.category});
       if (options.isFeatured) dataS.set({'isFeatured':JSON.parse(options.isFeatured)});

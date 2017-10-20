@@ -1,7 +1,4 @@
 $(document).ready(function() {
-//3---> el mas complicado que es guardar el orden que mueva en el drag and drog hacr el save en la bd
-// y luego al recargar que salga el orden elegido
-
 
   var height = 1;
   var cantidad = 1;
