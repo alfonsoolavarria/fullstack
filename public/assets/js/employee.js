@@ -302,7 +302,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-
+        flag=1;
       }
 
       if ($('#Martes-0-'+id).val().length>0 || $('#Martes-1-'+id).val().length>0 || $('#Martes-2-'+id).val().length>0 || $('#Martes-3-'+id).val().length>0) {
@@ -339,7 +339,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-
+        flag=1;
       }
 
       if ($('#Miercoles-0-'+id).val().length>0 || $('#Miercoles-1-'+id).val().length>0 || $('#Miercoles-2-'+id).val().length>0 || $('#Miercoles-3-'+id).val().length>0) {
@@ -376,6 +376,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
+        flag=1;
       }
 
       if ($('#Jueves-0-'+id).val().length>0 || $('#Jueves-1-'+id).val().length>0 || $('#Jueves-2-'+id).val().length>0 || $('#Jueves-3-'+id).val().length>0) {
@@ -412,7 +413,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-
+        flag=1;
       }
 
       if ($('#Viernes-0-'+id).val().length>0 || $('#Viernes-1-'+id).val().length>0 || $('#Viernes-2-'+id).val().length>0 || $('#Viernes-3-'+id).val().length>0) {
@@ -438,7 +439,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-        if (($('Vierness-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
+        if (($('#Viernes-0-'+id).val().length>0 && $('#Viernes-1-'+id).val().length>0) && ($('#Viernes-2-'+id).val().length<1 || $('#Viernes-3-'+id).val().length<1)) {
           $("#CompletaHoraS").trigger("click");
           $('.btn-'+id).append("<span id='nameE-"+id+"'>Guardar</span>");
           return;
@@ -449,6 +450,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
+        flag=1;
       }
 
       if ($('#Sabado-0-'+id).val().length>0 || $('#Sabado-1-'+id).val().length>0 || $('#Sabado-2-'+id).val().length>0 || $('#Sabado-3-'+id).val().length>0) {
@@ -485,7 +487,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-
+        flag=1;
       }
 
       if ($('#Domingo-0-'+id).val().length>0 || $('#Domingo-1-'+id).val().length>0 || $('#Domingo-2-'+id).val().length>0 || $('#Domingo-3-'+id).val().length>0) {
@@ -522,7 +524,7 @@ $('#employeeCreate').click(function () {
           return;
 
         }
-
+        flag=1;
       }
 
       /*horario*/

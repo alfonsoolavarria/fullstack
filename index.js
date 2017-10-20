@@ -17,8 +17,9 @@ var _ = require('lodash');
  dic.serverURL= configEnv.PARSE_SERVER_URL;
 
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(session({
   secret: 'turno123dev',
   resave: false,
