@@ -393,8 +393,9 @@ BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (op
     query.equalTo('owner', new Parse.Object('_User', { id: options.owner }));
   }
   return query.find().then(function(dataE){
-    var promises = [];
-    _.forEach(dataE, function(allD) {
+    if (JSON.parse(JSON.stringify(dataE)).length>0) {
+      var promises = [];
+      _.forEach(dataE, function(allD) {
         promises.push(allD.relation('employee').query().find().then(function (employess) {
           for (var i = 0; i < employess.length; i++) {
             if (options.owner) {
@@ -415,11 +416,14 @@ BusinessControllers.searchBusinessEmployee = function searchBusinessEmployee (op
             }
           }
         }));
-    });
-    return Parse.Promise.when(promises).then(function(resultados, index) {
-      var dataFinal = resultados.filter(function(n){ return n != undefined });
-      return dataFinal;
-    });
+      });
+      return Parse.Promise.when(promises).then(function(resultados, index) {
+        var dataFinal = resultados.filter(function(n){ return n != undefined });
+        return dataFinal;
+      });
+    }else {
+      return [];
+    }
   });
 };
 

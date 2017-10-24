@@ -29,6 +29,13 @@ var useTemplate = {
 module.exports = function(app) {
 
   app.get('/', function(req, res) {
+    var message = '';
+
+    if (req.query.businessempty) {
+      message  = 'No tiene empresas relacionadas';
+      return res.render('login.ejs',{message});
+    }
+
     if (req.session) {
       if (req.session.admin) {
         return res.redirect('/business/list?'+'user='+req.session.userId);
@@ -40,7 +47,6 @@ module.exports = function(app) {
         return res.redirect('/branch?ownerAdmin='+req.session.userId);
       }
     }
-    var message = '';
 
     if (req.query.invalid) {
       message = 'Error al logearse';
@@ -932,109 +938,113 @@ module.exports = function(app) {
         idUserEmploOwner = req.query.owner;
       }
       BusinessControllers.searchBusinessEmployee(req.query,idUserEmploOwner).then(function(dataBusiness1) {
-        if (req.query.employee) req.query.idowner = dataBusiness1[0].owner //filtro de solo empleado
-        Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
-          var id = 10;
-          if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
-          if (req.session.ownerAdmin) {
-            idgetservice=req.query.owner;
-          }else {
-            idgetservice=req.session.userId
-          }
+        if (JSON.parse(JSON.stringify(dataBusiness1)).length>0) {
+          if (req.query.employee) req.query.idowner = dataBusiness1[0].owner //filtro de solo empleado
+          Users.getEmployeeBusiness2(idUserEmploOwner,req.query).then(function(employeeB) {
+            var id = 10;
+            if (dataBusiness1.length>0) id = JSON.parse(JSON.stringify(dataBusiness1[0])).business;
+            if (req.session.ownerAdmin) {
+              idgetservice=req.query.owner;
+            }else {
+              idgetservice=req.session.userId
+            }
 
-          if (req.query.twoService=='1') {
-            var queryQuery = ServiceControllers.getService2(idgetservice,{type:'',page:0});
-          }else {
-            var queryQuery = ServiceControllers.getService(id,{type:'',page:0});
-          }
-          queryQuery.then(function(serviceData) {
-            var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
-            var datakk = JSON.parse(JSON.stringify(serviceData));
-            var lun,mar,mier,jue,vie,sab,dom,dow,minimo,maximo;
-            datakk = datakk.filter(function(el) {
-              if (el.lunes) {
-                lun = JSON.parse(JSON.stringify(el.lunes));
-              }
-              if (el.martes) {
-                mar = JSON.parse(JSON.stringify(el.martes));
-              }
-              if (el.miercoles) {
-                mier = JSON.parse(JSON.stringify(el.miercoles));
-              }
-              if (el.jueves) {
-                jue = JSON.parse(JSON.stringify(el.jueves));
-              }
-              if (el.viernes) {
-                vie = JSON.parse(JSON.stringify(el.viernes));
-              }
-              if (el.sabado) {
-                sab = JSON.parse(JSON.stringify(el.sabado));
-              }
-              if (el.domingo) {
-                dom = JSON.parse(JSON.stringify(el.domingo));
-              }
-              if (el.dias) {
-                dow = el.dias;
-              }
-              if (el.minimo) {
-                minimo = el.minimo;
-              }
-              if (el.maximo) {
-                maximo = el.maximo;
-              }
-              return !el.lunes;
-            });
+            if (req.query.twoService=='1') {
+              var queryQuery = ServiceControllers.getService2(idgetservice,{type:'',page:0});
+            }else {
+              var queryQuery = ServiceControllers.getService(id,{type:'',page:0});
+            }
+            queryQuery.then(function(serviceData) {
+              var listaemploye=[],listaservice=[],final2=[], flag=[], bussiId=0;
+              var datakk = JSON.parse(JSON.stringify(serviceData));
+              var lun,mar,mier,jue,vie,sab,dom,dow,minimo,maximo;
+              datakk = datakk.filter(function(el) {
+                if (el.lunes) {
+                  lun = JSON.parse(JSON.stringify(el.lunes));
+                }
+                if (el.martes) {
+                  mar = JSON.parse(JSON.stringify(el.martes));
+                }
+                if (el.miercoles) {
+                  mier = JSON.parse(JSON.stringify(el.miercoles));
+                }
+                if (el.jueves) {
+                  jue = JSON.parse(JSON.stringify(el.jueves));
+                }
+                if (el.viernes) {
+                  vie = JSON.parse(JSON.stringify(el.viernes));
+                }
+                if (el.sabado) {
+                  sab = JSON.parse(JSON.stringify(el.sabado));
+                }
+                if (el.domingo) {
+                  dom = JSON.parse(JSON.stringify(el.domingo));
+                }
+                if (el.dias) {
+                  dow = el.dias;
+                }
+                if (el.minimo) {
+                  minimo = el.minimo;
+                }
+                if (el.maximo) {
+                  maximo = el.maximo;
+                }
+                return !el.lunes;
+              });
 
-            for (var i = 0; i < datakk.length; i++) {
-              bussiId=datakk[i].business.objectId;
-              listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
-              if (datakk[i].alfonso[0].length>0) {
-                for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
-                  //if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
+              for (var i = 0; i < datakk.length; i++) {
+                bussiId=datakk[i].business.objectId;
+                listaservice.push({name:datakk[i].serviceName,id:datakk[i].objectId,bussi:datakk[i].business.objectId,duration:datakk[i].duration});
+                if (datakk[i].alfonso[0].length>0) {
+                  for (var o = 0; o < datakk[i].alfonso[0].length; o++) {
+                    //if (flag.indexOf(datakk[i].alfonso[0][o].objectId)===-1) {
                     listaemploye.push({id:datakk[i].alfonso[0][o].objectId,name:datakk[i].alfonso[0][o].name,servi:datakk[i].objectId});
                     flag.push(datakk[i].alfonso[0][o].objectId);
-                  //}
+                    //}
+                  }
+                }else {
+                  listaemploye.push(['']);
+                }
               }
+              if (bussiId==0){
+                req.session.business=id;
+                bussiId=id;
               }else {
-                listaemploye.push(['']);
+                req.session.business=bussiId;
+                bussiId=bussiId;
               }
-            }
-            if (bussiId==0){
-              req.session.business=id;
-              bussiId=id;
-            }else {
-              req.session.business=bussiId;
-              bussiId=bussiId;
-            }
-            res.render('calendar/calendar.ejs',{
-              usersType,
-              session:req.session,
-              client:data,
-              dias:dow,
-              minimo:minimo,
-              maximo:maximo,
-              lunes:JSON.stringify(lun),
-              martes:JSON.stringify(mar),
-              miercoles:JSON.stringify(mier),
-              jueves:JSON.stringify(jue),
-              viernes:JSON.stringify(vie),
-              sabado:JSON.stringify(sab),
-              domingo:JSON.stringify(dom),
-              service:JSON.stringify(listaservice),
-              employee:JSON.stringify(listaemploye),
-              employee2:JSON.stringify(employeeB.employee),
-              Idbussi:bussiId,
-              businessSelec:0,
-              dashSelec:0,
-              calendarSelec:1,
-              branchSelect:0,
-              categorySelec:0,
-              employeeSelec:0,
-              serviSelect:0,
-              clientSelect:0,
+              res.render('calendar/calendar.ejs',{
+                usersType,
+                session:req.session,
+                client:data,
+                dias:dow,
+                minimo:minimo,
+                maximo:maximo,
+                lunes:JSON.stringify(lun),
+                martes:JSON.stringify(mar),
+                miercoles:JSON.stringify(mier),
+                jueves:JSON.stringify(jue),
+                viernes:JSON.stringify(vie),
+                sabado:JSON.stringify(sab),
+                domingo:JSON.stringify(dom),
+                service:JSON.stringify(listaservice),
+                employee:JSON.stringify(listaemploye),
+                employee2:JSON.stringify(employeeB.employee),
+                Idbussi:bussiId,
+                businessSelec:0,
+                dashSelec:0,
+                calendarSelec:1,
+                branchSelect:0,
+                categorySelec:0,
+                employeeSelec:0,
+                serviSelect:0,
+                clientSelect:0,
+              });
             });
           });
-        });
+        }else {
+          return res.redirect('/?businessempty=true');
+        }
       });
     });
 	});
