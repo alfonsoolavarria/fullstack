@@ -53,5 +53,32 @@ CategoryControllers.getCategories = function getCategories() {
   });
 }
 
+CategoryControllers.updateCategory = function updateCategory(options) {
+  function filesImages(data) {
+    var promise = new Parse.Promise();
+    try {
+      var avatarImg = new Parse.File(data.nameicon+'-img.png', { base64: data.icon });
+      avatarImg.save();
+      promise.resolve(avatarImg);
+      return promise;
+    } catch (e) {
+      promise.resolve(0);
+      return promise;
+    }
+  }
+
+  return filesImages(options).then(function(base64imagen){
+    var query = new Parse.Query("TypeBusiness");
+    return query.get(options.id).then(function (objectData) {
+      if (options.name) objectData.set({'name':options.name});
+      if (options.icon) objectData.set('image',base64imagen);
+      objectData.save(null, { useMasterKey: true });
+      return {success:true,code:200};
+    }, function(error) {
+      console.log('TypeBusiness update Error',error);
+      return {error:'TypeBusiness update Error '+error, code:500};
+    });
+  });
+};
 
 module.exports = CategoryControllers;

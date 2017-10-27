@@ -43,7 +43,6 @@ EmployeeModel.creteEmployee = function creteEmployee (options) {
 };
 
 EmployeeModel.updateEmployee = function updateEmployee (options) {
-
   function filesImages(data) {
     var promise = new Parse.Promise();
     try {

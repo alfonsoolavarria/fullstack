@@ -1261,6 +1261,12 @@ module.exports = function(app) {
 
     });
 
+    app.put('/category',middle.checkSession, function(req, res) {
+      Category.updateCategory(req.body).then(function(dataC) {
+        res.json(dataC);
+      });
+    });
+
   /********************************
   ************User************
   ********************************/
