@@ -21,7 +21,7 @@ var _ = require('lodash');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(session({
-  secret: 'turno123dev',
+  secret: 'secret123dev',
   resave: false,
   saveUninitialized: false
 }));
